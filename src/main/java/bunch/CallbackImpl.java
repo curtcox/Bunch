@@ -19,7 +19,6 @@ package bunch;
 
 import bunch.BunchServer.IterationManager;
 import java.rmi.RemoteException;
-import javax.rmi.PortableRemoteObject;
 
 /**
  * This class implements the callback functionality that is used by the
@@ -27,7 +26,7 @@ import javax.rmi.PortableRemoteObject;
  *
  * @author Brian Mitchell
  */
-public class CallbackImpl extends PortableRemoteObject implements Callback{
+public class CallbackImpl implements Callback{
 
   /**
    * Constants for message types
