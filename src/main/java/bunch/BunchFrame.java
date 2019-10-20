@@ -1,116 +1,26 @@
-/****
- *
- *	$Log: BunchFrame.java,v $
- *	Revision 3.0  2002/02/03 18:41:44  bsmitc
- *	Retag starting at 3.0
- *
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *
- *	Revision 3.18  2001/04/03 23:32:11  bsmitc
- *	Added NAHC (really HC) support for Distributed Bunch, updated release
- *	version number to 3.2
- *
- *	Revision 3.17  2001/04/03 21:39:28  bsmitc
- *	Readded and fixed support for distributed clustering
- *
- *	Revision 3.16  2001/04/02 19:23:39  bsmitc
- *	*** empty log message ***
- *
- *	Revision 3.15  2000/11/26 15:48:12  bsmitc
- *	Fixed various bugs
- *
- *	Revision 3.14  2000/10/22 17:47:02  bsmitc
- *	Collapsed NAHC and SAHC into a generic hill climbing method
- *
- *	Revision 3.13  2000/10/22 17:30:06  bsmitc
- *	Fixed bug with user-directed clustering. Also, added support to clear
- *	the user-directed clustering option once it is selected
- *
- *	Revision 3.12  2000/10/22 15:48:48  bsmitc
- *	*** empty log message ***
- *
- *	Revision 3.11  2000/08/18 21:07:59  bsmitc
- *	Added feature to support tree output for dotty and text
- *
- *	Revision 3.10  2000/08/17 00:26:04  bsmitc
- *	Fixed omnipresent and library support for nodes in the MDG not connected to
- *	anything but the omnipresent nodes and libraries.
- *
- *	Revision 3.9  2000/08/16 00:12:45  bsmitc
- *	Extended UI to support various views and output options
- *
- *	Revision 3.8  2000/08/13 18:40:05  bsmitc
- *	Added support for SA framework
- *
- *	Revision 3.7  2000/08/11 13:19:10  bsmitc
- *	Added support for generating various output levels - all, median, one
- *
- *	Revision 3.6  2000/08/09 14:17:47  bsmitc
- *	Changes made to support agglomerative clustering feature.
- *
- *	Revision 3.5  2000/08/07 21:48:59  bsmitc
- *	*** empty log message ***
- *
- *	Revision 3.4  2000/08/02 21:40:53  bsmitc
- *	Added support for calculator feature
- *
- *	Revision 3.3  2000/08/01 19:04:37  bsmitc
- *	Updated menu item to have Bunch Utilities and calculators
- *
- *	Revision 3.2  2000/07/28 14:26:19  bsmitc
- *	Added support for the TXTTree Graph output option
- *
- *	Revision 3.1  2000/07/27 10:54:15  bsmitc
- *	Name of clustered input file is no longer removed after clustering.  Tab is now
- *	included as a default delimeter in the input processing of MDG files.
- *
- *	Revision 3.0  2000/07/26 22:46:07  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:33  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch;
 
 import bunch.BunchServer.BunchSvrMsg;
 import bunch.stats.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.Beans;
 import javax.swing.*;
 import java.io.*;
-
 import javax.naming.*;
-import javax.rmi.PortableRemoteObject;
-import java.rmi.RMISecurityManager;
 import java.util.*;
-
 import javax.swing.event.*;
 
 /**
  * Main GUI class for Bunch. This class is launched from the main() method in
  * Bunch.java.
- *
- * @author Brian Mitchell
- * @see bunch.Bunch.main(String[])
  */
-public
-class BunchFrame
-  extends JFrame
-{
+public final class BunchFrame extends JFrame {
 /**
  * Constants for BunchFrame
  */
 public static final int DEFAULT_UNIT_OF_WORK_SZ = 5;
 
-
-/**
- * Objects for all of the controls and menus on the GUI
- */
 JMenuBar bunchMenubar_d = new JMenuBar();
 JMenu fileMenu_d = new JMenu();
 JMenuItem menuFileExit = new JMenuItem();
@@ -256,32 +166,28 @@ JLabel centralLabel_d = new JLabel();
   JMenuItem clusteringUtilsMenu = new JMenuItem();
   JMenuItem fileUtilsMenu = new JMenuItem();
 
-/**
- * The BunchFrame class constructor. Basically calls the jbInit() method.
- *
- * @see #jbInit()
- */
-public
-BunchFrame()
-{
-  enableEvents(AWTEvent.WINDOW_EVENT_MASK);
-  try {
-      jbInit();
-  }
-  catch (Exception e) {
-    e.printStackTrace();
-  }
+public static BunchFrame of() {
+  BunchFrame frame = new BunchFrame();
+  frame.init();
+  return frame;
 }
 
-/**
+  BunchFrame() {}
+
+  void init() {
+    enableEvents(AWTEvent.WINDOW_EVENT_MASK);
+    try {
+        jbInit();
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
+  }
+
+  /**
  * Component initialization.  Draws the controls on the window and initializes
  * The appropriate bunch objects.
  */
-private
-void
-jbInit()
-  throws Exception
-{
+private void jbInit() throws IOException, ClassNotFoundException {
   //load preferences, either from the class or from a serialized file (bunch.BunchPreferences.ser)
   //this will allow to store the configuration in a future version
   preferences_d = (BunchPreferences)(Beans.instantiate(null, "bunch.BunchPreferences"));
@@ -305,9 +211,6 @@ jbInit()
 
   String defaultMqFn = preferences_d.getObjectiveFunctionCalculatorFactory().getDefaultMethod();
   ClusteringAlgEF.setSelectedItem(defaultMqFn);
-
-
-
 
   String defOutputType = preferences_d.getGraphOutputFactory().defaultOption;
 
@@ -797,10 +700,6 @@ jbInit()
   agglomOutputCB.addItem("Output Top Level");
   agglomOutputCB.addItem("Output All Levels");
 
-
-
-
-
   setLastResultGraph(null);
 
   //obtain the available output formats and add them to the list
@@ -819,13 +718,13 @@ jbInit()
  *
  * @returns True if agglomerative, false if user-directed
  */
-public boolean isAgglomerativeTechnique()
-{
-  String action = (String)actionList_d.getSelectedItem();
-  if(action.equals("Agglomerative Clustering"))
-    return true;
-
-  return false;
+public boolean isAgglomerativeTechnique() {
+  throw new UnsupportedOperationException();
+//  String action = (String)actionList_d.getSelectedItem();
+//  if(action.equals("Agglomerative Clustering"))
+//    return true;
+//
+//  return false;
 }
 
 /**
@@ -847,12 +746,8 @@ public boolean isUserDrivenTechnique()
  * The class is loaded by asking the ClusteringMethodFactory for it.
  *
  * @param method the name of the ClusteringMethod to load
- * @see bunch.ClusteringMethodFactory.getMethod(ClusteringMethod)
  */
-private
-void
-setClusteringMethod(String method)
-{
+private void setClusteringMethod(String method) {
   if (!method.getClass().getName().equals(method)) {
     clusteringMethod_d = preferences_d.getClusteringMethodFactory().getMethod(method);
     clusteringOptionsButton_d.setEnabled(clusteringMethod_d.isConfigurable());
@@ -866,20 +761,14 @@ setClusteringMethod(String method)
 /**
  * Method that is executed when the Exit option in the File menu is called.
  */
-public
-void
-fileExit_actionPerformed(ActionEvent e)
-{
+public void fileExit_actionPerformed(ActionEvent e) {
   System.exit(0);
 }
 
 /**
  * Method that is executed when the About option in the Help menu is called.
  */
-public
-void
-helpAbout_actionPerformed(ActionEvent e)
-{
+public void helpAbout_actionPerformed(ActionEvent e) {
   BunchFrame_AboutBox dlg = new BunchFrame_AboutBox(this);
   Dimension dlgSize = dlg.getPreferredSize();
   Dimension frmSize = getSize();
@@ -892,10 +781,7 @@ helpAbout_actionPerformed(ActionEvent e)
 /**
  * Overriden so we can exit on System Close without implementing WindowListener
  */
-protected
-void
-processWindowEvent(WindowEvent e)
-{
+protected void processWindowEvent(WindowEvent e) {
   super.processWindowEvent(e);
   if (e.getID() == WindowEvent.WINDOW_CLOSING) {
     fileExit_actionPerformed(null);
@@ -908,32 +794,30 @@ processWindowEvent(WindowEvent e)
  *
  * @returns A string with a list of delimeters
  */
-public String getDelims()
-{
-  String delims = delimEF.getText();
-  boolean state = spaceDelimCB.isSelected();
-  if (state == true)
-      delims = " " + delims;  //includes the space character
-  state = tabDelimCB.isSelected();
-  if (state == true)
-      delims = "\t" + delims; //includes the tab character
-
-  return delims;
+public String getDelims() {
+  throw new UnsupportedOperationException();
+//  String delims = delimEF.getText();
+//  boolean state = spaceDelimCB.isSelected();
+//  if (state == true)
+//      delims = " " + delims;  //includes the space character
+//  state = tabDelimCB.isSelected();
+//  if (state == true)
+//      delims = "\t" + delims; //includes the tab character
+//
+//  return delims;
 }
 
-boolean checkFile(String fileName)
-{
-  File f = new File(fileName);
-
-  return f.isFile();
+boolean checkFile(String fileName) {
+  throw new UnsupportedOperationException();
+//  File f = new File(fileName);
+//
+//  return f.isFile();
 }
 /**
  * Used to parse the input MDG graph.  This activity happens after the
  * input MDG file graph is selected
  */
-void
-selectGraphFileButton_d_actionPerformed(ActionEvent e)
-{
+void selectGraphFileButton_d_actionPerformed(ActionEvent e) {
   /**
    * Get the delimeters
    */
@@ -1022,10 +906,7 @@ selectGraphFileButton_d_actionPerformed(ActionEvent e)
  * Resets some GUI elements to their default values (in some cases disables
  * them) when a new graph file has been loaded
  */
-public
-void
-clearGUIElements(boolean nextLevel)
-{
+public void clearGUIElements(boolean nextLevel) {
   inputClusterFile_d.setText("");
   fileBasicName_d = fileSelector_d.getFile();
   standardNodeListModel_d.removeAllElements();
@@ -1055,9 +936,7 @@ clearGUIElements(boolean nextLevel)
  *
  * @param e the ActionEvent that triggered the method call
  */
-void
-selectOutputFileButton_d_actionPerformed(ActionEvent e)
-{
+void selectOutputFileButton_d_actionPerformed(ActionEvent e) {
   fileSelector_d.setVisible(true);
   if (fileSelector_d.getFile() != null) {
     String filename = fileSelector_d.getDirectory()+fileSelector_d.getFile();
@@ -1070,9 +949,8 @@ selectOutputFileButton_d_actionPerformed(ActionEvent e)
  * This method is called when the "Configure" option in the Options menu is called
  * To be used in the future to support storable configurations for bunch.
  */
-void
-configureOptionsMenuItem_d_actionPerformed(ActionEvent e)
-{
+void configureOptionsMenuItem_d_actionPerformed(ActionEvent e) {
+  throw new UnsupportedOperationException();
 }
 
 /**
@@ -1081,9 +959,7 @@ configureOptionsMenuItem_d_actionPerformed(ActionEvent e)
  *
  * @param e the ActionEvent that triggered the method call
  */
-void
-clusteringOptionsButton_d_actionPerformed(ActionEvent e)
-{
+void clusteringOptionsButton_d_actionPerformed(ActionEvent e) {
   ClusteringConfigurationDialog dlg = null;
 
   try {
@@ -1120,9 +996,7 @@ clusteringOptionsButton_d_actionPerformed(ActionEvent e)
 /**
  * Called when a new item is selected on the list of Clustering Methods
  */
-void
-clusteringMethodList_d_itemStateChanged(ItemEvent e)
-{
+void clusteringMethodList_d_itemStateChanged(ItemEvent e) {
   setClusteringMethod((String)clusteringMethodList_d.getSelectedItem());
   setupClusteringOptions();
 }
@@ -1134,9 +1008,7 @@ clusteringMethodList_d_itemStateChanged(ItemEvent e)
  *
  * @param e the ActionEvent that triggered the method call
  */
-void
-inputClusterFileSelectButton_d_actionPerformed(ActionEvent e)
-{
+void inputClusterFileSelectButton_d_actionPerformed(ActionEvent e) {
   if (inputGraphFilename_d.getText() == null
             || inputGraphFilename_d.getText().equals("")) {
       JOptionPane.showMessageDialog(this,
@@ -1163,13 +1035,13 @@ inputClusterFileSelectButton_d_actionPerformed(ActionEvent e)
  *
  * @returns The selected unit of work size
  */
-public int getUOWSz()
-{
-  try{
-    Integer i = new Integer(UOWSzEF.getText());
-    return i.intValue();
-  }catch(Exception e)
-  {  return DEFAULT_UNIT_OF_WORK_SZ;  }
+public int getUOWSz() {
+  throw new UnsupportedOperationException();
+//  try{
+//    Integer i = new Integer(UOWSzEF.getText());
+//    return i.intValue();
+//  }catch(Exception e)
+//  {  return DEFAULT_UNIT_OF_WORK_SZ;  }
 }
 
 /**
@@ -1179,9 +1051,9 @@ public int getUOWSz()
  *
  * @returns True if the flag is set, false if not
  */
-public boolean getAdaptiveEnableFlag()
-{
-  return  adaptiveEnableCB.isSelected();
+public boolean getAdaptiveEnableFlag() {
+  throw new UnsupportedOperationException();
+//  return  adaptiveEnableCB.isSelected();
 }
 
 /**
@@ -1191,9 +1063,9 @@ public boolean getAdaptiveEnableFlag()
  *
  * @returns The object instance of the distributed server callback
  */
-public CallbackImpl getSvrCallback()
-{
-   return svrCallback;
+public CallbackImpl getSvrCallback() {
+  throw new UnsupportedOperationException();
+//   return svrCallback;
 }
 
 /**
@@ -1203,9 +1075,7 @@ public CallbackImpl getSvrCallback()
  *
  * @param e the ActionEvent that triggered the method call
  */
-void
-runActionButton_d_actionPerformed(ActionEvent e)
-{
+void runActionButton_d_actionPerformed(ActionEvent e) {
 
   /**
    * First ensure that an input graph is specified
@@ -1374,7 +1244,7 @@ runActionButton_d_actionPerformed(ActionEvent e)
        * manage the clustering process.
        */
       ClusteringProgressDialog dlg = null;
-      dlg = new ClusteringProgressDialog(this, "Clustering " + initialGraph_d.getNumberOfNodes() + " nodes...", true);
+      dlg = ClusteringProgressDialog.of(this, "Clustering " + initialGraph_d.getNumberOfNodes() + " nodes...", true);
 
       Dimension dlgSize = dlg.getPreferredSize();
       Dimension frmSize = getSize();
@@ -1407,10 +1277,7 @@ runActionButton_d_actionPerformed(ActionEvent e)
  * This method sets the libraries, clients and suppliers defined in their
  * respective panes to the graph, just previous to processing.
  */
-public
-void
-arrangeLibrariesClientsAndSuppliers()
-{
+public void arrangeLibrariesClientsAndSuppliers() {
   //Node[] nodeList = initialGraph_d.getNodes();
   Node[] nodeList = null;
 
@@ -1633,17 +1500,17 @@ arrangeLibrariesClientsAndSuppliers()
  * This feature is used for debugging.  It shows the state of the modules
  * both before and after removing special modules
  */
-public void debugDump(int[] b, int[]a)
-{
-  System.out.print("Before: ");
-  for(int i = 0; i< b.length; i++)
-    System.out.print(b[i]+" ");
-  System.out.println();
-  System.out.print("After: ");
-  for(int i = 0; i< a.length; i++)
-    System.out.print(a[i]+" ");
-  System.out.println();
-  System.out.println();
+public void debugDump(int[] b, int[]a) {
+  throw new UnsupportedOperationException();
+//  System.out.print("Before: ");
+//  for(int i = 0; i< b.length; i++)
+//    System.out.print(b[i]+" ");
+//  System.out.println();
+//  System.out.print("After: ");
+//  for(int i = 0; i< a.length; i++)
+//    System.out.print(a[i]+" ");
+//  System.out.println();
+//  System.out.println();
 }
 
 /**
@@ -1651,12 +1518,8 @@ public void debugDump(int[] b, int[]a)
  * later to generate another level of the graph and then optimize it
  *
  * @param g the graph to set as result graph
- * @see #getLastResultGraph()
  */
-public
-void
-setLastResultGraph(Graph g)
-{
+public void setLastResultGraph(Graph g) {
   if (g == null) {
     outputLastButton_d.setEnabled(false);
     nextLevelGraphButton_d.setEnabled(false);
@@ -1674,9 +1537,7 @@ setLastResultGraph(Graph g)
  *
  * @see #setLastResultGraph(bunch.Graph)
  */
-public
-Graph
-getLastResultGraph()
+public Graph getLastResultGraph()
 {
   return lastResultGraph_d;
 }
@@ -1686,11 +1547,9 @@ getLastResultGraph()
  *
  * @return the current instance of a subclass of the GraphOutput class
  */
-public
-GraphOutput
-getGraphOutput()
-{
-  return graphOutput_d;
+public GraphOutput getGraphOutput() {
+  throw new UnsupportedOperationException();
+  //return graphOutput_d;
 }
 
 /**
@@ -1698,21 +1557,16 @@ getGraphOutput()
  *
  * @return the current instance of a subclass of the ClusteringMethod class
  */
-public
-ClusteringMethod
-getClusteringMethod()
-{
-  return clusteringMethod_d;
+public ClusteringMethod getClusteringMethod() {
+  throw new UnsupportedOperationException();
+  //return clusteringMethod_d;
 }
 
 /**
  * Configures the bunch environment based on the options selected
  * To be used in a future version.
  */
-public
-void
-configureOptions()
-{
+public void configureOptions() {
   String s = (String)agglomOutputCB.getSelectedItem();
 
   /**
@@ -1734,9 +1588,9 @@ configureOptions()
  * Gets the output method based on the selected output file format drop down
  * list box.
  */
-public String getOutputMethod()
-{
-  return (String)outputFileFormatList_d.getSelectedItem();
+public String getOutputMethod() {
+  throw new UnsupportedOperationException();
+//  return (String)outputFileFormatList_d.getSelectedItem();
 }
 
 /**
@@ -1759,9 +1613,7 @@ public Graph getInitalGraph()
  * @param e the ActionEvent that triggered the method call
  * @see #getLastResultGraph()
  */
-void
-nextLevelGraphButton_d_actionPerformed(ActionEvent e)
-{
+void nextLevelGraphButton_d_actionPerformed(ActionEvent e) {
   if (getLastResultGraph() == null) {
     throw new RuntimeException("Error:\n Result graph was null but output button \nwas enabled!");
   }
@@ -1791,9 +1643,7 @@ nextLevelGraphButton_d_actionPerformed(ActionEvent e)
  * @param e the ActionEvent that triggered the method call
  * @see #getLastResultGraph()
  */
-void
-outputLastButton_d_actionPerformed(ActionEvent e)
-{
+void outputLastButton_d_actionPerformed(ActionEvent e) {
     if (getLastResultGraph() == null) {
       throw new RuntimeException("Error:\n Result graph was null but output button \nwas enabled!");
     }
@@ -1819,9 +1669,7 @@ outputLastButton_d_actionPerformed(ActionEvent e)
  * Moves an item from the supplier nodes list to the normal nodes list in the
  * Omnipresent modules pane
  */
-void
-receiveFromSuppliersButton_d_actionPerformed(ActionEvent e)
-{
+void receiveFromSuppliersButton_d_actionPerformed(ActionEvent e) {
   if (suppliersList_d.getSelectedIndex() != -1) {
     String element = (String)suppliersListModel_d.elementAt(suppliersList_d.getSelectedIndex());
     suppliersList_d.setSelectedIndex(-1);
@@ -1839,9 +1687,7 @@ receiveFromSuppliersButton_d_actionPerformed(ActionEvent e)
  * Moves an item from the normal nodes list to the supplier nodes list in the
  * Omnipresent modules pane
  */
-void
-sendToSuppliersButton_d_actionPerformed(ActionEvent e)
-{
+void sendToSuppliersButton_d_actionPerformed(ActionEvent e) {
   if (standardNodeList_d.getSelectedIndex() != -1) {
     String element = (String)standardNodeListModel_d.elementAt(standardNodeList_d.getSelectedIndex());
     suppliersList_d.setSelectedIndex(-1);
@@ -1859,9 +1705,7 @@ sendToSuppliersButton_d_actionPerformed(ActionEvent e)
  * Moves an item from the normal nodes list to the client nodes list in the
  * Omnipresent modules pane
  */
-void
-sendToClientsButton_d_actionPerformed(ActionEvent e)
-{
+void sendToClientsButton_d_actionPerformed(ActionEvent e) {
   if (standardNodeList_d.getSelectedIndex() != -1) {
     String element = (String)standardNodeListModel_d.elementAt(standardNodeList_d.getSelectedIndex());
     clientsList_d.setSelectedIndex(-1);
@@ -1879,9 +1723,7 @@ sendToClientsButton_d_actionPerformed(ActionEvent e)
  * Moves an item from the client nodes list to the normal nodes list in the
  * Omnipresent modules pane
  */
-void
-receiveFromClientsButton_d_actionPerformed(ActionEvent e)
-{
+void receiveFromClientsButton_d_actionPerformed(ActionEvent e) {
   if (clientsList_d.getSelectedIndex() != -1) {
     String element = (String)clientsListModel_d.elementAt(clientsList_d.getSelectedIndex());
     clientsList_d.setSelectedIndex(-1);
@@ -1899,9 +1741,7 @@ receiveFromClientsButton_d_actionPerformed(ActionEvent e)
  * Moves an item from the normal nodes list to the client nodes list in the
  * Omnipresent modules pane
  */
-void
-sendToCentralButton_d_actionPerformed(ActionEvent e)
-{
+void sendToCentralButton_d_actionPerformed(ActionEvent e) {
   if (standardNodeList_d.getSelectedIndex() != -1) {
     String element = (String)standardNodeListModel_d.elementAt(standardNodeList_d.getSelectedIndex());
     centralList_d.setSelectedIndex(-1);
@@ -1919,9 +1759,7 @@ sendToCentralButton_d_actionPerformed(ActionEvent e)
  * Moves an item from the client nodes list to the normal nodes list in the
  * Omnipresent modules pane
  */
-void
-receiveFromCentralButton_d_actionPerformed(ActionEvent e)
-{
+void receiveFromCentralButton_d_actionPerformed(ActionEvent e) {
   if (centralList_d.getSelectedIndex() != -1) {
     String element = (String)centralListModel_d.elementAt(centralList_d.getSelectedIndex());
     centralList_d.setSelectedIndex(-1);
@@ -1940,9 +1778,7 @@ receiveFromCentralButton_d_actionPerformed(ActionEvent e)
  * current loaded graph based on a multiple (user-defined) of the average
  * number of outgoing/incoming edges to the node
  */
-void
-findOmnipresentNodesButton_d_actionPerformed(ActionEvent e)
-{
+void findOmnipresentNodesButton_d_actionPerformed(ActionEvent e) {
   //check for input graph
   if (inputGraphFilename_d.getText() == null
             || inputGraphFilename_d.getText().equals("")
@@ -2076,9 +1912,7 @@ findOmnipresentNodesButton_d_actionPerformed(ActionEvent e)
  * Moves an item from the library nodes list to the normal nodes list in the
  * Library modules pane
  */
-void
-receiveLibFromClientsButton_d_actionPerformed(ActionEvent e)
-{
+void receiveLibFromClientsButton_d_actionPerformed(ActionEvent e) {
   if (librariesList_d.getSelectedIndex() != -1) {
     String element = (String)librariesListModel_d.elementAt(librariesList_d.getSelectedIndex());
     librariesList_d.setSelectedIndex(-1);
@@ -2096,9 +1930,7 @@ receiveLibFromClientsButton_d_actionPerformed(ActionEvent e)
  * Moves an item from the normal nodes list to the library nodes list in the
  * Library modules pane
  */
-void
-sendLibToClientsButton_d_actionPerformed(ActionEvent e)
-{
+void sendLibToClientsButton_d_actionPerformed(ActionEvent e) {
   if (standardNodeListLib_d.getSelectedIndex() != -1) {
     String element = (String)standardNodeListModel_d.elementAt(standardNodeListLib_d.getSelectedIndex());
     librariesList_d.setSelectedIndex(-1);
@@ -2116,9 +1948,7 @@ sendLibToClientsButton_d_actionPerformed(ActionEvent e)
  * Automatically finds the library modules in the
  * current loaded graph based on what nodes have only incoming connections
  */
-void
-findLibraryNodesButton_d_actionPerformed(ActionEvent e)
-{
+void findLibraryNodesButton_d_actionPerformed(ActionEvent e) {
   //check for input graph
   if (inputGraphFilename_d.getText() == null
             || inputGraphFilename_d.getText().equals("")
@@ -2179,16 +2009,14 @@ findLibraryNodesButton_d_actionPerformed(ActionEvent e)
 /**
  * method used to check when a string object appears in a list
  */
-private
-boolean
-usesModule(DefaultListModel list, String element)
-{
-  for (int i=0; i<list.size(); ++i) {
-    if (element.equals((String)list.elementAt(i))) {
-      return true;
-    }
-  }
-  return false;
+private boolean usesModule(DefaultListModel list, String element) {
+  throw new UnsupportedOperationException();
+//  for (int i=0; i<list.size(); ++i) {
+//    if (element.equals((String)list.elementAt(i))) {
+//      return true;
+//    }
+//  }
+//  return false;
 }
 
 
@@ -2206,13 +2034,13 @@ void ClusteringAlgEF_actionPerformed(ActionEvent e) {
  * Action listner when the clustering method list is altered.
  */
 void clusteringMethodList_d_actionPerformed(ActionEvent e) {
+  throw new UnsupportedOperationException();
 }
 
 /**
  * Used to initialize the clustering options
  */
-void setupClusteringOptions()
-{
+void setupClusteringOptions() {
   String objFnCalc = (String)ClusteringAlgEF.getSelectedItem();
 
   if (clusteringMethod_d != null)
@@ -2238,6 +2066,7 @@ void setupClusteringOptions()
  * Action listner for when the consolidate drifters feature is selected
  */
 void consolidateDriftersCB_actionPerformed(ActionEvent e) {
+  throw new UnsupportedOperationException();
 }
 
 /**
@@ -2245,12 +2074,14 @@ void consolidateDriftersCB_actionPerformed(ActionEvent e) {
  * altered
  */
 void delimEF_actionPerformed(ActionEvent e) {
+  throw new UnsupportedOperationException();
 }
 
 /**
  * Action listner to process the "use space" delimiter checkbox
  */
 void spaceDelimCB_actionPerformed(ActionEvent e) {
+  throw new UnsupportedOperationException();
 }
 
 /**
@@ -2258,72 +2089,72 @@ void spaceDelimCB_actionPerformed(ActionEvent e) {
  * will be used to populate a listbox of available bunch servers
  */
 void queryNS_actionPerformed(ActionEvent e) {
-  try
-  {
-    DefaultListModel svrLM = new DefaultListModel();
-    serverList.setModel(svrLM);
-
-    Properties env = new Properties ();
-
-    env.put("java.naming.factory.initial","com.sun.jndi.cosnaming.CNCtxFactory");
-
-    String namingURL = "iiop://"+nameServerEF.getText()+":"+portEF.getText();
-    env.put("java.naming.provider.url",namingURL);
-
-    /**
-     * Get the initial context based on the provided parametes.  This activity
-     * calls the name server
-     */
-    InitialContext context = new InitialContext (env);
-
-    /**
-     * Obtain the list of server bindings
-     */
-    NamingEnumeration ne = context.listBindings(nameSpaceEF.getText());
-
-    serverVector = new Vector();
-    serverVector.removeAllElements();
-
-    /**
-     * Populate the server listbox
-     */
-    while(ne.hasMoreElements())
-    {
-      Binding b = (Binding)ne.next();
-      serverVector.addElement(b);
-      svrLM.addElement(b.getName());
-    }
-
-    /**
-     * Preselect all of the servers.  The user can manually unselect them.
-     */
-    int sz = svrLM.size();
-    if (sz > 0)
-    {
-      int [] selectAll = new int[sz];
-      for(int z = 0; z < sz; z++)
-        selectAll[z] = z;
-
-      serverList.setSelectedIndices(selectAll);
-    }
-  }
-  /**
-   * Handle a name server exception.
-   */
-  catch(Exception excpt)
-  {
-    String msg =  bunch.util.BunchUtilities.DelimitString(excpt.toString(),25);
-    JOptionPane.showMessageDialog(this,
-        msg, "Naming Server Exception",
-        JOptionPane.ERROR_MESSAGE);
-  }
+    throw new UnsupportedOperationException();
+//  try
+//  {
+//    DefaultListModel svrLM = new DefaultListModel();
+//    serverList.setModel(svrLM);
+//
+//    Properties env = new Properties ();
+//
+//    env.put("java.naming.factory.initial","com.sun.jndi.cosnaming.CNCtxFactory");
+//
+//    String namingURL = "iiop://"+nameServerEF.getText()+":"+portEF.getText();
+//    env.put("java.naming.provider.url",namingURL);
+//
+//    /**
+//     * Get the initial context based on the provided parametes.  This activity
+//     * calls the name server
+//     */
+//    InitialContext context = new InitialContext (env);
+//
+//    /**
+//     * Obtain the list of server bindings
+//     */
+//    NamingEnumeration ne = context.listBindings(nameSpaceEF.getText());
+//
+//    serverVector = new Vector();
+//    serverVector.removeAllElements();
+//
+//    /**
+//     * Populate the server listbox
+//     */
+//    while(ne.hasMoreElements())
+//    {
+//      Binding b = (Binding)ne.next();
+//      serverVector.addElement(b);
+//      svrLM.addElement(b.getName());
+//    }
+//
+//    /**
+//     * Preselect all of the servers.  The user can manually unselect them.
+//     */
+//    int sz = svrLM.size();
+//    if (sz > 0)
+//    {
+//      int [] selectAll = new int[sz];
+//      for(int z = 0; z < sz; z++)
+//        selectAll[z] = z;
+//
+//      serverList.setSelectedIndices(selectAll);
+//    }
+//  }
+//  /**
+//   * Handle a name server exception.
+//   */
+//  catch(Exception excpt)
+//  {
+//    String msg =  bunch.util.BunchUtilities.DelimitString(excpt.toString(),25);
+//    JOptionPane.showMessageDialog(this,
+//        msg, "Naming Server Exception",
+//        JOptionPane.ERROR_MESSAGE);
+//  }
 }
 
 /**
  * Create the callback object for the distributed client.
  */
-private void CreateCallbackObj()
-{
+private void CreateCallbackObj() {
   try
   {
     svrCallback = new CallbackImpl();
@@ -2341,13 +2172,13 @@ private void CreateCallbackObj()
 /**
  * This method is a utility to report an exception to the user
  */
-public void ReportException(String title, Exception excpt)
-{
-         String msg = excpt.toString()+"\n\n\n\n";
-
-         JOptionPane.showMessageDialog(this,
-              msg, title,
-              JOptionPane.ERROR_MESSAGE);
+public void ReportException(String title, Exception excpt) {
+  throw new UnsupportedOperationException();
+//         String msg = excpt.toString()+"\n\n\n\n";
+//
+//         JOptionPane.showMessageDialog(this,
+//              msg, title,
+//              JOptionPane.ERROR_MESSAGE);
 }
 
 /**
@@ -2415,8 +2246,7 @@ void includeDistSvrsPB_actionPerformed(ActionEvent e) {
 /**
  * This method deactivates all of the active servers
  */
-private void deactivateAllServers()
-{
+private void deactivateAllServers() {
   /**
    * Get the list of active servers
    */
@@ -2460,6 +2290,7 @@ void deactivatePB_actionPerformed(ActionEvent e) {
  * server list changes
  */
 void serverList_valueChanged(ListSelectionEvent e) {
+  throw new UnsupportedOperationException();
     //System.out.println("Server List Value changed");
 }
 
@@ -2511,9 +2342,9 @@ void timeoutEnable_actionPerformed(ActionEvent e) {
  *
  * @returns True if the timeout enable checkbox is selected, false otherwise
  */
-public boolean limitRuntime()
-{
-  return timeoutEnable.isSelected();
+public boolean limitRuntime() {
+  throw new UnsupportedOperationException();
+//  return timeoutEnable.isSelected();
 }
 
 /**
@@ -2523,50 +2354,50 @@ public boolean limitRuntime()
  *
  * @returns The maximum about of runtime allowed to the clustering process.
  */
-public long getTimoutTime()
-{
-  try
-  {
-    Long to = new Long(maxRuntimeEF.getText());
-    return to.longValue();
-  }
-  catch(Exception ex)
-  {
-    ReportException("Error Getting TimeoutValue",ex);
-  }
-  return 0;
+public long getTimoutTime() {
+  throw new UnsupportedOperationException();
+//  try
+//  {
+//    Long to = new Long(maxRuntimeEF.getText());
+//    return to.longValue();
+//  }
+//  catch(Exception ex)
+//  {
+//    ReportException("Error Getting TimeoutValue",ex);
+//  }
+//  return 0;
 }
 
 /**
  * This method is called in response to the usser selecting the MQ calucalator
  * utility.  It displays the MQ Calculator dialog box.
  */
-void menuMQCalc_actionPerformed(ActionEvent e)
-{
-    MQCalculatorUtil mqCalcUtil = new
-        MQCalculatorUtil(this,"MQ Calculator Utilility",true);
-
-    Dimension dlgSize = mqCalcUtil.getPreferredSize();
-    Dimension frmSize = getSize();
-    Point loc = getLocation();
-    mqCalcUtil.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
-    mqCalcUtil.setVisible(true);
+void menuMQCalc_actionPerformed(ActionEvent e) {
+  throw new UnsupportedOperationException();
+//    MQCalculatorUtil mqCalcUtil = new
+//        MQCalculatorUtil(this,"MQ Calculator Utilility",true);
+//
+//    Dimension dlgSize = mqCalcUtil.getPreferredSize();
+//    Dimension frmSize = getSize();
+//    Point loc = getLocation();
+//    mqCalcUtil.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
+//    mqCalcUtil.setVisible(true);
 }
 
 /**
  * This method is called when the user selects the measurment caluclator
  * menu option to display a dialog box of available calculators.
  */
-void utilityMeasurementCalc_actionPerformed(ActionEvent e)
-{
-  bunch.util.MeasurementUtil CalcUtil = new
-  bunch.util.MeasurementUtil(this,"Calculator Utilility",true);
-
-  Dimension dlgSize = CalcUtil.getPreferredSize();
-  Dimension frmSize = getSize();
-  Point loc = getLocation();
-  CalcUtil.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
-  CalcUtil.setVisible(true);
+void utilityMeasurementCalc_actionPerformed(ActionEvent e) {
+  throw new UnsupportedOperationException();
+//  bunch.util.MeasurementUtil CalcUtil = new
+//  bunch.util.MeasurementUtil(this,"Calculator Utilility",true);
+//
+//  Dimension dlgSize = CalcUtil.getPreferredSize();
+//  Dimension frmSize = getSize();
+//  Point loc = getLocation();
+//  CalcUtil.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
+//  CalcUtil.setVisible(true);
 }
 
 /**
@@ -2600,18 +2431,16 @@ void actionList_d_actionPerformed(ActionEvent e)
 /**
  * This method is called when the output checkbox for agglomerative
  * clustering is selected.  Currently, this function has been
- * depricated.
+ * deprecated.
  */
-void agglomOutputCB_actionPerformed(ActionEvent e) {
-}
+void agglomOutputCB_actionPerformed(ActionEvent e) { }
 
 /**
  * This method controls the type of output to be generated after the clustering
  * process executes.  It controls the level and if a "tree" format (i.e., the
  * nested clusters) will be generated in the output format.
  */
-void outputFileFormatList_d_actionPerformed(ActionEvent e)
-{
+void outputFileFormatList_d_actionPerformed(ActionEvent e) {
   String choice = (String)outputFileFormatList_d.getSelectedItem();
   if(choice.equals("Text Tree"))
     agglomOutputCB.setSelectedItem("Output Top Level");
@@ -2661,28 +2490,29 @@ void menuShowDistributedTab_actionPerformed(ActionEvent e)
  * This method is invoked when the user hits the clustering utils menu item.
  * The action is to display a dialog box that contains various bunch utilities.
  */
-void clusteringUtilsMenu_actionPerformed(ActionEvent e)
-{
-  bunch.util.BunchClusteringUtil BunchUtil = new
-  bunch.util.BunchClusteringUtil(this,"Bunch Utilility",true);
-
-  Dimension dlgSize = BunchUtil.getPreferredSize();
-  Dimension frmSize = getSize();
-  Point loc = getLocation();
-  BunchUtil.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
-  BunchUtil.setVisible(true);
+void clusteringUtilsMenu_actionPerformed(ActionEvent e) {
+  throw new UnsupportedOperationException();
+//  bunch.util.BunchClusteringUtil BunchUtil = new
+//  bunch.util.BunchClusteringUtil(this,"Bunch Utilility",true);
+//
+//  Dimension dlgSize = BunchUtil.getPreferredSize();
+//  Dimension frmSize = getSize();
+//  Point loc = getLocation();
+//  BunchUtil.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
+//  BunchUtil.setVisible(true);
 }
 
   void fileUtilsMenu_actionPerformed(ActionEvent e) {
-
-  bunch.util.BunchFileUtil BunchUtil = new
-  bunch.util.BunchFileUtil(this,"Bunch File Utilities",true);
-
-  Dimension dlgSize = BunchUtil.getPreferredSize();
-  Dimension frmSize = getSize();
-  Point loc = getLocation();
-  BunchUtil.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
-  BunchUtil.setVisible(true);
+    throw new UnsupportedOperationException();
+//
+//  bunch.util.BunchFileUtil BunchUtil = new
+//  bunch.util.BunchFileUtil(this,"Bunch File Utilities",true);
+//
+//  Dimension dlgSize = BunchUtil.getPreferredSize();
+//  Dimension frmSize = getSize();
+//  Point loc = getLocation();
+//  BunchUtil.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
+//  BunchUtil.setVisible(true);
 
   }
 
@@ -2740,8 +2570,7 @@ class BunchFrame_selectGraphFileButton_d_actionAdapter
     this.adaptee = adaptee;
   }
 
-  public void actionPerformed(ActionEvent e)
-  {
+  public void actionPerformed(ActionEvent e) {
     adaptee.selectGraphFileButton_d_actionPerformed(e);
   }
 }
@@ -2758,8 +2587,7 @@ class BunchFrame_selectOutputFileButton_d_actionAdapter
     this.adaptee = adaptee;
   }
 
-  public void actionPerformed(ActionEvent e)
-  {
+  public void actionPerformed(ActionEvent e) {
     adaptee.selectOutputFileButton_d_actionPerformed(e);
   }
 }
@@ -2787,8 +2615,7 @@ class BunchFrame_configureOptionsMenuItem_d_actionAdapter
 /**
  * An inner class for handling the run button.
  */
-class BunchFrame_runActionButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_runActionButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -2807,8 +2634,7 @@ class BunchFrame_runActionButton_d_actionAdapter
  * An inner class for handling the slecection of the input cluster file.  This
  * is used for user directed clustering.
  */
-class BunchFrame_inputClusterFileSelectButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_inputClusterFileSelectButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -2825,8 +2651,7 @@ class BunchFrame_inputClusterFileSelectButton_d_actionAdapter
 /**
  * An inner class for handling the slecection of the clustering options
  */
-class BunchFrame_clusteringOptionsButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_clusteringOptionsButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -2842,8 +2667,7 @@ class BunchFrame_clusteringOptionsButton_d_actionAdapter
 /**
  * An inner class for handling the slecection of the clustering method.
  */
-class BunchFrame_clusteringMethodList_d_itemAdapter
-  implements java.awt.event.ItemListener{
+class BunchFrame_clusteringMethodList_d_itemAdapter implements java.awt.event.ItemListener{
 
   BunchFrame adaptee;
 
@@ -2860,8 +2684,7 @@ class BunchFrame_clusteringMethodList_d_itemAdapter
  * An inner class for handling the processing of the output last level
  * button.
  */
-class BunchFrame_outputLastButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_outputLastButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -2878,8 +2701,7 @@ class BunchFrame_outputLastButton_d_actionAdapter
 /**
  * An inner class for handling the generation of the next level graph.
  */
-class BunchFrame_nextLevelGraphButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_nextLevelGraphButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -2896,8 +2718,7 @@ class BunchFrame_nextLevelGraphButton_d_actionAdapter
  * An inner class for handling the automatic determination of the omnipresent
  * client and suppliers.
  */
-class BunchFrame_receiveFromSuppliersButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_receiveFromSuppliersButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -2914,8 +2735,7 @@ class BunchFrame_receiveFromSuppliersButton_d_actionAdapter
 /**
  * An inner class for handling the manual selection of omnipresent suppliers.
  */
-class BunchFrame_sendToSuppliersButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_sendToSuppliersButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -2931,8 +2751,7 @@ class BunchFrame_sendToSuppliersButton_d_actionAdapter
 /**
  * An inner class for handling the manual selection of omnipresent clients.
  */
-class BunchFrame_sendToClientsButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_sendToClientsButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -2948,8 +2767,7 @@ class BunchFrame_sendToClientsButton_d_actionAdapter
 /**
  * An inner class for handling the manual deselection of omnipresent clients.
  */
-class BunchFrame_receiveFromClientsButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_receiveFromClientsButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -2966,8 +2784,7 @@ class BunchFrame_receiveFromClientsButton_d_actionAdapter
  * An inner class for handling the determination of omnipresent nodes in the
  * MDG.
  */
-class BunchFrame_findOmnipresentNodesButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_findOmnipresentNodesButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -2983,8 +2800,7 @@ class BunchFrame_findOmnipresentNodesButton_d_actionAdapter
 /**
  * An inner class for handling the manual selection of library modules.
  */
-class BunchFrame_receiveLibFromClientsButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_receiveLibFromClientsButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -3001,8 +2817,7 @@ class BunchFrame_receiveLibFromClientsButton_d_actionAdapter
  * An inner class for handling the manual selection of omnipresent clients
  * and suppliers.
  */
-class BunchFrame_sendToCentralButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_sendToCentralButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -3019,8 +2834,7 @@ class BunchFrame_sendToCentralButton_d_actionAdapter
  * An inner class for handling the manual deselection of omnipresent clients
  * and suppliers.
  */
-class BunchFrame_receiveFromCentralButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_receiveFromCentralButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -3036,8 +2850,7 @@ class BunchFrame_receiveFromCentralButton_d_actionAdapter
 /**
  * An inner class for handling the manual selection of librarys.
  */
-class BunchFrame_sendLibToClientsButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_sendLibToClientsButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -3053,8 +2866,7 @@ class BunchFrame_sendLibToClientsButton_d_actionAdapter
 /**
  * An inner class for handling the automatic detection of library modules.
  */
-class BunchFrame_findLibraryNodesButton_d_actionAdapter
-  implements java.awt.event.ActionListener{
+class BunchFrame_findLibraryNodesButton_d_actionAdapter implements java.awt.event.ActionListener{
 
   BunchFrame adaptee;
 
@@ -3070,8 +2882,7 @@ class BunchFrame_findLibraryNodesButton_d_actionAdapter
 /**
  * An inner class for handling the event to query the name server.
  */
-class BunchFrame_queryNS_actionAdapter
-  implements java.awt.event.ActionListener {
+class BunchFrame_queryNS_actionAdapter implements java.awt.event.ActionListener {
 
   BunchFrame adaptee;
 
@@ -3088,8 +2899,7 @@ class BunchFrame_queryNS_actionAdapter
  * An inner class for handling the user selection of the clustering utilities
  * menu.
  */
-class BunchFrame_clusteringUtilsMenu_actionAdapter
-  implements java.awt.event.ActionListener {
+class BunchFrame_clusteringUtilsMenu_actionAdapter implements java.awt.event.ActionListener {
 
   BunchFrame adaptee;
 

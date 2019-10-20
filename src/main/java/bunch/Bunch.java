@@ -15,22 +15,20 @@ public class Bunch {
 
 boolean packFrame = false;
 
-public Bunch() {
+private void start() {
+    JFrame frame = BunchFrame.of();
+    //Validate frames that have preset sizes
+    //Pack frames that have useful preferred size info, e.g. from their layout
+    if (packFrame)
+      frame.pack();
+    else
+      frame.validate();
 
-  BunchFrame frame = new BunchFrame();
+    centerTheWindow(frame);
+    frame.setVisible(true);
+  }
 
-  //Validate frames that have preset sizes
-  //Pack frames that have useful preferred size info, e.g. from their layout
-  if (packFrame)
-    frame.pack();
-  else
-    frame.validate();
-
-  centerTheWindow(frame);
-  frame.setVisible(true);
-}
-
-private void centerTheWindow(BunchFrame frame) {
+private void centerTheWindow(JFrame frame) {
   Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
   Dimension frameSize = frame.getSize();
   if (frameSize.height > screenSize.height)
@@ -53,7 +51,7 @@ public static void main(String[] args) throws Exception {
       System.out.println("Bad argument, for BunchServer use -s or -server");
     }
   } else
-    new Bunch();
+    new Bunch().start();
   }
 
   private static boolean serverModeSpecified(String a) {

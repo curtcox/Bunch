@@ -1,28 +1,3 @@
-/****
- *
- *	$Log: MeasurementUtil.java,v $
- *	Revision 1.1.1.1  2002/02/03 18:30:06  bsmitc
- *	CVS Import
- *	
- *	Revision 1.3  2000/08/07 21:49:31  bsmitc
- *	Added support for calculator function
- *
- *	Revision 1.1  2000/08/01 19:03:48  bsmitc
- *	Initial Version Added to Repository
- *
- *
- *
- */
-
-
-/**
- * Title:        Bunch Project<p>
- * Description:  <p>
- * Copyright:    Copyright (c) Brian Mitchell<p>
- * Company:      Drexel University - SERG<p>
- * @author Brian Mitchell
- * @version 1.0
- */
 package bunch.util;
 
 import bunch.*;
@@ -128,10 +103,10 @@ public class MeasurementUtil extends JDialog {
   JScrollPane jScrollPane1 = new JScrollPane();
   JTextArea resultsTA = new JTextArea();
 
-  public MeasurementUtil(Frame frame, String title, boolean modal) {
+  public MeasurementUtil(BunchFrame frame, String title, boolean modal) {
     super(frame, title, modal);
     try {
-      bunchFrame = (BunchFrame)frame;
+      bunchFrame = frame;
       jbInit();
       pack();
     }
@@ -427,69 +402,70 @@ public class MeasurementUtil extends JDialog {
   }
 
   void MQcalculatePB_actionPerformed(ActionEvent e) {
-      
-      
-    try
-    {
-      String mdg = mdgEF.getText();
-      String sil = silEF.getText();
-      
-      //ensure the SIL file covers the MDG graph
-      if(!BunchGraphUtils.isSilFileOK(mdg, sil))
-      {
-          String out = "The SIL File is Missing Nodes from MDG";
-          out += "\r\nThe following modules need to be in the SIL File:\r\n";
-          
-          ArrayList mlist = BunchGraphUtils.getMissingSilNodes(mdg, sil);
-          for(int i = 0; i < mlist.size(); i++)
-              out += "\r\n"+(i+1)+". "+mlist.get(i);
-          
-          JOptionPane.showMessageDialog(null,
-                out,
-                "SIL File Error",
-                JOptionPane.ERROR_MESSAGE);  
-          return;
-      }
-      
-
-      Parser p = new DependencyFileParser();
-      p.setInput(mdg);
-      p.setDelims(bunchFrame.getDelims());
-
-      Graph g = (Graph)p.parse();
-      ObjectiveFunctionCalculatorFactory ofc = new ObjectiveFunctionCalculatorFactory();
-      ofc.setCurrentCalculator((String)calculatorCB.getSelectedItem());
-      g.setObjectiveFunctionCalculatorFactory(ofc);
-
-      g.setObjectiveFunctionCalculator((String)calculatorCB.getSelectedItem());
-
-      ClusterFileParser cfp = new ClusterFileParser();
-      cfp.setInput(sil);
-      cfp.setObject(g);
-      cfp.parse();
-      g.calculateObjectiveFunctionValue();
-
-      //figure out the total number of edges
-      long edgeCnt = 0;
-      Node[] n = g.getNodes();
-      for(int i = 0; i < n.length; i++)
-      {
-        if (n[i].dependencies != null)
-          edgeCnt += n[i].dependencies.length;
-      }
-
-      //set output values
-      nodeST.setText(Integer.toString(g.getNodes().length));
-      clusterST.setText(Integer.toString(g.getClusterNames().length));
-      edgesST.setText(Long.toString(edgeCnt));
-      mqST.setText(Double.toString(g.getObjectiveFunctionValue()));
-      //System.out.println("Objective function value = " + g.getObjectiveFunctionValue());
-
-    }
-    catch(Exception calcExcept)
-    {
-      calcExcept.printStackTrace();
-    }
+    throw new UnsupportedOperationException();
+//
+//
+//    try
+//    {
+//      String mdg = mdgEF.getText();
+//      String sil = silEF.getText();
+//
+//      //ensure the SIL file covers the MDG graph
+//      if(!BunchGraphUtils.isSilFileOK(mdg, sil))
+//      {
+//          String out = "The SIL File is Missing Nodes from MDG";
+//          out += "\r\nThe following modules need to be in the SIL File:\r\n";
+//
+//          ArrayList mlist = BunchGraphUtils.getMissingSilNodes(mdg, sil);
+//          for(int i = 0; i < mlist.size(); i++)
+//              out += "\r\n"+(i+1)+". "+mlist.get(i);
+//
+//          JOptionPane.showMessageDialog(null,
+//                out,
+//                "SIL File Error",
+//                JOptionPane.ERROR_MESSAGE);
+//          return;
+//      }
+//
+//
+//      Parser p = new DependencyFileParser();
+//      p.setInput(mdg);
+//      p.setDelims(bunchFrame.getDelims());
+//
+//      Graph g = (Graph)p.parse();
+//      ObjectiveFunctionCalculatorFactory ofc = new ObjectiveFunctionCalculatorFactory();
+//      ofc.setCurrentCalculator((String)calculatorCB.getSelectedItem());
+//      g.setObjectiveFunctionCalculatorFactory(ofc);
+//
+//      g.setObjectiveFunctionCalculator((String)calculatorCB.getSelectedItem());
+//
+//      ClusterFileParser cfp = new ClusterFileParser();
+//      cfp.setInput(sil);
+//      cfp.setObject(g);
+//      cfp.parse();
+//      g.calculateObjectiveFunctionValue();
+//
+//      //figure out the total number of edges
+//      long edgeCnt = 0;
+//      Node[] n = g.getNodes();
+//      for(int i = 0; i < n.length; i++)
+//      {
+//        if (n[i].dependencies != null)
+//          edgeCnt += n[i].dependencies.length;
+//      }
+//
+//      //set output values
+//      nodeST.setText(Integer.toString(g.getNodes().length));
+//      clusterST.setText(Integer.toString(g.getClusterNames().length));
+//      edgesST.setText(Long.toString(edgeCnt));
+//      mqST.setText(Double.toString(g.getObjectiveFunctionValue()));
+//      //System.out.println("Objective function value = " + g.getObjectiveFunctionValue());
+//
+//    }
+//    catch(Exception calcExcept)
+//    {
+//      calcExcept.printStackTrace();
+//    }
   }
 
   void expertSelectPB_actionPerformed(ActionEvent e) {

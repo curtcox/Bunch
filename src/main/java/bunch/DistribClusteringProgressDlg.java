@@ -1,23 +1,3 @@
-/****
- *
- *	$Log: DistribClusteringProgressDlg.java,v $
- *	Revision 3.0  2002/02/03 18:41:47  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.1  2001/04/03 21:39:29  bsmitc
- *	Readded and fixed support for distributed clustering
- *
- *	Revision 3.0  2000/07/26 22:46:09  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch;
 
 import java.awt.*;
@@ -37,13 +17,10 @@ import java.awt.event.*;
  * @author Brian Mitchell
  *
  * @see bunch.ClusteringMethod
- * @see bunch.BunchFrame.runActionButton_d_actionPerformed(java.awt.event.ActionEvent)
  * @see bunch.BunchFrame
  */
-public
-class DistribClusteringProgressDlg
-  extends JDialog
-  implements IterationListener{
+public class DistribClusteringProgressDlg extends JDialog
+  implements IterationListener {
 
 JPanel panel1 = new JPanel();
 GridBagLayout gridBagLayout1 = new GridBagLayout();
@@ -68,117 +45,125 @@ boolean showOverallProgressBar_d= true;
 JLabel jLabel1 = new JLabel();
 JLabel IterationsProcessed_st = new JLabel();
 
+public static DistribClusteringProgressDlg of(Frame frame, String title, boolean modal, ClusteringMethod2 cm2) {
+   DistribClusteringProgressDlg dialog = new DistribClusteringProgressDlg(frame,title,modal,cm2);
+   dialog.init();
+   return dialog;
+}
+
+DistribClusteringProgressDlg(Frame frame, String title, boolean modal, ClusteringMethod2 cm2) {
+  super(frame, title, modal);
+}
+
 /**
  * Dialog constructor
  */
-public
-DistribClusteringProgressDlg(Frame frame, String title, boolean modal, ClusteringMethod2 cm2)
-{
-  super(frame, title, modal);
-  frame_d = (BunchFrame)frame;
-
-  /**
-   * Get required initialization objects from the parent frame
-   */
-  graphOutput_x = frame_d.getGraphOutput();
-  clusteringMethod_x = cm2;
-  clusteringMethod_x.setIterationListener(this);
-
-  String methodName = clusteringMethod_x.getClass().getName();
-
-  if (methodName.equals("bunch.GAClusteringMethod"))
-    showOverallProgressBar_d = false;
-
-  /**
-   * Setup the UI
-   */
-  try  {
-    jbInit();
-    pack();
-  }
-  catch (Exception ex) {
-    ex.printStackTrace();
-  }
-
-  progressBar_d.setMaximum(clusteringMethod_x.getMaxIterations());
-  progressBar_d.setMinimum(0);
-
-  /**
-   * Make and get the inbound and outbound queues for dealing with the server
-   */
-  ((GenericDistribHillClimbingClusteringMethod)clusteringMethod_x).makeEventQueue();
-  SynchronizedEventQueue eventQ =
-    ((GenericDistribHillClimbingClusteringMethod)clusteringMethod_x).getEventQueue();
-
-  CallbackImpl svrCB = frame_d.getSvrCallback();
-  svrCB.eventQ = eventQ;
-
-  BunchEvent   be    = new BunchEvent();
-  svrCB.bevent = be;
-  ((GenericDistribHillClimbingClusteringMethod)clusteringMethod_x).setEventObject(be);
-
-  /**
-   * Get adaptive work status
-   */
-  int uowSz = frame_d.getUOWSz();
-  boolean useAdaptive = frame_d.getAdaptiveEnableFlag();
-
-  ((GenericDistribHillClimbingClusteringMethod)clusteringMethod_x).setUOWSize(uowSz);
-  ((GenericDistribHillClimbingClusteringMethod)clusteringMethod_x).setAdaptiveEnable(useAdaptive);
-
-  /*
-   * Constructing the SwingWorker() causes a new Thread
-   * to be created that will call construct(), and then
-   * finished().  Note that finished() is called even if
-   * the worker is interrupted because we catch the
-   * InterruptedException in doWork().
-   * (Note: a SwingWorker object is necessary because Swing (a.k.a JFC)
-   * components are not thread-aware.
-   */
-  worker_d = new bunch.SwingWorker()
-  {
-    public Object construct()
-    {
-      /**
-       * Run the distributed clustering method
-       */
-      clusteringMethod_x.run();
-      return "Done";
-    }
-
-    /**
-     * Callback when clustering activity is finished.
-     */
-    public void finished()
-    {
-      Runnable doSetProgressBarValue = new Runnable()
-      {
-        public void run()
-        {
-          progressBar_d.setValue(progressBar_d.getMaximum());
-          if (showOverallProgressBar_d)
-            overallProgressBar_d.setValue(overallProgressBar_d.getMaximum());
-          bestMQLabel_d.setForeground(Color.red.darker());
-          bestMQValueFound_d.setForeground(Color.red.darker());
-          outputButton_d.setEnabled(false);
-          pauseButton_d.setEnabled(false);
-          cancelButton_d.setText("Close");
-          bestMQLabel_d.setText(bestMQLabel_d.getText());
-          bestMQValueFound_d.setText(Double.toString(clusteringMethod_x.getBestObjectiveFunctionValue()));
-          currentTimeLabel_d.setText(Double.toString(clusteringMethod_x.getElapsedTime()) + "  seconds");
-        }
-      };
-      SwingUtilities.invokeLater(doSetProgressBarValue);
-      outputGraph(true);
-      setFinished(true);
-    }
-  };
-
-  /**
-   * Set the worker thread to low priority so that the UI remains responsive
-   */
-  worker_d.setPriority(Thread.MIN_PRIORITY);
-  worker_d.start();
+private void init() {
+  throw new UnsupportedOperationException();
+//  frame_d = (BunchFrame)frame;
+//
+//  /**
+//   * Get required initialization objects from the parent frame
+//   */
+//  graphOutput_x = frame_d.getGraphOutput();
+//  clusteringMethod_x = cm2;
+//  clusteringMethod_x.setIterationListener(this);
+//
+//  String methodName = clusteringMethod_x.getClass().getName();
+//
+//  if (methodName.equals("bunch.GAClusteringMethod"))
+//    showOverallProgressBar_d = false;
+//
+//  /**
+//   * Setup the UI
+//   */
+//  try  {
+//    jbInit();
+//    pack();
+//  }
+//  catch (Exception ex) {
+//    ex.printStackTrace();
+//  }
+//
+//  progressBar_d.setMaximum(clusteringMethod_x.getMaxIterations());
+//  progressBar_d.setMinimum(0);
+//
+//  /**
+//   * Make and get the inbound and outbound queues for dealing with the server
+//   */
+//  ((GenericDistribHillClimbingClusteringMethod)clusteringMethod_x).makeEventQueue();
+//  SynchronizedEventQueue eventQ =
+//    ((GenericDistribHillClimbingClusteringMethod)clusteringMethod_x).getEventQueue();
+//
+//  CallbackImpl svrCB = frame_d.getSvrCallback();
+//  svrCB.eventQ = eventQ;
+//
+//  BunchEvent   be    = new BunchEvent();
+//  svrCB.bevent = be;
+//  ((GenericDistribHillClimbingClusteringMethod)clusteringMethod_x).setEventObject(be);
+//
+//  /**
+//   * Get adaptive work status
+//   */
+//  int uowSz = frame_d.getUOWSz();
+//  boolean useAdaptive = frame_d.getAdaptiveEnableFlag();
+//
+//  ((GenericDistribHillClimbingClusteringMethod)clusteringMethod_x).setUOWSize(uowSz);
+//  ((GenericDistribHillClimbingClusteringMethod)clusteringMethod_x).setAdaptiveEnable(useAdaptive);
+//
+//  /*
+//   * Constructing the SwingWorker() causes a new Thread
+//   * to be created that will call construct(), and then
+//   * finished().  Note that finished() is called even if
+//   * the worker is interrupted because we catch the
+//   * InterruptedException in doWork().
+//   * (Note: a SwingWorker object is necessary because Swing (a.k.a JFC)
+//   * components are not thread-aware.
+//   */
+//  worker_d = new bunch.SwingWorker()
+//  {
+//    public Object construct()
+//    {
+//      /**
+//       * Run the distributed clustering method
+//       */
+//      clusteringMethod_x.run();
+//      return "Done";
+//    }
+//
+//    /**
+//     * Callback when clustering activity is finished.
+//     */
+//    public void finished()
+//    {
+//      Runnable doSetProgressBarValue = new Runnable()
+//      {
+//        public void run()
+//        {
+//          progressBar_d.setValue(progressBar_d.getMaximum());
+//          if (showOverallProgressBar_d)
+//            overallProgressBar_d.setValue(overallProgressBar_d.getMaximum());
+//          bestMQLabel_d.setForeground(Color.red.darker());
+//          bestMQValueFound_d.setForeground(Color.red.darker());
+//          outputButton_d.setEnabled(false);
+//          pauseButton_d.setEnabled(false);
+//          cancelButton_d.setText("Close");
+//          bestMQLabel_d.setText(bestMQLabel_d.getText());
+//          bestMQValueFound_d.setText(Double.toString(clusteringMethod_x.getBestObjectiveFunctionValue()));
+//          currentTimeLabel_d.setText(Double.toString(clusteringMethod_x.getElapsedTime()) + "  seconds");
+//        }
+//      };
+//      SwingUtilities.invokeLater(doSetProgressBarValue);
+//      outputGraph(true);
+//      setFinished(true);
+//    }
+//  };
+//
+//  /**
+//   * Set the worker thread to low priority so that the UI remains responsive
+//   */
+//  worker_d.setPriority(Thread.MIN_PRIORITY);
+//  worker_d.start();
 }
 
 /**
@@ -190,27 +175,25 @@ DistribClusteringProgressDlg(Frame frame, String title, boolean modal, Clusterin
  *
  * @param end a boolean value indicating if the clustering is finished or not
  */
-public
-void
-outputGraph(boolean end)
-{
-  //consolidate the drifters
-  boolean state = frame_d.consolidateDriftersCB.isSelected();
-  if (state == true)
-      consolidateDrifters();
-
-  if (end) {
-    graphOutput_x.setCurrentName(graphOutput_x.getBaseName());
-  }
-  else {
-    graphOutput_x.setCurrentName(graphOutput_x.getBaseName() + "-" + overallIteration_d);
-  }
-
-  Cluster c = clusteringMethod_x.getBestCluster();
-  Graph g = c.getGraph();
-  graphOutput_x.setGraph(g);
-  frame_d.setLastResultGraph(g.cloneGraph());
-  graphOutput_x.write();
+public void outputGraph(boolean end) {
+  throw new UnsupportedOperationException();
+//  //consolidate the drifters
+//  boolean state = frame_d.consolidateDriftersCB.isSelected();
+//  if (state == true)
+//      consolidateDrifters();
+//
+//  if (end) {
+//    graphOutput_x.setCurrentName(graphOutput_x.getBaseName());
+//  }
+//  else {
+//    graphOutput_x.setCurrentName(graphOutput_x.getBaseName() + "-" + overallIteration_d);
+//  }
+//
+//  Cluster c = clusteringMethod_x.getBestCluster();
+//  Graph g = c.getGraph();
+//  graphOutput_x.setGraph(g);
+//  frame_d.setLastResultGraph(g.cloneGraph());
+//  graphOutput_x.write();
 }
 
 public

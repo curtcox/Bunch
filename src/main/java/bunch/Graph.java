@@ -48,10 +48,7 @@ import java.util.Random;
  * @version 1.0
  * @see bunch.Node
  */
-public
-class Graph
-    implements java.io.Serializable
-{
+public class Graph implements java.io.Serializable {
 
 private Node[] nodes_d;
 private Node[] originalNodes_d;
