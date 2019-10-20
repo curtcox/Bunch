@@ -19,7 +19,7 @@
         <module name="Bunch" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="13">
       <module name="Bunch" target="1.5" />
     </bytecodeTargetLevel>
   </component>
