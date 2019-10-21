@@ -20,6 +20,7 @@ package bunch.BunchServer;
 import  bunch.*;
 import bunch.model.Configuration;
 import bunch.model.Graph;
+import bunch.serverio.Callback;
 
 public class ServerProperties {
 

@@ -1,10 +1,11 @@
-package bunch;
+package bunch.serverio;
 
 import bunch.BunchServer.IterationManager;
 import bunch.event.BunchEvent;
 import bunch.event.SynchronizedEventQueue;
 import bunch.event.WorkFinishedEvent;
 import bunch.event.WorkRequestEvent;
+import bunch.serverio.Callback;
 
 import java.rmi.RemoteException;
 
@@ -14,7 +15,7 @@ import java.rmi.RemoteException;
  *
  * @author Brian Mitchell
  */
-public class CallbackImpl implements Callback{
+public class CallbackImpl implements Callback {
 
   /**
    * Constants for message types

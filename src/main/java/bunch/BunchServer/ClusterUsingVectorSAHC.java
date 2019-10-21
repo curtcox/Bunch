@@ -17,9 +17,9 @@
  */
 package bunch.BunchServer;
 
-import bunch.*;
 import bunch.model.Cluster;
 import bunch.model.Graph;
+import bunch.serverio.Callback;
 import bunch.serverui.BSWindow;
 import bunch.serverui.ServerClusteringProgress;
 

@@ -1,6 +1,6 @@
 package bunch.BunchServer;
 
-import bunch.Callback;
+import bunch.serverio.Callback;
 import bunch.model.Cluster;
 import bunch.serverui.BSWindow;
 import bunch.serverui.ServerClusteringProgress;

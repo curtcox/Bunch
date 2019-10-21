@@ -1,7 +1,6 @@
 package bunch.parser;
 
-import bunch.GenericFactory;
-import bunch.parser.Parser;
+import bunch.model.GenericFactory;
 
 /**
  * A factory for parsers of different kinds

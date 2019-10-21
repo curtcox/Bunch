@@ -3,9 +3,8 @@
 
 package bunch.BunchServer;
 
-import bunch.Callback;
+import bunch.serverio.Callback;
 import java.io.Serializable;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.UnexpectedException;
 import javax.rmi.CORBA.Stub;

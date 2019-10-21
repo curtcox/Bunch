@@ -1,7 +1,7 @@
 package bunch.clustering;
 
-import bunch.*;
 import bunch.event.IterationEvent;
+import bunch.event.IterationListener;
 import bunch.model.Cluster;
 import bunch.model.Configuration;
 import bunch.model.Graph;
@@ -165,7 +165,7 @@ setElapsedTime(double l)
  * partitioning process. This can be used to update a progress bar, for example.
  *
  * @param il the IterationListener for this class
- * @see bunch.IterationListener
+ * @see IterationListener
  * @see #getIterationListener()
  */
 public
@@ -179,8 +179,8 @@ setIterationListener(IterationListener il)
  * Obtains the iteration listener set for this clustering method object
  *
  * @return the IterationListener for this object
- * @see bunch.IterationListener
- * @see #setIterationListener(bunch.IterationListener)
+ * @see IterationListener
+ * @see #setIterationListener(IterationListener)
  */
 public
 IterationListener

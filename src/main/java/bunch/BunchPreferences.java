@@ -2,6 +2,7 @@ package bunch;
 
 import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 import bunch.clustering.ClusteringMethodFactory;
+import bunch.model.GraphOutputFactory;
 import bunch.parser.ParserFactory;
 
 /**
@@ -130,8 +131,8 @@ getParserFactory()
  * Obtains the factory of output methods set to this preferences object
  *
  * @return the graph output method factory
- * @see #setGraphOutputFactory(bunch.GraphOutputFactory)
- * @see bunch.GraphOutputFactory
+ * @see #setGraphOutputFactory(GraphOutputFactory)
+ * @see GraphOutputFactory
  */
 public
 GraphOutputFactory
@@ -145,7 +146,7 @@ getGraphOutputFactory()
  *
  * @param fac the new graph output object factory
  * @see #getGraphOutputFactory()
- * @see bunch.GraphOutputFactory
+ * @see GraphOutputFactory
  */
 public
 void

@@ -1,13 +1,15 @@
-package bunch;
+package bunch.simple;
 
-public class SATechniqueFactory extends GenericFactory{
+import bunch.model.GenericFactory;
+
+public class SATechniqueFactory extends GenericFactory {
 
   String  defaultFactoryItem = "Simple Algorithm";
 
   public SATechniqueFactory() {
       super();
       setFactoryType("SATechnique");
-      addItem("Simple Algorithm", "bunch.SASimpleTechnique");
+      addItem("Simple Algorithm", "bunch.simple.SASimpleTechnique");
   }
 
   public String getDefaultTechnique()

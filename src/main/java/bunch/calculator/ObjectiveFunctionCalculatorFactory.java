@@ -1,7 +1,6 @@
 package bunch.calculator;
 
-import bunch.GenericFactory;
-import bunch.calculator.ObjectiveFunctionCalculator;
+import bunch.model.GenericFactory;
 
 /**
  * A factory for different kinds of objective function calculator objects
@@ -9,7 +8,7 @@ import bunch.calculator.ObjectiveFunctionCalculator;
  * @author Diego Doval
  * @version 1.0
  * @see ObjectiveFunctionCalculator
- * @see bunch.GenericFactory
+ * @see GenericFactory
  */
 public class ObjectiveFunctionCalculatorFactory extends GenericFactory {
 String currObjFnMethod = "Incremental MQ Weighted";

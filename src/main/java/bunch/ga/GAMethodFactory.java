@@ -1,7 +1,6 @@
 package bunch.ga;
 
-import bunch.GenericFactory;
-import bunch.ga.GAMethod;
+import bunch.model.GenericFactory;
 
 /**
  * A factory for different kinds of methods for the GA
@@ -9,7 +8,7 @@ import bunch.ga.GAMethod;
  * @author Diego Doval / Brian Mitchell
  * @version 1.0
  * @see GAMethod
- * @see bunch.GenericFactory
+ * @see GenericFactory
  */
 public class GAMethodFactory
   extends GenericFactory

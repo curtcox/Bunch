@@ -6,6 +6,8 @@ import bunch.clustering.*;
 import bunch.event.BunchEvent;
 import bunch.model.*;
 import bunch.parser.Parser;
+import bunch.serverio.Callback;
+import bunch.serverio.CallbackImpl;
 import bunch.stats.*;
 import java.awt.*;
 import java.awt.event.*;

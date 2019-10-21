@@ -1,9 +1,10 @@
 package bunch.ui;
 
-import bunch.*;
 import bunch.clustering.ClusteringMethod;
 import bunch.clustering.ClusteringMethod2;
 import bunch.event.IterationEvent;
+import bunch.event.IterationListener;
+import bunch.model.Drifters;
 import bunch.model.GraphOutput;
 
 import java.awt.*;
@@ -17,7 +18,7 @@ import java.awt.event.*;
  * lets the user pause the optimization and output it, then resuming the
  * optimization process. Instances of this class are managed and created
  * from the bunch.ui.BunchFrame class. Also, this class implements the
- * bunch.IterationListener interface to connect with the clustering method
+ * bunch.event.IterationListener interface to connect with the clustering method
  * and know its status.
  *
  * @author Brian Mitchell

@@ -1,4 +1,4 @@
-package bunch;
+package bunch.model;
 
 import bunch.model.Graph;
 import bunch.model.GraphOutput;

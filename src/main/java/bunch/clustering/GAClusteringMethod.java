@@ -1,10 +1,10 @@
 package bunch.clustering;
 
-import bunch.*;
 import bunch.ga.GAConfiguration;
 import bunch.ga.GAMethod;
 import bunch.model.Cluster;
 import bunch.model.Configuration;
+import bunch.model.Feature;
 import bunch.model.Graph;
 
 import java.util.Random;

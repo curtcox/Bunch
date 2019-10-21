@@ -1,9 +1,10 @@
 package bunch.ui;
 
-import bunch.*;
 import bunch.clustering.HillClimbingConfiguration;
 import bunch.clustering.NAHCConfiguration;
 import bunch.model.Configuration;
+import bunch.simple.SATechnique;
+import bunch.simple.SATechniqueFactory;
 
 import java.awt.*;
 import javax.swing.*;

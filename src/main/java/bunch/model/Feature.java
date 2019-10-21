@@ -1,6 +1,4 @@
-package bunch;
-
-import bunch.model.Configuration;
+package bunch.model;
 
 /**
  * An interface used to create procedures that can extend other processes

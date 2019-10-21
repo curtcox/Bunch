@@ -1,8 +1,5 @@
 package bunch.model;
 
-import bunch.Feature;
-import bunch.model.Graph;
-
 import java.io.*;
 
 /**
@@ -15,7 +12,7 @@ import java.io.*;
  *
  * @author Brian Mitchell
  *
- * @see bunch.Feature
+ * @see Feature
  */
 public class Configuration implements java.io.Serializable
 {
@@ -119,7 +116,7 @@ getPopulationSize()
  * Obtains the array of pre-condition features for this configuration.
  *
  * @return the array of precondition features
- * @see #setPreConditionFeatures(bunch.Feature[])
+ * @see #setPreConditionFeatures(Feature[])
  */
 public
 Feature[]
@@ -146,7 +143,7 @@ setPreConditionFeatures(Feature[] p)
  * clustering algorithm for this configuration.
  *
  * @return the array of features
- * @see #setFeatures(bunch.Feature[])
+ * @see #setFeatures(Feature[])
  */
 public
 Feature[]
@@ -173,7 +170,7 @@ setFeatures(Feature[] f)
  * Obtains the array of post-condition features for this configuration.
  *
  * @return the array of postcondition features
- * @see #setPostConditionFeatures(bunch.Feature[])
+ * @see #setPostConditionFeatures(Feature[])
  */
 public
 Feature[]

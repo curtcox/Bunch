@@ -1,6 +1,6 @@
 package bunch.ui;
 
-import bunch.SASimpleTechnique;
+import bunch.simple.SASimpleTechnique;
 
 import java.awt.*;
 import javax.swing.*;

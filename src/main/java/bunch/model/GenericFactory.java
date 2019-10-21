@@ -1,4 +1,4 @@
-package bunch;
+package bunch.model;
 
 import java.util.*;
 import java.beans.Beans;

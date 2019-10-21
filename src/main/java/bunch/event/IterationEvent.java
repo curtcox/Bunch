@@ -9,7 +9,7 @@ import java.util.*;
  *
  * @author Brian Mitchell
  *
- * @see bunch.IterationListener
+ * @see IterationListener
  */
 public class IterationEvent
   extends EventObject

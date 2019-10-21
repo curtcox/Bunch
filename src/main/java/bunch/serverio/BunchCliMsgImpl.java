@@ -1,9 +1,11 @@
-package bunch;
+package bunch.serverio;
+
+import bunch.serverio.BunchCliMsg;
 
 import java.rmi.RemoteException;
 
 /**
- * This class implements the BunchCliMsg interface.  For the current distribtued
+ * This class implements the BunchCliMsg interface.  For the current distributed
  * services of Bunch, this class is not used.  Instead of direct reverse calls the
  * Callback class is used.
  *

@@ -17,7 +17,7 @@
  */
 package bunch.BunchServer;
 
-import bunch.Callback;
+import bunch.serverio.Callback;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

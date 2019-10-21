@@ -5,7 +5,7 @@
  *
  * @author Brian Mitchell
  */
-package bunch;
+package bunch.serverio;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

@@ -1,12 +1,9 @@
-package bunch;
-
-import bunch.model.GraphOutput;
+package bunch.model;
 
 /**
  * A factory for graph output generators
  */
-public class GraphOutputFactory extends GenericFactory
-{
+public class GraphOutputFactory extends GenericFactory {
 
 public String defaultOption = "Dotty";
 /**
@@ -31,8 +28,7 @@ public GraphOutputFactory() {
  * @param the name for the desired output generator
  * @return the graph output generator corresponding to the name
  */
-public GraphOutput
-getOutput(String name)
+public GraphOutput getOutput(String name)
 {
   return (GraphOutput)getItemInstance(name);
 }

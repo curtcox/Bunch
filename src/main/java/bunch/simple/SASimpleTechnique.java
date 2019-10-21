@@ -1,10 +1,10 @@
-package bunch;
+package bunch.simple;
 
 import bunch.ui.SASimpleTechniqueDialog;
 
 import java.util.*;
 
-public class SASimpleTechnique extends SATechnique{
+public class SASimpleTechnique extends SATechnique {
 
   //SA Function = deltaMQ / T
   //T(k+1) = T(k)*alpha;

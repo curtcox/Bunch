@@ -97,7 +97,7 @@ public class BunchStatsTest {
       bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_NAHC);
       bp.setProperty(BunchProperties.ALG_NAHC_HC_PCT,"1");
       //bp.setProperty(BunchProperties.ALG_NAHC_RND_PCT,"20");
-      //bp.setProperty(BunchProperties.ALG_NAHC_SA_CLASS,"bunch.SASimpleTechnique");
+      //bp.setProperty(BunchProperties.ALG_NAHC_SA_CLASS,"bunch.simple.SASimpleTechnique");
       //bp.setProperty(BunchProperties.ALG_NAHC_SA_CONFIG,"InitialTemp=179.0,Alpha=0.995");
       //bp.setProperty(BunchProperties.ALG_NAHC_SA_CONFIG,"InitialTemp=1.0,Alpha=0.85");
 

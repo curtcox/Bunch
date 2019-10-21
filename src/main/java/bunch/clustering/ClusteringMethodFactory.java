@@ -23,8 +23,7 @@
  */
 package bunch.clustering;
 
-import bunch.GenericFactory;
-import bunch.clustering.ClusteringMethod;
+import bunch.model.GenericFactory;
 
 /**
  * A factory for different kinds of objects that calculate the
@@ -33,7 +32,7 @@ import bunch.clustering.ClusteringMethod;
  * @author Brian Mitchell
  *
  * @see ClusteringMethod
- * @see bunch.GenericFactory
+ * @see GenericFactory
  */
 public
 class ClusteringMethodFactory

@@ -1,4 +1,4 @@
-package bunch;
+package bunch.simple;
 
 import java.util.*;
 

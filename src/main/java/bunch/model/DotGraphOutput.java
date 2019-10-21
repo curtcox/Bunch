@@ -21,10 +21,7 @@ public class DotGraphOutput
 
 int clusterIDTmp = 0;
 
-public
-DotGraphOutput()
-{
-}
+public DotGraphOutput() { }
 
 
 /**

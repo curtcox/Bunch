@@ -5,13 +5,13 @@ import java.io.*;
 
 import javax.naming.*;
 
-import bunch.*;
 import bunch.BunchServer.BunchSvrMsg;
 import bunch.BunchServer.IterationManager;
 import bunch.event.BunchEvent;
 import bunch.event.SynchronizedEventQueue;
 import bunch.model.Cluster;
 import bunch.model.Configuration;
+import bunch.serverio.CallbackImpl;
 
 /**
  * A generic hill climbing clustering method class, intended to provide common services

@@ -1,4 +1,4 @@
-package bunch;
+package bunch.serverio;
 
 public class ServerStats {
 

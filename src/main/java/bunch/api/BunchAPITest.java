@@ -439,7 +439,7 @@ public void BunchAPITest1x()
     {
       bp.setProperty(BunchProperties.ALG_HC_HC_PCT, "30");
       bp.setProperty(BunchProperties.ALG_HC_RND_PCT, "20");
-      bp.setProperty(BunchProperties.ALG_HC_SA_CLASS, "bunch.SASimpleTechnique");
+      bp.setProperty(BunchProperties.ALG_HC_SA_CLASS, "bunch.simple.SASimpleTechnique");
       bp.setProperty(BunchProperties.ALG_HC_SA_CONFIG, "InitialTemp=10.0,Alpha=0.85");
       bp.setProperty(BunchProperties.OUTPUT_FORMAT, BunchProperties.NULL_OUTPUT_FORMAT);
     }
@@ -1209,7 +1209,7 @@ public void BunchAPITest1x()
       //bp.setProperty(BunchProperties.ALG_HC_POPULATION_SIZE,"12");
       bp.setProperty(BunchProperties.ALG_HC_HC_PCT,"55");
       bp.setProperty(BunchProperties.ALG_HC_RND_PCT,"20");
-      bp.setProperty(BunchProperties.ALG_HC_SA_CLASS,"bunch.SASimpleTechnique");
+      bp.setProperty(BunchProperties.ALG_HC_SA_CLASS,"bunch.simple.SASimpleTechnique");
       bp.setProperty(BunchProperties.ALG_HC_SA_CONFIG,"InitialTemp=100.0,Alpha=0.95");
       //bp.setProperty(BunchProperties.TIMEOUT_TIME,"500");
 

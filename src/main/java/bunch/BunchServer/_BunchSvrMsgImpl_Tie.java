@@ -3,10 +3,9 @@
 
 package bunch.BunchServer;
 
-import bunch.Callback;
-import java.io.Serializable;
+import bunch.serverio.Callback;
+
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 import javax.rmi.CORBA.Tie;
 import javax.rmi.CORBA.Util;
 import javax.rmi.PortableRemoteObject;

@@ -1,7 +1,6 @@
 package bunch.clustering;
 
-import bunch.SATechnique;
-import bunch.clustering.HillClimbingConfiguration;
+import bunch.simple.SATechnique;
 
 /**
  * A basic class to hold all of the configuration information for the NAHC
