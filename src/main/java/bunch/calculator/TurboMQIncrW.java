@@ -1,9 +1,8 @@
 package bunch.calculator;
 
-import bunch.Cluster;
-import bunch.Graph;
-import bunch.Node;
-import bunch.calculator.ObjectiveFunctionCalculator;
+import bunch.model.Cluster;
+import bunch.model.Graph;
+import bunch.model.Node;
 
 public class TurboMQIncrW implements ObjectiveFunctionCalculator {
 private Graph graph_d;
@@ -247,7 +246,7 @@ private double calcCFi(int c)
 
 /**
  * Calculate the objective function value for the graph passed in the
- * #init(bunch.Graph) method.
+ * #init(bunch.model.Graph) method.
  */
 public
 void

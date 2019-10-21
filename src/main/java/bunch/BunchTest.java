@@ -1,23 +1,3 @@
-/****
- *
- *	$Log: BunchTest.java,v $
- *	Revision 3.0  2002/02/03 18:41:45  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.1  2000/10/22 15:48:48  bsmitc
- *	*** empty log message ***
- *
- *	Revision 3.0  2000/07/26 22:46:07  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:33  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch;
 
 /**

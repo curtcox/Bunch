@@ -1,6 +1,6 @@
 package bunch.ui;
 
-import bunch.Configuration;
+import bunch.model.Configuration;
 import bunch.clustering.HillClimbingConfiguration;
 import bunch.clustering.NextAscentHillClimbingClusteringMethod;
 import bunch.clustering.SteepestAscentHillClimbingClusteringMethod;

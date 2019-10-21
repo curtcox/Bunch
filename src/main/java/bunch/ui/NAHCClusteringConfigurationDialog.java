@@ -2,6 +2,8 @@ package bunch.ui;
 
 import bunch.*;
 import bunch.clustering.HillClimbingConfiguration;
+import bunch.clustering.NAHCConfiguration;
+import bunch.model.Configuration;
 
 import java.awt.*;
 import javax.swing.*;

@@ -1,6 +1,9 @@
 package bunch.clustering;
 
 import bunch.*;
+import bunch.model.Cluster;
+import bunch.model.Configuration;
+import bunch.model.Graph;
 
 /**
  * The superclass for all updated clustering methods. A clustering method is (usually) an
@@ -62,7 +65,7 @@ setGraph(Graph g)
  * Obtains the graph to be partitioned by this clustering method
  *
  * @return the graph
- * @see setGraph(bunch.Graph)
+ * @see setGraph( Graph )
  */
 public
 Graph
@@ -90,7 +93,7 @@ setBestCluster(Cluster c)
  * found).  The returned object is a cluster
  *
  * @return the (best) result graph
- * @see setResultGraph(bunch.Graph)
+ * @see setResultGraph( Graph )
  */
 public
 Cluster
@@ -104,7 +107,7 @@ getBestCluster()
  * found).  The returned object is a Graph.
  *
  * @return the (best) result graph
- * @see setResultGraph(bunch.Graph)
+ * @see setResultGraph( Graph )
  */
 public
 Graph
@@ -269,7 +272,7 @@ setConfiguration(Configuration c)
  * Obtains the configuration object for this clustering method.
  *
  * @return the configuration
- * @see #setConfiguration(bunch.Configuration)
+ * @see #setConfiguration(Configuration)
  */
 public
 Configuration

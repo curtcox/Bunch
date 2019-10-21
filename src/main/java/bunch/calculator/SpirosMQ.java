@@ -1,6 +1,9 @@
-package bunch;
+package bunch.calculator;
 
 import bunch.calculator.ObjectiveFunctionCalculator;
+import bunch.model.Cluster;
+import bunch.model.Graph;
+import bunch.model.Node;
 
 public class SpirosMQ implements ObjectiveFunctionCalculator {
 
@@ -44,7 +47,7 @@ public double calculate(Cluster c)
 
 /**
  * Calculate the objective function value for the graph passed in the
- * #init(bunch.Graph) method.
+ * #init(bunch.model.Graph) method.
  */
 public
 void

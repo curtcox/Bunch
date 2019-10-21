@@ -1,9 +1,8 @@
 package bunch.clustering;
 
-import bunch.Cluster;
-import bunch.Graph;
+import bunch.model.Cluster;
+import bunch.model.Graph;
 import bunch.IterationEvent;
-import bunch.clustering.ClusteringMethod2;
 import bunch.stats.StatsManager;
 
 public class OptimalClusteringMethod extends ClusteringMethod2 {

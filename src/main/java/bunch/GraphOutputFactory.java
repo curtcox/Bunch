@@ -2,11 +2,6 @@ package bunch;
 
 /**
  * A factory for graph output generators
- *
- * @author Brian Mitchell
- * @version 1.0
- * @see bunch.GraphOutput
- * @see bunch.GenericFactory
  */
 public class GraphOutputFactory extends GenericFactory
 {

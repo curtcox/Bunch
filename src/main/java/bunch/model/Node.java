@@ -1,4 +1,4 @@
-package bunch;
+package bunch.model;
 
 /**
  * A class that represents a Node in a Graph. Nodes contain an array of
@@ -18,7 +18,7 @@ package bunch;
  *
  * @author Diego Doval
  * @version 1.0
- * @see bunch.Graph
+ * @see Graph
  */
 public class Node  implements java.io.Serializable {
 /**
@@ -74,7 +74,7 @@ public int    nodeLevel = -1;
 /**
  * The string's name
  */
-String name_d;
+public String name_d;
 
 /**
  * The Node's current cluster

@@ -1,7 +1,7 @@
 package bunch.clustering;
 
-import bunch.Cluster;
-import bunch.Configuration;
+import bunch.model.Cluster;
+import bunch.model.Configuration;
 
 import java.io.*;
 
@@ -10,7 +10,7 @@ import java.io.*;
  * to both hill-climbing algorithms (next ascent and steepest ascent).
  * The class basically takes charge of executing each generation, leaving to the
  * subclasses the task of performing the actual improvement by defining
- * #getLocalMaxGraph(bunch.Graph) method.
+ * #getLocalMaxGraph(bunch.model.Graph) method.
  *
  * @author Brian Mitchell
  *

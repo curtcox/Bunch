@@ -1,8 +1,9 @@
 package bunch.BunchServer;
 
-import  bunch.*;
 import bunch.clustering.GenericDistribHillClimbingClusteringMethod;
 import bunch.clustering.HillClimbingConfiguration;
+import bunch.model.Cluster;
+import bunch.model.Configuration;
 
 public class ServerSteepestAscentClusteringMethod extends GenericDistribHillClimbingClusteringMethod {
 
@@ -14,8 +15,7 @@ FindNeighbor nServer = new FindNeighbor();
   public ServerSteepestAscentClusteringMethod() {
   }
 
-protected
-Cluster
+protected Cluster
 getLocalMaxGraph(Cluster c)
 {
 System.out.print("IN:  " + c.getObjFnValue() + "  ");
@@ -87,8 +87,7 @@ int[] getMoreWork()
    return workArea;
 }
 
-public
-Configuration
+public Configuration
 getConfiguration()
 {
   boolean reconf=false;

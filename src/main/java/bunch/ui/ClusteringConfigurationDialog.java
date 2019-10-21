@@ -1,7 +1,7 @@
 package bunch.ui;
 
-import bunch.Configuration;
-import bunch.Graph;
+import bunch.model.Configuration;
+import bunch.model.Graph;
 
 import java.awt.*;
 import javax.swing.*;
@@ -27,7 +27,7 @@ JButton cancelButton_d = new JButton();
 Frame parentFrame = null;
 /**
  * This panel can be used by subclasses to add components that configure
- * a particular bunch.Configuration object
+ * a particular bunch.model.Configuration object
  */
 JPanel optionsPanel_d = new JPanel();
 Graph graph_d;
@@ -88,7 +88,7 @@ jbInit()
  * Obtains the configuration object resultant of this dialog
  *
  * @return the configuration defined by this dialog
- * @see #setConfiguration(bunch.Configuration)
+ * @see #setConfiguration(Configuration)
  */
 public
 Configuration
@@ -171,7 +171,7 @@ setGraph(Graph g)
  * this configuration dialog in case they have not been set already.
  *
  * @return the graph
- * @see #setGraph(bunch.Graph)
+ * @see #setGraph(Graph)
  */
 public
 Graph

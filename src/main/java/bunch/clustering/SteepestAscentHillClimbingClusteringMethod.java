@@ -1,8 +1,8 @@
 package bunch.clustering;
 
-import bunch.Cluster;
-import bunch.Configuration;
-import bunch.Node;
+import bunch.model.Cluster;
+import bunch.model.Configuration;
+import bunch.model.Node;
 
 public class SteepestAscentHillClimbingClusteringMethod extends GenericHillClimbingClusteringMethod
 {

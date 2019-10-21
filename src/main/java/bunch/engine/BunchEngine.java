@@ -3,6 +3,12 @@ package bunch.engine;
 import bunch.*;
 import bunch.api.*;
 import bunch.clustering.ClusteringMethod;
+import bunch.clustering.NAHCConfiguration;
+import bunch.ga.GAConfiguration;
+import bunch.model.Cluster;
+import bunch.model.Configuration;
+import bunch.model.Graph;
+import bunch.model.Node;
 import bunch.stats.*;
 import bunch.ui.SwingWorker;
 
@@ -1046,9 +1052,9 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       stats.cleanup();
 
       Configuration cTmp = clusteringMethod_d.getConfiguration();
-      if(cTmp instanceof bunch.NAHCConfiguration)
+      if(cTmp instanceof NAHCConfiguration)
       {
-        bunch.NAHCConfiguration nahcConf = (bunch.NAHCConfiguration)cTmp;
+        NAHCConfiguration nahcConf = (NAHCConfiguration)cTmp;
         if (nahcConf.getSATechnique() != null)
           nahcConf.getSATechnique().reset();
       }

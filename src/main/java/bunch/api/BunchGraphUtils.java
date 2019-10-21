@@ -28,6 +28,8 @@ package bunch.api;
 import java.util.*;
 import bunch.*;
 import bunch.calculator.ObjectiveFunctionCalculatorFactory;
+import bunch.model.Graph;
+import bunch.model.Node;
 
  public class BunchGraphUtils {
 

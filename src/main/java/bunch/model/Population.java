@@ -1,4 +1,7 @@
-package bunch;
+package bunch.model;
+
+import bunch.model.Cluster;
+import bunch.model.Graph;
 
 import java.util.Vector;
 import java.util.Enumeration;
@@ -7,7 +10,7 @@ public class Population {
 
   Vector   pop = new Vector();
   static   Graph g = null;
-  Cluster  bestCluster = null;
+  Cluster bestCluster = null;
 
   public Population(Graph graph) {
       g = graph.cloneGraph();

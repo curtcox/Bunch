@@ -24,12 +24,12 @@ ObjectiveFunctionCalculatorFactory()
 {
   super();
   setFactoryType("ObjectiveFunctionCalculator");
-  addItem("Basic MQ Function", "bunch.BasicMQ");
+  addItem("Basic MQ Function", "bunch.calculator.BasicMQ");
   addItem("Turbo MQ Function", "bunch.calculator.TurboMQ");
   //addItem("Incremental MQ", "bunch.calculator.TurboMQIncr");
   addItem("Incremental MQ Weighted", "bunch.calculator.TurboMQIncrW");
 
-  addItem("bunch.BasicMQ", "bunch.BasicMQ");
+  addItem("bunch.calculator.BasicMQ", "bunch.calculator.BasicMQ");
   addItem("bunch.calculator.TurboMQ", "bunch.calculator.TurboMQ");
   addItem("bunch.ITurboMQ", "bunch.calculator.TurboMQIncrW");
   addItem("bunch.calculator.TurboMQIncrW", "bunch.calculator.TurboMQIncrW");
@@ -37,7 +37,7 @@ ObjectiveFunctionCalculatorFactory()
   //addItem("Turbo MQ Squared", "bunch.calculator.TurboMQ2");
   //addItem("Experimental Weighted 2", "bunch.calculator.WeightedObjectiveFunctionCalculator2");
   //addItem("Experimental Weighted 3", "bunch.calculator.WeightedObjectiveFunctionCalculator3");
-  //addItem("Spiros MQ", "bunch.SpirosMQ");
+  //addItem("Spiros MQ", "bunch.calculator.SpirosMQ");
 }
 
 /**

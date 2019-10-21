@@ -3,6 +3,10 @@ package bunch;
 import bunch.clustering.ClusteringMethod;
 import bunch.clustering.ClusteringMethodFactory;
 import bunch.clustering.HillClimbingConfiguration;
+import bunch.ga.GAConfiguration;
+import bunch.model.Configuration;
+import bunch.model.Graph;
+import bunch.model.Node;
 
 import java.awt.*;
 import java.beans.Beans;
@@ -341,7 +345,7 @@ setLastResultGraph(Graph g)
 /**
  * Obtain the last graph in the clustering hierarchy.
  *
- * @see #setLastResultGraph(bunch.Graph)
+ * @see #setLastResultGraph(Graph)
  */
 public
 Graph

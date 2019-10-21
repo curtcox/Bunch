@@ -21,10 +21,7 @@ protected String inputFileName;
 /**
  * Empty parser constructor
  */
-public
-Parser()
-{
-}
+public Parser() { }
 
 public void setDelims(String d)
 {

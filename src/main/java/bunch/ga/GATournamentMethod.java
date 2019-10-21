@@ -1,4 +1,6 @@
-package bunch;
+package bunch.ga;
+
+import bunch.model.Graph;
 
 /**
  * A Genetic Algorithm that usues tournament selection, as described

@@ -1,7 +1,7 @@
 package bunch.BunchServer;
 
 import bunch.Callback;
-import bunch.Cluster;
+import bunch.model.Cluster;
 import bunch.serverui.BSWindow;
 import bunch.serverui.ServerClusteringProgress;
 import bunch.ui.SwingWorker;

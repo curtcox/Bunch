@@ -1,6 +1,5 @@
 package bunch.ui;
 
-import bunch.ui.BunchFrame;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

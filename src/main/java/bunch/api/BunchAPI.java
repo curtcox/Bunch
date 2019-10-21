@@ -34,7 +34,8 @@
 package bunch.api;
 
 import bunch.engine.*;
-import bunch.*;
+import bunch.model.Graph;
+
 import java.util.*;
 import java.io.*;
 

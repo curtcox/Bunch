@@ -1,5 +1,7 @@
 package bunch;
 
+import bunch.model.Graph;
+
 import java.io.*;
 
 /**

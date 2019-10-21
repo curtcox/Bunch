@@ -1,5 +1,7 @@
 package bunch;
 
+import bunch.model.Node;
+
 import java.io.*;
 import java.util.Vector;
 

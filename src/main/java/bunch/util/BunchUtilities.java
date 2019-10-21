@@ -18,8 +18,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import java.util.*;
-import bunch.api.*;
-import bunch.*;
+
+import bunch.model.Graph;
+import bunch.model.Node;
 
 public class BunchUtilities {
 
@@ -156,7 +157,7 @@ public static String getLocalHostName()
   }
 }
 
-public static bunch.Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
+public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
 {
   ArrayList al = new ArrayList(bunchMDG.getMDGEdges());
   Hashtable nodes = new Hashtable();
@@ -239,15 +240,15 @@ public static bunch.Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
   }
 
   //now build the graph
-  bunch.Graph retGraph = new bunch.Graph(nodes.size());
+  Graph retGraph = new Graph(nodes.size());
   retGraph.clear();
-  bunch.Node[] nodeList = retGraph.getNodes();
+  Node[] nodeList = retGraph.getNodes();
 
   //now setup the datastructure
   Object [] nl = nodes.values().toArray();
   for(int i = 0; i < nl.length; i++)
   {
-    bunch.Node       n = new bunch.Node();
+    Node n = new Node();
     nodeList[i]  = n;
     ParserNode p = (ParserNode)nl[i];
     n.setName(p.name);

@@ -1,6 +1,6 @@
 package bunch.clustering;
 
-import bunch.Graph;
+import bunch.model.Graph;
 import bunch.IterationEvent;
 
 /**

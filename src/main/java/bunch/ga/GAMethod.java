@@ -15,7 +15,9 @@
  *
  *
  */
-package bunch;
+package bunch.ga;
+
+import bunch.model.Graph;
 
 import java.util.Random;
 
@@ -84,7 +86,7 @@ public void setPopulation(Graph[] currPop) {
  * Returns the current population of the GAMethod.
  *
  * @return an array with the population
- * @see #setPopulation(bunch.Graph[])
+ * @see #setPopulation(Graph[])
  */
 public
 Graph[]
@@ -265,7 +267,7 @@ setIncrementCounter(int i)
  * Obtains the best graph found by the GAMethod so far.
  *
  * @return the best result graph
- * @see #setBestGraph(bunch.Graph)
+ * @see #setBestGraph(Graph)
  */
 public
 Graph

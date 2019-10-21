@@ -1,7 +1,7 @@
 package bunch.calculator;
 
-import bunch.Cluster;
-import bunch.Graph;
+import bunch.model.Cluster;
+import bunch.model.Graph;
 
 public interface ObjectiveFunctionCalculator extends java.io.Serializable {
  void calculate();

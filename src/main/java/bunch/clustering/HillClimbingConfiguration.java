@@ -1,7 +1,7 @@
 package bunch.clustering;
 
-import bunch.Configuration;
-import bunch.Graph;
+import bunch.model.Configuration;
+import bunch.model.Graph;
 
 /**
  * A subclass of Configuration with specific parameters used by the Hill Climbing
@@ -18,10 +18,10 @@ double threshold_d=0.1;
 public HillClimbingConfiguration() { }
 
 /**
- * Utility class constructor that receives a graph, and calls #init(bunch.Graph).
+ * Utility class constructor that receives a graph, and calls #init(bunch.model.Graph).
  *
  * @param g the graph used to set the default values
- * @see #init(bunch.Graph)
+ * @see #init(Graph)
  */
 public HillClimbingConfiguration(Graph g)
 {

@@ -1,13 +1,17 @@
 package bunch.clustering;
 
 import bunch.*;
-import bunch.clustering.GenericClusteringMethod;
+import bunch.ga.GAConfiguration;
+import bunch.ga.GAMethod;
+import bunch.model.Cluster;
+import bunch.model.Configuration;
+import bunch.model.Graph;
 
 import java.util.Random;
 
 /**
  * A clustering method based on a genetic algorithm. This implementation relies
- * on the bunch.GAMethod interface for actual GA processing. This is necessary
+ * on the bunch.ga.GAMethod interface for actual GA processing. This is necessary
  * because there can be different GA implementations (for example, with
  * different selection mechanisms such as roulette wheel, or tournament)
  * and the basic algorithm does not change but the specifics do. Those specifics
@@ -16,7 +20,7 @@ import java.util.Random;
  * @author Brian Mitchell
  *
  * @see GenericClusteringMethod
- * @see bunch.GAMethod
+ * @see GAMethod
  */
 public class GAClusteringMethod extends GenericClusteringMethod {
 
@@ -189,8 +193,7 @@ getConfigurationDialogName()
 /**
  * This method returns the configuration object to the caller
  */
-public
-Configuration
+public Configuration
 getConfiguration()
 {
   if (configuration_d == null) {

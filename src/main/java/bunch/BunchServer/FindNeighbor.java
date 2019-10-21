@@ -17,15 +17,14 @@
  */
 package bunch.BunchServer;
 
-import bunch.*;
+import bunch.model.Cluster;
 
 public class FindNeighbor {
 
   public FindNeighbor() {
   }
 
-public
-Cluster
+public Cluster
 clusterWorklist(Cluster c, Cluster maxC, int[] clustNames, boolean[] locks, int[] workList)
 {
     //c.force();                                //set the cluster vector dirty

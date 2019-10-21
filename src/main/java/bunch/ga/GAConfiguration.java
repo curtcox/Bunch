@@ -1,25 +1,7 @@
-/****
- *
- *	$Log: GAConfiguration.java,v $
- *	Revision 3.0  2002/02/03 18:41:48  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.1  2001/03/17 14:55:23  bsmitc
- *	Added label to DotGraphOutput, Changed inheritance tree for GA method
- *
- *	Revision 3.0  2000/07/26 22:46:09  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
-package bunch;
+package bunch.ga;
 
+import bunch.model.Configuration;
+import bunch.model.Graph;
 import bunch.clustering.GAClusteringMethod;
 import bunch.ui.GAClusteringConfigurationDialog;
 
@@ -32,8 +14,7 @@ import bunch.ui.GAClusteringConfigurationDialog;
  * @see GAClusteringConfigurationDialog
  * @see GAClusteringMethod
  */
-public
-class GAConfiguration
+public class GAConfiguration
   extends Configuration
 {
 GAMethod method_d;
@@ -51,10 +32,10 @@ GAConfiguration()
 }
 
 /**
- * Utility class constructor that receives a graph, and calls #init(bunch.Graph).
+ * Utility class constructor that receives a graph, and calls #init(bunch.model.Graph).
  *
  * @param g the graph used to set the default values
- * @see #init(bunch.Graph)
+ * @see #init(Graph)
  */
 public
 GAConfiguration(Graph g)
@@ -106,7 +87,7 @@ getMethodFactory()
  * Obtains the GAMethod currently selected for this GAConfiguration
  *
  * @return the ga method selected
- * @see #setMethod(bunch.GAMethod)
+ * @see #setMethod(GAMethod)
  */
 public
 GAMethod
@@ -135,7 +116,7 @@ setMethod(GAMethod m)
  *
  * @param m the ga method to set to this configuration instance
  * @see #getMethod()
- * @see #setMethod(bunch.GAMethod)
+ * @see #setMethod(GAMethod)
  */
 public
 void

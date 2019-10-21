@@ -24,6 +24,9 @@
  */
 package bunch.api;
 
+import bunch.model.Cluster;
+import bunch.model.Graph;
+
 import java.util.*;
 import java.io.*;
 
@@ -45,11 +48,11 @@ public class BunchStatsTest {
       bunch.Parser p = pref.getParserFactory().getParser("dependency");
       p.setInput(filename);
       p.setDelims(" \t");
-      bunch.Graph g = (bunch.Graph)p.parse();
+      Graph g = (Graph)p.parse();
 
       String objFnCalc =  "bunch.calculator.TurboMQIncrW";
       (pref.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
-      bunch.Graph.setObjectiveFunctionCalculatorFactory(pref.getObjectiveFunctionCalculatorFactory());
+      Graph.setObjectiveFunctionCalculatorFactory(pref.getObjectiveFunctionCalculatorFactory());
       g.setObjectiveFunctionCalculator(objFnCalc);
 
       if(g == null)
@@ -61,7 +64,7 @@ public class BunchStatsTest {
       for(int i = 0; i < 100; i++)
       {
         int [] clusterV = g.genRandomClusterSize(); //.getRandomCluster();
-        bunch.Cluster c = new bunch.Cluster(g,clusterV);
+        Cluster c = new Cluster(g,clusterV);
         System.out.println("NumClusters = "+c.getClusterNames().length+" MQ Value = "+c.getObjFnValue());
       }
 

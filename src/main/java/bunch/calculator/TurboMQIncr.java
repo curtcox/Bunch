@@ -1,15 +1,13 @@
 package bunch.calculator;
 
-import bunch.Cluster;
-import bunch.Graph;
-import bunch.Node;
-import bunch.calculator.ObjectiveFunctionCalculator;
-import bunch.calculator.ObjectiveFunctionCalculatorFactory;
+import bunch.model.Cluster;
+import bunch.model.Graph;
+import bunch.model.Node;
 
 /**
  * The basic objective function calculator. This calculation method does not
  * take into account the weights of the edges between nodes in the graph.
- * The method uses the graph obtained in the #init(bunch.Graph) method
+ * The method uses the graph obtained in the #init(bunch.model.Graph) method
  * and then makes the calculations, setting the appropriate values in the
  * graph when finished.
  *
@@ -243,7 +241,7 @@ private double calcCFi(int c)
 
 /**
  * Calculate the objective function value for the graph passed in the
- * #init(bunch.Graph) method.
+ * #init(bunch.model.Graph) method.
  */
 public
 void

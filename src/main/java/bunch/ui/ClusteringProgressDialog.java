@@ -7,6 +7,10 @@ import java.awt.event.*;
 
 import bunch.*;
 import bunch.clustering.ClusteringMethod;
+import bunch.clustering.NAHCConfiguration;
+import bunch.model.Cluster;
+import bunch.model.Configuration;
+import bunch.model.Graph;
 import bunch.stats.*;
 
 /**
@@ -300,9 +304,9 @@ public void startClustering() {
 ////      bunch.stats.StatsManager.cleanup();
 ////
 ////      Configuration cTmp = clusteringMethod_x.getConfiguration();
-////      if(cTmp instanceof bunch.NAHCConfiguration)
+////      if(cTmp instanceof bunch.clustering.NAHCConfiguration)
 ////      {
-////        bunch.NAHCConfiguration nahcConf = (bunch.NAHCConfiguration)cTmp;
+////        bunch.clustering.NAHCConfiguration nahcConf = (bunch.clustering.NAHCConfiguration)cTmp;
 ////        if (nahcConf.getSATechnique() != null)
 ////          nahcConf.getSATechnique().reset();
 ////      }
@@ -694,9 +698,9 @@ cancelButton_d_actionPerformed(ActionEvent e)
   stats.cleanup();
 
       Configuration cTmp = clusteringMethod_x.getConfiguration();
-      if(cTmp instanceof bunch.NAHCConfiguration)
+      if(cTmp instanceof NAHCConfiguration)
       {
-        bunch.NAHCConfiguration nahcConf = (bunch.NAHCConfiguration)cTmp;
+        NAHCConfiguration nahcConf = (NAHCConfiguration)cTmp;
         if (nahcConf.getSATechnique() != null)
           nahcConf.getSATechnique().reset();
       }

@@ -1,4 +1,4 @@
-package bunch;
+package bunch.model;
 
 import java.util.Hashtable;
 import java.util.ArrayList;

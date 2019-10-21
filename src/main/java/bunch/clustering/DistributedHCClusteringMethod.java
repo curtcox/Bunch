@@ -25,6 +25,8 @@ import java.util.*;
 import bunch.*;
 import bunch.BunchServer.IterationManager;
 import bunch.BunchServer.BunchSvrMsg;
+import bunch.model.Cluster;
+import bunch.model.Configuration;
 
 /**
  * This class implements the distributed hill climbing clustering algorithm.
@@ -373,8 +375,7 @@ int [] getMoreWork(int requestSz)
  * This method is required by the base class to handle requests for
  * configuraiton information.
  */
-public
-Configuration
+public Configuration
 getConfiguration()
 {
   boolean reconf=false;

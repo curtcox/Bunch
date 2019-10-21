@@ -1,7 +1,7 @@
 package bunch.ui;
 
-import bunch.Configuration;
-import bunch.GAConfiguration;
+import bunch.model.Configuration;
+import bunch.ga.GAConfiguration;
 import bunch.clustering.GAClusteringMethod;
 
 import java.awt.*;

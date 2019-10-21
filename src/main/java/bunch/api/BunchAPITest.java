@@ -40,6 +40,8 @@
  */
 package bunch.api;
 
+import bunch.model.Cluster;
+
 import java.util.*;
 import java.io.*;
 
@@ -458,7 +460,7 @@ public void BunchAPITest1x()
     for(int zz = 0; zz< cList.size(); zz++)
     {
       System.out.println("LEVEL = "+zz);
-      bunch.Cluster c = (bunch.Cluster)cList.get(zz);
+      Cluster c = (Cluster)cList.get(zz);
       ArrayList alc = c.getClusteringDetails();
 
       long depth = c.getDepth();
@@ -533,7 +535,7 @@ public void BunchAPITest1x()
       double v = g.getMQValue();
       System.out.println("Default Mq value= "+v);
 
-      g = BunchGraphUtils.constructFromSil(mdg,sil,"bunch.BasicMQ");
+      g = BunchGraphUtils.constructFromSil(mdg,sil,"bunch.calculator.BasicMQ");
       v = g.getMQValue();
       System.out.println("Basic Mq value= "+v);
 

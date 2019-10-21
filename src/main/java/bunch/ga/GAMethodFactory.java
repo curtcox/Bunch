@@ -1,11 +1,14 @@
-package bunch;
+package bunch.ga;
+
+import bunch.GenericFactory;
+import bunch.ga.GAMethod;
 
 /**
  * A factory for different kinds of methods for the GA
  *
  * @author Diego Doval / Brian Mitchell
  * @version 1.0
- * @see bunch.GAMethod
+ * @see GAMethod
  * @see bunch.GenericFactory
  */
 public class GAMethodFactory
@@ -20,8 +23,8 @@ public GAMethodFactory()
 {
   super();
   setFactoryType("GAMethod");
-  addItem("tournament", "bunch.GATournamentMethod");
-  addItem("roulette wheel", "bunch.GARouletteWheelMethod");
+  addItem("tournament", "bunch.ga.GATournamentMethod");
+  addItem("roulette wheel", "bunch.ga.GARouletteWheelMethod");
 }
 
 /**

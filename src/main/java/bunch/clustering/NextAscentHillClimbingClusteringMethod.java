@@ -1,7 +1,10 @@
 package bunch.clustering;
 
 import bunch.*;
-import bunch.clustering.GenericHillClimbingClusteringMethod;
+import bunch.model.Cluster;
+import bunch.model.Configuration;
+import bunch.model.Graph;
+import bunch.model.Node;
 
 import java.util.*;
 
@@ -338,8 +341,7 @@ getLocalMaxGraph(Graph g)
     return g;
 }
 
-public
-Configuration
+public Configuration
 getConfiguration()
 {
   boolean reconf=false;

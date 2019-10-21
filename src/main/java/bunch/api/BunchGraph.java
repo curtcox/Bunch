@@ -30,6 +30,9 @@
 package bunch.api;
 
 import  bunch.*;
+import bunch.model.Graph;
+import bunch.model.Node;
+
 import  java.util.*;
 import  java.io.*;
 

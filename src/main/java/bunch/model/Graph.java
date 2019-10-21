@@ -1,4 +1,4 @@
-package bunch;
+package bunch.model;
 
 import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.calculator.ObjectiveFunctionCalculatorFactory;
@@ -16,7 +16,7 @@ import java.util.Random;
  *
  * @author Brian Mitchell
  * @version 1.0
- * @see bunch.Node
+ * @see Node
  */
 public class Graph implements java.io.Serializable {
 
@@ -1003,7 +1003,7 @@ setPreviousLevelGraph(Graph g)
  * Obtains the previous graph (level) for this graph instance.
  *
  * @return the previous level graph
- * @see #setPreviousLevelGraph(bunch.Graph)
+ * @see #setPreviousLevelGraph(Graph)
  * @see #setGraphLevel(int)
  */
 public

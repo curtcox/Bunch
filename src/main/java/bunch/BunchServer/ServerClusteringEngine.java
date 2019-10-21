@@ -1,9 +1,10 @@
 package bunch.BunchServer;
 
-import bunch.*;
 import bunch.clustering.ClusteringMethod2;
 import bunch.clustering.GenericDistribHillClimbingClusteringMethod;
 import bunch.clustering.HillClimbingConfiguration;
+import bunch.model.Cluster;
+import bunch.model.Graph;
 
 public class ServerClusteringEngine {
 

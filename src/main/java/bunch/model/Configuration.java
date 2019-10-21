@@ -1,23 +1,7 @@
-/****
- *
- *	$Log: Configuration.java,v $
- *	Revision 3.0  2002/02/03 18:41:46  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.0  2000/07/26 22:46:08  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
-package bunch;
+package bunch.model;
 
-import bunch.clustering.HillClimbingConfiguration;
+import bunch.Feature;
+import bunch.model.Graph;
 
 import java.io.*;
 
@@ -32,12 +16,8 @@ import java.io.*;
  * @author Brian Mitchell
  *
  * @see bunch.Feature
- * @see bunch.GAConfiguration
- * @see HillClimbingConfiguration
  */
-public
-class Configuration
-  implements java.io.Serializable
+public class Configuration implements java.io.Serializable
 {
 Feature[] preFeatures_d;
 Feature[] features_d;
@@ -62,10 +42,7 @@ Configuration()
  *
  * @param g the graph used to generate a default configuration
  */
-public
-void
-init(Graph g)
-{
+public void init(Graph g) {
 }
 
 /**

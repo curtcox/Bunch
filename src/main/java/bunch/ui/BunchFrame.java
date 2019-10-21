@@ -3,6 +3,9 @@ package bunch.ui;
 import bunch.*;
 import bunch.BunchServer.BunchSvrMsg;
 import bunch.clustering.*;
+import bunch.model.Configuration;
+import bunch.model.Graph;
+import bunch.model.Node;
 import bunch.stats.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -1537,7 +1540,7 @@ public void setLastResultGraph(Graph g) {
 /**
  * Obtain the last graph resultant of an Action.
  *
- * @see #setLastResultGraph(bunch.Graph)
+ * @see #setLastResultGraph(Graph)
  */
 public Graph getLastResultGraph()
 {

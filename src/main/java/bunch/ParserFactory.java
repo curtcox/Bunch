@@ -2,11 +2,6 @@ package bunch;
 
 /**
  * A factory for parsers of different kinds
- *
- * @author Diego Doval
- * @version 1.0
- * @see bunch.Parser
- * @see bunch.GenericFactory
  */
 public class ParserFactory
   extends GenericFactory

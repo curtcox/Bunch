@@ -8,13 +8,15 @@ import javax.naming.*;
 import bunch.*;
 import bunch.BunchServer.BunchSvrMsg;
 import bunch.BunchServer.IterationManager;
+import bunch.model.Cluster;
+import bunch.model.Configuration;
 
 /**
  * A generic hill climbing clustering method class, intended to provide common services
  * to both hill-climbing algorithms (next ascent and steepest ascent).
  * The class basically takes charge of executing each generation, leaving to the
  * subclasses the task of performing the actual improvement by defining
- * #getLocalMaxGraph(bunch.Graph) method.  This class also implments necessary
+ * #getLocalMaxGraph(bunch.model.Graph) method.  This class also implments necessary
  * behavior to support distributed clustering algorithms.
  *
  * @author Brian Mitchell
@@ -335,8 +337,7 @@ getConfigurationDialogName()
  *
  * @return a HillClimbing configuration object
  */
-public
-Configuration
+public Configuration
 getConfiguration()
 {
   if (configuration_d == null) {

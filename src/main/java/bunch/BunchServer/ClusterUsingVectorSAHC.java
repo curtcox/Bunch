@@ -18,6 +18,8 @@
 package bunch.BunchServer;
 
 import bunch.*;
+import bunch.model.Cluster;
+import bunch.model.Graph;
 import bunch.serverui.BSWindow;
 import bunch.serverui.ServerClusteringProgress;
 
@@ -26,9 +28,9 @@ public class ClusterUsingVectorSAHC implements Runnable
 
 int[] currWork = null;
 int pos=-1, maxPos=-1;
-Cluster  currCluster = null;
+Cluster currCluster = null;
 Callback cliCallback = null;
-Graph    graph = null;
+Graph graph = null;
 ServerProperties sProps = null;
 IterationManager iMgr = null;
 BSWindow parent = null;

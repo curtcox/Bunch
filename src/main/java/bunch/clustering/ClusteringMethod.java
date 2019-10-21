@@ -1,6 +1,9 @@
 package bunch.clustering;
 
 import bunch.*;
+import bunch.model.Cluster;
+import bunch.model.Configuration;
+import bunch.model.Graph;
 
 /**
  * The superclass for all clustering methods. A clustering method is (usually) an
@@ -211,7 +214,7 @@ public void setConfiguration(Configuration c)
  * Obtains the configuration object for this clustering method.
  *
  * @return the configuration
- * @see #setConfiguration(bunch.Configuration)
+ * @see #setConfiguration(Configuration)
  */
 public Configuration getConfiguration()
 {

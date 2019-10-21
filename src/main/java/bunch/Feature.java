@@ -1,12 +1,14 @@
 package bunch;
 
+import bunch.model.Configuration;
+
 /**
  * An interface used to create procedures that can extend other processes
  * generically. The objects that implement this interface will be serializable.
  *
  * @author Brian Mitchell
  *
- * @see bunch.Configuration
+ * @see Configuration
  */
 public interface Feature extends java.io.Serializable {
 /**
