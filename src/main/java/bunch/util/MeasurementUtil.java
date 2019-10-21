@@ -1,6 +1,5 @@
 package bunch.util;
 
-import bunch.*;
 import java.util.*;
 
 import java.awt.*;
@@ -9,6 +8,7 @@ import javax.swing.border.*;
 import java.awt.event.*;
 
 import bunch.api.*;
+import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 import bunch.ui.BunchFrame;
 
 public class MeasurementUtil extends JDialog {

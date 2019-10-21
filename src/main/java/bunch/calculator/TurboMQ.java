@@ -1,4 +1,10 @@
-package bunch;
+package bunch.calculator;
+
+import bunch.Cluster;
+import bunch.Graph;
+import bunch.Node;
+import bunch.calculator.ObjectiveFunctionCalculator;
+import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 
 /**
  * The basic objective function calculator. This calculation method does not
@@ -7,8 +13,8 @@ package bunch;
  * and then makes the calculations, setting the appropriate values in the
  * graph when finished.
  *
- * @see bunch.ObjectiveFunctionCalculator
- * @see bunch.ObjectiveFunctionCalculatorFactory
+ * @see ObjectiveFunctionCalculator
+ * @see ObjectiveFunctionCalculatorFactory
  */
 public class TurboMQ implements ObjectiveFunctionCalculator {
 private Graph graph_d;

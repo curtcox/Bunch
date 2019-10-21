@@ -1,42 +1,3 @@
-/****
- *
- *	$Log: DotGraphOutput.java,v $
- *	Revision 3.0  2002/02/03 18:41:48  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.7  2001/04/02 19:23:39  bsmitc
- *	*** empty log message ***
- *
- *	Revision 3.6  2001/03/17 14:55:23  bsmitc
- *	Added label to DotGraphOutput, Changed inheritance tree for GA method
- *
- *	Revision 3.5  2000/11/26 15:48:13  bsmitc
- *	Fixed various bugs
- *
- *	Revision 3.4  2000/08/18 21:08:00  bsmitc
- *	Added feature to support tree output for dotty and text
- *
- *	Revision 3.3  2000/08/17 00:26:04  bsmitc
- *	Fixed omnipresent and library support for nodes in the MDG not connected to
- *	anything but the omnipresent nodes and libraries.
- *
- *	Revision 3.2  2000/08/16 00:12:45  bsmitc
- *	Extended UI to support various views and output options
- *
- *	Revision 3.1  2000/08/11 22:01:55  bsmitc
- *	Updated dot output driver to support new output options - all, top, median
- *
- *	Revision 3.0  2000/07/26 22:46:09  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch;
 
 import java.io.*;
@@ -49,8 +10,7 @@ import java.util.*;
  *
  * @author Brian Mitchell
  */
-public
-class DotGraphOutput
+public class DotGraphOutput
   extends GraphOutput
 {
 

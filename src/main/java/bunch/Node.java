@@ -79,7 +79,7 @@ String name_d;
 /**
  * The Node's current cluster
  */
-int cluster;
+public int cluster;
 
 private void assignUniqueID()
 {

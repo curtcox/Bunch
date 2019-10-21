@@ -537,7 +537,7 @@ public void BunchAPITest1x()
       v = g.getMQValue();
       System.out.println("Basic Mq value= "+v);
 
-      g = BunchGraphUtils.constructFromSil(mdg,sil,"bunch.TurboMQ");
+      g = BunchGraphUtils.constructFromSil(mdg,sil,"bunch.calculator.TurboMQ");
       v = g.getMQValue();
       System.out.println("Turbo Mq value= "+v);
 
@@ -561,7 +561,7 @@ public void BunchAPITest1x()
 
       //bp.setProperty(BunchProperties.USER_DIRECTED_CLUSTER_SIL,"e:\\samplemdgs\\compiler.locks");
       //bp.setProperty(BunchProperties.LIBRARY_LIST,"declarations");
-      //bp.setProperty(BunchProperties.MQ_CALCULATOR_CLASS,"bunch.TurboMQIncrW");
+      //bp.setProperty(BunchProperties.MQ_CALCULATOR_CLASS,"bunch.calculator.TurboMQIncrW");
 
       //bp.setProperty(BunchProperties.ALG_GA_POPULATION_SZ,"100");
       //bp.setProperty(BunchProperties.ALG_GA_NUM_GENERATIONS,"100");

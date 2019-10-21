@@ -1,4 +1,8 @@
-package bunch;
+package bunch.calculator;
+
+import bunch.Cluster;
+import bunch.Graph;
+import bunch.Node;
 
 /**
  * The basic objective function calculator. This calculation method does not
@@ -7,10 +11,10 @@ package bunch;
  * and then makes the calculations, setting the appropriate values in the
  * graph when finished.
  *
- * @see bunch.ObjectiveFunctionCalculator
- * @see bunch.ObjectiveFunctionCalculatorFactory
+ * @see ObjectiveFunctionCalculator
+ * @see ObjectiveFunctionCalculatorFactory
  */
-public class TurboMQ2 implements ObjectiveFunctionCalculator {
+public class WeightedObjectiveFunctionCalculator implements ObjectiveFunctionCalculator {
 private Graph graph_d;
 private static int[][] clusterMatrix_d = null;
 private Node[] nodes_x;
@@ -20,9 +24,7 @@ private int numberOfNodes_d;
 /**
  * Class constructor
  */
-public
-TurboMQ2()
-{
+public WeightedObjectiveFunctionCalculator() {
 }
 
 /**
@@ -31,10 +33,7 @@ TurboMQ2()
  *
  * @param g the graph which OF will be calculated
  */
-public
-void
-init(Graph g)
-{
+public void init(Graph g) {
   graph_d = g;
   numberOfNodes_d = g.getNumberOfNodes();
   nodes_x = g.getNodes();

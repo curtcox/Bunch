@@ -27,8 +27,9 @@ package bunch.api;
 
 import java.util.*;
 import bunch.*;
+import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 
-public class BunchGraphUtils {
+ public class BunchGraphUtils {
 
   public static final String MECL_VALUE = "MeclValue";
   public static final String MECL_QUALITY_METRIC = "MeclQualityMetric";

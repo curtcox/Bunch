@@ -17,6 +17,7 @@
  */
 package bunch;
 
+import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 import bunch.clustering.ClusteringMethodFactory;
 
 /**
@@ -90,7 +91,7 @@ getClusteringMethodFactory()
  *
  * @param fac the new OF Calculator method factory
  * @see #getObjectiveFunctionCalculatorFactory()
- * @see bunch.ObjectiveFunctionCalculatorFactory
+ * @see ObjectiveFunctionCalculatorFactory
  */
 public
 void
@@ -104,8 +105,8 @@ setObjectiveFunctionCalculatorFactory(ObjectiveFunctionCalculatorFactory fac)
  * methods set to this preferences object
  *
  * @return the OF Calculator method factory
- * @see #setObjectiveFunctionCalculatorFactory(bunch.ObjectiveFunctionCalculatorFactory)
- * @see bunch.ObjectiveFunctionCalculatorFactory
+ * @see #setObjectiveFunctionCalculatorFactory(ObjectiveFunctionCalculatorFactory)
+ * @see ObjectiveFunctionCalculatorFactory
  */
 public
 ObjectiveFunctionCalculatorFactory

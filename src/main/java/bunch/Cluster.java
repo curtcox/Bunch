@@ -2,6 +2,8 @@ package bunch;
 
 import java.util.Hashtable;
 import java.util.ArrayList;
+
+import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.stats.*;
 
 /**

@@ -46,7 +46,7 @@ int numIterations_d;
 int popSize_d;
 public int expNumber_d = 0;
 public boolean runBatch_d = false;
-BufferedWriter writer_d = null;
+public BufferedWriter writer_d = null;
 
 /**
  * Class constructor.

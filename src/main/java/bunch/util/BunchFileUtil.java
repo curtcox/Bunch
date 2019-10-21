@@ -1,6 +1,6 @@
 package bunch.util;
 
-import bunch.*;
+import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 
 import java.awt.*;
 import javax.swing.*;

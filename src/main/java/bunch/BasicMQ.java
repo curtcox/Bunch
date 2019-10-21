@@ -17,6 +17,9 @@
  */
 package bunch;
 
+import bunch.calculator.ObjectiveFunctionCalculator;
+import bunch.calculator.ObjectiveFunctionCalculatorFactory;
+
 /**
  * The basic objective function calculator. This calculation method does not
  * take into account the weights of the edges between nodes in the graph.
@@ -26,13 +29,10 @@ package bunch;
  *
  * @author Brian Mitchell
  *
- * @see bunch.ObjectiveFunctionCalculator
- * @see bunch.ObjectiveFunctionCalculatorFactory
+ * @see ObjectiveFunctionCalculator
+ * @see ObjectiveFunctionCalculatorFactory
  */
-public
-class BasicMQ
-  implements ObjectiveFunctionCalculator
-{
+public class BasicMQ implements ObjectiveFunctionCalculator {
 private Graph graph_d;
 private static int[][] clusterMatrix_d = null;
 private Node[] nodes_x;

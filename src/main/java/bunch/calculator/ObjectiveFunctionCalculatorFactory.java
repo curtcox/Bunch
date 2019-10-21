@@ -1,11 +1,14 @@
-package bunch;
+package bunch.calculator;
+
+import bunch.GenericFactory;
+import bunch.calculator.ObjectiveFunctionCalculator;
 
 /**
  * A factory for different kinds of objective function calculator objects
  *
  * @author Diego Doval
  * @version 1.0
- * @see bunch.ObjectiveFunctionCalculator
+ * @see ObjectiveFunctionCalculator
  * @see bunch.GenericFactory
  */
 public class ObjectiveFunctionCalculatorFactory extends GenericFactory {
@@ -22,18 +25,18 @@ ObjectiveFunctionCalculatorFactory()
   super();
   setFactoryType("ObjectiveFunctionCalculator");
   addItem("Basic MQ Function", "bunch.BasicMQ");
-  addItem("Turbo MQ Function", "bunch.TurboMQ");
-  //addItem("Incremental MQ", "bunch.TurboMQIncr");
-  addItem("Incremental MQ Weighted", "bunch.TurboMQIncrW");
+  addItem("Turbo MQ Function", "bunch.calculator.TurboMQ");
+  //addItem("Incremental MQ", "bunch.calculator.TurboMQIncr");
+  addItem("Incremental MQ Weighted", "bunch.calculator.TurboMQIncrW");
 
   addItem("bunch.BasicMQ", "bunch.BasicMQ");
-  addItem("bunch.TurboMQ", "bunch.TurboMQ");
-  addItem("bunch.ITurboMQ", "bunch.TurboMQIncrW");
-  addItem("bunch.TurboMQIncrW", "bunch.TurboMQIncrW");
+  addItem("bunch.calculator.TurboMQ", "bunch.calculator.TurboMQ");
+  addItem("bunch.ITurboMQ", "bunch.calculator.TurboMQIncrW");
+  addItem("bunch.calculator.TurboMQIncrW", "bunch.calculator.TurboMQIncrW");
 
-  //addItem("Turbo MQ Squared", "bunch.TurboMQ2");
-  //addItem("Experimental Weighted 2", "bunch.WeightedObjectiveFunctionCalculator2");
-  //addItem("Experimental Weighted 3", "bunch.WeightedObjectiveFunctionCalculator3");
+  //addItem("Turbo MQ Squared", "bunch.calculator.TurboMQ2");
+  //addItem("Experimental Weighted 2", "bunch.calculator.WeightedObjectiveFunctionCalculator2");
+  //addItem("Experimental Weighted 3", "bunch.calculator.WeightedObjectiveFunctionCalculator3");
   //addItem("Spiros MQ", "bunch.SpirosMQ");
 }
 

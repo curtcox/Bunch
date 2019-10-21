@@ -1,37 +1,7 @@
-/****
- *
- *	$Log: Graph.java,v $
- *	Revision 3.0  2002/02/03 18:41:51  bsmitc
- *	Retag starting at 3.0
- *
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *
- *	Revision 3.5  2000/11/26 15:48:13  bsmitc
- *	Fixed various bugs
- *
- *	Revision 3.4  2000/10/22 17:30:06  bsmitc
- *	Fixed bug with user-directed clustering. Also, added support to clear
- *	the user-directed clustering option once it is selected
- *
- *	Revision 3.3  2000/10/22 15:48:49  bsmitc
- *	*** empty log message ***
- *
- *	Revision 3.2  2000/08/11 13:19:10  bsmitc
- *	Added support for generating various output levels - all, median, one
- *
- *	Revision 3.1  2000/08/02 21:40:53  bsmitc
- *	Added support for calculator feature
- *
- *	Revision 3.0  2000/07/26 22:46:09  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch;
+
+import bunch.calculator.ObjectiveFunctionCalculator;
+import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 
 import java.util.Random;
 

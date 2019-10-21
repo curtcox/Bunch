@@ -1,6 +1,5 @@
 package bunch.util;
 
-import bunch.*;
 import java.util.*;
 
 import java.awt.*;
@@ -8,6 +7,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 import bunch.api.*;
+import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 
 /**
  * Title:        Bunch Clustering Tool

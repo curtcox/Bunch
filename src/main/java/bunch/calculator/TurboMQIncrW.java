@@ -1,21 +1,17 @@
-package bunch;
+package bunch.calculator;
 
-/**
- * The basic objective function calculator. This calculation method does not
- * take into account the weights of the edges between nodes in the graph.
- * The method uses the graph obtained in the #init(bunch.Graph) method
- * and then makes the calculations, setting the appropriate values in the
- * graph when finished.
- *
- * @see bunch.ObjectiveFunctionCalculator
- * @see bunch.ObjectiveFunctionCalculatorFactory
- */
-public class TurboMQIncr implements ObjectiveFunctionCalculator {
+import bunch.Cluster;
+import bunch.Graph;
+import bunch.Node;
+import bunch.calculator.ObjectiveFunctionCalculator;
+
+public class TurboMQIncrW implements ObjectiveFunctionCalculator {
 private Graph graph_d;
 private static int[][] clusterMatrix_d = null;
 private Node[] nodes_x;
 private int[] clusters_x = null;
 private int numberOfNodes_d;
+private bunch.stats.StatsManager sm = bunch.stats.StatsManager.getInstance();
 
 private int[] muE = null;
 private int[] epE = null;
@@ -24,7 +20,7 @@ private int[] epE = null;
  * Class constructor
  */
 public
-TurboMQIncr()
+TurboMQIncrW()
 {
 }
 
@@ -65,12 +61,14 @@ public double calculate(Cluster c)
 
   if(c.isMoveValid() == false)
   {
-    if(clusters_x == null)
+    //if(clusters_x == null)
       clusters_x = c.getClusterNames();
     return calcAll(c);
   }
-  else
-    return calcIncr(c,c.getLmEncoding());
+  else if (c.hasClusterNamesChanged())
+    clusters_x = c.getClusterNames();
+
+  return calcIncr(c,c.getLmEncoding());
 
 /*******
   muE = c.getMuEdgeVector();
@@ -93,6 +91,7 @@ public double calculate(Cluster c)
 private double calcAll(Cluster c)
 {
 //System.out.println("Doing the full calc");
+  sm.incrCalcAllCalcs();
   c.allocEdgeCounters();
   muE = c.getMuEdgeVector();
   epE = c.getEpsilonEdgeVector();
@@ -114,14 +113,19 @@ private double calcAll(Cluster c)
     for(int j = 0; j < fe.length; j++)
     {
       int target = fe[j];
+      int weight = feW[j];
       int targetCluster = cv[target];
-
+      
       if (targetCluster == currentNodeCluster)
-        muE[currentNodeCluster]++;
+        muE[currentNodeCluster]+= weight;
       else
-        epE[currentNodeCluster]++;
+      {
+        epE[currentNodeCluster]+=weight;
+        epE[targetCluster]+=weight;
+      }
     }
   }
+
   double MQ = 0.0;
   for(int k = 0; k < clusters_x.length; k++)
   {
@@ -131,7 +135,7 @@ private double calcAll(Cluster c)
 
     if ((dMuE+dEpE)>0)
     {
-      MQ += (dMuE / (dMuE + dEpE));
+      MQ += ((2*dMuE) / ((2*dMuE) + dEpE));
       //MQ += CFk;
     }
   }
@@ -142,7 +146,7 @@ private double calcAll(Cluster c)
 private double calcIncr(Cluster c, int[]lastMv)
 {
   //int []lastMv = c.getLmEncoding();
-
+  sm.incrCalcIncrCalcs();
   muE = c.getMuEdgeVector();
   epE = c.getEpsilonEdgeVector();
   double lastObjFn = c.getLastMvObjFn();
@@ -169,6 +173,7 @@ private double calcIncr(Cluster c, int[]lastMv)
   for(int j = 0; j < fe.length; j++)
   {
     int target = fe[j];
+    int weight = feW[j];
     int targetCluster = cv[target];  //cluster of edge
 
     Node x = nodes_x[target];
@@ -177,17 +182,19 @@ private double calcIncr(Cluster c, int[]lastMv)
 
     if(targetCluster == lmNewC)
     {
-        muE[lmNewC]++;
-        epE[lmOrigC]--;
+        muE[lmNewC]+=weight;
+        epE[lmOrigC]-=weight;
+        epE[lmNewC]-=weight;
     }else if(targetCluster == lmOrigC)
     {
-        muE[lmOrigC]--;
-        epE[lmNewC]++;
+        muE[lmOrigC]-=weight;
+        epE[lmNewC]+=weight;
+        epE[lmOrigC]+=weight;
     }
     else
     {
-        epE[lmOrigC]--;
-        epE[lmNewC]++;
+        epE[lmOrigC]-=weight;
+        epE[lmNewC]+=weight;
     }
   }
   //---- now the back edges
@@ -195,20 +202,23 @@ private double calcIncr(Cluster c, int[]lastMv)
   for(int j = 0; j < be.length; j++)
   {
     int target = be[j];
+    int bWeight = beW[j];
     int targetCluster = cv[target];  //cluster of edge
 
     if(targetCluster == lmNewC)
     {
-        muE[lmNewC]++;
-        epE[lmNewC]--;
+        muE[lmNewC]+=bWeight;
+        epE[lmNewC]-=bWeight;
+        epE[lmOrigC]-=bWeight;
     }else if(targetCluster == lmOrigC)
     {
-        muE[lmOrigC]--;
-        epE[lmOrigC]++;
+        muE[lmOrigC]-=bWeight;
+        epE[lmOrigC]+=bWeight;
+        epE[lmNewC]+=bWeight;
     }else
     {
-        //epE[lmOrigC]--;
-        //epE[lmNewC]++;
+        epE[lmOrigC]-=bWeight;
+        epE[lmNewC]+=bWeight;
     }
   }
 
@@ -230,7 +240,7 @@ private double calcCFi(int c)
   double dEpE = (double)epE[c];
 
   if ((dMuE+dEpE)>0)
-      return (dMuE / (dMuE + dEpE));
+      return ((2*dMuE) / ((2*dMuE) + dEpE));
   else
       return 0;
 }
@@ -392,3 +402,4 @@ calculateInterdependenciesValue(int[] c1, int[] c2, int nc1, int nc2)
   return interdep;
 }
 }
+

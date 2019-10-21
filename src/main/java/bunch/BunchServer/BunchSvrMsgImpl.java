@@ -1,23 +1,3 @@
-/****
- *
- *	$Log: BunchSvrMsgImpl.java,v $
- *	Revision 3.0  2002/02/03 18:42:06  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:05  bsmitc
- *	CVS Import
- *	
- *	Revision 3.1  2000/08/07 21:49:12  bsmitc
- *	*** empty log message ***
- *
- *	Revision 3.0  2000/07/26 22:46:18  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch.BunchServer;
 
 import bunch.Callback;
@@ -27,11 +7,10 @@ import bunch.serverui.ServerClusteringProgress;
 import bunch.ui.SwingWorker;
 
 import java.rmi.RemoteException;
-import javax.rmi.PortableRemoteObject;
 
 import java.awt.*;
 
-public class BunchSvrMsgImpl extends PortableRemoteObject implements BunchSvrMsg{
+public class BunchSvrMsgImpl implements BunchSvrMsg {
 
   Callback clientCallback = null;
   private  ServerProperties sp = new ServerProperties();

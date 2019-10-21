@@ -47,7 +47,7 @@ public class BunchStatsTest {
       p.setDelims(" \t");
       bunch.Graph g = (bunch.Graph)p.parse();
 
-      String objFnCalc =  "bunch.TurboMQIncrW";
+      String objFnCalc =  "bunch.calculator.TurboMQIncrW";
       (pref.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
       bunch.Graph.setObjectiveFunctionCalculatorFactory(pref.getObjectiveFunctionCalculatorFactory());
       g.setObjectiveFunctionCalculator(objFnCalc);

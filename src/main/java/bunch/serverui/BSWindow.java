@@ -278,7 +278,7 @@ public class BSWindow extends JFrame {
       logText.setText(smsg);
   }
 
-  void appendLogMsg(String smsg)
+  public void appendLogMsg(String smsg)
   {
       String s = logText.getText() + "\n" + smsg;
       logText.setText(s);

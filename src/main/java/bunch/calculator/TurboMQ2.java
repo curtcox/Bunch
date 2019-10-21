@@ -1,4 +1,10 @@
-package bunch;
+package bunch.calculator;
+
+import bunch.Cluster;
+import bunch.Graph;
+import bunch.Node;
+import bunch.calculator.ObjectiveFunctionCalculator;
+import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 
 /**
  * The basic objective function calculator. This calculation method does not
@@ -7,11 +13,10 @@ package bunch;
  * and then makes the calculations, setting the appropriate values in the
  * graph when finished.
  *
- * @see bunch.ObjectiveFunctionCalculator
- * @see bunch.ObjectiveFunctionCalculatorFactory
+ * @see ObjectiveFunctionCalculator
+ * @see ObjectiveFunctionCalculatorFactory
  */
-public class WeightedObjectiveFunctionCalculator2 implements ObjectiveFunctionCalculator {
-
+public class TurboMQ2 implements ObjectiveFunctionCalculator {
 private Graph graph_d;
 private static int[][] clusterMatrix_d = null;
 private Node[] nodes_x;
@@ -22,7 +27,7 @@ private int numberOfNodes_d;
  * Class constructor
  */
 public
-WeightedObjectiveFunctionCalculator2()
+TurboMQ2()
 {
 }
 
@@ -55,7 +60,6 @@ public double calculate(Cluster c)
   calculate();
   return graph_d.getObjectiveFunctionValue();
 }
-
 
 /**
  * Calculate the objective function value for the graph passed in the
@@ -150,37 +154,21 @@ calculateIntradependenciesValue(int[] c, int numCluster)
   double objValue = 0;
 
 //  if (exitEdges == 0)
-//    objValue = (intradep / k);
+//   objValue = (intraEdges / k);
 //  else
-//    objValue = (intradep / k) * (1 / exitEdges);
+//   objValue = (intraEdges / k) * (1 / exitEdges);
 
-//  if ((exitEdges+intradep) == 0)
-//   objValue = ((intraEdges-interEdges) / k);
-//  else
-//   objValue = ((intraEdges-interEdges) / k) * (intradep / (intradep+exitEdges));
-
-//GOOD
-  if ((exitEdges+intradep) == 0)
+   //---------------------------------------------
+   //GOOD
+   //---------------------------------------------
+   if ((exitEdges+intradep) == 0)
       objValue = 0;
-  else
-      objValue = 0.5 - ((intraEdges/(intraEdges+interEdges)) * (intradep / (intradep+exitEdges)));
+   else
+      objValue = (intraEdges/(intraEdges+interEdges)) * (intradep / (intradep+exitEdges));
 
-//  objValue -= 0.5;
-
-//  if ((exitEdges+intradep) == 0)
-//   objValue = 0;
-//  else
-//   objValue = ((intradep-exitEdges) / (intradep+exitEdges));
-
-//if(intraEdges > interEdges)
-//{
-//  System.out.println("IntraEdges = " + intraEdges);
-//  System.out.println("InterEdges = " + interEdges);
-//  System.out.println("IntraEdge Weights = " + intradep);
-//  System.out.println("InterEdge Weights = " + exitEdges);
 //  System.out.println("Obj Cluster Val = " + objValue);
 //  System.out.println("***********************************");
-//}
+
   return objValue;
 }
 

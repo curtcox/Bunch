@@ -1,38 +1,15 @@
-/****
- *
- *	$Log: TSGraphOutput.java,v $
- *	Revision 3.0  2002/02/03 18:41:56  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *	
- *	Revision 3.0  2000/07/26 22:46:11  bsmitc
- *	*** empty log message ***
- *	
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *	
- *
- */
 package bunch;
 
 import java.io.*;
 import java.util.Vector;
 
-public
-class TSGraphOutput
+public class TSGraphOutput
   extends GraphOutput
 {
-public
-TSGraphOutput()
-{
-}
 
-public
-void
-write()
-{
+public TSGraphOutput() { }
+
+public void write() {
   Vector edges = new Vector();
   int clusters[] = graph_d.getClusters();
   Node[] nodeList = graph_d.getNodes();
@@ -482,8 +459,10 @@ write()
         }
       }
     }
-		clustersFile.close();
-
+
+		clustersFile.close();
+
+
     //Writing navigation file: relations between clusters nodes and clusters files
 		writer_d.write("// Navigation relationships\n");
     if (hasLibraries) {

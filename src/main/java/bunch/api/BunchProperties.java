@@ -68,7 +68,7 @@ public class BunchProperties extends Properties{
       public final static String ONE_LEVEL                = "ClustApproachOneLevel";
       public final static String AGGLOMERATIVE            = "ClustApproachAgglomerative";
   public final static String MQ_CALCULATOR_CLASS          = "MQCalculatorClass";
-      public final static String MQ_CALC_DEFAULT_CLASS      = "bunch.TurboMQIncrW";
+      public final static String MQ_CALC_DEFAULT_CLASS      = "bunch.calculator.TurboMQIncrW";
   public final static String ECHO_RESULTS_TO_CONSOLE  = "EchoResultsToConsole";
   public final static String CLUSTERING_ALG           = "ClusteringAlgorithm";
       public final static String ALG_EXHAUSTIVE         = "Exhaustive";

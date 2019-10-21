@@ -1,5 +1,7 @@
 package bunch;
 
+import bunch.calculator.ObjectiveFunctionCalculator;
+
 public class SpirosMQ implements ObjectiveFunctionCalculator {
 
 private Graph graph_d;
