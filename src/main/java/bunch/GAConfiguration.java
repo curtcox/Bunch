@@ -20,13 +20,15 @@
  */
 package bunch;
 
+import bunch.ui.GAClusteringConfigurationDialog;
+
 /**
  * A subclass of Configuration with specific parameters used by the Genetic
  * Algorithm clustering method.
  *
  * @author Brian Mitchell
  *
- * @see bunch.GAClusteringConfigurationDialog
+ * @see GAClusteringConfigurationDialog
  * @see bunch.GAClusteringMethod
  */
 public

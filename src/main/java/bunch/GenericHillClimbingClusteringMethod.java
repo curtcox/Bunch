@@ -237,7 +237,7 @@ public
 String
 getConfigurationDialogName()
 {
-  return "bunch.HillClimbingClusteringConfigurationDialog";
+  return "bunch.ui.HillClimbingClusteringConfigurationDialog";
 }
 
 /**

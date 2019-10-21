@@ -21,7 +21,9 @@
  * @author Brian Mitchell
  * @version 1.0
  */
-package bunch;
+package bunch.ui;
+
+import bunch.SASimpleTechnique;
 
 import java.awt.*;
 import javax.swing.*;

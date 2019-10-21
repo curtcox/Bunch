@@ -17,13 +17,15 @@
  */
 package bunch;
 
+import bunch.ui.HillClimbingClusteringConfigurationDialog;
+
 /**
  * A subclass of Configuration with specific parameters used by the Hill Climbing
  * Algorithms.
  *
  * @author Brian Mitchell
  *
- * @see bunch.HillClimbingClusteringConfigurationDialog
+ * @see HillClimbingClusteringConfigurationDialog
  * @see bunch.GenericHillClimbingClusteringMethod
  */
 public

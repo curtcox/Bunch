@@ -21,7 +21,11 @@
  *
  *
  */
-package bunch;
+package bunch.ui;
+
+import bunch.Configuration;
+import bunch.Graph;
+import bunch.GridBagConstraints2;
 
 import java.awt.*;
 import javax.swing.*;
@@ -32,8 +36,8 @@ import java.awt.event.*;
  * method. This dialog manages the buttons (ok, cancel) and has a panel
  * that subclasses can use to add components into.
  *
- * @see bunch.GAClusteringConfigurationDialog
- * @see bunch.HillClimbingClusteringConfigurationDialog
+ * @see GAClusteringConfigurationDialog
+ * @see HillClimbingClusteringConfigurationDialog
  *
  * @author Brian Mitchell
  */

@@ -15,11 +15,15 @@
  *
  *
  */
-package bunch;
+package bunch.ui;
+
+import bunch.Configuration;
+import bunch.GAConfiguration;
+import bunch.GridBagConstraints2;
+import bunch.ui.ClusteringConfigurationDialog;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
 
 /**
  * A configuration dialog for the Genetic Algorithm clustering
@@ -27,7 +31,7 @@ import java.awt.event.*;
  *
  * @author Brian Mitchell
  *
- * @see bunch.ClusteringConfigurationDialog
+ * @see ClusteringConfigurationDialog
  * @see bunch.GAClusteringMethod
  */
 public
@@ -112,8 +116,7 @@ jbInit()
  *
  * @return the created configuration
  */
-protected
-Configuration
+protected Configuration
 createConfiguration()
 {
   configuration_d.setNumOfIterations(Integer.parseInt(jTextField1.getText()));

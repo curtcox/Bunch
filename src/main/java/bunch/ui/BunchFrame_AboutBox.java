@@ -25,7 +25,7 @@
  *
  *
  */
-package bunch;
+package bunch.ui;
 
 import java.awt.*;
 import java.awt.event.*;

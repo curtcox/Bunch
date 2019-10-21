@@ -1,11 +1,11 @@
-package bunch;
+package bunch.ui;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.*;
 import java.awt.event.*;
 //import java.util.*;
 
+import bunch.*;
 import bunch.stats.*;
 
 /**
@@ -14,13 +14,13 @@ import bunch.stats.*;
  * accordingly, waiting for user input when finished. The dialog also
  * lets the user pause the optimization and output it, then resuming the
  * optimization process. Instances of this class are managed and created
- * from the bunch.BunchFrame class. Also, this class implements the
+ * from the bunch.ui.BunchFrame class. Also, this class implements the
  * bunch.IterationListener interface to connect with the clustering method
  * and know its status.
  *
  * @author Brian Mitchell
  * @see bunch.ClusteringMethod
- * @see bunch.BunchFrame
+ * @see BunchFrame
  */
 public class ClusteringProgressDialog extends JDialog
         implements IterationListener

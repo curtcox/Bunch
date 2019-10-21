@@ -1,5 +1,6 @@
-package bunch;
+package bunch.ui;
 
+import bunch.*;
 import bunch.BunchServer.BunchSvrMsg;
 import bunch.stats.*;
 import java.awt.*;

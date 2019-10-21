@@ -1,5 +1,7 @@
 package bunch;
 
+import bunch.ui.BunchFrame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
@@ -9,7 +11,7 @@ import java.io.FileNotFoundException;
  * general parameters (such as GUI) and then creates a BunchFrame and
  * displays it.
  *
- * @see bunch.BunchFrame
+ * @see BunchFrame
  */
 public class Bunch {
 

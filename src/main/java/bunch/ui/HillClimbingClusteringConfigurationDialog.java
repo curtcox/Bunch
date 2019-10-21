@@ -24,13 +24,17 @@
  *
  *
  */
-package bunch;
+package bunch.ui;
+
+import bunch.Configuration;
+import bunch.GridBagConstraints2;
+import bunch.HillClimbingConfiguration;
+import bunch.ui.ClusteringConfigurationDialog;
 
 import java.awt.*;
 import javax.swing.*;
 //import borland.jbcl.layout.GridBagConstraints2;
-import java.awt.event.*;
-import java.util.*;
+
 
 /**
  * A configuration dialog for the Hill Climbing clustering
@@ -38,7 +42,7 @@ import java.util.*;
  *
  * @author Brian Mitchell
  *
- * @see bunch.ClusteringConfigurationDialog
+ * @see ClusteringConfigurationDialog
  * @see bunch.HillClimbingClusteringMethod
  * @see bunch.NextAscentHillClimbingClusteringMethod
  * @see bunch.SteepestAscentHillClimbingClusteringMethod
@@ -113,8 +117,7 @@ jbInit()
  *
  * @return the created configuration
  */
-protected
-Configuration
+protected Configuration
 createConfiguration()
 {
   configuration_d.setNumOfIterations(Integer.parseInt(jTextField1.getText()));

@@ -7,10 +7,9 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.event.*;
-import java.io.*;
-import java.beans.*;
 
 import bunch.api.*;
+import bunch.ui.BunchFrame;
 
 public class MeasurementUtil extends JDialog {
   JPanel panel1 = new JPanel();

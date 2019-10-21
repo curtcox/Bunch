@@ -429,7 +429,7 @@ public
 String
 getConfigurationDialogName()
 {
-  return "bunch.NAHCClusteringConfigurationDialog";
+  return "bunch.ui.NAHCClusteringConfigurationDialog";
 }
 
 public void

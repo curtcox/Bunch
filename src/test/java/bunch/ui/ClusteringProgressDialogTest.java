@@ -1,5 +1,6 @@
-package bunch;
+package bunch.ui;
 
+import bunch.ui.ClusteringProgressDialog;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;

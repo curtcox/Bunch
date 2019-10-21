@@ -33,6 +33,8 @@
  */
 package bunch;
 
+import bunch.ui.SASimpleTechniqueDialog;
+
 import java.util.*;
 
 public class SASimpleTechnique
@@ -92,7 +94,7 @@ extends SATechnique{
   }
 
   public String getConfigDialogName()
-  { return "bunch.SASimpleTechniqueDialog"; }
+  { return "bunch.ui.SASimpleTechniqueDialog"; }
 
   public boolean configureUsingDialog(java.awt.Frame parent)
   {

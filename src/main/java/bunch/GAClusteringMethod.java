@@ -206,7 +206,7 @@ public
 String
 getConfigurationDialogName()
 {
-  return "bunch.GAClusteringConfigurationDialog";
+  return "bunch.ui.GAClusteringConfigurationDialog";
 }
 
 /**

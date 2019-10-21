@@ -39,7 +39,10 @@
  * @author Brian Mitchell
  * @version 1.0
  */
-package bunch;
+package bunch.ui;
+
+import bunch.*;
+import bunch.ui.ClusteringConfigurationDialog;
 
 import java.awt.*;
 import javax.swing.*;
@@ -240,8 +243,7 @@ extends ClusteringConfigurationDialog
 /**
  * Create the configuration object for the NAHC hill climbing method.
  */
-protected
-Configuration
+protected Configuration
 createConfiguration()
 {
   configuration_d.setNumOfIterations(1);//(Integer.parseInt(jTextField1.getText()));
