@@ -1,4 +1,4 @@
-package bunch;
+package bunch.event;
 
 public class WorkFinishedEvent {
 

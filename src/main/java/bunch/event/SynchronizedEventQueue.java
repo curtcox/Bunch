@@ -1,4 +1,6 @@
-package bunch;
+package bunch.event;
+
+import bunch.event.BunchEvent;
 
 import java.util.*;
 
@@ -23,7 +25,7 @@ public class SynchronizedEventQueue {
   public Thread getManagerThread()
   {   return managerThread;   }
 
-  public BunchEvent  getEvent()
+  public BunchEvent getEvent()
   {
    try{
       //synchronized(managerThread){

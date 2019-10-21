@@ -1,6 +1,8 @@
-package bunch;
+package bunch.model;
 
 import bunch.model.Graph;
+import bunch.model.GraphOutput;
+import bunch.model.NextLevelGraph;
 import bunch.model.Node;
 
 import java.util.*;

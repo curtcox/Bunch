@@ -21,9 +21,11 @@ import javax.naming.*;
 import javax.rmi.PortableRemoteObject;
 import java.util.*;
 
-import bunch.*;
 import bunch.BunchServer.IterationManager;
 import bunch.BunchServer.BunchSvrMsg;
+import bunch.event.BunchEvent;
+import bunch.event.WorkFinishedEvent;
+import bunch.event.WorkRequestEvent;
 import bunch.model.Cluster;
 import bunch.model.Configuration;
 

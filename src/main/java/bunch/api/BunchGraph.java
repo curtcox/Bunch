@@ -29,8 +29,8 @@
  */
 package bunch.api;
 
-import  bunch.*;
 import bunch.model.Graph;
+import bunch.model.NextLevelGraph;
 import bunch.model.Node;
 
 import  java.util.*;

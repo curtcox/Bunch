@@ -5,10 +5,9 @@ import bunch.api.*;
 import bunch.clustering.ClusteringMethod;
 import bunch.clustering.NAHCConfiguration;
 import bunch.ga.GAConfiguration;
-import bunch.model.Cluster;
-import bunch.model.Configuration;
-import bunch.model.Graph;
-import bunch.model.Node;
+import bunch.model.*;
+import bunch.parser.DependencyFileParser;
+import bunch.parser.Parser;
 import bunch.stats.*;
 import bunch.ui.SwingWorker;
 

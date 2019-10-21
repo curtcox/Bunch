@@ -3,6 +3,8 @@ package bunch.ui;
 import bunch.*;
 import bunch.clustering.ClusteringMethod;
 import bunch.clustering.ClusteringMethod2;
+import bunch.event.IterationEvent;
+import bunch.model.GraphOutput;
 
 import java.awt.*;
 import javax.swing.*;

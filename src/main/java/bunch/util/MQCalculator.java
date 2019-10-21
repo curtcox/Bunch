@@ -9,10 +9,12 @@ package bunch.util;
  * @version 1.0
  */
 
-import bunch.*;
 import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 import bunch.model.Graph;
 import bunch.model.Node;
+import bunch.parser.ClusterFileParser;
+import bunch.parser.DependencyFileParser;
+import bunch.parser.Parser;
 
 public class MQCalculator {
 

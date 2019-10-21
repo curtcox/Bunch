@@ -1,7 +1,8 @@
-package bunch;
+package bunch.parser;
 
 import bunch.model.Graph;
 import bunch.model.Node;
+import bunch.parser.Parser;
 
 import java.util.*;
 
@@ -9,7 +10,7 @@ import java.util.*;
  * This class parses a file in SIL format and updates the provided graph
  * object.  This object is often created from the parser factory.
  *
- * @see bunch.Parser
+ * @see Parser
  *
  * @see http://serg.mcs.drexel.edu
  *

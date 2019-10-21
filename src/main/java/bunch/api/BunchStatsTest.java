@@ -26,6 +26,7 @@ package bunch.api;
 
 import bunch.model.Cluster;
 import bunch.model.Graph;
+import bunch.parser.Parser;
 
 import java.util.*;
 import java.io.*;
@@ -45,7 +46,7 @@ public class BunchStatsTest {
       String filename = "d:\\proj\\bunch\\examples\\bison"; //"e:\\incl";
       bunch.BunchPreferences pref = (bunch.BunchPreferences)(java.beans.Beans.instantiate(null, "bunch.BunchPreferences"));
 
-      bunch.Parser p = pref.getParserFactory().getParser("dependency");
+      Parser p = pref.getParserFactory().getParser("dependency");
       p.setInput(filename);
       p.setDelims(" \t");
       Graph g = (Graph)p.parse();

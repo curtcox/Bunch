@@ -6,7 +6,9 @@ import bunch.clustering.HillClimbingConfiguration;
 import bunch.ga.GAConfiguration;
 import bunch.model.Configuration;
 import bunch.model.Graph;
+import bunch.model.GraphOutput;
 import bunch.model.Node;
+import bunch.parser.Parser;
 
 import java.awt.*;
 import java.beans.Beans;

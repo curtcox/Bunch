@@ -1,4 +1,4 @@
-package bunch;
+package bunch.parser;
 
 import java.io.*;
 
@@ -9,7 +9,7 @@ import java.io.*;
  *
  * @author Diego Doval
  * @version 1.0
- * @see bunch.ParserFactory
+ * @see ParserFactory
  */
 public abstract class Parser
 {

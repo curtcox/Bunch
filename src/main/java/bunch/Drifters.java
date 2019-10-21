@@ -1,6 +1,7 @@
 package bunch;
 
 import bunch.model.Graph;
+import bunch.model.GraphOutput;
 import bunch.model.Node;
 
 import java.util.Vector;
@@ -10,7 +11,7 @@ import java.util.Vector;
  * in clusters for which they have no connection to any other modules in
  * the cluster.  Drifters should be rare, if even happen at all.
  *
- * @see bunch.GraphOutput
+ * @see GraphOutput
  *
  * @author Brian Mitchell
  */

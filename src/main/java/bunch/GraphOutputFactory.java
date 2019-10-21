@@ -1,5 +1,7 @@
 package bunch;
 
+import bunch.model.GraphOutput;
+
 /**
  * A factory for graph output generators
  */
@@ -14,11 +16,11 @@ public String defaultOption = "Dotty";
 public GraphOutputFactory() {
   super();
   setFactoryType("GraphOutput");
-  addItem("Dotty", "bunch.DotGraphOutput");
-  addItem("Text", "bunch.TXTGraphOutput");
+  addItem("Dotty", "bunch.model.DotGraphOutput");
+  addItem("Text", "bunch.model.TXTGraphOutput");
   addItem("GXL","bunch.gxl.io.GXLGraphOutput");
-  //addItem("Tom Sawyer", "bunch.TSGraphOutput");
-  //addItem("Text Tree","bunch.TXTTreeGraphOutput");
+  //addItem("Tom Sawyer", "bunch.model.TSGraphOutput");
+  //addItem("Text Tree","bunch.model.TXTTreeGraphOutput");
 }
 
 /**
@@ -29,8 +31,7 @@ public GraphOutputFactory() {
  * @param the name for the desired output generator
  * @return the graph output generator corresponding to the name
  */
-public
-GraphOutput
+public GraphOutput
 getOutput(String name)
 {
   return (GraphOutput)getItemInstance(name);

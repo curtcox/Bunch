@@ -1,6 +1,4 @@
-package bunch;
-
-import bunch.model.Graph;
+package bunch.model;
 
 import java.io.*;
 
@@ -8,9 +6,9 @@ import java.io.*;
  * A generic class to output a partitioned graph. Subclasses must define
  * the #write() method to implement different output formats.
  *
- * @see bunch.DotGraphOutput
- * @see bunch.TSGraphOutput
- * @see bunch.TXTGraphOutput
+ * @see DotGraphOutput
+ * @see TSGraphOutput
+ * @see TXTGraphOutput
  *
  * @author Brian Mitchell
  */
@@ -34,10 +32,7 @@ protected int baseID = 0;
 /**
  * Class constructor
  */
-public
-GraphOutput()
-{
-}
+public GraphOutput() { }
 
 /**
  * Determines the output technique

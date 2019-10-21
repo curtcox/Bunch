@@ -1,7 +1,8 @@
-package bunch;
+package bunch.parser;
 
 import bunch.model.Graph;
 import bunch.model.Node;
+import bunch.parser.Parser;
 
 import java.util.*;
 
@@ -11,7 +12,7 @@ import java.util.*;
  *
  * @author Brian Mitchell
  *
- * @see bunch.Parser
+ * @see Parser
  * @see Graph
  */
 public class DependencyFileParser extends Parser {

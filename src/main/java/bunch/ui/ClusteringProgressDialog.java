@@ -8,9 +8,8 @@ import java.awt.event.*;
 import bunch.*;
 import bunch.clustering.ClusteringMethod;
 import bunch.clustering.NAHCConfiguration;
-import bunch.model.Cluster;
-import bunch.model.Configuration;
-import bunch.model.Graph;
+import bunch.event.IterationEvent;
+import bunch.model.*;
 import bunch.stats.*;
 
 /**

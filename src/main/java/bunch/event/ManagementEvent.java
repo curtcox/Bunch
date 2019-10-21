@@ -1,4 +1,4 @@
-package bunch;
+package bunch.event;
 
 /**
  * Not much functionality yet, but this class is used to control management events

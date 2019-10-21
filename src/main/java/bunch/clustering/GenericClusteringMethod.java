@@ -1,7 +1,7 @@
 package bunch.clustering;
 
 import bunch.model.Graph;
-import bunch.IterationEvent;
+import bunch.event.IterationEvent;
 
 /**
  * A generic clustering method class, intended to provide common services

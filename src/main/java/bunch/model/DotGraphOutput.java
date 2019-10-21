@@ -1,6 +1,8 @@
-package bunch;
+package bunch.model;
 
 import bunch.model.Graph;
+import bunch.model.GraphOutput;
+import bunch.model.NextLevelGraph;
 import bunch.model.Node;
 
 import java.io.*;
@@ -9,7 +11,7 @@ import java.util.*;
 /**
  * A class to output a partitioned graph in "Dot" format.
  *
- * @see bunch.GraphOutput
+ * @see GraphOutput
  *
  * @author Brian Mitchell
  */

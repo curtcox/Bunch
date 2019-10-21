@@ -1,4 +1,7 @@
-package bunch;
+package bunch.parser;
+
+import bunch.GenericFactory;
+import bunch.parser.Parser;
 
 /**
  * A factory for parsers of different kinds
@@ -12,13 +15,12 @@ ParserFactory()
 {
   super();
   setFactoryType("Parser");
-  addItem("dependency", "bunch.DependencyFileParser");
+  addItem("dependency", "bunch.parser.DependencyFileParser");
   addItem("gxl", "bunch.gxl.parser.GXLGraphParser");
-  addItem("cluster", "bunch.ClusterFileParser");
+  addItem("cluster", "bunch.parser.ClusterFileParser");
 }
 
-public
-Parser
+public Parser
 getParser(String name)
 {
   return (Parser)getItemInstance(name);

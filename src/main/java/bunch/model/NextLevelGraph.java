@@ -1,7 +1,4 @@
-package bunch;
-
-import bunch.model.Graph;
-import bunch.model.Node;
+package bunch.model;
 
 import java.util.*;
 

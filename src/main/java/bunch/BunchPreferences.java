@@ -2,6 +2,7 @@ package bunch;
 
 import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 import bunch.clustering.ClusteringMethodFactory;
+import bunch.parser.ParserFactory;
 
 /**
  * This class contains the settings used by Bunchv2. (Currently most of
@@ -102,7 +103,7 @@ getObjectiveFunctionCalculatorFactory()
  *
  * @param fac the new parser factory
  * @see #getParserFactory()
- * @see bunch.ParserFactory
+ * @see ParserFactory
  */
 public
 void
@@ -115,8 +116,8 @@ setParserFactory(ParserFactory fac)
  * Obtains the factory of parsers set to this preferences object
  *
  * @return the parser factory
- * @see #setParserFactory(bunch.ParserFactory)
- * @see bunch.ParserFactory
+ * @see #setParserFactory(ParserFactory)
+ * @see ParserFactory
  */
 public
 ParserFactory
