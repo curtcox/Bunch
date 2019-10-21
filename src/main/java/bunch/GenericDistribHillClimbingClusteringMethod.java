@@ -1,35 +1,9 @@
-/****
- *
- *	$Log: GenericDistribHillClimbingClusteringMethod.java,v $
- *	Revision 3.0  2002/02/03 18:41:50  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.1  2001/04/03 23:32:12  bsmitc
- *	Added NAHC (really HC) support for Distributed Bunch, updated release
- *	version number to 3.2
- *
- *	Revision 3.0  2000/07/26 22:46:09  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
-
 package bunch;
 
 import java.util.*;
-import javax.swing.*;
 import java.io.*;
 
 import javax.naming.*;
-import javax.rmi.PortableRemoteObject;
-import java.rmi.RMISecurityManager;
-import java.util.*;
 
 import bunch.BunchServer.BunchSvrMsg;
 import bunch.BunchServer.IterationManager;
@@ -47,10 +21,7 @@ import bunch.BunchServer.IterationManager;
  * @see bunch.NextAscentHillClimbingClusteringMethod
  * @see bunch.SteepestAscentHillClimbingClusteringMethod
  */
-public abstract
-class GenericDistribHillClimbingClusteringMethod
-  extends GenericClusteringMethod2
-{
+public abstract class GenericDistribHillClimbingClusteringMethod extends GenericClusteringMethod2 {
 //HillClimbingConfiguration config_d;
 NAHCConfiguration config_d;
 protected BunchEvent                event = null;
@@ -60,8 +31,7 @@ protected SynchronizedEventQueue    eventQ = null;
 protected int                       BaseUOWSize = 5;
 protected boolean                   useAdaptiveAlg = true;
 
-public
-GenericDistribHillClimbingClusteringMethod()
+public GenericDistribHillClimbingClusteringMethod()
 {
   setConfigurable(true);
 }

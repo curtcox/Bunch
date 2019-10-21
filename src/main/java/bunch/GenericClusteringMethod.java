@@ -1,25 +1,4 @@
-/****
- *
- *	$Log: GenericClusteringMethod.java,v $
- *	Revision 3.0  2002/02/03 18:41:50  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.0  2000/07/26 22:46:09  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
-
 package bunch;
-
-import java.util.*;
-import javax.swing.*;
 
 /**
  * A generic clustering method class, intended to provide common services

@@ -1,29 +1,3 @@
-/****
- *
- *	$Log: HillClimbingClusteringConfigurationDialog.java,v $
- *	Revision 3.0  2002/02/03 18:41:51  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *	
- *	Revision 3.3  2000/08/13 18:40:06  bsmitc
- *	Added support for SA framework
- *
- *	Revision 3.2  2000/08/12 22:16:10  bsmitc
- *	Added support for Simulated Annealing configuration for NAHC technique
- *
- *	Revision 3.1  2000/08/11 22:13:04  bsmitc
- *	Removed generation selection feature
- *
- *	Revision 3.0  2000/07/26 22:46:10  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch.ui;
 
 import bunch.Configuration;

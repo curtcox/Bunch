@@ -1,25 +1,11 @@
 package bunch.util;
 
 import bunch.*;
-import java.util.*;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.*;
 import java.awt.event.*;
 import java.io.*;
-import java.beans.*;
-
-import bunch.api.*;
-
-/**
- * Title:        Bunch Clustering Tool
- * Description:
- * Copyright:    Copyright (c) 2000
- * Company:      Drexel University
- * @author Brian Mitchell
- * @version 1.0
- */
 
 public class BunchFileUtil extends JDialog {
 

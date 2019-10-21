@@ -17,6 +17,8 @@
  */
 package bunch.BunchServer;
 
+import bunch.serverui.BSWindow;
+
 import javax.swing.UIManager;
 import java.awt.*;
 

@@ -1,30 +1,3 @@
-/****
- *
- *	$Log: BunchFrame_AboutBox.java,v $
- *	Revision 3.0  2002/02/03 18:41:44  bsmitc
- *	Retag starting at 3.0
- *
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *
- *	Revision 3.3  2001/04/03 23:32:12  bsmitc
- *	Added NAHC (really HC) support for Distributed Bunch, updated release
- *	version number to 3.2
- *
- *	Revision 3.2  2001/04/02 19:23:39  bsmitc
- *	*** empty log message ***
- *
- *	Revision 3.1  2000/07/26 23:27:55  bsmitc
- *	Changed about box to include updated copywrite date and CVS release tag
- *
- *	Revision 3.0  2000/07/26 22:46:07  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:33  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch.ui;
 
 import java.awt.*;
@@ -37,9 +10,7 @@ import javax.swing.border.*;
  *
  * @author Brian Mitchell
  */
-public
-class BunchFrame_AboutBox
-  extends Dialog
+public class BunchFrame_AboutBox extends Dialog
   implements ActionListener{
 JPanel panel1 = new JPanel();
 JPanel panel2 = new JPanel();

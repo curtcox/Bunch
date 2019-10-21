@@ -1,47 +1,18 @@
-/****
- *
- *	$Log: BunchAPIOld.java,v $
- *	Revision 3.0  2002/02/03 18:41:43  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.2  2000/10/22 15:48:47  bsmitc
- *	*** empty log message ***
- *
- *	Revision 3.1  2000/08/19 22:07:37  bsmitc
- *	Renamed BunchAPI to BunchAPIOld
- *
- *	Revision 3.0  2000/07/26 22:46:07  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:33  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.beans.Beans;
 import javax.swing.*;
-import java.util.Vector;
-
-import javax.swing.event.*;
 
 /**
  * This is the old bunch api class.  It was renamed to BunchAPIOld after the
- * updated API was created and put in its own package.  This class is depricated
+ * updated API was created and put in its own package.  This class is deprecated
  * and will be removed in a later version of Bunch
  *
  * @author Brian Mitchell
  * @see class bunch.api.BunchAPI
  */
-public
-class BunchAPIOld
-{
+public class BunchAPIOld {
 
 /**
  * These are the static parameters used to drive the clustering options
@@ -96,9 +67,7 @@ int   mqFn = MQ_TURBO;
  * @param sMDGFile  The name of the mdg file to be used for the clustering
  *                  process
  */
-public
-BunchAPIOld(String sMDGFile) throws Exception
-{
+public BunchAPIOld(String sMDGFile) throws Exception {
 	mdgFileName = sMDGFile;
 	delims = " ";
   	init(sMDGFile," ");

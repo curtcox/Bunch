@@ -18,8 +18,8 @@
 package bunch.BunchServer;
 
 import bunch.*;
-import javax.swing.*;
-import java.awt.*;
+import bunch.serverui.BSWindow;
+import bunch.serverui.ServerClusteringProgress;
 
 public class ClusterUsingVectorSAHC implements Runnable
 {

@@ -1,26 +1,8 @@
-/****
- *
- *	$Log: ServerSteepestAscentClusteringMethod.java,v $
- *	Revision 3.0  2002/02/03 18:42:07  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:05  bsmitc
- *	CVS Import
- *	
- *	Revision 3.0  2000/07/26 22:46:18  bsmitc
- *	*** empty log message ***
- *	
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *	
- *
- */
 package bunch.BunchServer;
+
 import  bunch.*;
 
-public class ServerSteepestAscentClusteringMethod
-  extends GenericDistribHillClimbingClusteringMethod
-{
+public class ServerSteepestAscentClusteringMethod extends GenericDistribHillClimbingClusteringMethod {
 
 int[] currWork = null;
 int pos=-1, maxPos=-1;

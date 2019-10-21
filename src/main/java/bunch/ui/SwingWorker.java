@@ -15,7 +15,7 @@
  *
  *
  */
-package bunch;
+package bunch.ui;
 
 import javax.swing.SwingUtilities;
 

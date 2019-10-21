@@ -1,46 +1,9 @@
-/****
- *
- *	$Log: BunchEngine.java,v $
- *	Revision 1.1.1.1  2002/02/03 18:30:06  bsmitc
- *	CVS Import
- *
- *	Revision 3.4  2001/03/17 14:55:59  bsmitc
- *	Added additional features to the API
- *
- *	Revision 3.3  2000/11/30 03:08:31  bsmitc
- *	Updated statstics collection capabilities
- *
- *	Revision 3.2  2000/11/26 22:22:27  bsmitc
- *	Added support to build the structures necessary to support the BunchGraph
- *	API suite and classes
- *
- *	Revision 3.1  2000/11/26 15:47:44  bsmitc
- *	Updated engine to support errors and warnings, also included support for
- *	using the precision and recall calculator.
- *
- *	Revision 3.0  2000/10/22 16:17:25  bsmitc
- *	Changed initial version to 3.0
- *
- *	Revision 1.1.1.1  2000/10/22 16:16:14  bsmitc
- *	Initial Version
- *
- *
- *
- */
-
-/**
- * Title:        Bunch Project<p>
- * Description:  <p>
- * Copyright:    Copyright (c) Brian Mitchell<p>
- * Company:      Drexel University - SERG<p>
- * @author Brian Mitchell
- * @version 1.0
- */
 package bunch.engine;
 
 import bunch.*;
 import bunch.api.*;
 import bunch.stats.*;
+import bunch.ui.SwingWorker;
 
 import java.util.*;
 import java.beans.*;
@@ -73,8 +36,7 @@ public class BunchEngine {
   String MQCalcSilFileName;
   String MQCalcValue;
 
-  public BunchEngine() {
-  }
+  public BunchEngine() {}
 
   String getFileDelims()
   {
@@ -141,12 +103,7 @@ private String[] stringArrayFromString(String in)
  * This method sets the libraries, clients and suppliers defined in their
  * respective panes to the graph, just previous to processing.
  */
-public
-void
-arrangeLibrariesClientsAndSuppliers(Graph g,
-                                    Hashtable special)
-
-{
+public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
   Object []suppliers = null; //new Object[0]; //null;
   Object []clients = null; //new Object[0]; //null;
   Object []centrals = null; //new Object[0]; //null;
@@ -837,7 +794,7 @@ arrangeLibrariesClientsAndSuppliers(Graph g,
   {
 
     nObject.setStatus(bunch.api.BunchAsyncNotify.STATUS_RUNNING);
-    bunch.SwingWorker worker_d = new bunch.SwingWorker()
+    SwingWorker worker_d = new SwingWorker()
       //Runnable runThread = new Runnable()
     {
       public Object construct()
@@ -1194,12 +1151,11 @@ class ExecuteClusteringEngine
     }
 }
 
-class ExecuteClusteringEngineAsync
-{
+class ExecuteClusteringEngineAsync {
     //ClusteringMethod clusteringMethod_d;
     //Hashtable bunchArgs;
     BunchAsyncNotify    notifyObject = null;
-    bunch.SwingWorker worker_d = null;
+    SwingWorker worker_d = null;
 
     ExecuteClusteringEngineAsync(BunchAsyncNotify nObject)
     {
@@ -1213,7 +1169,7 @@ class ExecuteClusteringEngineAsync
     public void run()
     {
       notifyObject.setStatus(bunch.api.BunchAsyncNotify.STATUS_RUNNING);
-      worker_d = new bunch.SwingWorker()
+      worker_d = new SwingWorker()
       //Runnable runThread = new Runnable()
       {
         public Object construct()

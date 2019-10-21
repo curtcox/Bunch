@@ -1,26 +1,3 @@
-/****
- *
- *	$Log: ClusteringConfigurationDialog.java,v $
- *	Revision 3.0  2002/02/03 18:41:46  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.2  2000/08/13 18:40:05  bsmitc
- *	Added support for SA framework
- *
- *	Revision 3.1  2000/08/12 22:16:09  bsmitc
- *	Added support for Simulated Annealing configuration for NAHC technique
- *
- *	Revision 3.0  2000/07/26 22:46:08  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch.ui;
 
 import bunch.Configuration;
@@ -41,10 +18,8 @@ import java.awt.event.*;
  *
  * @author Brian Mitchell
  */
-public abstract
-class ClusteringConfigurationDialog
-  extends JDialog
-{
+public abstract class ClusteringConfigurationDialog extends JDialog {
+
 JPanel panel1 = new JPanel();
 Configuration configuration_d;
 GridBagLayout gridBagLayout1 = new GridBagLayout();

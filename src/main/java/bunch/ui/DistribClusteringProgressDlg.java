@@ -40,7 +40,7 @@ JButton cancelButton_d = new JButton();
 BunchFrame frame_d = null;
 GraphOutput graphOutput_x = null;
 ClusteringMethod2 clusteringMethod_x = null;
-bunch.SwingWorker worker_d;
+SwingWorker worker_d;
 int iteration_d=0, overallIteration_d;
 boolean finished_d=false;
 boolean showOverallProgressBar_d= true;
@@ -122,7 +122,7 @@ private void init() {
 //   * (Note: a SwingWorker object is necessary because Swing (a.k.a JFC)
 //   * components are not thread-aware.
 //   */
-//  worker_d = new bunch.SwingWorker()
+//  worker_d = new bunch.ui.SwingWorker()
 //  {
 //    public Object construct()
 //    {

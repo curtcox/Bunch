@@ -1,81 +1,16 @@
-/****
- *
- *	$Log: NextAscentHillClimbingClusteringMethod.java,v $
- *	Revision 3.0  2002/02/03 18:41:53  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *	
- *	Revision 3.11  2001/04/03 23:32:12  bsmitc
- *	Added NAHC (really HC) support for Distributed Bunch, updated release
- *	version number to 3.2
- *
- *	Revision 3.10  2000/11/26 15:48:13  bsmitc
- *	Fixed various bugs
- *
- *	Revision 3.9  2000/10/22 15:48:49  bsmitc
- *	*** empty log message ***
- *
- *	Revision 3.8  2000/08/19 00:44:39  bsmitc
- *	Added support for configuring the amount of randomization performed when
- *	the user adjusts the "slider" feature of NAHC.
- *
- *	Revision 3.7  2000/08/16 00:12:46  bsmitc
- *	Extended UI to support various views and output options
- *
- *	Revision 3.6  2000/08/15 02:52:18  bsmitc
- *	Implemented adjustable NAHC feature.  This feature allows the user to set
- *	a minimum search threshold so that NAHC will not just take the first thing
- *	that it finds.
- *
- *	Revision 3.5  2000/08/14 18:29:52  bsmitc
- *	Fixed bug where the code was not exiting after the first (better) partition
- *	of the cluster was found.
- *
- *	Revision 3.4  2000/08/13 18:40:06  bsmitc
- *	Added support for SA framework
- *
- *	Revision 3.3  2000/08/12 22:16:10  bsmitc
- *	Added support for Simulated Annealing configuration for NAHC technique
- *
- *	Revision 3.2  2000/08/11 22:34:20  bsmitc
- *	Set default population back to 10.  With very small populations NAHC tends
- *	to produce one large cluster
- *
- *	Revision 3.1  2000/08/07 21:48:59  bsmitc
- *	*** empty log message ***
- *
- *	Revision 3.0  2000/07/26 22:46:10  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
-
 package bunch;
 
 import java.util.*;
-import javax.swing.*;
 
-public
-class NextAscentHillClimbingClusteringMethod
-  extends GenericHillClimbingClusteringMethod
-{
+public class NextAscentHillClimbingClusteringMethod extends GenericHillClimbingClusteringMethod {
 private Random random_d;
 
-public
-NextAscentHillClimbingClusteringMethod()
+public NextAscentHillClimbingClusteringMethod()
 {
   random_d = new Random(System.currentTimeMillis());
 }
 
-protected
-Cluster
-getLocalMaxGraph(Cluster c)
-{
+protected Cluster getLocalMaxGraph(Cluster c) {
     if (c == null) return null;
 
     boolean foundbetter;

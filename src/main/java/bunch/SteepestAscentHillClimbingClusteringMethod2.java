@@ -1,39 +1,11 @@
-/****
- *
- *	$Log: SteepestAscentHillClimbingClusteringMethod2.java,v $
- *	Revision 3.0  2002/02/03 18:41:56  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *	
- *	Revision 3.0  2000/07/26 22:46:11  bsmitc
- *	*** empty log message ***
- *	
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *	
- *
- */
 package bunch;
 
-import java.util.*;
-import javax.swing.*;
+public class SteepestAscentHillClimbingClusteringMethod2 extends GenericDistribHillClimbingClusteringMethod {
 
-public
-class SteepestAscentHillClimbingClusteringMethod2
-  extends GenericDistribHillClimbingClusteringMethod
-{
-
-public
-SteepestAscentHillClimbingClusteringMethod2()
-{
+public SteepestAscentHillClimbingClusteringMethod2() {
 }
 
-protected
-Cluster
-getLocalMaxGraph(Cluster c)
-{
+protected Cluster getLocalMaxGraph(Cluster c) {
 System.out.print("IN:  " + c.getObjFnValue() + "  ");
     double maxOF = c.getObjFnValue();
     double originalMax = maxOF;

@@ -42,7 +42,7 @@ JLabel currentTimeLabel_d = new JLabel();
 BunchFrame frame_d = null;
 GraphOutput graphOutput_x = null;
 ClusteringMethod clusteringMethod_x = null;
-bunch.SwingWorker worker_d;
+SwingWorker worker_d;
 int iteration_d=0, overallIteration_d;
 boolean finished_d=false;
 boolean showOverallProgressBar_d= true;
@@ -159,7 +159,7 @@ public void startClustering() {
 //  /**
 //   * Create the worker thread
 //   */
-//  worker_d = new bunch.SwingWorker()
+//  worker_d = new bunch.ui.SwingWorker()
 //  {
 //    public Object construct()
 //    {

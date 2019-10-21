@@ -22,14 +22,14 @@ package bunch.BunchServer;
 
 import bunch.Callback;
 import bunch.Cluster;
+import bunch.serverui.BSWindow;
+import bunch.serverui.ServerClusteringProgress;
+import bunch.ui.SwingWorker;
+
 import java.rmi.RemoteException;
 import javax.rmi.PortableRemoteObject;
-import java.util.Properties;
-import javax.naming.*;
-import java.rmi.RMISecurityManager;
 
 import java.awt.*;
-import javax.swing.*;
 
 public class BunchSvrMsgImpl extends PortableRemoteObject implements BunchSvrMsg{
 
@@ -113,7 +113,7 @@ public class BunchSvrMsgImpl extends PortableRemoteObject implements BunchSvrMsg
       ******/
 
         final byte []sc = serializedClass;
-        bunch.SwingWorker worker_d = new bunch.SwingWorker(/*clusteringMethod_x*/) {
+        SwingWorker worker_d = new SwingWorker(/*clusteringMethod_x*/) {
           public Object construct() {
             IterationManager starti = (IterationManager)bunch.util.BunchUtilities.fromByteArray(sc);
             Cluster workCluster = new Cluster(sp.theGraph,starti.clusterVector);

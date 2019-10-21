@@ -1,34 +1,13 @@
-/****
- *
- *	$Log: BSWindow.java,v $
- *	Revision 3.0  2002/02/03 18:42:05  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:05  bsmitc
- *	CVS Import
- *	
- *	Revision 3.1  2001/04/03 21:39:40  bsmitc
- *	Readded and fixed support for distributed clustering
- *	
- *	Revision 3.0  2000/07/26 22:46:18  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
-package bunch.BunchServer;
+package bunch.serverui;
+
+import bunch.BunchServer.BunchSvrMsgImpl;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import java.rmi.RemoteException;
-import javax.rmi.PortableRemoteObject;
 import java.util.Properties;
 import javax.naming.*;
-import java.rmi.RMISecurityManager;
 
 public class BSWindow extends JFrame {
   JMenuBar menuBar1 = new JMenuBar();

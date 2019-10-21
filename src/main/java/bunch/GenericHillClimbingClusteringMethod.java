@@ -1,25 +1,5 @@
-/****
- *
- *	$Log: GenericHillClimbingClusteringMethod.java,v $
- *	Revision 3.0  2002/02/03 18:41:50  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *	
- *	Revision 3.0  2000/07/26 22:46:09  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
-
 package bunch;
 
-import java.util.*;
-import javax.swing.*;
 import java.io.*;
 
 /**
@@ -34,10 +14,7 @@ import java.io.*;
  * @see bunch.NextAscentHillClimbingClusteringMethod
  * @see bunch.SteepestAscentHillClimbingClusteringMethod
  */
-public abstract
-class GenericHillClimbingClusteringMethod
-  extends GenericClusteringMethod2
-{
+public abstract class GenericHillClimbingClusteringMethod extends GenericClusteringMethod2 {
 HillClimbingConfiguration config_d;
 
 /**
@@ -45,8 +22,7 @@ HillClimbingConfiguration config_d;
  * clustering algorithm is configurable.  This is used to indicate if there
  * is a UI available
  */
-public
-GenericHillClimbingClusteringMethod()
+public GenericHillClimbingClusteringMethod()
 {
   setConfigurable(true);
 }
