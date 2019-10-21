@@ -1,44 +1,10 @@
-/****
- *
- *	$Log: SASimpleTechnique.java,v $
- *	Revision 3.0  2002/02/03 18:41:55  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *	
- *	Revision 3.4  2000/10/22 15:48:49  bsmitc
- *	*** empty log message ***
- *
- *	Revision 3.3  2000/08/14 18:33:25  bsmitc
- *	Fixed bug where the SA configuration information was not being saved
- *	bewteen runs of Bunch
- *
- *	Revision 3.2  2000/08/13 18:40:06  bsmitc
- *	Added support for SA framework
- *
- *	Revision 3.1  2000/08/12 22:58:26  bsmitc
- *	Adding Simulated Annealing Support To Project
- *
- *
- */
-
-/**
- * Title:        Bunch Project<p>
- * Description:  <p>
- * Copyright:    Copyright (c) Brian Mitchell<p>
- * Company:      Drexel University - SERG<p>
- * @author Brian Mitchell
- * @version 1.0
- */
 package bunch;
 
 import bunch.ui.SASimpleTechniqueDialog;
 
 import java.util.*;
 
-public class SASimpleTechnique
-extends SATechnique{
+public class SASimpleTechnique extends SATechnique{
 
   //SA Function = deltaMQ / T
   //T(k+1) = T(k)*alpha;

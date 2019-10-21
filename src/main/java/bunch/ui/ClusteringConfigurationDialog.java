@@ -2,7 +2,6 @@ package bunch.ui;
 
 import bunch.Configuration;
 import bunch.Graph;
-import bunch.GridBagConstraints2;
 
 import java.awt.*;
 import javax.swing.*;

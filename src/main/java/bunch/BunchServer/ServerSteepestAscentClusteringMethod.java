@@ -1,6 +1,8 @@
 package bunch.BunchServer;
 
 import  bunch.*;
+import bunch.clustering.GenericDistribHillClimbingClusteringMethod;
+import bunch.clustering.HillClimbingConfiguration;
 
 public class ServerSteepestAscentClusteringMethod extends GenericDistribHillClimbingClusteringMethod {
 

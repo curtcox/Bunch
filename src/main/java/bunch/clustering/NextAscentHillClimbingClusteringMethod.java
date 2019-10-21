@@ -1,4 +1,7 @@
-package bunch;
+package bunch.clustering;
+
+import bunch.*;
+import bunch.clustering.GenericHillClimbingClusteringMethod;
 
 import java.util.*;
 
@@ -190,7 +193,7 @@ protected Cluster getLocalMaxGraph(Cluster c) {
 
 //******************** THIS IS NEW EXPIREMENTAL CODE
     if (!bunch.util.BunchUtilities.compareGreater(maxOF,originalMax)) {
-      Node [] nodes = c.getGraph().getNodes();
+      Node[] nodes = c.getGraph().getNodes();
       int newClusterID = c.allocateNewCluster();
 
         for (int i=0; i<clusters.length; ++i) {
@@ -245,8 +248,7 @@ protected Cluster getLocalMaxGraph(Cluster c) {
     return c;
 }
 
-protected
-Graph
+protected Graph
 getLocalMaxGraph(Graph g)
 {
     double maxOF = g.getObjectiveFunctionValue();

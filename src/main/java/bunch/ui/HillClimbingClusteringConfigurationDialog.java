@@ -1,9 +1,9 @@
 package bunch.ui;
 
 import bunch.Configuration;
-import bunch.GridBagConstraints2;
-import bunch.HillClimbingConfiguration;
-import bunch.ui.ClusteringConfigurationDialog;
+import bunch.clustering.HillClimbingConfiguration;
+import bunch.clustering.NextAscentHillClimbingClusteringMethod;
+import bunch.clustering.SteepestAscentHillClimbingClusteringMethod;
 
 import java.awt.*;
 import javax.swing.*;
@@ -18,8 +18,8 @@ import javax.swing.*;
  *
  * @see ClusteringConfigurationDialog
  * @see bunch.HillClimbingClusteringMethod
- * @see bunch.NextAscentHillClimbingClusteringMethod
- * @see bunch.SteepestAscentHillClimbingClusteringMethod
+ * @see NextAscentHillClimbingClusteringMethod
+ * @see SteepestAscentHillClimbingClusteringMethod
  */
 public
 class HillClimbingClusteringConfigurationDialog

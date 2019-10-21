@@ -1,23 +1,5 @@
-/****
- *
- *	$Log: Drifters.java,v $
- *	Revision 3.0  2002/02/03 18:41:48  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.0  2000/07/26 22:46:09  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch;
 
-import java.io.*;
 import java.util.Vector;
 
 /**
@@ -29,9 +11,8 @@ import java.util.Vector;
  *
  * @author Brian Mitchell
  */
-public
-class Drifters
-{
+public class Drifters {
+
 public final static int NODE_NOT_CONNECTED=-1;
 
 protected Graph graph_d;
@@ -45,8 +26,7 @@ protected Graph graph_d;
 /**
  * The constructor caches the graph object
  */
-public
-Drifters(Graph g)
+public Drifters(Graph g)
 {
    graph_d = g;
 }
@@ -54,10 +34,7 @@ Drifters(Graph g)
 /**
  * This method intitializes a matrix to track which modules are connected
  */
-private
-void
-initStructures()
-{
+private void initStructures() {
    clusters = graph_d.getClusters();
    nodeList = graph_d.getNodes();
    nodes = nodeList.length;

@@ -1,24 +1,7 @@
-/****
- *
- *	$Log: GAClusteringMethod.java,v $
- *	Revision 3.0  2002/02/03 18:41:48  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.1  2001/03/17 14:55:23  bsmitc
- *	Added label to DotGraphOutput, Changed inheritance tree for GA method
- *
- *	Revision 3.0  2000/07/26 22:46:09  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
-package bunch;
+package bunch.clustering;
+
+import bunch.*;
+import bunch.clustering.GenericClusteringMethod;
 
 import java.util.Random;
 
@@ -32,13 +15,11 @@ import java.util.Random;
  *
  * @author Brian Mitchell
  *
- * @see bunch.GenericClusteringMethod
+ * @see GenericClusteringMethod
  * @see bunch.GAMethod
  */
-public
-class GAClusteringMethod
-  extends GenericClusteringMethod
-{
+public class GAClusteringMethod extends GenericClusteringMethod {
+
 GAConfiguration config_d;
 GAMethod method_d;
 Feature[] preFeatures_d;
@@ -48,9 +29,7 @@ Feature[] postFeatures_d;
 /**
  * Class constructor.
  */
-public
-GAClusteringMethod()
-{
+public GAClusteringMethod() {
   setConfigurable(true);
   setThreshold(1.0);
 }
@@ -59,9 +38,7 @@ GAClusteringMethod()
  * Get the confiruation parameter telling us how many interations to perform
  * at maximum
  */
-public
-int
-getMaxIterations()
+public int getMaxIterations()
 {
   return getConfiguration().getNumOfIterations();
 }

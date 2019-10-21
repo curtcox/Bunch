@@ -10,9 +10,7 @@ package bunch;
  * @see bunch.ObjectiveFunctionCalculator
  * @see bunch.ObjectiveFunctionCalculatorFactory
  */
-public class WeightedObjectiveFunctionCalculator
-  implements ObjectiveFunctionCalculator
-{
+public class WeightedObjectiveFunctionCalculator implements ObjectiveFunctionCalculator {
 private Graph graph_d;
 private static int[][] clusterMatrix_d = null;
 private Node[] nodes_x;

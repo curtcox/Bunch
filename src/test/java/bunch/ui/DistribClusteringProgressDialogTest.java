@@ -1,7 +1,6 @@
 package bunch.ui;
 
-import bunch.ClusteringMethod2;
-import bunch.ui.DistribClusteringProgressDlg;
+import bunch.clustering.ClusteringMethod2;
 import org.junit.Test;
 import static org.junit.Assert.assertNotNull;
 import java.awt.*;

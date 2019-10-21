@@ -1,4 +1,7 @@
-package bunch;
+package bunch.clustering;
+
+import bunch.Cluster;
+import bunch.Configuration;
 
 public class SteepestAscentHillClimbingClusteringMethod2 extends GenericDistribHillClimbingClusteringMethod {
 
@@ -50,8 +53,7 @@ System.out.println("OUT:  " + c.getObjFnValue() + "  ");
     return c;
 }
 
-public
-Configuration
+public Configuration
 getConfiguration()
 {
   boolean reconf=false;

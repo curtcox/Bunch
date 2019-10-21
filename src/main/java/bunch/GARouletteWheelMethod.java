@@ -1,20 +1,3 @@
-/****
- *
- *	$Log: GARouletteWheelMethod.java,v $
- *	Revision 3.0  2002/02/03 18:41:49  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.0  2000/07/26 22:46:09  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch;
 
 /**
@@ -23,21 +6,13 @@ package bunch;
  *
  * @author Brian Mitchell
  */
-public
-class GARouletteWheelMethod
-  extends GAMethod
-{
+public class GARouletteWheelMethod extends GAMethod {
+
 protected int[] tempArray_d;
 protected int shakeUpCount_d;
-public
-GARouletteWheelMethod()
-{
-}
+public GARouletteWheelMethod() { }
 
-public
-void
-init()
-{
+public void init() {
   setIncrementCounter(2);
   setInitCounter(0);
   setMaxCounter(currentPopulation_d.length-1);
@@ -49,10 +24,7 @@ init()
  * Selection, crossover and reproduction (including mutation) for roulette
  * wheel selection.
  */
-public
-void
-selectReproduceCrossAndMutate(int pos)
-{
+public void selectReproduceCrossAndMutate(int pos) {
   Graph parent1 = null, parent2 = null;
 
   //selection

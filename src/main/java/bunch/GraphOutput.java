@@ -1,32 +1,3 @@
-/****
- *
- *	$Log: GraphOutput.java,v $
- *	Revision 3.0  2002/02/03 18:41:51  bsmitc
- *	Retag starting at 3.0
- *
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *
- *	Revision 3.4  2000/08/18 21:08:00  bsmitc
- *	Added feature to support tree output for dotty and text
- *
- *	Revision 3.3  2000/08/16 00:12:46  bsmitc
- *	Extended UI to support various views and output options
- *
- *	Revision 3.2  2000/08/11 22:01:55  bsmitc
- *	Updated dot output driver to support new output options - all, top, median
- *
- *	Revision 3.1  2000/08/11 13:19:10  bsmitc
- *	Added support for generating various output levels - all, median, one
- *
- *	Revision 3.0  2000/07/26 22:46:09  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch;
 
 import java.io.*;
@@ -41,9 +12,8 @@ import java.io.*;
  *
  * @author Brian Mitchell
  */
-public abstract
-class GraphOutput
-{
+public abstract class GraphOutput {
+
 public final static int OUTPUT_TOP_ONLY = 1;
 public final static int OUTPUT_MEDIAN_ONLY = 2;
 public final static int OUTPUT_ALL_LEVELS = 3;

@@ -1,6 +1,8 @@
 package bunch.ui;
 
 import bunch.*;
+import bunch.clustering.ClusteringMethod;
+import bunch.clustering.ClusteringMethod2;
 
 import java.awt.*;
 import javax.swing.*;
@@ -18,7 +20,7 @@ import java.awt.event.*;
  *
  * @author Brian Mitchell
  *
- * @see bunch.ClusteringMethod
+ * @see ClusteringMethod
  * @see BunchFrame
  */
 public class DistribClusteringProgressDlg extends JDialog
@@ -73,7 +75,7 @@ private void init() {
 //
 //  String methodName = clusteringMethod_x.getClass().getName();
 //
-//  if (methodName.equals("bunch.GAClusteringMethod"))
+//  if (methodName.equals("bunch.clustering.GAClusteringMethod"))
 //    showOverallProgressBar_d = false;
 //
 //  /**

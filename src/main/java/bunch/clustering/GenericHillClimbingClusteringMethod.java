@@ -1,4 +1,7 @@
-package bunch;
+package bunch.clustering;
+
+import bunch.Cluster;
+import bunch.Configuration;
 
 import java.io.*;
 
@@ -11,8 +14,8 @@ import java.io.*;
  *
  * @author Brian Mitchell
  *
- * @see bunch.NextAscentHillClimbingClusteringMethod
- * @see bunch.SteepestAscentHillClimbingClusteringMethod
+ * @see NextAscentHillClimbingClusteringMethod
+ * @see SteepestAscentHillClimbingClusteringMethod
  */
 public abstract class GenericHillClimbingClusteringMethod extends GenericClusteringMethod2 {
 HillClimbingConfiguration config_d;
@@ -186,8 +189,7 @@ private void realignClusters(int[] c)
  * This is method that is redefined by the subclasses for each specific
  * hill-climbing algorithm, i.e., where the hill-climbing is actually performed
  */
-protected abstract
-Cluster
+protected abstract Cluster
 getLocalMaxGraph(Cluster c);
 
 /**
@@ -225,8 +227,7 @@ getConfigurationDialogName()
  *
  * @return a HillClimbing configuration object
  */
-public
-Configuration
+public Configuration
 getConfiguration()
 {
   if (configuration_d == null) {

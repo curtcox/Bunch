@@ -20,6 +20,7 @@
  */
 package bunch;
 
+import bunch.clustering.GAClusteringMethod;
 import bunch.ui.GAClusteringConfigurationDialog;
 
 /**
@@ -29,7 +30,7 @@ import bunch.ui.GAClusteringConfigurationDialog;
  * @author Brian Mitchell
  *
  * @see GAClusteringConfigurationDialog
- * @see bunch.GAClusteringMethod
+ * @see GAClusteringMethod
  */
 public
 class GAConfiguration

@@ -1,5 +1,9 @@
 package bunch;
 
+import bunch.clustering.ClusteringMethod;
+import bunch.clustering.ClusteringMethodFactory;
+import bunch.clustering.HillClimbingConfiguration;
+
 import java.awt.*;
 import java.beans.Beans;
 import javax.swing.*;
@@ -121,7 +125,7 @@ public void init(String sMDG, String delims) throws Exception
  * The class is loaded by asking the ClusteringMethodFactory for it.
  *
  * @param method the name of the ClusteringMethod to load
- * @see bunch.ClusteringMethodFactory.getMethod(ClusteringMethod)
+ * @see ClusteringMethodFactory.getMethod(ClusteringMethod)
  */
 public
 void

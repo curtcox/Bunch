@@ -17,6 +17,8 @@
  */
 package bunch;
 
+import bunch.clustering.HillClimbingConfiguration;
+
 import java.io.*;
 
 /**
@@ -31,7 +33,7 @@ import java.io.*;
  *
  * @see bunch.Feature
  * @see bunch.GAConfiguration
- * @see bunch.HillClimbingConfiguration
+ * @see HillClimbingConfiguration
  */
 public
 class Configuration

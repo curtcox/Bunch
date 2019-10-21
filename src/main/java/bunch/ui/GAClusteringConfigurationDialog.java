@@ -2,8 +2,7 @@ package bunch.ui;
 
 import bunch.Configuration;
 import bunch.GAConfiguration;
-import bunch.GridBagConstraints2;
-import bunch.ui.ClusteringConfigurationDialog;
+import bunch.clustering.GAClusteringMethod;
 
 import java.awt.*;
 import javax.swing.*;
@@ -15,7 +14,7 @@ import javax.swing.*;
  * @author Brian Mitchell
  *
  * @see ClusteringConfigurationDialog
- * @see bunch.GAClusteringMethod
+ * @see GAClusteringMethod
  */
 public
 class GAClusteringConfigurationDialog

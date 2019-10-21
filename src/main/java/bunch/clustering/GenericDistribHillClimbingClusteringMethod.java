@@ -1,10 +1,11 @@
-package bunch;
+package bunch.clustering;
 
 import java.util.*;
 import java.io.*;
 
 import javax.naming.*;
 
+import bunch.*;
 import bunch.BunchServer.BunchSvrMsg;
 import bunch.BunchServer.IterationManager;
 
@@ -18,16 +19,16 @@ import bunch.BunchServer.IterationManager;
  *
  * @author Brian Mitchell
  *
- * @see bunch.NextAscentHillClimbingClusteringMethod
- * @see bunch.SteepestAscentHillClimbingClusteringMethod
+ * @see NextAscentHillClimbingClusteringMethod
+ * @see SteepestAscentHillClimbingClusteringMethod
  */
 public abstract class GenericDistribHillClimbingClusteringMethod extends GenericClusteringMethod2 {
 //HillClimbingConfiguration config_d;
 NAHCConfiguration config_d;
-protected BunchEvent                event = null;
+protected BunchEvent event = null;
 protected Vector                    activeServerVector = null;
-protected CallbackImpl              svrCallback = null;
-protected SynchronizedEventQueue    eventQ = null;
+protected CallbackImpl svrCallback = null;
+protected SynchronizedEventQueue eventQ = null;
 protected int                       BaseUOWSize = 5;
 protected boolean                   useAdaptiveAlg = true;
 

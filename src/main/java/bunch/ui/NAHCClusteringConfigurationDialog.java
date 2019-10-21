@@ -1,7 +1,7 @@
 package bunch.ui;
 
 import bunch.*;
-import bunch.ui.ClusteringConfigurationDialog;
+import bunch.clustering.HillClimbingConfiguration;
 
 import java.awt.*;
 import javax.swing.*;

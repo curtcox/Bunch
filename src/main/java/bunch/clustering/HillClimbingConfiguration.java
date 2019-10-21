@@ -1,46 +1,21 @@
-/****
- *
- *	$Log: HillClimbingConfiguration.java,v $
- *	Revision 3.0  2002/02/03 18:41:52  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *	
- *	Revision 3.0  2000/07/26 22:46:10  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
-package bunch;
+package bunch.clustering;
 
-import bunch.ui.HillClimbingClusteringConfigurationDialog;
+import bunch.Configuration;
+import bunch.Graph;
 
 /**
  * A subclass of Configuration with specific parameters used by the Hill Climbing
  * Algorithms.
  *
  * @author Brian Mitchell
- *
- * @see HillClimbingClusteringConfigurationDialog
- * @see bunch.GenericHillClimbingClusteringMethod
  */
-public
-class HillClimbingConfiguration
-  extends Configuration
-{
+public class HillClimbingConfiguration extends Configuration {
 double threshold_d=0.1;
 
 /**
  * Parameterless class constructor.
  */
-public
-HillClimbingConfiguration()
-{
-}
+public HillClimbingConfiguration() { }
 
 /**
  * Utility class constructor that receives a graph, and calls #init(bunch.Graph).
@@ -48,8 +23,7 @@ HillClimbingConfiguration()
  * @param g the graph used to set the default values
  * @see #init(bunch.Graph)
  */
-public
-HillClimbingConfiguration(Graph g)
+public HillClimbingConfiguration(Graph g)
 {
   init(g);
 }
@@ -61,10 +35,7 @@ HillClimbingConfiguration(Graph g)
  * @param g the graph that will be used to create the default values for the
  * configuration object
  */
-public
-void
-init(Graph g)
-{
+public void init(Graph g) {
   int nodes = g.getNumberOfNodes();
   super.init(g);
 }
@@ -79,9 +50,7 @@ init(Graph g)
  * @param t the threshold percentage expressed as a real value
  * @see #getThreshold()
  */
-public
-void
-setThreshold(double t)
+public void setThreshold(double t)
 {
     threshold_d = t;
 }
@@ -93,9 +62,7 @@ setThreshold(double t)
  * @return the threshold percentage expressed as a real (double) value
  * @see #setThreshold(double)
  */
-public
-double
-getThreshold()
+public double getThreshold()
 {
     return threshold_d;
 }

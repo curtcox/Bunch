@@ -17,6 +17,8 @@
  */
 package bunch;
 
+import bunch.clustering.ClusteringMethodFactory;
+
 /**
  * This class contains the settings used by Bunchv2. (Currently most of
  * the options are wired at compile time. However, the structure exists to
@@ -60,7 +62,7 @@ BunchPreferences()
  *
  * @param fac the new clustering method factory
  * @see #getClusteringMethodFactory()
- * @see bunch.ClusteringMethodFactory
+ * @see ClusteringMethodFactory
  */
 public
 void
@@ -73,8 +75,8 @@ setClusteringMethodFactory(ClusteringMethodFactory fac)
  * Obtains the factory of Clustering Methods set to this preferences object
  *
  * @return the clustering method factory
- * @see #setClusteringMethodFactory(bunch.ClusteringMethodFactory)
- * @see bunch.ClusteringMethodFactory
+ * @see #setClusteringMethodFactory(ClusteringMethodFactory)
+ * @see ClusteringMethodFactory
  */
 public
 ClusteringMethodFactory

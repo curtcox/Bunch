@@ -1,6 +1,6 @@
-package bunch;
+package bunch.clustering;
 
-import java.util.*;
+import bunch.*;
 
 /**
  * The superclass for all clustering methods. A clustering method is (usually) an
@@ -9,9 +9,9 @@ import java.util.*;
  *
  * @author Brian Mitchell
  *
- * @see bunch.NextAscentHillClimbingClusteringMethod
- * @see bunch.SteepestAscentHillClimbingClusteringMethod
- * @see bunch.GAClusteringMethod
+ * @see NextAscentHillClimbingClusteringMethod
+ * @see SteepestAscentHillClimbingClusteringMethod
+ * @see GAClusteringMethod
  */
 public abstract class ClusteringMethod
   implements Runnable
@@ -52,11 +52,8 @@ public void setGraph(Graph g)
  * Obtains the graph to be partitioned by this clustering method
  *
  * @return the graph
- * @see setGraph(bunch.Graph)
  */
-public
-Graph
-getGraph()
+public Graph getGraph()
 {
   return graph_d;
 }
@@ -68,9 +65,7 @@ getGraph()
  * @param g the (best) result graph
  * @see #getBestGraph()
  */
-public
-void
-setBestGraph(Graph g)
+public void setBestGraph(Graph g)
 {
   bestGraph_d = g;
 }
@@ -80,11 +75,8 @@ setBestGraph(Graph g)
  * found)
  *
  * @return the (best) result graph
- * @see setResultGraph(bunch.Graph)
  */
-public
-Graph
-getBestGraph()
+public Graph getBestGraph()
 {
   return bestGraph_d;
 }
@@ -94,9 +86,7 @@ getBestGraph()
  *
  * @return the objective function value of the best partitioned graph found
  */
-public
-double
-getBestObjectiveFunctionValue()
+public double getBestObjectiveFunctionValue()
 {
   return bestGraph_d.getObjectiveFunctionValue();
 }
@@ -107,9 +97,7 @@ getBestObjectiveFunctionValue()
  * @return the elapsed time
  * @see #setElapsedTime(double)
  */
-public
-double
-getElapsedTime()
+public double getElapsedTime()
 {
   return elapsedTime_d;
 }
@@ -121,9 +109,7 @@ getElapsedTime()
  * @param l the elapsed time
  * @see #getElapsedTime()
  */
-public
-void
-setElapsedTime(double l)
+public void setElapsedTime(double l)
 {
   elapsedTime_d = l;
 }
@@ -137,9 +123,7 @@ setElapsedTime(double l)
  * @see bunch.IterationListener
  * @see #getIterationListener()
  */
-public
-void
-setIterationListener(IterationListener il)
+public void setIterationListener(IterationListener il)
 {
   listener_d = il;
 }
@@ -151,9 +135,7 @@ setIterationListener(IterationListener il)
  * @see bunch.IterationListener
  * @see #setIterationListener(bunch.IterationListener)
  */
-public
-IterationListener
-getIterationListener()
+public IterationListener getIterationListener()
 {
   return listener_d;
 }
@@ -161,10 +143,7 @@ getIterationListener()
 /**
  * Fires an Iteration event to this clustering method's iteration listener
  */
-public
-void
-fireIterationEvent(IterationEvent e)
-{
+public void fireIterationEvent(IterationEvent e) {
    if (listener_d != null)
    {
       listener_d.newIteration(e);
@@ -174,10 +153,7 @@ fireIterationEvent(IterationEvent e)
 /**
  * Fires an Iteration event to this clustering method's iteration listener
  */
-public
-void
-fireExpermentEvent(IterationEvent e)
-{
+public void fireExpermentEvent(IterationEvent e) {
    if (listener_d != null)
    {
       listener_d.newExperiment(e);
@@ -188,9 +164,7 @@ fireExpermentEvent(IterationEvent e)
  * Obtains the maximum number of iterations this algorithm will perform. Useful
  * to set the parameters for a progress bar, for example
  */
-public abstract
-int
-getMaxIterations();
+public abstract int getMaxIterations();
 
 public abstract Cluster getBestCluster();
 
@@ -204,9 +178,7 @@ public abstract Cluster getBestCluster();
  * @see #setConfigurable(boolean)
  * @see #getConfigurationDialogName()
  */
-public
-boolean
-isConfigurable()
+public boolean isConfigurable()
 {
   return isConfigurable_d;
 }
@@ -215,12 +187,9 @@ isConfigurable()
  * Defines if this clustering method is configurable by an "options" dialog.
  *
  * @param isC true if the method is configurable, false otherwise
- * @see #getConfigurable()
  * @see #getConfigurationDialogName()
  */
-public
-void
-setConfigurable(boolean isC)
+public void setConfigurable(boolean isC)
 {
   isConfigurable_d = isC;
 }
@@ -233,9 +202,7 @@ setConfigurable(boolean isC)
  * @param c the configuration
  * @see #getConfiguration()
  */
-public
-void
-setConfiguration(Configuration c)
+public void setConfiguration(Configuration c)
 {
   configuration_d = c;
 }
@@ -246,16 +213,12 @@ setConfiguration(Configuration c)
  * @return the configuration
  * @see #setConfiguration(bunch.Configuration)
  */
-public
-Configuration
-getConfiguration()
+public Configuration getConfiguration()
 {
   return configuration_d;
 }
 
-public
-void
-setDefaultConfiguration()
+public void setDefaultConfiguration()
 {
 }
 
@@ -267,9 +230,7 @@ setDefaultConfiguration()
  *
  * @return a string with the class name for the dialog
  */
-public
-String
-getConfigurationDialogName()
+public String getConfigurationDialogName()
 {
   return null;
 }

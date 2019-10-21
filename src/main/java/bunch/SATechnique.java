@@ -1,33 +1,3 @@
-/****
- *
- *	$Log: SATechnique.java,v $
- *	Revision 3.0  2002/02/03 18:41:55  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *	
- *	Revision 3.3  2000/08/14 18:33:26  bsmitc
- *	Fixed bug where the SA configuration information was not being saved
- *	bewteen runs of Bunch
- *
- *	Revision 3.2  2000/08/13 18:40:07  bsmitc
- *	Added support for SA framework
- *
- *	Revision 3.1  2000/08/12 22:58:26  bsmitc
- *	Adding Simulated Annealing Support To Project
- *
- *
- */
-
-/**
- * Title:        Bunch Project<p>
- * Description:  <p>
- * Copyright:    Copyright (c) Brian Mitchell<p>
- * Company:      Drexel University - SERG<p>
- * @author Brian Mitchell
- * @version 1.0
- */
 package bunch;
 
 import java.util.*;

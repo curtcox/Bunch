@@ -1,4 +1,7 @@
-package bunch;
+package bunch.clustering;
+
+import bunch.Graph;
+import bunch.IterationEvent;
 
 /**
  * A generic clustering method class, intended to provide common services
@@ -9,8 +12,8 @@ package bunch;
  *
  * @author Brian Mitchell
  *
- * @see bunch.GAClusteringMethod
- * @see bunch.GenericHillClimbingClusteringMethod
+ * @see GAClusteringMethod
+ * @see GenericHillClimbingClusteringMethod
  */
 public abstract
 class GenericClusteringMethod

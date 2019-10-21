@@ -1,27 +1,28 @@
 /****
  *
- *	$Log: DistributedSAHCClusteringMethod.java,v $
+ *	$Log: DistributedHCClusteringMethod.java,v $
  *	Revision 3.0  2002/02/03 18:41:47  bsmitc
  *	Retag starting at 3.0
  *	
  *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
  *	CVS Import
  *	
- *	Revision 3.0  2000/07/26 22:46:09  bsmitc
- *	*** empty log message ***
+ *	Revision 3.2  2001/04/03 23:32:12  bsmitc
+ *	Added NAHC (really HC) support for Distributed Bunch, updated release
+ *	version number to 3.2
  *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
+ *	Revision 3.1  2001/04/03 21:42:35  bsmitc
+ *	Baseline version of basic HC in a distributed mode
  *
  *
  */
-package bunch;
+package bunch.clustering;
 
 import javax.naming.*;
 import javax.rmi.PortableRemoteObject;
-import java.rmi.RMISecurityManager;
 import java.util.*;
 
+import bunch.*;
 import bunch.BunchServer.IterationManager;
 import bunch.BunchServer.BunchSvrMsg;
 
@@ -31,7 +32,7 @@ import bunch.BunchServer.BunchSvrMsg;
  * @author Brian Mitchell
  *
  */
-public class DistributedSAHCClusteringMethod extends GenericDistribHillClimbingClusteringMethod {
+public class DistributedHCClusteringMethod extends GenericDistribHillClimbingClusteringMethod {
 
 /**
  * Constants related to work status
@@ -41,7 +42,7 @@ public static final int STAT_CHECKED_OUT = 1;
 public static final int STAT_FINISHED = 2;
 public static final int NO_SERVER_WORKING = -1;
 
-  public DistributedSAHCClusteringMethod() {
+  public DistributedHCClusteringMethod() {
   }
 
   int [] workQueue;
@@ -83,6 +84,7 @@ private boolean initWorkVectors(Cluster c)
    //------------
    workQ.clear();
    pendingQ.clear();
+
 
    /**
     * If the work queue is null, then allocate it
@@ -201,6 +203,17 @@ getLocalMaxGraph(Cluster c)
   double originalMax = maxC.getObjFnValue();
   double maxOF = originalMax;
 
+  int[] clustNames = c.getClusterNames();
+  int[] clusters = c.getClusterVector();
+  long maxPartitionsToExamine = clustNames.length;
+  int currClustersExamined = 0;
+  double evalPct = (double)(((NAHCConfiguration)configuration_d).getMinPctToConsider())/100.0;
+  long partitionsToExamine = (long)(((double)maxPartitionsToExamine)*evalPct);
+
+  boolean exceededMaxExamination = false;
+
+//System.out.println("partitions to examine = " + partitionsToExamine + "  Min Pct = " + ((NAHCConfiguration)configuration_d).getMinPctToConsider()  );
+
   try
   {
     /**
@@ -219,45 +232,54 @@ getLocalMaxGraph(Cluster c)
        * a work request event so send work to the requester, or a work
        * finsihed event, so process the results
        */
-      BunchEvent be = eventQ.getEvent();
+       BunchEvent be = eventQ.getEvent();
 
-      //Its a request for work...
-      if(be.getEventObj() instanceof WorkRequestEvent)
-      {
-        WorkRequestEvent wre = (WorkRequestEvent)be.getEventObj();
+       //Its a request for work...
+       if(be.getEventObj() instanceof WorkRequestEvent)
+       {
+          WorkRequestEvent wre = (WorkRequestEvent)be.getEventObj();
 
-        //How much work was requested...
-        wre.workToDo = getMoreWork(wre.requestWorkSz);
-        if(wre.workToDo== null)
-          wre.actualWorkSz=0;
-        else
-          wre.actualWorkSz = wre.workToDo.length;
-      }
-      //Its a notification that work has finished...
-      else if(be.getEventObj() instanceof WorkFinishedEvent)
-      {
-        WorkFinishedEvent wfe = (WorkFinishedEvent)be.getEventObj();
-        intermC.setClusterVector(wfe.clusterVector);
-        finishedCount += wfe.clusterVector.length;
+          //How much work was requested...
+          wre.workToDo = getMoreWork(wre.requestWorkSz);
+          if(wre.workToDo== null)
+            wre.actualWorkSz=0;
+          else
+            wre.actualWorkSz = wre.workToDo.length;
 
-        //The server is done, so reduce the number of servers counter
-        synchronized(this)
-        {
-          runningServers--;
-        }
+          //We may be out of work, so let the server know...
+          if (exceededMaxExamination == true)
+          {
+            wre.workToDo = null;
+            wre.actualWorkSz = 0;
+          }
+       }
+       //Its a notification that work has finished...
+       else if(be.getEventObj() instanceof WorkFinishedEvent)
+       {
+          WorkFinishedEvent wfe = (WorkFinishedEvent)be.getEventObj();
+          intermC.setClusterVector(wfe.clusterVector);
+          finishedCount += wfe.clusterVector.length;
 
-        //Is the work returned from the server better then anything else
-        //seen so far, if so save it...
-        if (intermC.getObjFnValue() > maxOF) {
-          maxC.copyFromCluster(intermC);
-          maxOF = maxC.getObjFnValue();
-        }
-      }
+          //The server is done, so reduce the number of servers counter
+          synchronized(this)
+          {
+               runningServers--;
+          }
 
-      /**
-       * Release the event, were done...
-       */
-      eventQ.releaseEvent(be);
+          //Is the work returned from the server better then anything else
+          //seen so far, if so save it...
+          if (intermC.getObjFnValue() > maxOF) {
+             maxC.copyFromCluster(intermC);
+             maxOF = maxC.getObjFnValue();
+
+             if(finishedCount >= partitionsToExamine)
+                exceededMaxExamination = true;
+          }
+       }
+       /**
+        * Release the event, were done...
+        */
+       eventQ.releaseEvent(be);
     }
   }
   catch(Exception e)
@@ -266,13 +288,15 @@ getLocalMaxGraph(Cluster c)
     return c;
   }
 
-  if (maxOF > originalMax) {
+  if (maxOF > originalMax)
+  {
     //we found a better max partition, save it into c
     c.copyFromCluster(maxC);
   }
-  else {
-    //we didn't find a better max partition then it's a maximum
-    c.setConverged(true);
+  else
+  {
+      //we didn't find a better max partition then it's a maximum
+      c.setConverged(true);
   }
 
   /**
@@ -304,7 +328,6 @@ boolean isMoreWork() throws Exception
    else
       return true;
 }
-
 
 /**
  * This method returns more work based on the work request size.  If the
@@ -360,19 +383,24 @@ getConfiguration()
    * If the configuration object is null, allocate it
    */
   if (configuration_d == null) {
+    configuration_d = new NAHCConfiguration();
     reconf = true;
   }
 
-  HillClimbingConfiguration hc = (HillClimbingConfiguration)super.getConfiguration();
+  NAHCConfiguration hc = (NAHCConfiguration)configuration_d;
 
   /**
    * If the first time through, set the defaults.
    */
   if (reconf) {
-    hc.setThreshold(0.1);
-    hc.setNumOfIterations(100);
-    hc.setPopulationSize(5);
+    hc.setThreshold(1);
+    hc.setNumOfIterations(1);
+    hc.setPopulationSize(1);
+    hc.setMinPctToConsider(0);
+    hc.setRandomizePct(100);
+    hc.setSATechnique(null);
   }
+
   return hc;
 }
 

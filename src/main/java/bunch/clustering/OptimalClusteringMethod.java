@@ -1,33 +1,12 @@
-/****
- *
- *	$Log: OptimalClusteringMethod.java,v $
- *	Revision 3.0  2002/02/03 18:41:54  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *	
- *	Revision 3.1  2000/08/11 15:04:28  bsmitc
- *	Added support for producing optimal output on the clustering progress
- *	dialog window
- *	
- *	Revision 3.0  2000/07/26 22:46:10  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
-package bunch;
+package bunch.clustering;
 
-import java.util.*;
+import bunch.Cluster;
+import bunch.Graph;
+import bunch.IterationEvent;
+import bunch.clustering.ClusteringMethod2;
 import bunch.stats.StatsManager;
 
-public
-class OptimalClusteringMethod
-  extends ClusteringMethod2
-{
+public class OptimalClusteringMethod extends ClusteringMethod2 {
 boolean hasMorePartitions_d = false;
 int[] tmpClusters_d;
 int[] nClusters_d;

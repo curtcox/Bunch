@@ -6,6 +6,7 @@ import java.awt.event.*;
 //import java.util.*;
 
 import bunch.*;
+import bunch.clustering.ClusteringMethod;
 import bunch.stats.*;
 
 /**
@@ -19,7 +20,7 @@ import bunch.stats.*;
  * and know its status.
  *
  * @author Brian Mitchell
- * @see bunch.ClusteringMethod
+ * @see ClusteringMethod
  * @see BunchFrame
  */
 public class ClusteringProgressDialog extends JDialog
@@ -108,7 +109,7 @@ private void init() {
 //    clusteringMethod_x.setIterationListener(this);
 //
 //    String methodName = clusteringMethod_x.getClass().getName();
-//    if (methodName.equals("bunch.GAClusteringMethod"))
+//    if (methodName.equals("bunch.clustering.GAClusteringMethod"))
 //      showOverallProgressBar_d = false;
 //
 //    eventTimer = new Timer(2000,new updateTimer());

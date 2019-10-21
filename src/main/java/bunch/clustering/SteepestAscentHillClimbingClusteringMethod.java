@@ -1,4 +1,8 @@
-package bunch;
+package bunch.clustering;
+
+import bunch.Cluster;
+import bunch.Configuration;
+import bunch.Node;
 
 public class SteepestAscentHillClimbingClusteringMethod extends GenericHillClimbingClusteringMethod
 {
@@ -6,8 +10,7 @@ public class SteepestAscentHillClimbingClusteringMethod extends GenericHillClimb
 public SteepestAscentHillClimbingClusteringMethod() {
 }
 
-protected
-Cluster
+protected Cluster
 getLocalMaxGraph(Cluster c)
 {
     if (c == null) return null;
@@ -74,7 +77,7 @@ getLocalMaxGraph(Cluster c)
 
 //******************** THIS IS NEW EXPIREMENTAL CODE
     if (!bunch.util.BunchUtilities.compareGreater(maxOF,originalMax)) {
-      Node [] nodes = c.getGraph().getNodes();
+      Node[] nodes = c.getGraph().getNodes();
       int newClusterID = c.allocateNewCluster();
 
         for (int i=0; i<clusters.length; ++i) {
@@ -123,8 +126,7 @@ getLocalMaxGraph(Cluster c)
     return c;
 }
 
-public
-Configuration
+public Configuration
 getConfiguration()
 {
   boolean reconf=false;

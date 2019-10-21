@@ -29,9 +29,7 @@ import java.util.Random;
  *
  * @author  Brian Mitchell
  */
-public abstract
-class GAMethod
-{
+public abstract class GAMethod {
 protected int initCounter_d=0, maxCounter_d=0, increment_d=1;
 protected Random randomGenerator_d;
 protected Graph[] currentPopulation_d, newPopulation_d;
@@ -42,10 +40,7 @@ protected float mutationThreshold_d, mutCounter_d=0;
 protected double[] fitnessArray_d;
 protected double maxOFValue_d=0.0, minOFValue_d=1.0;
 
-public
-GAMethod()
-{
-}
+public GAMethod() {}
 
 /**
  * Sets the random number generator for this method. This is important since
@@ -56,9 +51,7 @@ GAMethod()
  * @param rgen the new random number generator
  * @see #getRandomNumberGenerator()
  */
-public
-void
-setRandomNumberGenerator(Random rgen)
+public void setRandomNumberGenerator(Random rgen)
 {
   randomGenerator_d = rgen;
 }
@@ -69,9 +62,7 @@ setRandomNumberGenerator(Random rgen)
  * @return the random number generator used by this method
  * @see #setRandomNumberGenerator(java.util.Random)
  */
-public
-Random
-getRandomNumberGenerator()
+public Random getRandomNumberGenerator()
 {
   return randomGenerator_d;
 }
@@ -80,10 +71,7 @@ getRandomNumberGenerator()
  * Sets the population to be used by this method. The GAClusteringMethod
  * is only aware of one population used by the method.
  */
-public
-void
-setPopulation(Graph[] currPop)
-{
+public void setPopulation(Graph[] currPop) {
   currentPopulation_d = currPop;
   newPopulation_d = new Graph[currentPopulation_d.length];
   fitnessArray_d = new double[currentPopulation_d.length];
@@ -191,7 +179,7 @@ shakePopulation()
 
 /**
  * Sets the initial value of the counter for this method. This value will
- * be used by the bunch.GAClusteringMethod.run() method to initialize the
+ * be used by the bunch.clustering.GAClusteringMethod.run() method to initialize the
  * internal generation counter for the GA.
  *
  * @param i the initial counter value
@@ -219,7 +207,7 @@ getInitCounter()
 
 /**
  * Sets the maximum value of the counter for this method. This value will
- * be used by the bunch.GAClusteringMethod.run() method as upper bound
+ * be used by the bunch.clustering.GAClusteringMethod.run() method as upper bound
  * for the GA's internal generation counter.
  *
  * @param i the maximum counter value
@@ -260,7 +248,7 @@ getIncrementCounter()
 
 /**
  * Sets the increment value of the counter for this method. This value will
- * be used by the bunch.GAClusteringMethod.run() method to increment the
+ * be used by the bunch.clustering.GAClusteringMethod.run() method to increment the
  * for the GA's internal generation counter each iteration.
  *
  * @param i the counter increment value

@@ -2,6 +2,7 @@ package bunch.engine;
 
 import bunch.*;
 import bunch.api.*;
+import bunch.clustering.ClusteringMethod;
 import bunch.stats.*;
 import bunch.ui.SwingWorker;
 
@@ -9,7 +10,6 @@ import java.util.*;
 import java.beans.*;
 
 public class BunchEngine {
-
 
   Hashtable bunchArgs = null;
   Hashtable results = null;

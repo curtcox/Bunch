@@ -1,23 +1,3 @@
-/****
- *
- *	$Log: Parser.java,v $
- *	Revision 3.0  2002/02/03 18:41:54  bsmitc
- *	Retag starting at 3.0
- *
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *
- *	Revision 3.1  2000/11/30 03:07:57  bsmitc
- *	Updated parser for statistics
- *
- *	Revision 3.0  2000/07/26 22:46:10  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch;
 
 import java.io.*;
@@ -31,8 +11,7 @@ import java.io.*;
  * @version 1.0
  * @see bunch.ParserFactory
  */
-public abstract
-class Parser
+public abstract class Parser
 {
 protected BufferedReader reader_d;
 protected String delims_d = " \t\r\n";

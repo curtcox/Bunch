@@ -35,6 +35,8 @@
  */
 package bunch;
 
+import bunch.clustering.HillClimbingConfiguration;
+
 /**
  * A basic class to hold all of the configuration information for the NAHC
  * clustering algorithm.  This class inherits all configuration information
@@ -44,7 +46,7 @@ package bunch;
  *
  */
 public class NAHCConfiguration
-extends HillClimbingConfiguration{
+extends HillClimbingConfiguration {
 
   SATechnique saTechnique = null;
   int         minPctToConsider = 0;

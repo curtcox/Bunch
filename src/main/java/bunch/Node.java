@@ -1,34 +1,3 @@
-/****
- *
- *	$Log: Node.java,v $
- *	Revision 3.0  2002/02/03 18:41:53  bsmitc
- *	Retag starting at 3.0
- *
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *
- *	Revision 3.4  2000/10/22 17:30:06  bsmitc
- *	Fixed bug with user-directed clustering. Also, added support to clear
- *	the user-directed clustering option once it is selected
- *
- *	Revision 3.3  2000/08/18 21:08:00  bsmitc
- *	Added feature to support tree output for dotty and text
- *
- *	Revision 3.2  2000/08/17 00:26:04  bsmitc
- *	Fixed omnipresent and library support for nodes in the MDG not connected to
- *	anything but the omnipresent nodes and libraries.
- *
- *	Revision 3.1  2000/08/11 13:19:11  bsmitc
- *	Added support for generating various output levels - all, median, one
- *
- *	Revision 3.0  2000/07/26 22:46:10  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch;
 
 /**
@@ -51,9 +20,7 @@ package bunch;
  * @version 1.0
  * @see bunch.Graph
  */
-public
-class Node  implements java.io.Serializable
-{
+public class Node  implements java.io.Serializable {
 /**
  * The array of dependencies (edges) to other nodes
  */

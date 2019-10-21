@@ -1,43 +1,3 @@
-/****
- *
- *	$Log: TXTGraphOutput.java,v $
- *	Revision 3.0  2002/02/03 18:41:57  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *	
- *	Revision 3.7  2000/10/22 15:48:49  bsmitc
- *	*** empty log message ***
- *	
- *	Revision 3.6  2000/08/18 21:08:00  bsmitc
- *	Added feature to support tree output for dotty and text
- *
- *	Revision 3.5  2000/08/17 00:26:05  bsmitc
- *	Fixed omnipresent and library support for nodes in the MDG not connected to
- *	anything but the omnipresent nodes and libraries.
- *
- *	Revision 3.4  2000/08/16 00:33:15  bsmitc
- *	Changed output subsystem name to be consistent with the DOT subsystem names
- *
- *	Revision 3.3  2000/08/16 00:12:46  bsmitc
- *	Extended UI to support various views and output options
- *
- *	Revision 3.2  2000/08/11 13:19:11  bsmitc
- *	Added support for generating various output levels - all, median, one
- *
- *	Revision 3.1  2000/07/26 23:42:15  bsmitc
- *	Updated findStrongestNode() method to check for null arrays.  Null arrays
- *	may have been causing a null pointer exception in rare cases.
- *
- *	Revision 3.0  2000/07/26 22:46:11  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch;
 
 import java.util.*;
@@ -55,10 +15,7 @@ boolean hasClients = false;
 boolean hasCentrals = false;
 boolean hasLibraries = false;
 
-public
-TXTGraphOutput()
-{
-}
+public TXTGraphOutput() { }
 
 public void writeHeader(Graph gBase) throws IOException
 {

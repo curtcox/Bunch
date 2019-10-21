@@ -1,4 +1,9 @@
-package bunch;
+package bunch.clustering;
+
+import bunch.Cluster;
+import bunch.IterationEvent;
+import bunch.Population;
+import bunch.clustering.ClusteringMethod2;
 
 /**
  * This class is a refactoring in progress.  It supports the same base interface

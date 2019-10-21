@@ -1,23 +1,3 @@
-/****
- *
- *	$Log: ClusterFileParser.java,v $
- *	Revision 3.0  2002/02/03 18:41:45  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.1  2000/08/09 14:17:47  bsmitc
- *	Changes made to support agglomerative clustering feature.
- *
- *	Revision 3.0  2000/07/26 22:46:08  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:33  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch;
 
 import java.util.*;
@@ -32,16 +12,10 @@ import java.util.*;
  *
  * @author Brian Mitchell
  */
-public
-class ClusterFileParser
-  extends Parser
-{
+public class ClusterFileParser extends Parser {
 Graph graph_d;
 
-public
-ClusterFileParser()
-{
-}
+public ClusterFileParser() { }
 
 /**
  * This method sets the graph that will be updated according to the

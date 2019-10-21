@@ -21,9 +21,10 @@
  *
  *
  */
-package bunch;
+package bunch.clustering;
 
-import java.util.*;
+import bunch.GenericFactory;
+import bunch.clustering.ClusteringMethod;
 
 /**
  * A factory for different kinds of objects that calculate the
@@ -31,7 +32,7 @@ import java.util.*;
  *
  * @author Brian Mitchell
  *
- * @see bunch.ClusteringMethod
+ * @see ClusteringMethod
  * @see bunch.GenericFactory
  */
 public
@@ -50,11 +51,11 @@ ClusteringMethodFactory()
 {
   super();
   setFactoryType("ClusteringMethod");
-  addItem("Hill Climbing", "bunch.GeneralHillClimbingClusteringMethod");
-  addItem("NAHC", "bunch.NextAscentHillClimbingClusteringMethod");
-  addItem("SAHC", "bunch.SteepestAscentHillClimbingClusteringMethod");
-  addItem("GA", "bunch.GAClusteringMethod");
-  addItem("Exhaustive", "bunch.OptimalClusteringMethod");
+  addItem("Hill Climbing", "bunch.clustering.GeneralHillClimbingClusteringMethod");
+  addItem("NAHC", "bunch.clustering.NextAscentHillClimbingClusteringMethod");
+  addItem("SAHC", "bunch.clustering.SteepestAscentHillClimbingClusteringMethod");
+  addItem("GA", "bunch.clustering.GAClusteringMethod");
+  addItem("Exhaustive", "bunch.clustering.OptimalClusteringMethod");
 }
 
 /**

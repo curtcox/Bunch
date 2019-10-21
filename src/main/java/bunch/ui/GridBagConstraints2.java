@@ -1,20 +1,3 @@
-/****
- *
- *	$Log: GridBagConstraints2.java,v $
- *	Revision 3.0  2002/02/03 18:41:51  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *	
- *	Revision 3.0  2000/07/26 22:46:10  bsmitc
- *	*** empty log message ***
- *	
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *	
- *
- */
 /*
  * Copyright (c) 1997-1998 Borland International, Inc. All Rights Reserved.
  * 
@@ -38,7 +21,7 @@
 // Copyright (c) 1996-1998 Borland International, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------------------------
 
-package bunch;				//borland.jbcl.layout;
+package bunch.ui;				//borland.jbcl.layout;
 
 import java.awt.*;
 

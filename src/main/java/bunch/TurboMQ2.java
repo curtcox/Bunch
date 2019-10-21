@@ -1,20 +1,3 @@
-/****
- *
- *	$Log: TurboMQ2.java,v $
- *	Revision 3.0  2002/02/03 18:41:57  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *	
- *	Revision 3.0  2000/07/26 22:46:11  bsmitc
- *	*** empty log message ***
- *	
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *	
- *
- */
 package bunch;
 
 /**
@@ -27,10 +10,7 @@ package bunch;
  * @see bunch.ObjectiveFunctionCalculator
  * @see bunch.ObjectiveFunctionCalculatorFactory
  */
-public
-class TurboMQ2
-  implements ObjectiveFunctionCalculator
-{
+public class TurboMQ2 implements ObjectiveFunctionCalculator {
 private Graph graph_d;
 private static int[][] clusterMatrix_d = null;
 private Node[] nodes_x;

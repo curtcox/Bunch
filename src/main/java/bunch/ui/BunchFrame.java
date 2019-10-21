@@ -2,6 +2,7 @@ package bunch.ui;
 
 import bunch.*;
 import bunch.BunchServer.BunchSvrMsg;
+import bunch.clustering.*;
 import bunch.stats.*;
 import java.awt.*;
 import java.awt.event.*;

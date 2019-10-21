@@ -1,41 +1,3 @@
-/****
- *
- *	$Log: TXTTreeGraphOutput.java,v $
- *	Revision 3.0  2002/02/03 18:41:57  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *	
- *	Revision 3.5  2000/08/18 21:08:01  bsmitc
- *	Added feature to support tree output for dotty and text
- *	
- *	Revision 3.4  2000/08/16 00:33:15  bsmitc
- *	Changed output subsystem name to be consistent with the DOT subsystem names
- *
- *	Revision 3.3  2000/08/11 13:19:11  bsmitc
- *	Added support for generating various output levels - all, median, one
- *
- *	Revision 3.2  2000/07/28 14:26:19  bsmitc
- *	Added support for the TXTTree Graph output option
- *
- *	Revision 3.1  2000/07/28 12:51:28  bsmitc
- *	Initial Version Added To Project
- *
- *	Revision 1.1.2.1  2000/07/28 12:30:46  bsmitc
- *	Added Class to Project
- *
- *
- */
-
-/**
- * Title:        Bunch Project<p>
- * Description:  <p>
- * Copyright:    Copyright (c) Brian Mitchell<p>
- * Company:      Drexel University - SERG<p>
- * @author Brian Mitchell
- * @version 1.0
- */
 package bunch;
 
 import java.util.*;
@@ -43,10 +5,9 @@ import java.util.*;
 import java.io.*;
 import java.util.Vector;
 
-public class TXTTreeGraphOutput   extends GraphOutput {
+public class TXTTreeGraphOutput extends GraphOutput {
 
-  public TXTTreeGraphOutput() {
-  }
+  public TXTTreeGraphOutput() {}
 
   public void writeHeader(Graph gBase) throws IOException
 {

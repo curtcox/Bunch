@@ -1,4 +1,6 @@
-package bunch;
+package bunch.clustering;
+
+import bunch.*;
 
 /**
  * The superclass for all updated clustering methods. A clustering method is (usually) an
@@ -12,13 +14,12 @@ package bunch;
  *
  * @author Brian Mitchell
  *
- * @see bunch.NextAscentHillClimbingClusteringMethod
- * @see bunch.SteepestAscentHillClimbingClusteringMethod
- * @see bunch.GAClusteringMethod
+ * @see NextAscentHillClimbingClusteringMethod
+ * @see SteepestAscentHillClimbingClusteringMethod
+ * @see GAClusteringMethod
  */
 
-public abstract class ClusteringMethod2 extends ClusteringMethod
-{
+public abstract class ClusteringMethod2 extends ClusteringMethod {
 private IterationListener listener_d;
 private Graph graph_d;
 private Cluster bestCluster_d;

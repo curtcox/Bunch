@@ -1,43 +1,11 @@
-/****
- *
- *	$Log: NextLevelGraph.java,v $
- *	Revision 3.0  2002/02/03 18:41:53  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:04  bsmitc
- *	CVS Import
- *	
- *	Revision 3.2  2000/08/11 13:19:11  bsmitc
- *	Added support for generating various output levels - all, median, one
- *	
- *	Revision 3.1  2000/08/09 14:17:48  bsmitc
- *	Changes made to support agglomerative clustering feature.
- *
- *	Revision 3.0  2000/07/26 22:46:10  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
-
-/**
- * Title:        Bunch Version 1.2 Base<p>
- * Description:  Your description<p>
- * Copyright:    Copyright (c) 1999<p>
- * Company:      <p>
- * @author Brian Mitchell
- * @version
- */
 package bunch;
 
 import java.util.*;
 
 public class NextLevelGraph {
 
-class NodeInfo
-{
+class NodeInfo {
+
   public String name;
   public int    id;
   public Hashtable dependencies;
@@ -48,9 +16,7 @@ class NodeInfo
   public int[] arrayDependencies;
   public int[] arrayWeights;
 
-  public
-  NodeInfo(String n)
-  {
+  public NodeInfo(String n) {
     name = n;
     id = -1;
     dependencies = new Hashtable();
