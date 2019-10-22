@@ -14,7 +14,8 @@ import bunch.model.Node;
  * @see ObjectiveFunctionCalculator
  * @see ObjectiveFunctionCalculatorFactory
  */
-public class TurboMQIncr implements ObjectiveFunctionCalculator {
+public final class TurboMQIncr implements ObjectiveFunctionCalculator {
+
 private Graph graph_d;
 private static int[][] clusterMatrix_d = null;
 private Node[] nodes_x;
@@ -38,10 +39,7 @@ TurboMQIncr()
  *
  * @param g the graph which OF will be calculated
  */
-public
-void
-init(Graph g)
-{
+public void init(Graph g) {
   graph_d = g;
   numberOfNodes_d = g.getNumberOfNodes();
   nodes_x = g.getNodes();
@@ -56,8 +54,7 @@ init(Graph g)
   //}
 }
 
-public double calculate(Cluster c)
-{
+public double calculate(Cluster c) {
   //if(clusters_x == null)
   //  clusters_x = c.getClusterNames();
 
@@ -67,8 +64,7 @@ public double calculate(Cluster c)
 
   //return calcAll(c);
 
-  if(c.isMoveValid() == false)
-  {
+  if(c.isMoveValid() == false) {
     if(clusters_x == null)
       clusters_x = c.getClusterNames();
     return calcAll(c);
@@ -94,8 +90,7 @@ public double calculate(Cluster c)
   //return graph_d.getObjectiveFunctionValue();
 }
 
-private double calcAll(Cluster c)
-{
+private double calcAll(Cluster c) {
 //System.out.println("Doing the full calc");
   c.allocEdgeCounters();
   muE = c.getMuEdgeVector();
@@ -143,8 +138,7 @@ private double calcAll(Cluster c)
   return MQ;
 }
 
-private double calcIncr(Cluster c, int[]lastMv)
-{
+private double calcIncr(Cluster c, int[]lastMv) {
   //int []lastMv = c.getLmEncoding();
 
   muE = c.getMuEdgeVector();
@@ -228,8 +222,7 @@ private double calcIncr(Cluster c, int[]lastMv)
   return MQ;
 }
 
-private double calcCFi(int c)
-{
+private double calcCFi(int c) {
   double dMuE = (double)muE[c];
   double dEpE = (double)epE[c];
 
@@ -243,10 +236,7 @@ private double calcCFi(int c)
  * Calculate the objective function value for the graph passed in the
  * #init(bunch.model.Graph) method.
  */
-public
-void
-calculate()
-{
+public void calculate() {
   int k=0;
   double intra=0.0;
   double inter=0.0;
@@ -289,10 +279,7 @@ calculate()
  * Calculates the intradependencies (intraconnectivity) value for the given cluster
  * of the graph.
  */
-public
-double
-calculateIntradependenciesValue(int[] c, int numCluster)
-{
+public double calculateIntradependenciesValue(int[] c, int numCluster) {
   double intradep=0.0;
   double intraEdges=0.0;
   double interEdges=0.0;
@@ -358,10 +345,7 @@ calculateIntradependenciesValue(int[] c, int numCluster)
 /**
  * Calculates the interdependencies (interconnectivity) between to given clusters
  */
-public
-double
-calculateInterdependenciesValue(int[] c1, int[] c2, int nc1, int nc2)
-{
+public double calculateInterdependenciesValue(int[] c1, int[] c2, int nc1, int nc2) {
   double interdep=0.0;
   for (int i=1; i<=c1[0]; ++i) {
     int[] ca = nodes_x[c1[i]].dependencies;

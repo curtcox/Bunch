@@ -20,7 +20,7 @@ import java.util.*;
  * @version 1.0
  */
 
-public class BunchMDG {
+public final class BunchMDG {
 ArrayList mdgEdges = null;
 
   public BunchMDG() {

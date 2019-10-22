@@ -10,7 +10,7 @@ import bunch.model.GenericFactory;
  * @see ObjectiveFunctionCalculator
  * @see GenericFactory
  */
-public class ObjectiveFunctionCalculatorFactory extends GenericFactory {
+public final class ObjectiveFunctionCalculatorFactory extends GenericFactory {
 String currObjFnMethod = "Incremental MQ Weighted";
 String defaultMethod = "Incremental MQ Weighted";
 

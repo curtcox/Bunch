@@ -1,28 +1,3 @@
- /****
- *
- *	$Log: BunchGraphUtils.java,v $
- *	Revision 1.1.1.1  2002/02/03 18:30:05  bsmitc
- *	CVS Import
- *
- *	Revision 3.3  2001/03/17 14:55:47  bsmitc
- *	Added additional features to the API
- *
- *	Revision 3.2  2000/11/30 01:49:21  bsmitc
- *	Added support for various tests and statistical gathering
- *
- *	Revision 3.1  2000/11/26 20:39:26  bsmitc
- *	Added support for precision and recall calculations by using the
- *	BunchGraph API suite
- *
- */
-/**
- * Title:        Bunch Project<p>
- * Description:  <p>
- * Copyright:    Copyright (c) Brian Mitchell<p>
- * Company:      Drexel University - SERG<p>
- * @author Brian Mitchell
- * @version 1.0
- */
 package bunch.api;
 
 import java.util.*;
@@ -34,13 +9,12 @@ import bunch.parser.ClusterFileParser;
 import bunch.parser.DependencyFileParser;
 import bunch.parser.Parser;
 
- public class BunchGraphUtils {
+public final class BunchGraphUtils {
 
   public static final String MECL_VALUE = "MeclValue";
   public static final String MECL_QUALITY_METRIC = "MeclQualityMetric";
 
-  public BunchGraphUtils() {
-  }
+  public BunchGraphUtils() { }
 
   public static Collection getModuleNames(String mdgFileName)
   {
@@ -362,7 +336,7 @@ import bunch.parser.Parser;
   }
 }
 
-class BunchGraphPR
+final class BunchGraphPR
 {
   BunchGraph expertG;
   BunchGraph clusterG;
@@ -428,7 +402,7 @@ class BunchGraphPR
   { return recall;  }
 }
 
-class MeCl
+final class MeCl
 {
   BunchGraph A;
   BunchGraph B;

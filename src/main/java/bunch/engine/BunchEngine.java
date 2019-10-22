@@ -15,7 +15,7 @@ import bunch.ui.SwingWorker;
 import java.util.*;
 import java.beans.*;
 
-public class BunchEngine {
+public final class BunchEngine {
 
   Hashtable bunchArgs = null;
   Hashtable results = null;

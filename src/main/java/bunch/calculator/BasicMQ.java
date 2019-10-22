@@ -16,7 +16,8 @@ import bunch.model.Node;
  * @see ObjectiveFunctionCalculator
  * @see ObjectiveFunctionCalculatorFactory
  */
-public class BasicMQ implements ObjectiveFunctionCalculator {
+public final class BasicMQ implements ObjectiveFunctionCalculator {
+
 private Graph graph_d;
 private static int[][] clusterMatrix_d = null;
 private Node[] nodes_x;
@@ -25,13 +26,10 @@ private int numberOfNodes_d;
 
 /**
  * This is the basic MQ objective function.  It was developed and published in
- * IWPC98.  This MQ function measures inter- and intra-connectivly seperatly, and
+ * IWPC98.  This MQ function measures inter- and intra-connectivly separately, and
  * returns the average value of intra-connectivity minus inter-connectivity.
  */
-public
-BasicMQ()
-{
-}
+public BasicMQ() { }
 
 /**
  * Initialization for the OF Calculator using the data of the Graph passed
@@ -39,10 +37,7 @@ BasicMQ()
  *
  * @param g the graph which OF will be calculated
  */
-public
-void
-init(Graph g)
-{
+public void init(Graph g) {
   graph_d = g;
   numberOfNodes_d = g.getNumberOfNodes();
   nodes_x = g.getNodes();
@@ -60,8 +55,7 @@ init(Graph g)
  * This method calls the calculate function, which updates the objective
  * function value in the graph object.
  */
-public double calculate(Cluster c)
-{
+public double calculate(Cluster c) {
   graph_d.setClusters(c.getClusterVector());
   this.init(c.getGraph());
   calculate();
@@ -73,10 +67,7 @@ public double calculate(Cluster c)
  * Calculate the objective function value for the graph passed in the
  * #init(bunch.model.Graph) method.
  */
-public
-void
-calculate()
-{
+public void calculate() {
   int k=0;
   double intra=0.0;
   double inter=0.0;
@@ -150,10 +141,7 @@ calculate()
  * Calculates the intradependencies (intraconnectivity) value for the given cluster
  * of the graph.  A_i = \frac{\mu_i}{N^2}
  */
-public
-double
-calculateIntradependenciesValue(int[] c, int numCluster)
-{
+public double calculateIntradependenciesValue(int[] c, int numCluster) {
   double intradep=0.0;
   int k=0;
   for (int i=1; i<=c[0]; ++i) {
@@ -178,10 +166,7 @@ calculateIntradependenciesValue(int[] c, int numCluster)
  * Calculates the interdependencies (interconnectivity) between to given clusters.
  * E_i = \frac{\epsilon_i}{2 \cdot N_1 \cdot N_2}
  */
-public
-double
-calculateInterdependenciesValue(int[] c1, int[] c2, int nc1, int nc2)
-{
+public double calculateInterdependenciesValue(int[] c1, int[] c2, int nc1, int nc2) {
   double interdep=0.0;
   for (int i=1; i<=c1[0]; ++i) {
     int[] ca = nodes_x[c1[i]].dependencies;

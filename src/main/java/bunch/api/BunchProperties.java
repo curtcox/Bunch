@@ -1,36 +1,3 @@
-
-/**
- * Title:        Bunch Project<p>
- * Description:  <p>
- * Copyright:    Copyright (c) Brian Mitchell<p>
- * Company:      Drexel University - SERG<p>
- * @author Brian Mitchell
- * @version 1.0
- */
-
- /****
- *
- *	$Log: BunchProperties.java,v $
- *	Revision 1.1.1.1  2002/02/03 18:30:05  bsmitc
- *	CVS Import
- *
- *	Revision 3.3  2001/03/17 14:55:47  bsmitc
- *	Added additional features to the API
- *
- *	Revision 3.2  2000/11/30 01:49:22  bsmitc
- *	Added support for various tests and statistical gathering
- *
- *	Revision 3.1  2000/11/26 15:44:36  bsmitc
- *	Various bug patchs
- *
- *	Revision 3.0  2000/10/22 16:14:01  bsmitc
- *	Changed version number to 3.0 to sync with rest of project
- *
- *	Revision 1.1.1.1  2000/10/22 16:05:57  bsmitc
- *	Initial Version
- *
- *
- */
 package bunch.api;
 
 import java.util.*;

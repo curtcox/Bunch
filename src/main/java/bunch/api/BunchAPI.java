@@ -1,36 +1,3 @@
-
-/**
- * Title:        Bunch Project<p>
- * Description:  <p>
- * Copyright:    Copyright (c) Brian Mitchell<p>
- * Company:      Drexel University - SERG<p>
- * @author Brian Mitchell
- * @version 1.0
- */
-
-/****
- *
- *	$Log: BunchAPI.java,v $
- *	Revision 1.1.1.1  2002/02/03 18:30:05  bsmitc
- *	CVS Import
- *
- *	Revision 3.3  2001/03/17 14:55:47  bsmitc
- *	Added additional features to the API
- *
- *	Revision 3.2  2000/11/30 01:49:21  bsmitc
- *	Added support for various tests and statistical gathering
- *
- *	Revision 3.1  2000/11/26 15:44:36  bsmitc
- *	Various bug patchs
- *
- *	Revision 3.0  2000/10/22 16:14:00  bsmitc
- *	Changed version number to 3.0 to sync with rest of project
- *
- *	Revision 1.1.1.1  2000/10/22 16:05:57  bsmitc
- *	Initial Version
- *
- *
- */
 package bunch.api;
 
 import bunch.engine.*;
@@ -39,7 +6,7 @@ import bunch.model.Graph;
 import java.util.*;
 import java.io.*;
 
-public class BunchAPI {
+public final class BunchAPI {
 
   public static final String  CALLBACK_OBJECT_REF = "CallbackObjectReference";
   public static final String  CALLBACK_OBJECT_FREQ = "CallbackObjectFrequency";
@@ -71,8 +38,6 @@ public class BunchAPI {
   public static final String OMNIPRESENT_CENTRAL = "OmnipresentCentral";
   public static final String LIBRARY_MODULE = "LibraryModule";
 
-
-
   BunchProperties   bunchProps;
   Hashtable         bunchArgs;
   Hashtable         resultsHashtable=null;
@@ -85,8 +50,7 @@ public class BunchAPI {
     engine = new BunchEngine();
   }
 
-  Hashtable loadHTFromProperties(BunchProperties bp)
-  {
+  Hashtable loadHTFromProperties(BunchProperties bp) {
     Hashtable h = new Hashtable();
     Enumeration e = bp.propertyNames();
     while(e.hasMoreElements())
@@ -130,12 +94,10 @@ public class BunchAPI {
       h.put(BunchProperties.ALG_SAHC_POPULATION_SZ,pop);
     }
 
-
     return h;
   }
 
-  public void reset()
-  {
+  public void reset() {
     if(bunchArgs != null)
     {
       bunchArgs.clear();
@@ -143,8 +105,7 @@ public class BunchAPI {
     }
   }
 
-  public void setProperties(BunchProperties bp)
-  {
+  public void setProperties(BunchProperties bp) {
       bunchProps = bp;
       Hashtable    htArgs = loadHTFromProperties(bp);
       if(bunchArgs == null)
@@ -153,35 +114,30 @@ public class BunchAPI {
         bunchArgs.putAll(htArgs);
   }
 
-  public void setAPIProperty(Object key, Object value)
-  {
+  public void setAPIProperty(Object key, Object value) {
     if(bunchArgs == null) bunchArgs = new Hashtable();
     bunchArgs.put(key,value);
   }
 
-  public Object removeAPIProperty(Object key)
-  {
+  public Object removeAPIProperty(Object key) {
     if(bunchArgs != null)
       return bunchArgs.remove(key);
     return null;
   }
 
-  public void setProperties(String fileName) throws FileNotFoundException, IOException
-  {
+  public void setProperties(String fileName) throws IOException {
     bunchProps = new BunchProperties();
     bunchProps.load(new FileInputStream(fileName));
     bunchArgs = loadHTFromProperties(bunchProps);
   }
 
-  public void setProperties(InputStream in) throws IOException
-  {
+  public void setProperties(InputStream in) throws IOException {
     bunchProps = new BunchProperties();
     bunchProps.load(in);
     bunchArgs = loadHTFromProperties(bunchProps);
   }
 
-  public boolean validate()
-  {
+  public boolean validate() {
     boolean rc = true;
 
     if(bunchProps.getProperty(BunchProperties.MDG_INPUT_FILE_NAME) == null)
@@ -213,23 +169,19 @@ public class BunchAPI {
   //  return resultsHashtable;
   //}
 
-  public Hashtable getResults()
-  {
+  public Hashtable getResults() {
     return engine.getResultsHT();
   }
 
-  public Hashtable getSpecialModules(String mdgFileName)
-  {
+  public Hashtable getSpecialModules(String mdgFileName) {
     return engine.getDefaultSpecialNodes(mdgFileName);
   }
 
-  public Hashtable getSpecialModules(String mdgFileName,double threshold)
-  {
+  public Hashtable getSpecialModules(String mdgFileName,double threshold) {
     return engine.getDefaultSpecialNodes(mdgFileName,threshold);
   }
 
-  public boolean run()
-  {
+  public boolean run() {
     boolean rc = true;
     resultsHashtable = new Hashtable();
     if(progressCB != null){
@@ -242,23 +194,19 @@ public class BunchAPI {
     return rc;
   }
 
-  public void setDebugStats(boolean b)
-  {
+  public void setDebugStats(boolean b) {
     engine.setDebugStats(b);
   }
 
-  public ArrayList getClusters()
-  {
+  public ArrayList getClusters() {
     return engine.getClusterList();
   }
 
-  public BunchGraph getPartitionedGraph()
-  {
+  public BunchGraph getPartitionedGraph() {
     return getPartitionedGraph(0);
   }
 
-  public ArrayList  getPartitionedBunchGraphs()
-  {
+  public ArrayList  getPartitionedBunchGraphs() {
     Graph baseGraph = engine.getBestGraph();
     if (baseGraph == null) return null;
 
@@ -298,8 +246,7 @@ public class BunchAPI {
     return al;
   }
 
-  public BunchGraph getPartitionedGraph(int Level)
-  {
+  public BunchGraph getPartitionedGraph(int Level) {
     Graph baseGraph = engine.getBestGraph();
     if (baseGraph == null) return null;
 

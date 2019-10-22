@@ -14,7 +14,7 @@ import bunch.model.Node;
  * @see ObjectiveFunctionCalculator
  * @see ObjectiveFunctionCalculatorFactory
  */
-public class WeightedObjectiveFunctionCalculator3 implements ObjectiveFunctionCalculator {
+public final class WeightedObjectiveFunctionCalculator3 implements ObjectiveFunctionCalculator {
 
 private Graph graph_d;
 private static int[][] clusterMatrix_d = null;
@@ -58,10 +58,7 @@ public double calculate(Cluster c)
  * Calculate the objective function value for the graph passed in the
  * #init(bunch.model.Graph) method.
  */
-public
-void
-calculate()
-{
+public void calculate() {
   int k=0;
   double intra=0.0;
   double inter=0.0;
@@ -118,10 +115,7 @@ calculate()
  * Calculates the intradependencies (intraconnectivity) value for the given cluster
  * of the graph.
  */
-public
-double
-calculateIntradependenciesValue(int[] c, int numCluster, double[] intraTally, double[] interTally)
-{
+public double calculateIntradependenciesValue(int[] c, int numCluster, double[] intraTally, double[] interTally) {
   double intradep=0.0;
   double intraEdges=0.0;
   double interEdges=0.0;
@@ -205,10 +199,7 @@ calculateIntradependenciesValue(int[] c, int numCluster, double[] intraTally, do
 /**
  * Calculates the interdependencies (interconnectivity) between to given clusters
  */
-public
-double
-calculateInterdependenciesValue(int[] c1, int[] c2, int nc1, int nc2)
-{
+public double calculateInterdependenciesValue(int[] c1, int[] c2, int nc1, int nc2) {
   double interdep=0.0;
   for (int i=1; i<=c1[0]; ++i) {
     int[] ca = nodes_x[c1[i]].dependencies;

@@ -1,34 +1,6 @@
-/****
- *
- *	$Log: BunchAPISimEdgeTest.java,v $
- *	Revision 1.1.1.1  2002/02/03 18:30:05  bsmitc
- *	CVS Import
- *	
- *	Revision 3.3  2001/03/17 14:55:47  bsmitc
- *	Added additional features to the API
- *
- *	Revision 3.2  2000/11/30 03:08:12  bsmitc
- *	Updated test case
- *
- *	Revision 3.1  2000/11/30 01:49:21  bsmitc
- *	Added support for various tests and statistical gathering
- *
- *
- */
+package bunch.api;
 
- package bunch.api;
-
- import java.util.*;
- import java.io.*;
-
-/**
- * Title:        Bunch Clustering Tool
- * Description:
- * Copyright:    Copyright (c) 2000
- * Company:      Drexel University
- * @author Brian Mitchell
- * @version 1.0
- */
+import java.util.*;
 
 public class BunchAPISimEdgeTest {
 
@@ -45,8 +17,7 @@ int [] meclIFreq = new int[11];
 
 String mode = "NAHC";
 
-  public BunchAPISimEdgeTest()
-  {
+  public BunchAPISimEdgeTest() {
     String graphName = "d:\\linux\\linux"; //"e:\\expir\\grappa"; //"e:\\linux\\linux"; //"e:\\expir\\compiler";
     mode = "NAHC";
 
@@ -56,8 +27,7 @@ String mode = "NAHC";
     runTest(graphName, true);
   }
 
-  public void runTest(String graphName, boolean removeSpecial)
-  {
+  public void runTest(String graphName, boolean removeSpecial) {
     totalNodes = totalAdjustments = 0;
     bunchGraphs = new ArrayList();
     boolean removeSpecialModules = removeSpecial;

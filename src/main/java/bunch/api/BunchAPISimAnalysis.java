@@ -4,24 +4,7 @@ import java.util.*;
 import java.io.*;
 import java.sql.*;
 
-/****
- *
- *	$Log: BunchAPISimAnalysis.java,v $
- *	Revision 1.1.1.1  2002/02/03 18:30:05  bsmitc
- *	CVS Import
- *	
- */
-
-/**
- * Title:        Bunch Clustering Tool
- * Description:
- * Copyright:    Copyright (c) 2000
- * Company:      Drexel University
- * @author Brian Mitchell
- * @version 1.0
- */
-
-public class BunchAPISimAnalysis {
+public final class BunchAPISimAnalysis {
 
   String testID = "CIAT1";
   Connection con = null;
@@ -46,8 +29,7 @@ public class BunchAPISimAnalysis {
   }
 
 
-  public void randomHack(String baseFName, int count, int mcount)
-  {
+  public void randomHack(String baseFName, int count, int mcount) {
     Random r = new Random(System.currentTimeMillis());
 
     for(int i = 0; i < count; i++)

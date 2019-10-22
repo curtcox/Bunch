@@ -1,14 +1,5 @@
 package bunch.api;
 
-/**
- * Title:        Bunch Clustering Tool
- * Description:
- * Copyright:    Copyright (c) 2000
- * Company:      Drexel University
- * @author
- * @version 1.0
- */
-
 public abstract class BunchAsyncNotify {
 
   public static final int STATUS_NONE = 1;
