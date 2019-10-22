@@ -93,14 +93,11 @@ public BunchAPIOld(String sMDGFile) throws Exception {
  *
  * @param  delims   The list of delimters to use in the parsing process
  */
-public
-BunchAPIOld(String sMDGFile, String delims) throws Exception
-{
+public BunchAPIOld(String sMDGFile, String delims) throws Exception {
     mdgFileName = sMDGFile;
     delims = delims;
     init(sMDGFile,delims);
 }
-
 
 /**
  * The init method initializes the clustering engine with default parameters
@@ -111,8 +108,7 @@ BunchAPIOld(String sMDGFile, String delims) throws Exception
  *
  * @param  delims   The list of delimters to use in the parsing process
  */
-public void init(String sMDG, String delims) throws Exception
-{
+public void init(String sMDG, String delims) throws Exception {
    preferences_d = (BunchPreferences)(Beans.instantiate(null, "bunch.BunchPreferences"));
    Graph.setObjectiveFunctionCalculatorFactory(preferences_d.getObjectiveFunctionCalculatorFactory());
    inputFileName = sMDG;
@@ -133,10 +129,7 @@ public void init(String sMDG, String delims) throws Exception
  * @param method the name of the ClusteringMethod to load
  * @see ClusteringMethodFactory.getMethod(ClusteringMethod)
  */
-public
-void
-setClusteringMethod(int iMethod)
-{
+public void setClusteringMethod(int iMethod) {
   String method;
 
    alg = iMethod;
@@ -194,18 +187,16 @@ setClusteringMethod(int iMethod)
 }
 
 /**
- * Parse the mdg graph with the specified delimeters and create the graph
+ * Parse the mdg graph with the specified delimiters and create the graph
  * object for the api class.  This graph object will be used by the other
  * methods in this class.
  *
  * @param sMDGFile  The name of the mdg file to be used for the clustering
  *                  process
  *
- * @param  delims   The list of delimters to use in the parsing process
+ * @param  delims   The list of delimiters to use in the parsing process
  */
-void
-parseGraph(String filename, String delims)
-{
+void parseGraph(String filename, String delims) {
     Parser p = preferences_d.getParserFactory().getParser("dependency");
     p.setInput(filename);
     p.setDelims(delims);
@@ -221,9 +212,7 @@ parseGraph(String filename, String delims)
  * @param filename Sets the name of the output file.  The output file type
  *                 is set in the output driver
  */
-public
-void
-setOutputFile(String filename)
+public void setOutputFile(String filename)
 {
     outputFileName = filename;
 }
@@ -234,9 +223,7 @@ setOutputFile(String filename)
  *
  * @param filename the name of the MDG file
  */
-void
-parseClusterFile(String filename)
-{
+void parseClusterFile(String filename) {
     Parser p = preferences_d.getParserFactory().getParser("cluster");
     p.setInput(filename);
     p.setObject(initialGraph_d);
@@ -248,10 +235,7 @@ parseClusterFile(String filename)
  * of the parameters are set.
  *
  */
-public
-void
-run()
-{
+public void run() {
   //configures the bunch environment based on the options selected
   configureOptions();
 
@@ -280,16 +264,13 @@ run()
 
 /**
  * This method is used to run a clustering algorithm multiple times.  It is
- * useful for performing expirements
+ * useful for performing experiments
  *
  * @param howMany   Sets the number of times to run the clustering algorithm.
  *
  * @exception Exception Cascades downstream exceptions upwards.
  */
-public
-void
-runBatch(int howMany) throws Exception
-{
+public void runBatch(int howMany) throws Exception {
 	int expNum = 0;
 
         /**
@@ -337,9 +318,7 @@ runBatch(int howMany) throws Exception
  * @param g the graph to set as result graph
  * @see #getLastResultGraph()
  */
-public
-void
-setLastResultGraph(Graph g)
+public void setLastResultGraph(Graph g)
 {
   lastResultGraph_d = g;
 }
@@ -349,9 +328,7 @@ setLastResultGraph(Graph g)
  *
  * @see #setLastResultGraph(Graph)
  */
-public
-Graph
-getLastResultGraph()
+public Graph getLastResultGraph()
 {
   return lastResultGraph_d;
 }
@@ -361,9 +338,7 @@ getLastResultGraph()
  *
  * @return the current instance of a subclass of the GraphOutput class
  */
-public
-GraphOutput
-getGraphOutput()
+public GraphOutput getGraphOutput()
 {
   return graphOutput_d;
 }
@@ -373,9 +348,7 @@ getGraphOutput()
  *
  * @return the current instance of a subclass of the ClusteringMethod class
  */
-public
-ClusteringMethod
-getClusteringMethod()
+public ClusteringMethod getClusteringMethod()
 {
   return clusteringMethod_d;
 }
@@ -387,8 +360,7 @@ getClusteringMethod()
  *
  * @param iCalc The ordinal value for the MQ Calculator
  */
-public void setMQCalc(int iCalc)
-{
+public void setMQCalc(int iCalc) {
    mqFn = iCalc;
 
    /**
@@ -422,10 +394,7 @@ public void setMQCalc(int iCalc)
  * Configures the bunch environment based on the options selected.  For now
  * this includes setting the objective function calculator.
  */
-public
-void
-configureOptions()
-{
+public void configureOptions() {
    String objFnCalc = mqCalc_d;
    (preferences_d.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
 }
@@ -437,10 +406,7 @@ configureOptions()
  * @param iPopSize    The population size
  * @param dThreshold  The threshold to determine convergance
  */
-public
-void
-setHillClimbingConfiguration(int iInterations, int iPopSz, double dThreshold )
-{
+public void setHillClimbingConfiguration(int iInterations, int iPopSz, double dThreshold ) {
    hcc = new HillClimbingConfiguration();
    hcc.init(initialGraph_d);
    hcc.setNumOfIterations(iInterations);
@@ -457,9 +423,7 @@ setHillClimbingConfiguration(int iInterations, int iPopSz, double dThreshold )
  * @param mutationThreshod The mutation probability 0 <= x <= 1
  * @param iMethod         The selection method
  */
-public
-void
-setGAConfiguration(int iInterations, int iPopSz, double crossThreshold,
+public void setGAConfiguration(int iInterations, int iPopSz, double crossThreshold,
          double mutationThreshold, int iMethod )
 {
    gac = new GAConfiguration();
@@ -482,10 +446,7 @@ setGAConfiguration(int iInterations, int iPopSz, double crossThreshold,
  *
  * @param iMethod The output method based on the defined constnts.
  */
-public
-void
-setOutputMethod(int iMethod)
-{
+public void setOutputMethod(int iMethod) {
    String sMethod;
 
    /**
@@ -520,9 +481,7 @@ setOutputMethod(int iMethod)
  * @param doIT If true, consolidate the drifters, if false dont consolidate
  *             the drifters.
  */
-public
-void
-setDriftersOptimization(boolean doIt)
+public void setDriftersOptimization(boolean doIt)
 {
    doDrifters = doIt;
 }
@@ -530,9 +489,7 @@ setDriftersOptimization(boolean doIt)
 /**
  * Outputs the partitioned graph based on the previously selected output factory.
  */
-void
-outputGraph()
-{
+void outputGraph() {
     graphOutput_d = preferences_d.getGraphOutputFactory().getOutput(outputMethod);
     graphOutput_d.setBaseName(clusterName_d);
     graphOutput_d.setBasicName(outputFileName);
@@ -545,8 +502,7 @@ outputGraph()
  * Sets the default parametes for the GA, SAHC and NAHC algorithms.  The newer
  * BunchAPI class supports the generic HillClimbing feature.
  */
-private void setDefaultPreferences()
-{
+private void setDefaultPreferences() {
   /**
    * Set the defaults based on the defaults in the Bunch GUI.
    */
@@ -573,9 +529,7 @@ private void setDefaultPreferences()
  * Excludes omnipresent modules based on the default threshold
  *
  */
-public
-void
-excludeOmnipresentModules()
+public void excludeOmnipresentModules()
 {
    excludeOmnipresentModules(DEFAULT_OPM_THRESHOLD);
 }
@@ -586,10 +540,7 @@ excludeOmnipresentModules()
  * @param threshod  The multiple of average edge weight used to determine if a
  *                  module is omnipresent
  */
-public
-void
-excludeOmnipresentModules(float threshold)
-{
+public void excludeOmnipresentModules(float threshold) {
   Node[] nodeList = initialGraph_d.getNodes();
 
   //find clients
@@ -670,10 +621,7 @@ excludeOmnipresentModules(float threshold)
  * This method sets the libraries, clients and suppliers defined in their
  * respective panes to the graph, just previous to processing.
  */
-private
-void
-arrangeLibrariesClientsAndSuppliers()
-{
+private void arrangeLibrariesClientsAndSuppliers() {
   Node[] nodeList = initialGraph_d.getNodes();
   Node[] originalList = nodeList;
 
@@ -787,10 +735,7 @@ arrangeLibrariesClientsAndSuppliers()
  *
  * @returns True if the element is used, false if not
  */
-private
-boolean
-usesModule(DefaultListModel list, String element)
-{
+private boolean usesModule(DefaultListModel list, String element) {
   for (int i=0; i<list.size(); ++i) {
     if (element.equals((String)list.elementAt(i))) {
       return true;
@@ -802,10 +747,7 @@ usesModule(DefaultListModel list, String element)
 /**
  * Returns the best graph from the clustering method object.
  */
-public
-Graph
-getBestGraph()
-{
+public Graph getBestGraph() {
   if (clusteringMethod_d != null)
     return clusteringMethod_d.getBestGraph();
   else
