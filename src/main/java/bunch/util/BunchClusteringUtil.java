@@ -18,7 +18,7 @@ import bunch.calculator.ObjectiveFunctionCalculatorFactory;
  * @version 1.0
  */
 
-public class BunchClusteringUtil extends JDialog {
+public final class BunchClusteringUtil extends JDialog {
   JPanel panel1 = new JPanel();
   BorderLayout borderLayout1 = new BorderLayout();
   JPanel jPanel1 = new JPanel();

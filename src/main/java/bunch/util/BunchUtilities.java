@@ -1,14 +1,3 @@
-/****
- *
- *	$Log: BunchUtilities.java,v $
- *	Revision 1.1.1.1  2002/02/03 18:30:06  bsmitc
- *	CVS Import
- *	
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch.util;
 
 import java.io.Serializable;
@@ -22,7 +11,7 @@ import java.util.*;
 import bunch.model.Graph;
 import bunch.model.Node;
 
-public class BunchUtilities {
+public final class BunchUtilities {
 
 
 

@@ -1,21 +1,3 @@
-/****
- *
- *	$Log: PrecisionRecallCalculator.java,v $
- *	Revision 1.1.1.1  2002/02/03 18:30:06  bsmitc
- *	CVS Import
- *	
- *
- *
- */
-
-/**
- * Title:        Bunch Project<p>
- * Description:  <p>
- * Copyright:    Copyright (c) Brian Mitchell<p>
- * Company:      Drexel University - SERG<p>
- * @author Brian Mitchell
- * @version 1.0
- */
 package bunch.util;
 
 import java.util.*;
@@ -23,7 +5,7 @@ import java.io.*;
 import java.lang.Math.*;
 import java.text.*;
 
-public class PrecisionRecallCalculator {
+public final class PrecisionRecallCalculator {
 
   String m_S_filename1;
   String m_S_filename2;
@@ -163,8 +145,7 @@ public class PrecisionRecallCalculator {
 
 
 
-class Compare
-{
+final class Compare {
   private Hashtable m_ht_vars_orig; // used to get the index of the original vars
   private Hashtable m_ht_vars_new; // used to get the index of the new vars
   private Vector m_v_original_distance, m_v_new_distance_name, m_v_new_distance_number;
@@ -320,7 +301,7 @@ class Compare
 
 }
 
-class GBunchRW {
+final class GBunchRW {
   private Hashtable m_ht_bunchread;
   private String m_S_filename;
 

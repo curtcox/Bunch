@@ -1,14 +1,5 @@
 package bunch.util;
 
-/**
- * Title:        Bunch Clustering Tool
- * Description:
- * Copyright:    Copyright (c) 2000
- * Company:      Drexel University
- * @author Brian Mitchell
- * @version 1.0
- */
-
 import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 import bunch.model.Graph;
 import bunch.model.Node;
@@ -16,15 +7,12 @@ import bunch.parser.ClusterFileParser;
 import bunch.parser.DependencyFileParser;
 import bunch.parser.Parser;
 
-public class MQCalculator {
+public final class MQCalculator {
 
-  public MQCalculator() {
-  }
+  public MQCalculator() { }
 
-  public static double CalcMQ(String mdgFileName, String silFileName, String calculatorName)
-  {
-    try
-    {
+  public static double CalcMQ(String mdgFileName, String silFileName, String calculatorName) {
+    try {
       String mdg = mdgFileName;
       String sil = silFileName;
 

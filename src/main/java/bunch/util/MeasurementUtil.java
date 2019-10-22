@@ -11,7 +11,7 @@ import bunch.api.*;
 import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 import bunch.ui.BunchFrame;
 
-public class MeasurementUtil extends JDialog {
+public final class MeasurementUtil extends JDialog {
   JPanel panel1 = new JPanel();
   Border border1;
   TitledBorder titledBorder1;

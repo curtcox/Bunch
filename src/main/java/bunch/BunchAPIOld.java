@@ -22,7 +22,7 @@ import javax.swing.*;
  * @author Brian Mitchell
  * @see class bunch.api.BunchAPI
  */
-public class BunchAPIOld {
+public final class BunchAPIOld {
 
 /**
  * These are the static parameters used to drive the clustering options

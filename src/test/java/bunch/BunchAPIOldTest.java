@@ -7,9 +7,9 @@ package bunch;
  *
  * @author Brian Mitchell
  */
-public class BunchTest {
+public class BunchAPIOldTest {
 
-public BunchTest() { }
+public BunchAPIOldTest() { }
 
 public static void main(String[] args) throws Exception {
       System.out.println("TEST: Clustering bunch (need MDG file named bunch)...");

@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 
-public class BunchFileUtil extends JDialog {
+public final class BunchFileUtil extends JDialog {
 
   public static String convClassName = "bunch.gxl.converter.MDGtoGXL";
   public static String convClassJarName = "BunchGXL.jar";
