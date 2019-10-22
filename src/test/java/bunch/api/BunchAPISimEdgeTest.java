@@ -2,7 +2,7 @@ package bunch.api;
 
 import java.util.*;
 
-public class BunchAPISimEdgeTest {
+public final class BunchAPISimEdgeTest {
 
 long totalNodes;
 long totalAdjustments;
