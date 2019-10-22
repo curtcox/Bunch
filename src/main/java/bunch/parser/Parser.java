@@ -62,15 +62,11 @@ setInput(InputStream is)
  *
  * @param fileName the name of the file that will be used as input
  */
-public
-void
-setInput(String fileName)
-{
+public void setInput(String fileName) {
   try {
     reader_d = new BufferedReader(new FileReader(fileName));
     inputFileName = fileName;
-  }
-  catch (Exception e) {
+  } catch (Exception e) {
     e.printStackTrace();
     System.exit(1);
   }
