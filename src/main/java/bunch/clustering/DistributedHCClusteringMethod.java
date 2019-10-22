@@ -1,25 +1,6 @@
-/****
- *
- *	$Log: DistributedHCClusteringMethod.java,v $
- *	Revision 3.0  2002/02/03 18:41:47  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.2  2001/04/03 23:32:12  bsmitc
- *	Added NAHC (really HC) support for Distributed Bunch, updated release
- *	version number to 3.2
- *
- *	Revision 3.1  2001/04/03 21:42:35  bsmitc
- *	Baseline version of basic HC in a distributed mode
- *
- *
- */
 package bunch.clustering;
 
 import javax.naming.*;
-import javax.rmi.PortableRemoteObject;
 import java.util.*;
 
 import bunch.BunchServer.IterationManager;
@@ -36,7 +17,7 @@ import bunch.model.Configuration;
  * @author Brian Mitchell
  *
  */
-public class DistributedHCClusteringMethod extends GenericDistribHillClimbingClusteringMethod {
+public final class DistributedHCClusteringMethod extends GenericDistribHillClimbingClusteringMethod {
 
 /**
  * Constants related to work status

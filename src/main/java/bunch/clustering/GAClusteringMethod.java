@@ -50,10 +50,7 @@ public int getMaxIterations()
 /**
  * initializes the clustering method based on the input graph characteristics
  */
-public
-void
-init()
-{
+public void init() {
   setPopSize(getConfiguration().getPopulationSize());
   setNumOfExperiments(getConfiguration().getNumOfIterations());
   config_d = (GAConfiguration)getConfiguration();
@@ -71,8 +68,7 @@ init()
     currentPopulation_d[i].shuffleClusters();
     currentPopulation_d[i].calculateObjectiveFunctionValue();
 
-    if (currentPopulation_d[i].getObjectiveFunctionValue()
-        > getBestGraph().getObjectiveFunctionValue()) {
+    if (currentPopulation_d[i].getObjectiveFunctionValue() > getBestGraph().getObjectiveFunctionValue()) {
       setBestGraph(currentPopulation_d[i].cloneGraph());
     }
   }
@@ -99,10 +95,7 @@ init()
 /**
  * Redefinition of the setBestGraph method
  */
-public
-void
-setBestGraph(Graph g)
-{
+public void setBestGraph(Graph g) {
   if (method_d != null)
     method_d.setBestGraph(g);
 }
@@ -111,8 +104,7 @@ setBestGraph(Graph g)
  * Return the best cluster from this clustering method.  This method
  * is required to be implemented in order to support the superclass
  */
-public Cluster getBestCluster()
-{
+public Cluster getBestCluster() {
   Graph bestG = getBestGraph();
   Cluster c = new Cluster(bestG,bestG.getClusters());
   c.calcObjFn();
@@ -122,9 +114,7 @@ public Cluster getBestCluster()
 /**
  * This returns the best graph
  */
-public
-Graph
-getBestGraph()
+public Graph getBestGraph()
 {
  return method_d.getBestGraph();
 }
@@ -132,10 +122,7 @@ getBestGraph()
 /**
  * This is the main code for the GA. newGeneration()
  */
-public
-boolean
-nextGeneration()
-{
+public boolean nextGeneration() {
   method_d.calcStatistics();
 
   int parent1=0, parent2=0;
@@ -183,9 +170,7 @@ nextGeneration()
 /**
  * This returns the configuration dialog name
  */
-public
-String
-getConfigurationDialogName()
+public String getConfigurationDialogName()
 {
   return "bunch.ui.GAClusteringConfigurationDialog";
 }
@@ -193,9 +178,7 @@ getConfigurationDialogName()
 /**
  * This method returns the configuration object to the caller
  */
-public Configuration
-getConfiguration()
-{
+public Configuration getConfiguration() {
   if (configuration_d == null) {
     configuration_d = new GAConfiguration();
   }

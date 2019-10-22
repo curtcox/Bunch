@@ -11,7 +11,7 @@ import bunch.model.Graph;
  * optimization algorithm that takes a graph as input and produces a partitioned
  * graph as output.
  *
- * NOTE:  This abstract class extends the clusering method class and adds support for
+ * NOTE:  This abstract class extends the clustering method class and adds support for
  * working with objects of type cluster as well as type graph.  When all clustering
  * methods can use the newer type Cluster, this class can replace the base Clustering
  * Method class.
@@ -24,7 +24,8 @@ import bunch.model.Graph;
  */
 
 public abstract class ClusteringMethod2 extends ClusteringMethod {
-private IterationListener listener_d;
+
+    private IterationListener listener_d;
 private Graph graph_d;
 private Cluster bestCluster_d;
 private boolean isConfigurable_d=false;
@@ -34,17 +35,12 @@ protected double elapsedTime_d=0.0;
 /**
  * the class constructor
  */
-public
-ClusteringMethod2()
-{
-}
+public ClusteringMethod2() { }
 
 /**
  * Initializes the clustering method.
  */
-public
-void
-initialize()
+public void initialize()
 {
   setBestCluster(null);
 }
@@ -55,9 +51,7 @@ initialize()
  * @param g the graph to partition
  * @see #getGraph()
  */
-public
-void
-setGraph(Graph g)
+public void setGraph(Graph g)
 {
   graph_d = g;
 }
@@ -68,9 +62,7 @@ setGraph(Graph g)
  * @return the graph
  * @see setGraph( Graph )
  */
-public
-Graph
-getGraph()
+public Graph getGraph()
 {
   return graph_d;
 }
@@ -82,9 +74,7 @@ getGraph()
  * @param g the (best) result partitioned cluster
  * @see #getBestGraph()
  */
-public
-void
-setBestCluster(Cluster c)
+public void setBestCluster(Cluster c)
 {
   bestCluster_d = c;
 }
@@ -96,9 +86,7 @@ setBestCluster(Cluster c)
  * @return the (best) result graph
  * @see setResultGraph( Graph )
  */
-public
-Cluster
-getBestCluster()
+public Cluster getBestCluster()
 {
   return bestCluster_d;
 }
@@ -110,10 +98,7 @@ getBestCluster()
  * @return the (best) result graph
  * @see setResultGraph( Graph )
  */
-public
-Graph
-getBestGraph()
-{
+public Graph getBestGraph() {
    Cluster best = getBestCluster();
    graph_d.setClusters(best.getClusterVector());
    graph_d.setObjectiveFunctionValue(best.getObjFnValue());
@@ -125,9 +110,7 @@ getBestGraph()
  *
  * @return the objective function value of the best partitioned graph found
  */
-public
-double
-getBestObjectiveFunctionValue()
+public double getBestObjectiveFunctionValue()
 {
   return bestCluster_d.getObjFnValue();
 }
@@ -138,9 +121,7 @@ getBestObjectiveFunctionValue()
  * @return the elapsed time
  * @see #setElapsedTime(double)
  */
-public
-double
-getElapsedTime()
+public double getElapsedTime()
 {
   return elapsedTime_d;
 }
@@ -152,9 +133,7 @@ getElapsedTime()
  * @param l the elapsed time
  * @see #getElapsedTime()
  */
-public
-void
-setElapsedTime(double l)
+public void setElapsedTime(double l)
 {
   elapsedTime_d = l;
 }
@@ -168,9 +147,7 @@ setElapsedTime(double l)
  * @see IterationListener
  * @see #getIterationListener()
  */
-public
-void
-setIterationListener(IterationListener il)
+public void setIterationListener(IterationListener il)
 {
   listener_d = il;
 }
@@ -182,9 +159,7 @@ setIterationListener(IterationListener il)
  * @see IterationListener
  * @see #setIterationListener(IterationListener)
  */
-public
-IterationListener
-getIterationListener()
+public IterationListener getIterationListener()
 {
   return listener_d;
 }
@@ -192,12 +167,9 @@ getIterationListener()
 /**
  * Fires an Iteration event to this clustering method's iteration listener
  */
-public
-void
-fireIterationEvent(IterationEvent e)
+public void fireIterationEvent(IterationEvent e)
 {
-   if (listener_d != null)
-   {
+   if (listener_d != null) {
       listener_d.newIteration(e);
    }
 }
@@ -205,12 +177,8 @@ fireIterationEvent(IterationEvent e)
 /**
  * Fires an Iteration event to this clustering method's iteration listener
  */
-public
-void
-fireExpermentEvent(IterationEvent e)
-{
-   if (listener_d != null)
-   {
+public void fireExpermentEvent(IterationEvent e) {
+   if (listener_d != null) {
       listener_d.newExperiment(e);
    }
 }
@@ -219,9 +187,7 @@ fireExpermentEvent(IterationEvent e)
  * Obtains the maximum number of iterations this algorithm will perform. Useful
  * to set the parameters for a progress bar, for example
  */
-public abstract
-int
-getMaxIterations();
+public abstract int getMaxIterations();
 
 /**
  * Returns whether or not this clustering method is configurable by an
@@ -233,9 +199,7 @@ getMaxIterations();
  * @see #setConfigurable(boolean)
  * @see #getConfigurationDialogName()
  */
-public
-boolean
-isConfigurable()
+public boolean isConfigurable()
 {
   return isConfigurable_d;
 }
@@ -247,9 +211,7 @@ isConfigurable()
  * @see #getConfigurable()
  * @see #getConfigurationDialogName()
  */
-public
-void
-setConfigurable(boolean isC)
+public void setConfigurable(boolean isC)
 {
   isConfigurable_d = isC;
 }
@@ -262,9 +224,7 @@ setConfigurable(boolean isC)
  * @param c the configuration
  * @see #getConfiguration()
  */
-public
-void
-setConfiguration(Configuration c)
+public void setConfiguration(Configuration c)
 {
   configuration_d = c;
 }
@@ -275,16 +235,12 @@ setConfiguration(Configuration c)
  * @return the configuration
  * @see #setConfiguration(Configuration)
  */
-public
-Configuration
-getConfiguration()
+public Configuration getConfiguration()
 {
   return configuration_d;
 }
 
-public
-void
-setDefaultConfiguration()
+public void setDefaultConfiguration()
 {
 }
 
@@ -296,9 +252,7 @@ setDefaultConfiguration()
  *
  * @return a string with the class name for the dialog
  */
-public
-String
-getConfigurationDialogName()
+public String getConfigurationDialogName()
 {
   return null;
 }

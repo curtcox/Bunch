@@ -5,22 +5,16 @@ import bunch.model.Graph;
 import bunch.event.IterationEvent;
 import bunch.stats.StatsManager;
 
-public class OptimalClusteringMethod extends ClusteringMethod2 {
+public final class OptimalClusteringMethod extends ClusteringMethod2 {
 boolean hasMorePartitions_d = false;
 int[] tmpClusters_d;
 int[] nClusters_d;
 int NC=0;
 
-public
-OptimalClusteringMethod()
-{
-}
+public OptimalClusteringMethod() { }
 
 //TO COMPLETE
-public
-void
-run()
-{
+public void run() {
   Graph graph = getGraph().cloneGraph();
   StatsManager sm = StatsManager.getInstance();
   //setBestGraph(null);
@@ -97,10 +91,7 @@ run()
 }
 
 static int xx=1;
-private
-boolean
-findNextPartition()
-{
+private boolean findNextPartition() {
   int M, L;
   int N = getGraph().getNumberOfNodes();
 
@@ -142,9 +133,7 @@ findNextPartition()
   return hasMorePartitions_d;
 }
 
-public
-int
-getMaxIterations()
+public int getMaxIterations()
 {
   return (int)(getGraph().getNumberOfPartitions());
 }

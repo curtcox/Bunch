@@ -18,20 +18,18 @@ String defaultMethod = "Incremental MQ Weighted";
  * Class constructor, defines the objects that the factory will be able
  * to create
  */
-public
-ObjectiveFunctionCalculatorFactory()
-{
+public ObjectiveFunctionCalculatorFactory() {
   super();
   setFactoryType("ObjectiveFunctionCalculator");
-  addItem("Basic MQ Function", "bunch.calculator.BasicMQ");
-  addItem("Turbo MQ Function", "bunch.calculator.TurboMQ");
+  addItem("Basic MQ Function", bunch.calculator.BasicMQ.class.getName());
+  addItem("Turbo MQ Function", bunch.calculator.TurboMQ.class.getName());
   //addItem("Incremental MQ", "bunch.calculator.TurboMQIncr");
-  addItem("Incremental MQ Weighted", "bunch.calculator.TurboMQIncrW");
+  addItem("Incremental MQ Weighted", bunch.calculator.TurboMQIncrW.class.getName());
 
-  addItem("bunch.calculator.BasicMQ", "bunch.calculator.BasicMQ");
-  addItem("bunch.calculator.TurboMQ", "bunch.calculator.TurboMQ");
-  addItem("bunch.ITurboMQ", "bunch.calculator.TurboMQIncrW");
-  addItem("bunch.calculator.TurboMQIncrW", "bunch.calculator.TurboMQIncrW");
+  addItem("bunch.calculator.BasicMQ", bunch.calculator.BasicMQ.class.getName());
+  addItem("bunch.calculator.TurboMQ", bunch.calculator.TurboMQ.class.getName());
+  addItem("bunch.ITurboMQ", bunch.calculator.TurboMQIncrW.class.getName());
+  addItem("bunch.calculator.TurboMQIncrW", bunch.calculator.TurboMQIncrW.class.getName());
 
   //addItem("Turbo MQ Squared", "bunch.calculator.TurboMQ2");
   //addItem("Experimental Weighted 2", "bunch.calculator.WeightedObjectiveFunctionCalculator2");
@@ -47,17 +45,12 @@ ObjectiveFunctionCalculatorFactory()
  * @param the name for the desired method
  * @return the OF Calculator corresponding to the name
  */
-public
-ObjectiveFunctionCalculator
-getCalculator(String name)
+public ObjectiveFunctionCalculator getCalculator(String name)
 {
   return (ObjectiveFunctionCalculator)getItemInstance(name);
 }
 
-public
-ObjectiveFunctionCalculator
-getSelectedCalculator()
-{
+public ObjectiveFunctionCalculator getSelectedCalculator() {
   return (ObjectiveFunctionCalculator)getItemInstance(currObjFnMethod);
 }
 
@@ -70,16 +63,11 @@ public String getDefaultMethod()
   return defaultMethod;
 }
 
-public
-String
-getCurrentCalculator()
-{
+public String getCurrentCalculator() {
    return currObjFnMethod;
 }
 
-public
-void
-setCurrentCalculator(String sCalc)
+public void setCurrentCalculator(String sCalc)
 {
    currObjFnMethod = sCalc;
 }

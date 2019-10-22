@@ -10,4 +10,10 @@ public class ClusteringProgressDialogTest {
     public void can_create() {
         assertNotNull(new ClusteringProgressDialog());
     }
+
+    @Test
+    public void startClustering() {
+        ClusteringProgressDialog dialog = new ClusteringProgressDialog();
+        dialog.startClustering();
+    }
 }

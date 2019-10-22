@@ -2,11 +2,12 @@ package bunch.ui;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.event.*;
-//import java.util.*;
 
 import bunch.clustering.ClusteringMethod;
 import bunch.clustering.NAHCConfiguration;
+import bunch.clustering.OptimalClusteringMethod;
 import bunch.event.IterationEvent;
 import bunch.event.IterationListener;
 import bunch.model.*;
@@ -43,9 +44,9 @@ JLabel overallPercentLabel_d = new JLabel();
 JProgressBar overallProgressBar_d = new JProgressBar();
 JLabel timeTitleLabel_d = new JLabel();
 JLabel currentTimeLabel_d = new JLabel();
-BunchFrame frame_d = null;
-GraphOutput graphOutput_x = null;
-ClusteringMethod clusteringMethod_x = null;
+BunchFrame frame_d;
+GraphOutput graphOutput_x;
+ClusteringMethod clusteringMethod_x;
 SwingWorker worker_d;
 int iteration_d=0, overallIteration_d;
 boolean finished_d=false;
@@ -102,25 +103,24 @@ static ClusteringProgressDialog of(BunchFrame frame, String title, boolean modal
 }
 
 private void init() {
-    throw new UnsupportedOperationException();
-//    /**
-//     * Get required initialization objects from the parent frame
-//     */
-//    startTime = System.currentTimeMillis();
-//    graphOutput_x = frame_d.getGraphOutput();
-//    clusteringMethod_x = frame_d.getClusteringMethod();
-//    clusteringMethod_x.setIterationListener(this);
-//
-//    String methodName = clusteringMethod_x.getClass().getName();
-//    if (methodName.equals("bunch.clustering.GAClusteringMethod"))
-//      showOverallProgressBar_d = false;
-//
-//    eventTimer = new Timer(2000,new updateTimer());
-//    toTimer = new Timer((int)frame_d.getTimoutTime(),new timeoutTimer());
-//
-//
-//    jbInit();
-//    pack();
+    /**
+     * Get required initialization objects from the parent frame
+     */
+    startTime = System.currentTimeMillis();
+    graphOutput_x = frame_d.getGraphOutput();
+    clusteringMethod_x = frame_d.getClusteringMethod();
+    clusteringMethod_x.setIterationListener(this);
+
+    String methodName = clusteringMethod_x.getClass().getName();
+    if (methodName.equals("bunch.clustering.GAClusteringMethod"))
+      showOverallProgressBar_d = false;
+
+    eventTimer = new Timer(2000,new updateTimer());
+    toTimer = new Timer((int)frame_d.getTimoutTime(),new timeoutTimer());
+
+
+    jbInit();
+    pack();
 }
 
 
@@ -139,247 +139,241 @@ public void updateTitle(int level)
  * thread.  This approach leaves the UI responsive during the clustering activity.
  */
 public void startClustering() {
-    throw new UnsupportedOperationException();
-//  /*
-//   * Constructing the SwingWorker() causes a new Thread
-//   * to be created that will call construct(), and then
-//   * finished().  Note that finished() is called even if
-//   * the worker is interrupted because we catch the
-//   * InterruptedException in doWork().
-//   * (Note: a SwingWorker object is necessary because Swing (a.k.a JFC)
-//   * components are not thread-aware.
-//   */
-//
-//  /**
-//   * If the user wants to limit the runtime start the timer - toTimer.
-//   */
-//  if(frame_d.limitRuntime()) {
-//    toTimer.start();
-//  }
-//
-//  String basicTitle = this.getTitle();
-//  bestCLL.clear();
-//
-//  /**
-//   * Create the worker thread
-//   */
-//  worker_d = new bunch.ui.SwingWorker()
-//  {
-//    public Object construct()
-//    {
-//      /**
-//       * START CLUSTERING
-//       */
-//      try
-//      {
-//        int level=0;
-//        CurrentActivity.setText("Clustering...");
-//        Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-//        eventTimer.start();
-//
-//        if(frame_d.isAgglomerativeTechnique())
-//          updateTitle(level);
-//
-//        /**
-//         * RUN the clustering method
-//         */
-//        clusteringMethod_x.run();
-//
-//        currentViewC = new Cluster(clusteringMethod_x.getBestGraph().cloneGraph(),
-//              clusteringMethod_x.getBestGraph().getClusters());
-//
-//        /**
-//         * Save the best cluster object from the clustering run
-//         */
-//        currentViewC.force();
-//        currentViewC.copyFromCluster(clusteringMethod_x.getBestCluster());
-//
-//        bestCLL.addLast(currentViewC);
-//
-//        /**
-//         * If agglomerative mode setup for the next level(s)
-//         */
-//        if(frame_d.isAgglomerativeTechnique()) {
-//          /**
-//           * Get the best graph
-//           */
-//          Graph g = clusteringMethod_x.getBestGraph().cloneGraph();
-//
-//          int []cNames = g.getClusterNames();
-//
-//          /**
-//           * While there is more then 1 cluster, there are still more levels
-//           * to create.
-//           */
-//          while(cNames.length>1)
-//          {
-//            level++;
-//            updateTitle(level);
-//
-//            /**
-//             * Create the next level graph from the current graph
-//             */
-//            NextLevelGraph nextL = new NextLevelGraph();
-//            Graph newG=nextL.genNextLevelGraph(g);
-//
-//            newG.setPreviousLevelGraph(g);
-//            newG.setGraphLevel(g.getGraphLevel()+1);
-//
-//            clusteringMethod_x.setGraph(newG);
-//            clusteringMethod_x.initialize();
-//
-//            /**
-//             * Now cluster the next level graph
-//             */
-//            clusteringMethod_x.run();
-//
-//            currentViewC = new Cluster(clusteringMethod_x.getBestGraph().cloneGraph(),
-//                                      clusteringMethod_x.getBestGraph().getClusters());
-//
-//            /**
-//             * Get the results and add them to the tree of results
-//             */
-//            currentViewC.force();
-//            currentViewC.copyFromCluster(clusteringMethod_x.getBestCluster());
-//            bestCLL.addLast(currentViewC);
-//
-//            g = clusteringMethod_x.getBestGraph().cloneGraph();
-//
-//            cNames = g.getClusterNames();
-//          }
-//        }
-//      }catch(Exception ex)
-//      {ex.printStackTrace();}
-//
-//      /**
-//       * Finished clustering
-//       */
-//      return "Done";
-//    }
-//
-//    /**
-//     * Used to interrupt the current swing worker thread.
-//     */
-//    public void interrupt()
-//    {
-//            this.suspend();
-//            super.interrupt();
-//    }
-//
-//    /**
-//     * Used as a callback to notifiy that the clustering activity has finished.
-//     */
-//    public void finished() {
-//        throw new UnsupportedOperationException();
-////      /**
-////       * Stop the timer
-////       */
-////      eventTimer.stop();
-////      toTimer.stop();
-////
-////      CurrentActivity.setText("Post Processing...");
-////
-////      if (showOverallProgressBar_d)
-////        overallProgressBar_d.setValue(overallProgressBar_d.getMaximum());
-////
-////      updateStats();
-////
-////      /**
-////       * Update the UI by enabling/disabling certain buttons
-////       */
-////      outputButton_d.setEnabled(false);
-////      pauseButton_d.setEnabled(false);
-////      cancelButton_d.setText("Close");
-////
-////      /**
-////       * If dotty is the output format, enable the view button
-////       */
-////      if(frame_d.getOutputMethod().equals("Dotty"))
-////        viewPB.setEnabled(true);
-////
-////      /**
-////       * Dump the runtime stats
-////       */
-////      bunch.stats.StatsManager.cleanup();
-////
-////      Configuration cTmp = clusteringMethod_x.getConfiguration();
-////      if(cTmp instanceof bunch.clustering.NAHCConfiguration)
-////      {
-////        bunch.clustering.NAHCConfiguration nahcConf = (bunch.clustering.NAHCConfiguration)cTmp;
-////        if (nahcConf.getSATechnique() != null)
-////          nahcConf.getSATechnique().reset();
-////      }
-////
-////      /**
-////       * Dump the output
-////       */
-////      outputGraph(MODE_END);
-////
-////      /**
-////       * Update the UI
-////       */
-////      CurrentActivity.setForeground(Color.red.darker());
-////      CurrentActivity.setText("Finished Clustering!");
-////
-////      /**
-////       * If the mode is agglomerative then update the drop down list box
-////       * to enable the user to traverse the different levels.
-////       */
-////      if(frame_d.isAgglomerativeTechnique())
-////      {
-////        Graph tmpG = clusteringMethod_x.getBestCluster().getGraph();
-////        int gLvl = tmpG.getGraphLevel();
-////        int medianLevel = tmpG.getMedianTree().getGraphLevel();
-////
-////        for (int i = 0; i <= gLvl; i++)
-////          if (i == 0)
-////            lvlViewerCB.addItem("Level " + i+ " <-- Detail Level");
-////          else if (i == medianLevel)
-////            lvlViewerCB.addItem("Level " + i+ " <-- Median Level");
-////          else
-////            lvlViewerCB.addItem("Level " + i);
-////
-////        lvlViewerCB.setEnabled(true);
-////
-////        int outTechnique = graphOutput_x.getOutputTechnique();
-////
-////        int median = clusteringMethod_x.getBestCluster().getGraph().getMedianTree().getGraphLevel();
-////
-////        /**
-////         * Handle the specified output as specified by the user
-////         */
-////        switch(outTechnique)
-////        {
-////          case GraphOutput.OUTPUT_ALL_LEVELS:
-////          case GraphOutput.OUTPUT_MEDIAN_ONLY:
-////          { lvlViewerCB.setSelectedIndex(median); break;  }
-////
-////          case GraphOutput.OUTPUT_DETAILED_LEVEL_ONLY:
-////          { lvlViewerCB.setSelectedIndex(0);  break;  }
-////
-////          case GraphOutput.OUTPUT_TOP_ONLY:
-////          {
-////            lvlViewerCB.setSelectedIndex(clusteringMethod_x.getBestCluster().getGraph().getGraphLevel());
-////            break;
-////          }
-////        }
-////      }
-////
-////      /**
-////       * Were finished with the post processing, dump the logss and set the finished
-////       * flag to true
-////       */
-////      setFinished(true);
-////      stats.dumpStatsLog();
-//    }
-//  };
-//
-//  /**
-//   * Setting the worker thread to minimum priority will maximize the responsiveness
-//   * of the UI
-//   */
-//  worker_d.setPriority(Thread.MIN_PRIORITY);
-//  worker_d.start();
+  /*
+   * Constructing the SwingWorker() causes a new Thread
+   * to be created that will call construct(), and then
+   * finished().  Note that finished() is called even if
+   * the worker is interrupted because we catch the
+   * InterruptedException in doWork().
+   * (Note: a SwingWorker object is necessary because Swing (a.k.a JFC)
+   * components are not thread-aware.
+   */
+
+  /**
+   * If the user wants to limit the runtime start the timer - toTimer.
+   */
+  if(frame_d.limitRuntime()) {
+    toTimer.start();
+  }
+
+  String basicTitle = this.getTitle();
+  bestCLL.clear();
+
+  /**
+   * Create the worker thread
+   */
+  worker_d = new bunch.ui.SwingWorker() {
+    public Object construct() {
+      /**
+       * START CLUSTERING
+       */
+        int level=0;
+        CurrentActivity.setText("Clustering...");
+        Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+        eventTimer.start();
+
+        if(frame_d.isAgglomerativeTechnique())
+          updateTitle(level);
+
+        /**
+         * RUN the clustering method
+         */
+        clusteringMethod_x.run();
+
+        currentViewC = new Cluster(clusteringMethod_x.getBestGraph().cloneGraph(),
+              clusteringMethod_x.getBestGraph().getClusters());
+
+        /**
+         * Save the best cluster object from the clustering run
+         */
+        currentViewC.force();
+        currentViewC.copyFromCluster(clusteringMethod_x.getBestCluster());
+
+        bestCLL.addLast(currentViewC);
+
+        /**
+         * If agglomerative mode setup for the next level(s)
+         */
+        if (frame_d.isAgglomerativeTechnique()) {
+          agglomerative(level);
+        }
+
+      /**
+       * Finished clustering
+       */
+      return "Done";
+    }
+
+    void agglomerative(int level) {
+          /**
+           * Get the best graph
+           */
+          Graph g = clusteringMethod_x.getBestGraph().cloneGraph();
+
+          int []cNames = g.getClusterNames();
+
+          /**
+           * While there is more then 1 cluster, there are still more levels
+           * to create.
+           */
+          while(cNames.length>1) {
+            level++;
+            updateTitle(level);
+
+            /**
+             * Create the next level graph from the current graph
+             */
+            NextLevelGraph nextL = new NextLevelGraph();
+            Graph newG=nextL.genNextLevelGraph(g);
+
+            newG.setPreviousLevelGraph(g);
+            newG.setGraphLevel(g.getGraphLevel()+1);
+
+            clusteringMethod_x.setGraph(newG);
+            clusteringMethod_x.initialize();
+
+            /**
+             * Now cluster the next level graph
+             */
+            clusteringMethod_x.run();
+
+            currentViewC = new Cluster(clusteringMethod_x.getBestGraph().cloneGraph(),
+                    clusteringMethod_x.getBestGraph().getClusters());
+
+            /**
+             * Get the results and add them to the tree of results
+             */
+            currentViewC.force();
+            currentViewC.copyFromCluster(clusteringMethod_x.getBestCluster());
+            bestCLL.addLast(currentViewC);
+
+            g = clusteringMethod_x.getBestGraph().cloneGraph();
+
+            cNames = g.getClusterNames();
+          }
+    }
+
+    /**
+     * Used to interrupt the current swing worker thread.
+     */
+    public void interrupt() {
+        this.suspend();
+        super.interrupt();
+    }
+
+    /**
+     * Used as a callback to notifiy that the clustering activity has finished.
+     */
+    public void finished() {
+      /**
+       * Stop the timer
+       */
+      eventTimer.stop();
+      toTimer.stop();
+
+      CurrentActivity.setText("Post Processing...");
+
+      if (showOverallProgressBar_d)
+        overallProgressBar_d.setValue(overallProgressBar_d.getMaximum());
+
+      updateStats();
+
+      /**
+       * Update the UI by enabling/disabling certain buttons
+       */
+      outputButton_d.setEnabled(false);
+      pauseButton_d.setEnabled(false);
+      cancelButton_d.setText("Close");
+
+      /**
+       * If dotty is the output format, enable the view button
+       */
+      if(frame_d.getOutputMethod().equals("Dotty"))
+        viewPB.setEnabled(true);
+
+      /**
+       * Dump the runtime stats
+       */
+      bunch.stats.StatsManager.cleanup();
+
+      Configuration cTmp = clusteringMethod_x.getConfiguration();
+      if(cTmp instanceof bunch.clustering.NAHCConfiguration)
+      {
+        bunch.clustering.NAHCConfiguration nahcConf = (bunch.clustering.NAHCConfiguration)cTmp;
+        if (nahcConf.getSATechnique() != null)
+          nahcConf.getSATechnique().reset();
+      }
+
+      /**
+       * Dump the output
+       */
+      outputGraph(MODE_END);
+
+      /**
+       * Update the UI
+       */
+      CurrentActivity.setForeground(Color.red.darker());
+      CurrentActivity.setText("Finished Clustering!");
+
+      /**
+       * If the mode is agglomerative then update the drop down list box
+       * to enable the user to traverse the different levels.
+       */
+      if(frame_d.isAgglomerativeTechnique())
+      {
+        Graph tmpG = clusteringMethod_x.getBestCluster().getGraph();
+        int gLvl = tmpG.getGraphLevel();
+        int medianLevel = tmpG.getMedianTree().getGraphLevel();
+
+        for (int i = 0; i <= gLvl; i++)
+          if (i == 0)
+            lvlViewerCB.addItem("Level " + i+ " <-- Detail Level");
+          else if (i == medianLevel)
+            lvlViewerCB.addItem("Level " + i+ " <-- Median Level");
+          else
+            lvlViewerCB.addItem("Level " + i);
+
+        lvlViewerCB.setEnabled(true);
+
+        int outTechnique = graphOutput_x.getOutputTechnique();
+
+        int median = clusteringMethod_x.getBestCluster().getGraph().getMedianTree().getGraphLevel();
+
+        /**
+         * Handle the specified output as specified by the user
+         */
+        switch(outTechnique)
+        {
+          case GraphOutput.OUTPUT_ALL_LEVELS:
+          case GraphOutput.OUTPUT_MEDIAN_ONLY:
+          { lvlViewerCB.setSelectedIndex(median); break;  }
+
+          case GraphOutput.OUTPUT_DETAILED_LEVEL_ONLY:
+          { lvlViewerCB.setSelectedIndex(0);  break;  }
+
+          case GraphOutput.OUTPUT_TOP_ONLY:
+          {
+            lvlViewerCB.setSelectedIndex(clusteringMethod_x.getBestCluster().getGraph().getGraphLevel());
+            break;
+          }
+        }
+      }
+
+      /**
+       * Were finished with the post processing, dump the logss and set the finished
+       * flag to true
+       */
+      setFinished(true);
+      stats.dumpStatsLog();
+    }
+  };
+
+  /**
+   * Setting the worker thread to minimum priority will maximize the responsiveness
+   * of the UI
+   */
+  worker_d.setPriority(Thread.MIN_PRIORITY);
+  worker_d.start();
 }
 
 /**
@@ -399,33 +393,32 @@ public ClusteringProgressDialog() {
  * @param "end" a boolean value indicating if the clustering is finished or not
  */
 public void outputGraph(int mode) {
-    throw new UnsupportedOperationException();
-//  //consolidate the drifters
-//  boolean state = frame_d.consolidateDriftersCB.isSelected();
-//  boolean driftersFound=false;
-//
-//  if (state == true)
-//    //driftersFound = consolidateDrifters();
-//    if(driftersFound) System.out.println("Drifters were found!!!!");
-//
-//  /**
-//   * Output the level specified by the user when the clustering process finishes
-//   * (MODE_END), or output the specified level graph (MODE_LEVEL)
-//   */
-//  if (mode == MODE_END) {
-//    graphOutput_x.setCurrentName(graphOutput_x.getBaseName());
-//  }
-//  else if (mode == MODE_LEVEL) {
-//    graphOutput_x.setCurrentName(graphOutput_x.getBaseName() + "-" + overallIteration_d);
-//  } else
-//    graphOutput_x.setCurrentName(graphOutput_x.getBaseName() + "-" + "TMP");
-//
-//  /**
-//   * Get the graph output factory and write the output file
-//   */
-//  graphOutput_x.setGraph(clusteringMethod_x.getBestGraph());
-//  frame_d.setLastResultGraph(clusteringMethod_x.getBestGraph().cloneGraph());
-//  graphOutput_x.write();
+  //consolidate the drifters
+  boolean state = frame_d.consolidateDriftersCB.isSelected();
+  boolean driftersFound=false;
+
+  if (state == true)
+    //driftersFound = consolidateDrifters();
+    if(driftersFound) System.out.println("Drifters were found!!!!");
+
+  /**
+   * Output the level specified by the user when the clustering process finishes
+   * (MODE_END), or output the specified level graph (MODE_LEVEL)
+   */
+  if (mode == MODE_END) {
+    graphOutput_x.setCurrentName(graphOutput_x.getBaseName());
+  }
+  else if (mode == MODE_LEVEL) {
+    graphOutput_x.setCurrentName(graphOutput_x.getBaseName() + "-" + overallIteration_d);
+  } else
+    graphOutput_x.setCurrentName(graphOutput_x.getBaseName() + "-" + "TMP");
+
+  /**
+   * Get the graph output factory and write the output file
+   */
+  graphOutput_x.setGraph(clusteringMethod_x.getBestGraph());
+  frame_d.setLastResultGraph(clusteringMethod_x.getBestGraph().cloneGraph());
+  graphOutput_x.write();
 }
 
 /**
@@ -433,10 +426,7 @@ public void outputGraph(int mode) {
  *
  * @return If there are drifters present, return TRUE, otherwise return FALSE.
  */
-public
-boolean
-consolidateDrifters()
-{
+public boolean consolidateDrifters() {
   Drifters d = new Drifters(clusteringMethod_x.getBestGraph());
   return d.consolidate();
 }
@@ -446,138 +436,137 @@ consolidateDrifters()
  * Component initialization
  */
 void jbInit() {
-    throw new UnsupportedOperationException();
-//  panel1.setLayout(gridBagLayout1);
-//  timeTitleLabel_d.setText("Elapsed Time:");
-//  currentTimeLabel_d.setText("0.0  seconds                      ");
-//  jLabel2.setText("Total MQ Evaluations:");
-//  BestClustPanel.setBorder(BorderFactory.createEtchedBorder());
-//
-//  BestClustPanel.setLayout(gridBagLayout2);
-//  jLabel4.setText("Depth (h):");
-//  jLabel5.setText("MQ Value:");
-//  DepthCount.setText("0");
-//  bestMQValueFound_d.setText("0.0");
-//  MQEvalCount.setText("0");
-//  Border b = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
-//        "Best Cluster Statistics");
-//  BestClustPanel.setBorder(b);
-//
-//  if (showOverallProgressBar_d){
-//    //noop
-//  }
-//  else
-//    panel1.add(overallPercentLabel_d, new GridBagConstraints2(0, 2, 1, 1, 0.0, 0.0,
-//              GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 5), 0, 0));
-//
-//  outputButton_d.setEnabled(false);
-//  outputButton_d.setText("Output");
-//  outputButton_d.addActionListener(new java.awt.event.ActionListener() {
-//    public void actionPerformed(ActionEvent e) {
-//      outputButton_d_actionPerformed(e);
-//    }
-//  });
-//
-//  viewPB.setEnabled(false);
-//  viewPB.setText("View Graph");
-//  viewPB.addActionListener(new java.awt.event.ActionListener() {
-//    public void actionPerformed(ActionEvent e) {
-//      viewPB_actionPerformed(e);
-//    }
-//  });
-//
-//  pauseButton_d.setText("Pause");
-//  pauseButton_d.addActionListener(new java.awt.event.ActionListener() {
-//    public void actionPerformed(ActionEvent e) {
-//      pauseButton_d_actionPerformed(e);
-//    }
-//  });
-//
-//  cancelButton_d.setText("Cancel");
-//  cancelButton_d.addActionListener(new java.awt.event.ActionListener() {
-//    public void actionPerformed(ActionEvent e) {
-//      cancelButton_d_actionPerformed(e);
-//    }
-//  });
-//
-//  CurrentActivity.setForeground(Color.blue);
-//  CurrentActivity.setText("Initializing...");
-//  jLabel3.setText("Activity:");
-//  jLabel6.setText("Number of Clusters:");
-//  numClusters.setText("0");
-//  progressLbl.setText("Progress:");
-//  progressMsg.setText("0/0 - 0% Finished");
-//  gotoLBL.setText("Go To Level:");
-//  lvlViewerCB.addActionListener(new java.awt.event.ActionListener() {
-//    public void actionPerformed(ActionEvent e) {
-//      lvlViewerCB_actionPerformed(e);
-//    }
-//  });
-//
-//  this.getContentPane().add(panel1, BorderLayout.CENTER);
-//  panel1.add(timeTitleLabel_d, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(3, 5, 0, 0), 10, 0));
-//  panel1.add(currentTimeLabel_d, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-//  panel1.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-//  panel1.add(IterationsProcessed_st, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0
-//            ,GridBagConstraints.SOUTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 50, 0));
-//  panel1.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(8, 5, 0, 0), 10, 0));
-//  panel1.add(MQEvalCount, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(8, 0, 0, 0), 0, 0));
-//  panel1.add(BestClustPanel, new GridBagConstraints(0, 0, 3, 1, 0.0, 0.0
-//            ,GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-//  BestClustPanel.add(jLabel4, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(0, 5, 0, 0), 69, 0));
-//  BestClustPanel.add(jLabel5, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 5, 0));
-//  BestClustPanel.add(DepthCount, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 203, 0));
-//  BestClustPanel.add(bestMQValueFound_d, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-//  BestClustPanel.add(jLabel6, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 5, 0, 0), 0, 0));
-//  BestClustPanel.add(numClusters, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-//  BestClustPanel.add(gotoLBL, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
-//  BestClustPanel.add(lvlViewerCB, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, -3));
-//  panel1.add(jPanel1, new GridBagConstraints(0, 5, 3, 1, 0.0, 0.0
-//            ,GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-//  jPanel1.add(outputButton_d, null);
-//  jPanel1.add(viewPB, null);
-//  jPanel1.add(pauseButton_d, null);
-//  jPanel1.add(cancelButton_d, null);
-//  panel1.add(CurrentActivity, new GridBagConstraints(1, 4, 2, 1, 0.0, 0.0
-//            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(3, 0, 0, 0), 0, 0));
-//  panel1.add(jLabel3, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(3, 5, 0, 0), 10, 0));
-//  panel1.add(progressLbl, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0
-//            ,GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(3, 5, 0, 0), 0, 0));
-//  panel1.add(progressMsg, new GridBagConstraints(1, 3, 2, 1, 0.0, 0.0
-//            ,GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-//
-//  basicTitle = this.getTitle();
-//
-//  if(!(clusteringMethod_x instanceof OptimalClusteringMethod))
-//  {
-//    progressLbl.setVisible(false);
-//    progressMsg.setVisible(false);
-//    isExhaustive = false;
-//  }
-//  else
-//    isExhaustive = true;
-//
-//  if(!frame_d.isAgglomerativeTechnique())
-//  {
-//    lvlViewerCB.setVisible(false);
-//    gotoLBL.setVisible(false);
-//  }
-//  else
-//    lvlViewerCB.setEnabled(false);
+  panel1.setLayout(gridBagLayout1);
+  timeTitleLabel_d.setText("Elapsed Time:");
+  currentTimeLabel_d.setText("0.0  seconds                      ");
+  jLabel2.setText("Total MQ Evaluations:");
+  BestClustPanel.setBorder(BorderFactory.createEtchedBorder());
+
+  BestClustPanel.setLayout(gridBagLayout2);
+  jLabel4.setText("Depth (h):");
+  jLabel5.setText("MQ Value:");
+  DepthCount.setText("0");
+  bestMQValueFound_d.setText("0.0");
+  MQEvalCount.setText("0");
+  Border b = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
+        "Best Cluster Statistics");
+  BestClustPanel.setBorder(b);
+
+  if (showOverallProgressBar_d){
+    //noop
+  }
+  else
+    panel1.add(overallPercentLabel_d, new GridBagConstraints2(0, 2, 1, 1, 0.0, 0.0,
+              GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 5), 0, 0));
+
+  outputButton_d.setEnabled(false);
+  outputButton_d.setText("Output");
+  outputButton_d.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+      outputButton_d_actionPerformed(e);
+    }
+  });
+
+  viewPB.setEnabled(false);
+  viewPB.setText("View Graph");
+  viewPB.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+      viewPB_actionPerformed(e);
+    }
+  });
+
+  pauseButton_d.setText("Pause");
+  pauseButton_d.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+      pauseButton_d_actionPerformed(e);
+    }
+  });
+
+  cancelButton_d.setText("Cancel");
+  cancelButton_d.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+      cancelButton_d_actionPerformed(e);
+    }
+  });
+
+  CurrentActivity.setForeground(Color.blue);
+  CurrentActivity.setText("Initializing...");
+  jLabel3.setText("Activity:");
+  jLabel6.setText("Number of Clusters:");
+  numClusters.setText("0");
+  progressLbl.setText("Progress:");
+  progressMsg.setText("0/0 - 0% Finished");
+  gotoLBL.setText("Go To Level:");
+  lvlViewerCB.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+      lvlViewerCB_actionPerformed(e);
+    }
+  });
+
+  this.getContentPane().add(panel1, BorderLayout.CENTER);
+  panel1.add(timeTitleLabel_d, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(3, 5, 0, 0), 10, 0));
+  panel1.add(currentTimeLabel_d, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+  panel1.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+  panel1.add(IterationsProcessed_st, new GridBagConstraints(1, 0, 2, 1, 0.0, 0.0
+            ,GridBagConstraints.SOUTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 50, 0));
+  panel1.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(8, 5, 0, 0), 10, 0));
+  panel1.add(MQEvalCount, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(8, 0, 0, 0), 0, 0));
+  panel1.add(BestClustPanel, new GridBagConstraints(0, 0, 3, 1, 0.0, 0.0
+            ,GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+  BestClustPanel.add(jLabel4, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(0, 5, 0, 0), 69, 0));
+  BestClustPanel.add(jLabel5, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 5, 0));
+  BestClustPanel.add(DepthCount, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 203, 0));
+  BestClustPanel.add(bestMQValueFound_d, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+  BestClustPanel.add(jLabel6, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 5, 0, 0), 0, 0));
+  BestClustPanel.add(numClusters, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+  BestClustPanel.add(gotoLBL, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 5, 0, 0), 0, 0));
+  BestClustPanel.add(lvlViewerCB, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, -3));
+  panel1.add(jPanel1, new GridBagConstraints(0, 5, 3, 1, 0.0, 0.0
+            ,GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+  jPanel1.add(outputButton_d, null);
+  jPanel1.add(viewPB, null);
+  jPanel1.add(pauseButton_d, null);
+  jPanel1.add(cancelButton_d, null);
+  panel1.add(CurrentActivity, new GridBagConstraints(1, 4, 2, 1, 0.0, 0.0
+            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(3, 0, 0, 0), 0, 0));
+  panel1.add(jLabel3, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.SOUTHWEST, GridBagConstraints.BOTH, new Insets(3, 5, 0, 0), 10, 0));
+  panel1.add(progressLbl, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0
+            ,GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(3, 5, 0, 0), 0, 0));
+  panel1.add(progressMsg, new GridBagConstraints(1, 3, 2, 1, 0.0, 0.0
+            ,GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+
+  basicTitle = this.getTitle();
+
+  if(!(clusteringMethod_x instanceof OptimalClusteringMethod))
+  {
+    progressLbl.setVisible(false);
+    progressMsg.setVisible(false);
+    isExhaustive = false;
+  }
+  else
+    isExhaustive = true;
+
+  if(!frame_d.isAgglomerativeTechnique())
+  {
+    lvlViewerCB.setVisible(false);
+    gotoLBL.setVisible(false);
+  }
+  else
+    lvlViewerCB.setEnabled(false);
 }
 
 /**
@@ -597,57 +586,56 @@ void outputButton_d_actionPerformed(ActionEvent e) {
  * @param e the action event that generated this method call
  */
 void pauseButton_d_actionPerformed(ActionEvent e) {
-    throw new UnsupportedOperationException();
-//  if(isPaused == false)
-//  {
-//    /**
-//     * THE DESIRED MODE IS PAUSE
-//     */
-//    isPaused = true;
-//
-//    /**
-//     * Tell the worker to pause
-//     */
-//    if(worker_d != null)
-//      worker_d.suspend();
-//    eventTimer.stop();
-//    updateStats();
-//    CurrentActivity.setText("Paused");
-//    pauseButton_d.setText("Resume");
-//    outputButton_d.setEnabled(true);
-//
-//    /**
-//     * Take a snapshot of the best cluster seen so far.
-//     */
-//    currentViewC = new Cluster(clusteringMethod_x.getBestGraph().cloneGraph(),
-//                               clusteringMethod_x.getBestGraph().getClusters());
-//    currentViewC.force();
-//    graphOutput_x.setGraph(clusteringMethod_x.getBestGraph().cloneGraph());
-//
-//    /**
-//     * If the format is dotty, enable the view button.
-//     */
-//    if(frame_d.getOutputMethod().equals("Dotty"))
-//      viewPB.setEnabled(true);
-//  }
-//  else
-//  {
-//    /**
-//     * THE DESIRED MODE IS RESUME
-//     */
-//    outputButton_d.setEnabled(false);
-//    viewPB.setEnabled(false);
-//    pauseButton_d.setText("  Pause  ");
-//    eventTimer.start();
-//    CurrentActivity.setText("Clustering...");
-//
-//    /**
-//     * Restart the worker thread
-//     */
-//    if(worker_d != null)
-//      worker_d.resume();
-//    isPaused = false;
-//  }
+  if(isPaused == false)
+  {
+    /**
+     * THE DESIRED MODE IS PAUSE
+     */
+    isPaused = true;
+
+    /**
+     * Tell the worker to pause
+     */
+    if(worker_d != null)
+      worker_d.suspend();
+    eventTimer.stop();
+    updateStats();
+    CurrentActivity.setText("Paused");
+    pauseButton_d.setText("Resume");
+    outputButton_d.setEnabled(true);
+
+    /**
+     * Take a snapshot of the best cluster seen so far.
+     */
+    currentViewC = new Cluster(clusteringMethod_x.getBestGraph().cloneGraph(),
+                               clusteringMethod_x.getBestGraph().getClusters());
+    currentViewC.force();
+    graphOutput_x.setGraph(clusteringMethod_x.getBestGraph().cloneGraph());
+
+    /**
+     * If the format is dotty, enable the view button.
+     */
+    if(frame_d.getOutputMethod().equals("Dotty"))
+      viewPB.setEnabled(true);
+  }
+  else
+  {
+    /**
+     * THE DESIRED MODE IS RESUME
+     */
+    outputButton_d.setEnabled(false);
+    viewPB.setEnabled(false);
+    pauseButton_d.setText("  Pause  ");
+    eventTimer.start();
+    CurrentActivity.setText("Clustering...");
+
+    /**
+     * Restart the worker thread
+     */
+    if(worker_d != null)
+      worker_d.resume();
+    isPaused = false;
+  }
 }
 
 /**
@@ -657,10 +645,7 @@ void pauseButton_d_actionPerformed(ActionEvent e) {
  * @param v if the clustering is finished or not
  * @see #isFinished()
  */
-public
-void
-setFinished(boolean v)
-{
+public void setFinished(boolean v) {
   finished_d = v;
   if(v == true)
     eventTimer.stop();
@@ -675,9 +660,7 @@ setFinished(boolean v)
  * @return if the clustering is finished or not
  * @see #setFinished(boolean)
  */
-public
-boolean
-isFinished()
+public boolean isFinished()
 {
   return finished_d;
 }
@@ -687,9 +670,7 @@ isFinished()
  *
  * @param e the action event that generated this method call
  */
-void
-cancelButton_d_actionPerformed(ActionEvent e)
-{
+void cancelButton_d_actionPerformed(ActionEvent e) {
   if(cancelPending == true)
     return;
   cancelPending = true;
@@ -753,10 +734,7 @@ cancelButton_d_actionPerformed(ActionEvent e)
  *
  * @param e the iteration event that launched this method call
  */
-public
-void
-newIteration(IterationEvent e)
-{
+public void newIteration(IterationEvent e) {
 }
 
 
@@ -766,9 +744,7 @@ newIteration(IterationEvent e)
  *
  * @param e the iteration event that launched this method call
  */
-public void
-newExperiment(IterationEvent e)
-{
+public void newExperiment(IterationEvent e) {
   Integer i = new Integer(e.getExpNum());
   IterationsProcessed_st.setText(i.toString());
 }
@@ -777,8 +753,7 @@ newExperiment(IterationEvent e)
  * Used when the view button is pressed to display the output.  This button is
  * currently only enabled when the output type is dotty.
  */
-void viewPB_actionPerformed(ActionEvent e)
-{
+void viewPB_actionPerformed(ActionEvent e) {
   try
   {
     /**

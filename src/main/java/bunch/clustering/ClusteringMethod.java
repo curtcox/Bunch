@@ -17,9 +17,8 @@ import bunch.model.Graph;
  * @see SteepestAscentHillClimbingClusteringMethod
  * @see GAClusteringMethod
  */
-public abstract class ClusteringMethod
-  implements Runnable
-{
+public abstract class ClusteringMethod implements Runnable {
+
 private IterationListener listener_d;
 private Graph graph_d;
 private Graph bestGraph_d;
@@ -148,8 +147,7 @@ public IterationListener getIterationListener()
  * Fires an Iteration event to this clustering method's iteration listener
  */
 public void fireIterationEvent(IterationEvent e) {
-   if (listener_d != null)
-   {
+   if (listener_d != null) {
       listener_d.newIteration(e);
    }
 }
@@ -158,8 +156,7 @@ public void fireIterationEvent(IterationEvent e) {
  * Fires an Iteration event to this clustering method's iteration listener
  */
 public void fireExpermentEvent(IterationEvent e) {
-   if (listener_d != null)
-   {
+   if (listener_d != null) {
       listener_d.newExperiment(e);
    }
 }

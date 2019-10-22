@@ -1,26 +1,3 @@
-/****
- *
- *	$Log: ClusteringMethodFactory.java,v $
- *	Revision 3.0  2002/02/03 18:41:46  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.2  2000/11/26 15:48:12  bsmitc
- *	Fixed various bugs
- *
- *	Revision 3.1  2000/10/22 17:47:02  bsmitc
- *	Collapsed NAHC and SAHC into a generic hill climbing method
- *
- *	Revision 3.0  2000/07/26 22:46:08  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch.clustering;
 
 import bunch.model.GenericFactory;
@@ -44,11 +21,11 @@ final String defaultMethod = "Hill Climbing";
  */
 public ClusteringMethodFactory() {
   setFactoryType("ClusteringMethod");
-  addItem("Hill Climbing", "bunch.clustering.GeneralHillClimbingClusteringMethod");
-  addItem("NAHC", "bunch.clustering.NextAscentHillClimbingClusteringMethod");
-  addItem("SAHC", "bunch.clustering.SteepestAscentHillClimbingClusteringMethod");
-  addItem("GA", "bunch.clustering.GAClusteringMethod");
-  addItem("Exhaustive", "bunch.clustering.OptimalClusteringMethod");
+  addItem("Hill Climbing", bunch.clustering.GeneralHillClimbingClusteringMethod.class.getName());
+  addItem("NAHC", bunch.clustering.NextAscentHillClimbingClusteringMethod.class.getName());
+  addItem("SAHC", bunch.clustering.SteepestAscentHillClimbingClusteringMethod.class.getName());
+  addItem("GA", bunch.clustering.GAClusteringMethod.class.getName());
+  addItem("Exhaustive", bunch.clustering.OptimalClusteringMethod.class.getName());
 }
 
 /**

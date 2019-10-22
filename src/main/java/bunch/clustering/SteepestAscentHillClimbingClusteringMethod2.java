@@ -3,10 +3,9 @@ package bunch.clustering;
 import bunch.model.Cluster;
 import bunch.model.Configuration;
 
-public class SteepestAscentHillClimbingClusteringMethod2 extends GenericDistribHillClimbingClusteringMethod {
+public final class SteepestAscentHillClimbingClusteringMethod2 extends GenericDistribHillClimbingClusteringMethod {
 
-public SteepestAscentHillClimbingClusteringMethod2() {
-}
+public SteepestAscentHillClimbingClusteringMethod2() { }
 
 protected Cluster getLocalMaxGraph(Cluster c) {
 System.out.print("IN:  " + c.getObjFnValue() + "  ");
@@ -53,9 +52,7 @@ System.out.println("OUT:  " + c.getObjFnValue() + "  ");
     return c;
 }
 
-public Configuration
-getConfiguration()
-{
+public Configuration getConfiguration() {
   boolean reconf=false;
   if (configuration_d == null) {
     reconf = true;
@@ -71,9 +68,7 @@ getConfiguration()
   return hc;
 }
 
-public void
-setDefaultConfiguration()
-{
+public void setDefaultConfiguration() {
   HillClimbingConfiguration hc = (HillClimbingConfiguration)super.getConfiguration();
 
   hc.setThreshold(0.1);

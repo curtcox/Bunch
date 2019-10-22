@@ -251,8 +251,7 @@ protected Cluster getLocalMaxGraph(Cluster c) {
     return c;
 }
 
-protected Graph
-getLocalMaxGraph(Graph g)
+protected Graph getLocalMaxGraph(Graph g)
 {
     double maxOF = g.getObjectiveFunctionValue();
 
@@ -341,9 +340,7 @@ getLocalMaxGraph(Graph g)
     return g;
 }
 
-public Configuration
-getConfiguration()
-{
+public Configuration getConfiguration() {
   boolean reconf=false;
   if (configuration_d == null) {
     configuration_d = new NAHCConfiguration();
@@ -364,16 +361,12 @@ getConfiguration()
   return hc;
 }
 
-public
-String
-getConfigurationDialogName()
+public String getConfigurationDialogName()
 {
   return "bunch.ui.NAHCClusteringConfigurationDialog";
 }
 
-public void
-setDefaultConfiguration()
-{
+public void setDefaultConfiguration() {
   NAHCConfiguration hc = (NAHCConfiguration)getConfiguration();
 
   hc.setThreshold(1.0/*0.1*/);

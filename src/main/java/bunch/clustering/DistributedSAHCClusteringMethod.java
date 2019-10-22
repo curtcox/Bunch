@@ -18,7 +18,6 @@
 package bunch.clustering;
 
 import javax.naming.*;
-import javax.rmi.PortableRemoteObject;
 import java.util.*;
 
 import bunch.BunchServer.IterationManager;
@@ -35,7 +34,7 @@ import bunch.model.Configuration;
  * @author Brian Mitchell
  *
  */
-public class DistributedSAHCClusteringMethod extends GenericDistribHillClimbingClusteringMethod {
+public final class DistributedSAHCClusteringMethod extends GenericDistribHillClimbingClusteringMethod {
 
 /**
  * Constants related to work status

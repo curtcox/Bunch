@@ -47,14 +47,11 @@ public static ObjectiveFunctionCalculatorFactory objectiveFunctionCalculatorFact
  *
  * @see #initGraph(int)
  */
-public
-Graph()
-{
+public Graph() {
   random_d = new Random(System.currentTimeMillis());
 }
 
-private void checkRandomOK()
-{
+private void checkRandomOK() {
    if(random_d == null)
       random_d = new Random(System.currentTimeMillis());
 }
@@ -65,9 +62,7 @@ private void checkRandomOK()
  * @param nodes the number of nodes this graph will contain
  * @see #initGraph(int)
  */
-public
-Graph(int nodes)
-{
+public Graph(int nodes) {
   this();
   initGraph(nodes);
 }
@@ -80,10 +75,7 @@ Graph(int nodes)
  * @param of the function calculator factory to set
  * @see #setObjectiveFunctionCalculator(java.lang.String)
  */
-public static
-void
-setObjectiveFunctionCalculatorFactory(ObjectiveFunctionCalculatorFactory of)
-{
+public static void setObjectiveFunctionCalculatorFactory(ObjectiveFunctionCalculatorFactory of) {
   objectiveFunctionCalculatorFactory_sd = of;
 }
 
@@ -94,10 +86,7 @@ setObjectiveFunctionCalculatorFactory(ObjectiveFunctionCalculatorFactory of)
  *
  * @param nodes the number of nodes of the graph
  */
-public
-void
-initGraph(int nodes)
-{
+public void initGraph(int nodes) {
   nodes_d = new Node[nodes];
   clusters_d = new int[nodes];
   locked_d = new boolean[nodes];
@@ -111,17 +100,12 @@ initGraph(int nodes)
  * @param name the name of the calculator to set for this graph
  * @see #setObjectiveFunctionCalculatorFactory(ObjectiveFunctionCalculatorFactory)
  */
-public
-void
-setObjectiveFunctionCalculator(String name)
-{
+public void setObjectiveFunctionCalculator(String name) {
   calculator_d = objectiveFunctionCalculatorFactory_sd.getCalculator(name);
   calculator_d.init(this);
 }
 
-public ObjectiveFunctionCalculator
-getObjectiveFunctionCalculator()
-{
+public ObjectiveFunctionCalculator getObjectiveFunctionCalculator() {
   return calculator_d;
 }
 
@@ -129,10 +113,7 @@ getObjectiveFunctionCalculator()
  * clears a Graph by resetting all the cluster identifiers to -1 and
  * allocating new Node objects for each position in the node array.
  */
-public
-void
-clear()
-{
+public void clear() {
   for (int i=0; i<nodes_d.length; ++i) {
     nodes_d[i] = new Node();
     clusters_d[i] = -1;
@@ -144,8 +125,7 @@ clear()
 /**
  * Clear the nodes that are locked
  */
-public void resetNodeLocks()
-{
+public void resetNodeLocks() {
   for (int i=0; i<nodes_d.length; ++i) {
     nodes_d[i].resetNode();
   }
@@ -164,10 +144,7 @@ public void resetNodeLocks()
  *
  * @return the number of nodes of the graph
  */
-public
-int
-getNumberOfNodes()
-{
+public int getNumberOfNodes() {
   return nodes_d.length;
 }
 
@@ -177,10 +154,7 @@ getNumberOfNodes()
  * @return the array of nodes.
  * @see #setOriginalNodes(Node[])
  */
-public
-Node[]
-getOriginalNodes()
-{
+public Node[] getOriginalNodes() {
   return originalNodes_d;
 }
 
@@ -192,10 +166,7 @@ getOriginalNodes()
  * @param nodes the array of nodes
  * @see #getOriginalNodes()
  */
-public
-void
-setOriginalNodes(Node[] nodes)
-{
+public void setOriginalNodes(Node[] nodes) {
   originalNodes_d = nodes;
 }
 
@@ -205,10 +176,7 @@ setOriginalNodes(Node[] nodes)
  *
  * @see #setNodes(Node[])
  */
-public
-Node[]
-getNodes()
-{
+public Node[] getNodes() {
   return nodes_d;
 }
 
@@ -218,10 +186,7 @@ getNodes()
  *
  * @see #getNodes()
  */
-public
-void
-setNodes(Node[] nodes)
-{
+public void setNodes(Node[] nodes) {
   nodes_d = nodes;
 }
 
@@ -231,10 +196,7 @@ setNodes(Node[] nodes)
  * @return the array of cluster identifiers.
  * @see #setClusters(int[])
  */
-public
-int[]
-getClusters()
-{
+public int[] getClusters() {
   return clusters_d;
 }
 
@@ -244,10 +206,7 @@ getClusters()
  * @param clusters the array of clusters.
  * @see #getClusters()
  */
-public
-void
-setClusters(int[] clusters)
-{
+public void setClusters(int[] clusters) {
   clusters_d = clusters;
 }
 
@@ -260,10 +219,7 @@ setClusters(int[] clusters)
  * @param locked the array of locks
  * @see #getLocks()
  */
-public
-void
-setLocks(boolean[] locked)
-{
+public void setLocks(boolean[] locked) {
   locked_d = locked;
 }
 
@@ -273,10 +229,7 @@ setLocks(boolean[] locked)
  * @return the array of cluster locks
  * @see #setLocks(boolean[])
  */
-public
-boolean[]
-getLocks()
-{
+public boolean[] getLocks() {
   return locked_d;
 }
 
@@ -289,10 +242,7 @@ getLocks()
  *
  * @return a new Graph object
  */
-public
-Graph
-cloneGraph()
-{
+public Graph cloneGraph() {
   Graph g = new Graph();
   g.nodes_d = this.nodes_d;
   g.clusters_d = new int[nodes_d.length];
@@ -319,10 +269,7 @@ cloneGraph()
  * @return the objective function value
  * @see #calculateObjectiveFunctionValue()
  */
-public
-double
-getObjectiveFunctionValue()
-{
+public double getObjectiveFunctionValue() {
   return objectiveFunctionValue_d;
 }
 
@@ -334,10 +281,7 @@ getObjectiveFunctionValue()
  * @param the new objective function value for this graph
  * @see #getObjectiveFunctionValue()
  */
-public
-void
-setObjectiveFunctionValue(double objVal)
-{
+public void setObjectiveFunctionValue(double objVal) {
   objectiveFunctionValue_d = objVal;
 }
 
@@ -349,10 +293,7 @@ setObjectiveFunctionValue(double objVal)
  * @return the interdependencies value
  * @see #getObjectiveFunctionValue()
  */
-public
-double
-getInterdependenciesValue()
-{
+public double getInterdependenciesValue() {
   return interdependenciesValue_d;
 }
 
@@ -364,10 +305,7 @@ getInterdependenciesValue()
  * @return the interdependencies value
  * @see #getInterdependenciesValue()
  */
-public
-void
-setInterdependenciesValue(double inter)
-{
+public void setInterdependenciesValue(double inter) {
   interdependenciesValue_d = inter;
 }
 
@@ -379,10 +317,7 @@ setInterdependenciesValue(double inter)
  * @see #calculateObjectiveFunctionValue()
  * @see #getObjectiveFunctionValue()
  */
-public
-double
-getIntradependenciesValue()
-{
+public double getIntradependenciesValue() {
   return intradependenciesValue_d;
 }
 
@@ -394,10 +329,7 @@ getIntradependenciesValue()
  * @return the intradependencies value
  * @see #getIntradependenciesValue()
  */
-public
-void
-setIntradependenciesValue(double intra)
-{
+public void setIntradependenciesValue(double intra) {
   intradependenciesValue_d = intra;
 }
 
@@ -405,10 +337,7 @@ setIntradependenciesValue(double intra)
  * Calculates the Objective Function value for this partitioned graph
  * by calling its ObjectiveFunctionCalculator.
  */
-public
-void
-calculateObjectiveFunctionValue()
-{
+public void calculateObjectiveFunctionValue() {
     if (calculator_d == null) {
       setObjectiveFunctionCalculator(objectiveFunctionCalculatorFactory_sd.getCurrentCalculator());
     }
@@ -424,10 +353,7 @@ calculateObjectiveFunctionValue()
  *
  * @return the number of partitions
  */
-public
-long
-getNumberOfPartitions()
-{
+public long getNumberOfPartitions() {
   long p = 0;
 
   for (int i=1; i <= nodes_d.length; i++) {
@@ -442,10 +368,7 @@ getNumberOfPartitions()
  * Computes the number of K-partitions of a set of N elements using a
  * recurrence relation for computing Stirling numbers
  */
-private
-long
-calcStirling(int n, int k)
-{
+private long calcStirling(int n, int k) {
   if (k == 1)
     return 1;
   else if (n == k)
@@ -460,10 +383,7 @@ calcStirling(int n, int k)
  *
  * @return the new graph
  */
-public
-Graph
-cloneAllNodesCluster()
-{
+public Graph cloneAllNodesCluster() {
     Graph g = cloneGraph();
     if (g.hasDoubleLocks()) {
       int num = g.findFreeCluster(g.getClusterNames());
@@ -494,10 +414,7 @@ cloneAllNodesCluster()
  * @param c the array of "used" clusters
  * @return a cluster number that is not yet in use
  */
-public
-int
-findFreeCluster(int[] c)
-{
+public int findFreeCluster(int[] c) {
   int n=0;
   boolean change=true;
   while (change) {
@@ -526,10 +443,7 @@ findFreeCluster(int[] c)
  * @param c the array of "used" clusters
  * @return a cluster random number that is not yet in use
  */
-public
-int
-findFreeRandomCluster(int[] c)
-{
+public int findFreeRandomCluster(int[] c) {
   checkRandomOK();
   int n=(int)(random_d.nextFloat()*(clusters_d.length-1));
   int loops = 0;
@@ -553,10 +467,7 @@ findFreeRandomCluster(int[] c)
  *
  * @return the new graph
  */
-public
-Graph
-cloneSingleNodeClusters()
-{
+public Graph cloneSingleNodeClusters() {
     Graph g = cloneGraph();
 
     if (g.hasDoubleLocks()) {
@@ -584,10 +495,7 @@ cloneSingleNodeClusters()
  * @param a boolean defining is the graph is "double locked" or not
  * @see #hasDoubleLocks()
  */
-public
-void
-setDoubleLocks(boolean v)
-{
+public void setDoubleLocks(boolean v) {
   hasLocks_d = v;
 }
 
@@ -598,10 +506,7 @@ setDoubleLocks(boolean v)
  * @return a boolean defining is the graph is "double locked" or not
  * @see #setDoubleLocks(boolean)
  */
-public
-boolean
-hasDoubleLocks()
-{
+public boolean hasDoubleLocks() {
   return hasLocks_d;
 }
 
@@ -611,10 +516,7 @@ hasDoubleLocks()
  * are in a single cluster). Used to generate random partitions that are
  * better-performing that purely-random ones.
  */
-public
-void
-shuffleClusters()
-{
+public void shuffleClusters() {
     int[] clustNames = null;
     if (hasDoubleLocks()) {
       clustNames = this.getUnlockedClusterNames();
@@ -637,10 +539,7 @@ shuffleClusters()
  *
  * @return the new graph
  */
-public
-Graph
-cloneWithRandomClusters()
-{
+public Graph cloneWithRandomClusters() {
    checkRandomOK();
     Graph g = cloneGraph();
     if (g.hasDoubleLocks()) {
@@ -665,8 +564,7 @@ cloneWithRandomClusters()
  * an integer array, where each index indicates the node.  Thus n[0] would have
  * the value of the cluster for node zero.
  */
-public int[] getRandomCluster()
-{
+public int[] getRandomCluster() {
    checkRandomOK();
    int [] c = new int[nodes_d.length];
 
@@ -691,8 +589,7 @@ public int[] getRandomCluster()
 /**
  * Generate a random cluster, taking into account special or ''locked'' clusters
  */
-public int[] genRandomClusterSize()
-{
+public int[] genRandomClusterSize() {
    checkRandomOK();
    int [] c = new int[nodes_d.length];
    int [] existingClusters = getClusters();
@@ -776,8 +673,7 @@ public int[] genRandomClusterSize()
 /**
  * Generate a random cluster, taking into account special or ''locked'' clusters
  */
-public int[] genRandomClusterSizeWithLimits(int min, int max)
-{
+public int[] genRandomClusterSizeWithLimits(int min, int max) {
    int range = max-min;
 
    if (range < 0) return null;
@@ -867,10 +763,7 @@ public int[] genRandomClusterSizeWithLimits(int min, int max)
  * @param r the random number generator
  * @see #getRandom()
  */
-public
-void
-setRandom(Random r)
-{
+public void setRandom(Random r) {
     random_d = r;
 }
 
@@ -880,10 +773,7 @@ setRandom(Random r)
  * @return the random number generator
  * @see #setRandom(java.util.Random)
  */
-public
-Random
-getRandom()
-{
+public Random getRandom() {
    checkRandomOK();
     return random_d;
 }
@@ -893,10 +783,7 @@ getRandom()
  *
  * @return the array of cluster "names" (numeric ids, actually)
  */
-public
-int[]
-getClusterNames()
-{
+public int[] getClusterNames() {
     int[] clusts = new int[nodes_d.length];
     int name;
     int numClusts = 0;
@@ -926,10 +813,7 @@ getClusterNames()
  * @return the array of cluster "names" (numeric ids, actually)
  * @see #setDoubleLocks(boolean)
  */
-public
-int[]
-getUnlockedClusterNames()
-{
+public int[] getUnlockedClusterNames() {
     int[] clusts = new int[nodes_d.length];
     int name;
     int numClusts = 0;
@@ -961,10 +845,7 @@ getUnlockedClusterNames()
  *
  * @return true if the graph is a local maximum, false otherwise
  */
-public
-boolean
-isMaximum()
-{
+public boolean isMaximum() {
   return isMaximum_d;
 }
 
@@ -973,10 +854,7 @@ isMaximum()
  *
  * @param b, which should true if the graph is a local maximum, false otherwise
  */
-public
-void
-setMaximum(boolean b)
-{
+public void setMaximum(boolean b) {
   isMaximum_d=b;
 }
 
@@ -992,10 +870,7 @@ setMaximum(boolean b)
  * @see #getPreviousLevelGraph()
  * @see #setGraphLevel(int)
  */
-public
-void
-setPreviousLevelGraph(Graph g)
-{
+public void setPreviousLevelGraph(Graph g) {
   previousLevelGraph_d = g;
 }
 
@@ -1006,10 +881,7 @@ setPreviousLevelGraph(Graph g)
  * @see #setPreviousLevelGraph(Graph)
  * @see #setGraphLevel(int)
  */
-public
-Graph
-getPreviousLevelGraph()
-{
+public Graph getPreviousLevelGraph() {
   return previousLevelGraph_d;
 }
 
@@ -1019,10 +891,7 @@ getPreviousLevelGraph()
  * @param gl the level as numeric value (i.e., level 0 is the initial partitioned graph)
  * @see #getGraphLevel()
  */
-public
-void
-setGraphLevel(int gl)
-{
+public void setGraphLevel(int gl) {
   graphLevel_d = gl;
 }
 
@@ -1032,10 +901,7 @@ setGraphLevel(int gl)
  * @return the level as numeric value (i.e., level 0 is the initial partitioned graph)
  * @see #setGraphLevel(int)
  */
-public
-int
-getGraphLevel()
-{
+public int getGraphLevel() {
   return graphLevel_d;
 }
 
@@ -1044,8 +910,7 @@ getGraphLevel()
  * contains clusters, which is a level up on the tree.  If it is a tree, then
  * the nodes have children and so on.
  */
-public boolean isClusterTree()
-{ return this.isClusterTree_d; }
+public boolean isClusterTree() { return this.isClusterTree_d; }
 
 public void setIsClusterTree(boolean b)
 { isClusterTree_d = b;  }
@@ -1054,8 +919,7 @@ public void setIsClusterTree(boolean b)
  * If the cluster is a tree, find the median level of the tree and return
  * the graph object to the caller.
  */
-public Graph getMedianTree()
-{
+public Graph getMedianTree() {
   if (isClusterTree() == false)
     return this;
 
