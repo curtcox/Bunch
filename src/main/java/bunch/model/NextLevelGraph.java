@@ -2,7 +2,7 @@ package bunch.model;
 
 import java.util.*;
 
-public class NextLevelGraph {
+public final class NextLevelGraph {
 
 class NodeInfo {
 
@@ -27,11 +27,9 @@ class NodeInfo {
   }
 }
 
-  public NextLevelGraph() {
-  }
+  public NextLevelGraph() {}
 
-  public Graph genNextLevelGraph(Graph g)
-  {
+  public Graph genNextLevelGraph(Graph g) {
     int    lvl          = g.getGraphLevel()+1;
     int[]  cnames       = g.getClusterNames();
     Node[] nodeList     = g.getNodes();

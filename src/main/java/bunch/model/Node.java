@@ -20,7 +20,7 @@ package bunch.model;
  * @version 1.0
  * @see Graph
  */
-public class Node  implements java.io.Serializable {
+public final class Node  implements java.io.Serializable {
 /**
  * The array of dependencies (edges) to other nodes
  */

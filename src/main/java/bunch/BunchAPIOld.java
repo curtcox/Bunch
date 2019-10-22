@@ -135,9 +135,9 @@ public void setClusteringMethod(int iMethod) {
    alg = iMethod;
 
    /**
-    * Set the clustering method based on the method id.  The mehod is a string
+    * Set the clustering method based on the method id.  The method is a string
     * used to select the name from the factory.  This is not a good coding
-    * approach and has been improved in the non-depricated version of the BunchAPI
+    * approach and has been improved in the non-deprecated version of the BunchAPI
     */
    switch(iMethod)
    {
@@ -164,28 +164,30 @@ public void setClusteringMethod(int iMethod) {
          method = "SAHC:    nodes in [10,50)";
          break;
    }
+   setPreferencesObject(method);
 
-  /**
-   * Set the preferences object using the default preferences of the
-   * clustering method.  Also set the clustering method factory with the
-   * appropriate clustering algorithm
-   */
-  if (!method.getClass().getName().equals(method)) {
-    clusteringMethod_d = preferences_d.getClusteringMethodFactory().getMethod(method);
-    if (configuration_d == null)
-      configuration_d = clusteringMethod_d.getConfiguration();
-
-    clusteringMethod_d.setIterationListener(null);
-
-    if (initialGraph_d!=null&&configuration_d!=null) {
-      configuration_d.init(initialGraph_d);
-
-    clusteringMethod_d.setConfiguration(configuration_d);
-
-    }
-  }
 }
 
+/**
+ * Set the preferences object using the default preferences of the
+ * clustering method.  Also set the clustering method factory with the
+ * appropriate clustering algorithm
+ */
+private void setPreferencesObject(String method) {
+    if (!method.getClass().getName().equals(method)) {
+        clusteringMethod_d = preferences_d.getClusteringMethodFactory().getMethod(method);
+        if (configuration_d == null)
+            configuration_d = clusteringMethod_d.getConfiguration();
+
+        clusteringMethod_d.setIterationListener(null);
+
+        if (initialGraph_d!=null&&configuration_d!=null) {
+            configuration_d.init(initialGraph_d);
+
+            clusteringMethod_d.setConfiguration(configuration_d);
+        }
+    }
+}
 /**
  * Parse the mdg graph with the specified delimiters and create the graph
  * object for the api class.  This graph object will be used by the other

@@ -13,7 +13,7 @@ public BunchTest() { }
 
 public static void main(String[] args) throws Exception {
       System.out.println("TEST: Clustering bunch (need MDG file named bunch)...");
-         BunchAPIOld b = new BunchAPIOld("d:\\bunch\\mdgs\\random37.mdg");
+         BunchAPIOld b = new BunchAPIOld("./dot-examples/bash.mdg");
          b.runBatch(100);
       System.out.println("TEST Finished, check bunchTest.dot file for output!");
 }

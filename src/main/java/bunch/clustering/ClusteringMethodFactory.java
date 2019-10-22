@@ -34,21 +34,15 @@ import bunch.model.GenericFactory;
  * @see ClusteringMethod
  * @see GenericFactory
  */
-public
-class ClusteringMethodFactory
-  extends GenericFactory
-{
+public final class ClusteringMethodFactory extends GenericFactory {
 
-String defaultMethod = "Hill Climbing";
+final String defaultMethod = "Hill Climbing";
 
 /**
  * Class constructor, defines the objects that the factory will be able
  * to create
  */
-public
-ClusteringMethodFactory()
-{
-  super();
+public ClusteringMethodFactory() {
   setFactoryType("ClusteringMethod");
   addItem("Hill Climbing", "bunch.clustering.GeneralHillClimbingClusteringMethod");
   addItem("NAHC", "bunch.clustering.NextAscentHillClimbingClusteringMethod");
@@ -61,8 +55,7 @@ ClusteringMethodFactory()
  * This method returns the default clustering method.  It is used in the GUI and
  * API when the clustering algorithm is not explicitly specified.
  */
-public String getDefaultMethod()
-{
+public String getDefaultMethod() {
   return defaultMethod;
 }
 
@@ -71,8 +64,7 @@ public String getDefaultMethod()
  *
  * @return A string array containing the keys in the factory.
  */
-public String[] getItemList()
-{
+public String[] getItemList() {
   String[] masterList = super.getItemList();
   String[] resList    = new String[masterList.length-2];
 
@@ -97,10 +89,7 @@ public String[] getItemList()
  * @param the name for the desired method
  * @return the clustering method corresponding to the name
  */
-public
-ClusteringMethod
-getMethod(String name)
-{
+public ClusteringMethod getMethod(String name) {
   return (ClusteringMethod)getItemInstance(name);
 }
 }

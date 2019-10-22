@@ -3,7 +3,7 @@ package bunch.model;
 import java.io.*;
 import java.util.Vector;
 
-public class TSGraphOutput
+public final class TSGraphOutput
   extends GraphOutput
 {
 

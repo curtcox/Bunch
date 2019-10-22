@@ -31,8 +31,7 @@ protected String factoryType_d;
  * 10 (given that factories are usually used for a small number of
  * objects).
  */
-public
-GenericFactory()
+public GenericFactory()
 {
   methodTable_d = new Hashtable(10);
 }
@@ -44,9 +43,7 @@ GenericFactory()
  * @param the name of the class
  * @see #getFactoryType()
  */
-public
-void
-setFactoryType(String name)
+public void setFactoryType(String name)
 {
   factoryType_d = name;
 }
@@ -58,9 +55,7 @@ setFactoryType(String name)
  * @return the name of the class
  * @see #setFactoryType(java.lang.String)
  */
-public
-String
-getFactoryType()
+public String getFactoryType()
 {
   return factoryType_d;
 }
@@ -72,9 +67,7 @@ getFactoryType()
  * @param className the name of the class that will be instanced to answer for
  * this object
  */
-public
-void
-addItem(String name, String className)
+public void addItem(String name, String className)
 {
   methodTable_d.put(name, className);
 }
@@ -85,17 +78,12 @@ addItem(String name, String className)
  * @return an enumeration (@see java.util.Enumeration) with all the available
  * keys
  */
-public
-Enumeration
-getAvailableItems()
+public Enumeration getAvailableItems()
 {
   return methodTable_d.keys();
 }
 
-public
-String[]
-getItemList()
-{
+public String[] getItemList() {
   String[] list = new String[methodTable_d.size()];
   Enumeration e = methodTable_d.keys();
   int i=0;
@@ -113,9 +101,7 @@ getItemList()
  * @param name the name of the object which FQN is to be retrieved
  * @return the item stored for the key received as parameter
  */
-public
-String
-getItemName(String name)
+public String getItemName(String name)
 {
   return (String)methodTable_d.get(name);
 }
@@ -127,46 +113,30 @@ getItemName(String name)
  * @return an instance of the name that corresponds to the key passed
  * as parameter
  */
-public
-Object
-getItemInstance(String name)
-{
-  String cls = null;
+public Object getItemInstance(String name) {
+  String cls;
   if (name.toLowerCase().equals("default")) {
     cls = "bunch.Default"+factoryType_d;
-  }
-  else {
+  } else {
     cls = (String)methodTable_d.get(name);
   }
 
-  Object obj = null;
-
   try {
-    obj = (Beans.instantiate(null, cls));
-  }
-  catch (Exception e) {
+    return (Beans.instantiate(null, cls));
+  } catch (Exception e) {
     return getItemInstanceFromClass(name);
-    //throw new RuntimeException(e.toString());
   }
-  return obj;
 }
 
 /**
  * Get object instance using a class name as a key
  */
-public
-Object
-getItemInstanceFromClass(String cls)
-{
-  Object obj = null;
-
+public Object getItemInstanceFromClass(String cls) {
   try {
-    obj = (Beans.instantiate(null, cls));
+    return (Beans.instantiate(null, cls));
+  } catch (Exception e) {
+    throw new RuntimeException(e);
   }
-  catch (Exception e) {
-    throw new RuntimeException(e.toString());
-  }
-  return obj;
 }
 
 /**

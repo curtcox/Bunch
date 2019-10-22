@@ -1087,9 +1087,7 @@ void runActionButton_d_actionPerformed(ActionEvent e) {
   /**
    * First ensure that an input graph is specified
    */
-  if (outputClusterFilename_d.getText() == null
-          || outputClusterFilename_d.getText().equals(""))
-  {
+  if (outputClusterFilename_d.getText() == null || outputClusterFilename_d.getText().equals("")) {
     JOptionPane.showMessageDialog(this,
             "Error: missing input graph file\nor output graph filename.", "MQ Calculation: Missing Parameter",
             JOptionPane.ERROR_MESSAGE);
@@ -1131,138 +1129,129 @@ void runActionButton_d_actionPerformed(ActionEvent e) {
   graphOutput_d.setBasicName(fileBasicName_d);
   configureOptions();
 
-  //==================
-  //DISTRIB CLUSTERING ENTRY POINT
-  //=================
-  /**
-   * This path of code is used for the distributed clustering options
-   */
-  boolean doDistrib = distClustEnableCB.isSelected();
-  if(doDistrib == true)
-  {
-    /**
-     * Get the distributed options
-     */
-    bunch.LoadBalancer.Manager lbManager = new bunch.LoadBalancer.Manager();
-    bunch.BunchServer.DistribInit diMsg = new bunch.BunchServer.DistribInit();
-    diMsg.theGraph = initialGraph_d;
-    diMsg.clusteringTechnique = method;
-    diMsg.objFunction = (String)ClusteringAlgEF.getSelectedItem();
-    diMsg.config = configuration_d;
-    diMsg.bp = preferences_d;
+  if(distClustEnableCB.isSelected()) {
+    runDistributedClustering(method);
+  } else {
+    runLocalClustering();
+  }
+}
 
-    lbManager.baseUOWSz = this.getUOWSz();
-    lbManager.useAdaptiveAlg = this.getAdaptiveEnableFlag();
+  void runDistributedClustering(String method) {
+      /**
+       * Get the distributed options
+       */
+      bunch.LoadBalancer.Manager lbManager = new bunch.LoadBalancer.Manager();
+      bunch.BunchServer.DistribInit diMsg = new bunch.BunchServer.DistribInit();
+      diMsg.theGraph = initialGraph_d;
+      diMsg.clusteringTechnique = method;
+      diMsg.objFunction = (String)ClusteringAlgEF.getSelectedItem();
+      diMsg.config = configuration_d;
+      diMsg.bp = preferences_d;
 
-    /**
-     * Process the server vector for each server.  Initialize each server
-     */
-    if(activeServerVector!= null)
-       for (int i = 0; i < activeServerVector.size(); i++)
-       {
+      lbManager.baseUOWSz = this.getUOWSz();
+      lbManager.useAdaptiveAlg = this.getAdaptiveEnableFlag();
+
+      /**
+       * Process the server vector for each server.  Initialize each server
+       */
+      if(activeServerVector!= null)
+        for (int i = 0; i < activeServerVector.size(); i++) {
           Binding b = (Binding)activeServerVector.elementAt(i);
           diMsg.svrID = lbManager.createNewServer();
           diMsg.svrName = b.getName();
           diMsg.adaptiveEnabled = getAdaptiveEnableFlag();
           byte[] so = bunch.util.BunchUtilities.toByteArray(diMsg);
-          if (so != null)
-          {
-             BunchSvrMsg bsm = (BunchSvrMsg)b.getObject();
-             try{
-               boolean rc = bsm.invokeMessage("Init",so);
-             }catch(Exception ex)
-             {
-                JOptionPane.showMessageDialog(this,
-                   ex.toString(), "Error Initializing Server: " + b.getName(),
-                   JOptionPane.ERROR_MESSAGE);
-             }
+          if (so != null) {
+            BunchSvrMsg bsm = (BunchSvrMsg)b.getObject();
+            try{
+              boolean rc = bsm.invokeMessage("Init",so);
+            }catch(Exception ex)
+            {
+              JOptionPane.showMessageDialog(this,
+                      ex.toString(), "Error Initializing Server: " + b.getName(),
+                      JOptionPane.ERROR_MESSAGE);
+            }
           }
-       }
+        }
 
-       /**
-        * Get ready to do the distributed clustering
-        */
-       try
-       {
-          bevent = new BunchEvent();
+      /**
+       * Get ready to do the distributed clustering
+       */
+      try {
+        bevent = new BunchEvent();
 
-          DistributedHCClusteringMethod dcm =
-             new DistributedHCClusteringMethod();
+        DistributedHCClusteringMethod dcm = new DistributedHCClusteringMethod();
 
-          dcm.setEventObject(bevent);
-          dcm.setActiveServerVector(activeServerVector);
+        dcm.setEventObject(bevent);
+        dcm.setActiveServerVector(activeServerVector);
 
-          lbManager.baseUOWSz = this.getUOWSz();
-          lbManager.useAdaptiveAlg = this.getAdaptiveEnableFlag();
-          svrCallback.bevent = bevent;
-          svrCallback.lbManager = lbManager;
+        lbManager.baseUOWSz = this.getUOWSz();
+        lbManager.useAdaptiveAlg = this.getAdaptiveEnableFlag();
+        svrCallback.bevent = bevent;
+        svrCallback.lbManager = lbManager;
 
-          /**
-           * For now, only NAHC is supported in the distributed version
-           * of Bunch.  Set its configuration parameters to the default
-           * values. These can be overriden by the user on the GUI.
-           */
-          NAHCConfiguration hcc = (NAHCConfiguration)dcm.getConfiguration();
+        /**
+         * For now, only NAHC is supported in the distributed version
+         * of Bunch.  Set its configuration parameters to the default
+         * values. These can be overriden by the user on the GUI.
+         */
+        NAHCConfiguration hcc = (NAHCConfiguration)dcm.getConfiguration();
 
-          hcc.setNumOfIterations(1);
-          hcc.setThreshold(1.0);
-          hcc.setRandomizePct(100);
-          hcc.setMinPctToConsider(0);
+        hcc.setNumOfIterations(1);
+        hcc.setThreshold(1.0);
+        hcc.setRandomizePct(100);
+        hcc.setMinPctToConsider(0);
 
-          ((GenericDistribHillClimbingClusteringMethod)dcm).setConfiguration(configuration_d);
+        ((GenericDistribHillClimbingClusteringMethod)dcm).setConfiguration(configuration_d);
 
-          /**
-           * Initialize the distributed clustering engine
-           */
-          dcm.initialize();
-          dcm.setGraph(initialGraph_d.cloneGraph());
+        /**
+         * Initialize the distributed clustering engine
+         */
+        dcm.initialize();
+        dcm.setGraph(initialGraph_d.cloneGraph());
 
-          /**
-           * Display the distributed clustering dialog box which will be used
-           * to manage the distributed clustering process
-           */
-          DistribClusteringProgressDlg dlg = null;
-          dlg = new DistribClusteringProgressDlg(this, "Distributed Clustering " + initialGraph_d.getNumberOfNodes() + " nodes...", true,dcm);
+        /**
+         * Display the distributed clustering dialog box which will be used
+         * to manage the distributed clustering process
+         */
+        DistribClusteringProgressDlg dlg = null;
+        dlg = new DistribClusteringProgressDlg(this, "Distributed Clustering " + initialGraph_d.getNumberOfNodes() + " nodes...", true,dcm);
 
-          Dimension dlgSize = dlg.getPreferredSize();
-          Dimension frmSize = getSize();
-          Point loc = getLocation();
-          dlg.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
-          dlg.setVisible(true);
-       }
+        Dimension dlgSize = dlg.getPreferredSize();
+        Dimension frmSize = getSize();
+        Point loc = getLocation();
+        dlg.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
+        dlg.setVisible(true);
+      }
 
-       /**
-        * Catch and notify the user of a distributed clustering error.
-        */
-       catch(Exception ex)
-       {
-          JOptionPane.showMessageDialog(this,
-            ex.toString(), "Error Doing Distributed Clustering: " + ex.toString(),
-            JOptionPane.ERROR_MESSAGE);
-       }
-    }
-    /**
-     * We are using the standard, non distributed clustering engine
-     */
-    else
-    {
+      /**
+       * Catch and notify the user of a distributed clustering error.
+       */
+      catch(Exception ex) {
+        JOptionPane.showMessageDialog(this,
+                ex.toString(), "Error Doing Distributed Clustering: " + ex.toString(),
+                JOptionPane.ERROR_MESSAGE);
+      }
+  }
+
+  /**
+   * We are using the standard, non distributed clustering engine
+   */
+  void runLocalClustering() {
       /**
        * Get ready to display the clustering progress dialog box which will
        * manage the clustering process.
        */
-      ClusteringProgressDialog dlg = null;
-      dlg = ClusteringProgressDialog.of(this, "Clustering " + initialGraph_d.getNumberOfNodes() + " nodes...", true);
+      ClusteringProgressDialog dlg = ClusteringProgressDialog.of(this, "Clustering " + initialGraph_d.getNumberOfNodes() + " nodes...", true);
 
       Dimension dlgSize = dlg.getPreferredSize();
       Dimension frmSize = getSize();
       Point loc = getLocation();
       dlg.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
-
       dlg.setModal(false);
       dlg.setVisible(true);
       dlg.startClustering();
       dlg.setModal(true);
-
 
       /**
        * If clustering is user-managed setup the generate next level feature by
@@ -1276,9 +1265,8 @@ void runActionButton_d_actionPerformed(ActionEvent e) {
        * If the output format is dotty, enable the visualize button.
        */
       if (outputFileFormatList_d.getSelectedItem().equals("Dotty"))
-         visualizeButton_d.setEnabled(true);
-    }
-}
+        visualizeButton_d.setEnabled(true);
+  }
 
 /**
  * This method sets the libraries, clients and suppliers defined in their

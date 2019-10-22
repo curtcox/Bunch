@@ -11,7 +11,7 @@ import bunch.stats.*;
  *
  * @author Brian Mitchell
  */
- public class Cluster {
+ public final class Cluster {
 
  /**
   * Constants
@@ -21,12 +21,12 @@ import bunch.stats.*;
   /**
    * Member variables
    */
-  int [] clusterVector = null;
-  int [] epsilonEdges = null;
-  int [] muEdges = null;
+  int [] clusterVector;
+  int [] epsilonEdges;
+  int [] muEdges;
   int [] lastMv = new int[3];
   double objFnValue=CLUSTER_OBJ_FN_VAL_NOT_DEFINED;
-  Graph graph = null;
+  Graph graph;
   boolean converged = false;
   boolean validMove = false;
 

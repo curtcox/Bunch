@@ -1,6 +1,6 @@
 package bunch.model;
 
-class Edge {
+final class Edge {
 
     public Node from_d, to_d;
 

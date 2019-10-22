@@ -1,9 +1,5 @@
 package bunch.model;
 
-import bunch.model.Graph;
-import bunch.model.GraphOutput;
-import bunch.model.Node;
-
 import java.util.Vector;
 
 /**
@@ -15,7 +11,7 @@ import java.util.Vector;
  *
  * @author Brian Mitchell
  */
-public class Drifters {
+public final class Drifters {
 
 public final static int NODE_NOT_CONNECTED=-1;
 
@@ -30,8 +26,7 @@ protected Graph graph_d;
 /**
  * The constructor caches the graph object
  */
-public Drifters(Graph g)
-{
+public Drifters(Graph g) {
    graph_d = g;
 }
 

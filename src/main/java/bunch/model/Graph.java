@@ -18,7 +18,7 @@ import java.util.Random;
  * @version 1.0
  * @see Node
  */
-public class Graph implements java.io.Serializable {
+public final class Graph implements java.io.Serializable {
 
 private Node[] nodes_d;
 private Node[] originalNodes_d;

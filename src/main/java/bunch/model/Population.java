@@ -3,7 +3,7 @@ package bunch.model;
 import java.util.Vector;
 import java.util.Enumeration;
 
-public class Population {
+public final class Population {
 
   Vector   pop = new Vector();
   static   Graph g = null;

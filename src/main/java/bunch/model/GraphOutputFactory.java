@@ -3,7 +3,7 @@ package bunch.model;
 /**
  * A factory for graph output generators
  */
-public class GraphOutputFactory extends GenericFactory {
+public final class GraphOutputFactory extends GenericFactory {
 
 public String defaultOption = "Dotty";
 /**

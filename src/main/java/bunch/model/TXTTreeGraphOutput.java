@@ -5,7 +5,7 @@ import java.util.*;
 import java.io.*;
 import java.util.Vector;
 
-public class TXTTreeGraphOutput extends GraphOutput {
+public final class TXTTreeGraphOutput extends GraphOutput {
 
   public TXTTreeGraphOutput() {}
 

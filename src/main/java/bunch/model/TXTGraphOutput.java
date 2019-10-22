@@ -4,7 +4,7 @@ import java.util.*;
 import java.io.*;
 import java.util.Vector;
 
-public class TXTGraphOutput extends GraphOutput {
+public final class TXTGraphOutput extends GraphOutput {
 
 boolean hasSuppliers = false;
 boolean hasClients = false;

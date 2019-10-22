@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @author Brian Mitchell
  */
-public class DotGraphOutput
+public final class DotGraphOutput
   extends GraphOutput
 {
 
