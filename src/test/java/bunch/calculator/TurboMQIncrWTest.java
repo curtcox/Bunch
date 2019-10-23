@@ -13,16 +13,16 @@ public class TurboMQIncrWTest {
     @Test
     public void init() {
         Graph.setObjectiveFunctionCalculatorFactory(new ObjectiveFunctionCalculatorFactory());
-        TurboMQIncrW calc = new TurboMQIncrW();
-        Graph graph = new Graph(0);
+        var calc = new TurboMQIncrW();
+        var graph = new Graph(0);
         calc.init(graph);
     }
 
     @Test
     public void calculate() {
         Graph.setObjectiveFunctionCalculatorFactory(new ObjectiveFunctionCalculatorFactory());
-        TurboMQIncrW calc = new TurboMQIncrW();
-        Graph graph = new Graph(0);
+        var calc = new TurboMQIncrW();
+        var graph = new Graph(0);
         calc.init(graph);
         calc.calculate();
     }
@@ -30,8 +30,8 @@ public class TurboMQIncrWTest {
     @Test
     public void calculate_cluster() {
         Graph.setObjectiveFunctionCalculatorFactory(new ObjectiveFunctionCalculatorFactory());
-        TurboMQIncrW calc = new TurboMQIncrW();
-        Graph graph = new Graph(0);
+        var calc = new TurboMQIncrW();
+        var graph = new Graph(0);
         calc.init(graph);
         int[] vector = new int[0];
         Cluster cluster = new Cluster(graph,vector);
@@ -41,8 +41,8 @@ public class TurboMQIncrWTest {
     @Test
     public void calculateInterdependenciesValue() {
         Graph.setObjectiveFunctionCalculatorFactory(new ObjectiveFunctionCalculatorFactory());
-        TurboMQIncrW calc = new TurboMQIncrW();
-        Graph graph = new Graph(0);
+        var calc = new TurboMQIncrW();
+        var graph = new Graph(0);
         calc.init(graph);
         int[] c1 = new int[0];
         int[] c2 = new int[0];
@@ -54,8 +54,8 @@ public class TurboMQIncrWTest {
     @Test
     public void calculateIntradependenciesValue() {
         Graph.setObjectiveFunctionCalculatorFactory(new ObjectiveFunctionCalculatorFactory());
-        TurboMQIncrW calc = new TurboMQIncrW();
-        Graph graph = new Graph(0);
+        var calc = new TurboMQIncrW();
+        var graph = new Graph(0);
         calc.init(graph);
         int[] c = new int[0];
         int numCluster = 0;
