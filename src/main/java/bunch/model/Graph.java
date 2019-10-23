@@ -936,8 +936,7 @@ public Graph getMedianTree() {
  * This method always returns the level-0 graph.  This may be this instance
  * itself, or one of its children graphs.
  */
-public Graph getDetailedGraph()
-{
+public Graph getDetailedGraph() {
   int lvl = this.getGraphLevel();
 
   Graph tmpGraph = this;

@@ -5,6 +5,7 @@ import bunch.model.Graph;
 import bunch.model.Node;
 
 public class TurboMQIncrW implements ObjectiveFunctionCalculator {
+
 private Graph graph_d;
 private static int[][] clusterMatrix_d;
 private Node[] nodes_x;
