@@ -15,9 +15,7 @@
  *	
  *
  */
-package bunch.BunchServer;
-
-import bunch.*;
+package bunch.server;
 
 public class IterationManager implements java.io.Serializable{
   public static final int DIR_TO_CLIENT = 1;

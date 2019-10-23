@@ -75,8 +75,7 @@ import bunch.stats.*;
    * This alternative constructor contains a graph and a cluster vector object
    * on its interface to initialize this instance of the Cluster object.
    */
-  public Cluster(Graph g, int []cv)
-  {
+  public Cluster(Graph g, int []cv) {
       lastMv[0]=lastMv[1]=lastMv[2] = -1;
       graph = g;
       setClusterVector(cv);

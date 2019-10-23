@@ -1,4 +1,4 @@
-package bunch.BunchServer;
+package bunch.server;
 
 import bunch.serverio.Callback;
 import bunch.model.Cluster;

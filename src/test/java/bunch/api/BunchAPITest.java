@@ -1,6 +1,7 @@
 package bunch.api;
 
 import bunch.model.Cluster;
+import org.junit.Test;
 
 import java.util.*;
 import java.io.*;
@@ -14,7 +15,8 @@ ArrayList bunchGraphs = null;
 int [] prfreq = new int[11];
 int [] prIfreq = new int [11];
 
- public void BunchAPITest4() {
+ @Test
+ public void test4() {
 
       BunchAPI api = new BunchAPI();
       BunchProperties bp = new BunchProperties();
@@ -147,8 +149,7 @@ int [] prIfreq = new int [11];
       //}
   }
 
-  public static Hashtable collectFinalGraphs(String mdgFileName, String baseFileDirectory, int howMany)
-  {
+  public static Hashtable collectFinalGraphs(String mdgFileName, String baseFileDirectory, int howMany) {
     BunchGraph  bgList[] = new BunchGraph[howMany];
     String baseOutputFileName = mdgFileName;
 
@@ -259,8 +260,8 @@ System.out.println("ML:"+meclValue);
     return h;
   }
 
-  public void BunchAPITestxxx()
-  {
+  @Test
+  public void BunchAPITestxxx() {
     String baseDir = "e:\\SampleMDGs\\";
     String mdgFileName = "compiler";
     String pathMDG = baseDir+mdgFileName;
@@ -269,7 +270,6 @@ System.out.println("ML:"+meclValue);
         Hashtable res = collectFinalGraphs(pathMDG,baseDir,howMany);
         Hashtable mes = processFinalResults(res);
   }
-
 
   private double calcSlope(ArrayList inputX, ArrayList inputY)
   {
@@ -306,8 +306,8 @@ System.out.println("ML:"+meclValue);
 
     return slope;
   }
-  private Hashtable calcVelocityAccel(ArrayList input)
-  {
+
+  private Hashtable calcVelocityAccel(ArrayList input) {
     Hashtable h = new Hashtable();
     ArrayList ax = new ArrayList();
 
@@ -352,8 +352,8 @@ System.out.println("ML:"+meclValue);
     return h;
   }
 
-public void BunchAPITest1x()
-{
+  @Test
+public void BunchAPITest1x() {
     
     String mdgFile = "c:\\research\\mdgs\\pgsql";
     String cluFile = "c:\\research\\mdgs\\pgsql.clu";
@@ -372,9 +372,8 @@ public void BunchAPITest1x()
     System.out.println("Done");
 }
 
-
-  public void BunchAPITestOld99()
-  {
+  @Test
+  public void BunchAPITestOld99() {
 
   String mdg     = "e:\\samplemdgs\\bison";
   int    numRuns = 1;
@@ -486,6 +485,7 @@ public void BunchAPITest1x()
   System.out.println("USE SA = "+useSA);
   }
 
+  @Test
   public void BunchAPITestBigBad() {
 
       String mdg="e:\\samplemdgs\\compiler";
@@ -599,8 +599,8 @@ public void BunchAPITest1x()
     System.out.println();
   }
 
-  public void BunchAPITestOld()
-  {
+  @Test
+  public void BunchAPITestOld() {
       BunchAPI api = new BunchAPI();
       Hashtable htSpecial = api.getSpecialModules("e:\\linux\\linux");
 
@@ -614,6 +614,7 @@ public void BunchAPITest1x()
       dump("libraries",libraries);
   }
 
+  @Test
   public void BunchAPITest5()
   {
     BunchProperties bp = new BunchProperties();
@@ -665,6 +666,7 @@ public void BunchAPITest1x()
       }
   }
 
+  @Test
   public void BunchAPITest8()
   {
     String graphName = "e:\\expir\\rcs";
@@ -674,6 +676,7 @@ public void BunchAPITest1x()
     runTest(graphName, false);
     runTest(graphName, true);
   }
+
   public void runTest(String graphName, boolean removeSpecial)
   {
     totalNodes = totalAdjustments = 0;
@@ -1067,6 +1070,7 @@ public void BunchAPITest1x()
     }
   }
 
+  @Test
   public void BunchAPITest3()
   {
     try{
@@ -1159,7 +1163,8 @@ public void BunchAPITest1x()
     { e.printStackTrace(); }
   }
 
-  BunchAPITest() {
+  @Test
+  public void run() throws IOException {
       BunchAPI api = new BunchAPI();
       BunchProperties bp = new BunchProperties();
       bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,"/Users/brianmitchell/dev/mdgs/incl");
@@ -1185,7 +1190,6 @@ public void BunchAPITest1x()
       api.setProperties(bp);
       System.out.println("Running...");
 
-
       api.run();
       Hashtable results = api.getResults();
       System.out.println("Results:");
@@ -1201,8 +1205,7 @@ public void BunchAPITest1x()
       System.out.println();
       Hashtable [] resultLevels = (Hashtable[])results.get(BunchAPI.RESULT_CLUSTER_OBJS);
 
-      for(int i = 0; i < resultLevels.length; i++)
-      {
+      for(int i = 0; i < resultLevels.length; i++) {
         Hashtable lvlResults = resultLevels[i];
         System.out.println("***** LEVEL "+i+"*****");
         String mq = (String)lvlResults.get(BunchAPI.MQVALUE);
@@ -1215,18 +1218,13 @@ public void BunchAPITest1x()
         System.out.println();
       }
 
-      try
-      {
-
-        Runtime r = Runtime.getRuntime();
-        r.exec("dot -Tps e:\\pstopcl\\incl.dot > e:\\pstopcl\\in\\incl.ps");
-      }catch(Exception ex)
-      { ex.printStackTrace(); }
+      Runtime r = Runtime.getRuntime();
+      r.exec("dot -Tps e:\\pstopcl\\incl.dot > e:\\pstopcl\\in\\incl.ps");
   }
 
 
-
-  public static void main(String[] args) {
-    BunchAPITest bunchAPITest1 = new BunchAPITest();
+  public static void main(String[] args) throws IOException {
+    BunchAPITest test = new BunchAPITest();
+    test.run();
   }
 }

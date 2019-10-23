@@ -20,8 +20,8 @@ package bunch.clustering;
 import javax.naming.*;
 import java.util.*;
 
-import bunch.BunchServer.IterationManager;
-import bunch.BunchServer.BunchSvrMsg;
+import bunch.server.IterationManager;
+import bunch.server.BunchSvrMsg;
 import bunch.event.BunchEvent;
 import bunch.event.WorkFinishedEvent;
 import bunch.event.WorkRequestEvent;

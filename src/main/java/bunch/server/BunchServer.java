@@ -15,7 +15,7 @@
  *	
  *
  */
-package bunch.BunchServer;
+package bunch.server;
 
 import bunch.serverui.BSWindow;
 

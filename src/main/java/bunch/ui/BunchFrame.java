@@ -1,7 +1,7 @@
 package bunch.ui;
 
 import bunch.*;
-import bunch.BunchServer.BunchSvrMsg;
+import bunch.server.BunchSvrMsg;
 import bunch.clustering.*;
 import bunch.event.BunchEvent;
 import bunch.model.*;
@@ -1140,8 +1140,8 @@ void runActionButton_d_actionPerformed(ActionEvent e) {
       /**
        * Get the distributed options
        */
-      bunch.LoadBalancer.Manager lbManager = new bunch.LoadBalancer.Manager();
-      bunch.BunchServer.DistribInit diMsg = new bunch.BunchServer.DistribInit();
+      bunch.loadbalancer.Manager lbManager = new bunch.loadbalancer.Manager();
+      bunch.server.DistribInit diMsg = new bunch.server.DistribInit();
       diMsg.theGraph = initialGraph_d;
       diMsg.clusteringTechnique = method;
       diMsg.objFunction = (String)ClusteringAlgEF.getSelectedItem();

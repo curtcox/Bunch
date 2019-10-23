@@ -1,4 +1,4 @@
-package bunch.BunchServer;
+package bunch.server;
 
 import bunch.clustering.GenericDistribHillClimbingClusteringMethod;
 import bunch.clustering.HillClimbingConfiguration;

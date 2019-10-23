@@ -1,11 +1,10 @@
 package bunch.serverio;
 
-import bunch.BunchServer.IterationManager;
+import bunch.server.IterationManager;
 import bunch.event.BunchEvent;
 import bunch.event.SynchronizedEventQueue;
 import bunch.event.WorkFinishedEvent;
 import bunch.event.WorkRequestEvent;
-import bunch.serverio.Callback;
 
 import java.rmi.RemoteException;
 
@@ -27,7 +26,7 @@ public class CallbackImpl implements Callback {
   public int baseUOWSz = 5;
   public BunchEvent bevent = null;
   public SynchronizedEventQueue eventQ = null;
-  public bunch.LoadBalancer.Manager lbManager = null;
+  public bunch.loadbalancer.Manager lbManager = null;
 
   public CallbackImpl() throws RemoteException{
   }

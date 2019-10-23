@@ -1,6 +1,6 @@
 package bunch.serverui;
 
-import bunch.BunchServer.BunchSvrMsgImpl;
+import bunch.server.BunchSvrMsgImpl;
 
 import java.awt.*;
 import java.awt.event.*;

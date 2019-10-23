@@ -6,9 +6,9 @@ import bunch.model.Node;
 
 public class TurboMQIncrW implements ObjectiveFunctionCalculator {
 private Graph graph_d;
-private static int[][] clusterMatrix_d = null;
+private static int[][] clusterMatrix_d;
 private Node[] nodes_x;
-private int[] clusters_x = null;
+private int[] clusters_x;
 private int numberOfNodes_d;
 private bunch.stats.StatsManager sm = bunch.stats.StatsManager.getInstance();
 

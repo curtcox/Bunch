@@ -48,8 +48,7 @@ public void init(Graph g) {
   }
 }
 
-public double calculate(Cluster c)
-{
+public double calculate(Cluster c) {
   calculate();
   return graph_d.getObjectiveFunctionValue();
 }
@@ -98,8 +97,7 @@ public void calculate() {
 
   objTalley = 0.0;
 
-  for (int i=0; i<clusterMatrix_d.length; ++i)
-  {
+  for (int i=0; i<clusterMatrix_d.length; ++i) {
     double denom = intraTally[i] + interTally[i];
     if (denom > 0.0)
       objTalley += (intraTally[i] / denom);

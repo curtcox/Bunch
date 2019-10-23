@@ -37,7 +37,7 @@ private transient double objectiveFunctionValue_d;
 
 private transient Random random_d;
 
-transient ObjectiveFunctionCalculator calculator_d=null;
+transient ObjectiveFunctionCalculator calculator_d;
 
 public static ObjectiveFunctionCalculatorFactory objectiveFunctionCalculatorFactory_sd;
 

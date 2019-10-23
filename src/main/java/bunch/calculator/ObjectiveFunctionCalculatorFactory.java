@@ -45,8 +45,7 @@ public ObjectiveFunctionCalculatorFactory() {
  * @param the name for the desired method
  * @return the OF Calculator corresponding to the name
  */
-public ObjectiveFunctionCalculator getCalculator(String name)
-{
+public ObjectiveFunctionCalculator getCalculator(String name) {
   return (ObjectiveFunctionCalculator)getItemInstance(name);
 }
 

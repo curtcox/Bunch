@@ -5,8 +5,8 @@ import java.io.*;
 
 import javax.naming.*;
 
-import bunch.BunchServer.BunchSvrMsg;
-import bunch.BunchServer.IterationManager;
+import bunch.server.BunchSvrMsg;
+import bunch.server.IterationManager;
 import bunch.event.BunchEvent;
 import bunch.event.SynchronizedEventQueue;
 import bunch.model.Cluster;

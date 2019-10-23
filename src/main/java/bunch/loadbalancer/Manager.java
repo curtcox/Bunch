@@ -18,7 +18,7 @@
  * @author Brian Mitchell
  * @version
  */
-package bunch.LoadBalancer;
+package bunch.loadbalancer;
 
 import java.util.*;
 

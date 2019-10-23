@@ -1,4 +1,4 @@
-package bunch.BunchServer;
+package bunch.server;
 
 import bunch.clustering.ClusteringMethod2;
 import bunch.clustering.GenericDistribHillClimbingClusteringMethod;

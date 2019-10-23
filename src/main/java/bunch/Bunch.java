@@ -61,7 +61,7 @@ public static void main(String[] args) throws Exception {
   }
 
   private static void startInServerMode(String[] args) {
-    bunch.BunchServer.BunchServer theServer = new bunch.BunchServer.BunchServer();
+    bunch.server.BunchServer theServer = new bunch.server.BunchServer();
     theServer.setStartupParms(args,true);
     theServer.start();
   }

@@ -24,13 +24,11 @@
  * @author Brian Mitchell
  * @version
  */
-package bunch.BunchServer;
+package bunch.server;
 
-import java.rmi.RemoteException;
 import javax.rmi.PortableRemoteObject;
 import java.util.Properties;
 import javax.naming.*;
-import java.rmi.RMISecurityManager;
 
 public class BSTextServer {
 
