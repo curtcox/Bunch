@@ -81,16 +81,13 @@ public String name_d;
  */
 public int cluster;
 
-private void assignUniqueID()
-{
-  synchronized(this)
-  {
+private void assignUniqueID() {
+  synchronized(this) {
     uniqueID = new Long(++nodeCounter);
   }
 }
 
-public void resetNode()
-{
+public void resetNode() {
   type_d = NORMAL;
   children = null;
   isCluster = false;
@@ -118,9 +115,7 @@ public int getId()
 /**
  * The empty Node constructor.  before using a Node, however,
  */
-public
-Node()
-{
+public Node() {
   assignUniqueID();
   setType(NORMAL);
 }
@@ -133,9 +128,7 @@ Node()
  * @param deps the list of dependencies (edges) for this node
  * @param weights the list of weights for each of the dependencies for this node
  */
-public
-Node(String name, int[] deps, int[] weights)
-{
+public Node(String name, int[] deps, int[] weights) {
   assignUniqueID();
   setType(NORMAL);
   setName(name);
@@ -151,9 +144,7 @@ Node(String name, int[] deps, int[] weights)
  * @param name the node's name
  * @param deps the list of dependencies (edges) for this node
  */
-public
-Node(String name, int[] deps)
-{
+public Node(String name, int[] deps) {
   assignUniqueID();
   setType(NORMAL);
   setDependencies(deps);
@@ -171,10 +162,7 @@ Node(String name, int[] deps)
  *
  * @return a string with the node's information
  */
-public
-String
-toString()
-{
+public String toString() {
     String str = new String();
     str += "\n"+name_d + " = ";
     for (int i=0; i<dependencies.length; ++i) {
@@ -189,9 +177,7 @@ toString()
  * @return the node's name as a string
  * @see #setName(java.lang.String)
  */
-public
-String
-getName()
+public String getName()
 {
     return name_d;
 }
@@ -202,9 +188,7 @@ getName()
  * @param name the new node's name
  * @see #getName()
  */
-public
-void
-setName(String name)
+public void setName(String name)
 {
     name_d = name;
 }
@@ -216,9 +200,7 @@ setName(String name)
  * @see #getDependencies()
  * @see #weights
  */
-public
-void
-setDependencies(int[] deps)
+public void setDependencies(int[] deps)
 {
     dependencies = deps;
 }
@@ -230,9 +212,7 @@ setDependencies(int[] deps)
  * @see #setDependencies(int[])
  * @see #weights
  */
-public
-int[]
-getDependencies()
+public int[] getDependencies()
 {
     return dependencies;
 }
@@ -245,9 +225,7 @@ getDependencies()
  * @see #getWeights()
  * @see #dependencies
  */
-public
-void
-setWeights(int[] ws)
+public void setWeights(int[] ws)
 {
     weights = ws;
 }
@@ -260,16 +238,12 @@ setWeights(int[] ws)
  * @see #setWeights(int[])
  * @see #dependencies
  */
-public
-int[]
-getWeights()
+public int[] getWeights()
 {
     return weights;
 }
 
-public
-void
-setBackEdges(int[] deps)
+public void setBackEdges(int[] deps)
 {
     backEdges = deps;
 }
@@ -281,9 +255,7 @@ setBackEdges(int[] deps)
  * @see #setDependencies(int[])
  * @see #weights
  */
-public
-int[]
-getBackEdges()
+public int[] getBackEdges()
 {
     return backEdges;
 }
@@ -296,9 +268,7 @@ getBackEdges()
  * @see #getWeights()
  * @see #dependencies
  */
-public
-void
-setBeWeights(int[] ws)
+public void setBeWeights(int[] ws)
 {
     beWeights = ws;
 }
@@ -311,9 +281,7 @@ setBeWeights(int[] ws)
  * @see #setWeights(int[])
  * @see #dependencies
  */
-public
-int[]
-getBeWeights()
+public int[] getBeWeights()
 {
     return beWeights;
 }
@@ -324,10 +292,7 @@ getBeWeights()
  *
  * @return a copy of this node
  */
-public
-Node
-cloneNode()
-{
+public Node cloneNode() {
   Node n = new Node();
   n.setName(getName());
   n.cluster = cluster;
@@ -359,9 +324,7 @@ cloneNode()
  * @param type the type of the node
  * @see #getType()
  */
-public
-void
-setType(int type)
+public void setType(int type)
 {
   type_d = type;
 }
@@ -372,9 +335,7 @@ setType(int type)
  * @return the type of the node
  * @see #setType(int)
  */
-public
-int
-getType()
+public int getType()
 {
   return type_d;
 }
