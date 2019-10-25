@@ -26,7 +26,7 @@ private int numberOfNodes_d;
 
 /**
  * This is the basic MQ objective function.  It was developed and published in
- * IWPC98.  This MQ function measures inter- and intra-connectivly separately, and
+ * IWPC98.  This MQ function measures inter- and intra-connectivity separately, and
  * returns the average value of intra-connectivity minus inter-connectivity.
  */
 public BasicMQ() { }

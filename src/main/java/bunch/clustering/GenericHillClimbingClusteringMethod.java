@@ -35,10 +35,7 @@ public GenericHillClimbingClusteringMethod()
  * that the parent in the hierarchy is also called.  Subclasses are expected
  * to implement thier own init() if necessary, but call thier parent.
  */
-public
-void
-init()
-{
+public void init() {
   config_d = (HillClimbingConfiguration)getConfiguration();
   this.setNumOfExperiments(config_d.getNumOfIterations());
   this.setThreshold(config_d.getThreshold());
@@ -51,10 +48,7 @@ init()
  * Implementation of the nextGeneration method common to both
  * hill climbing algorithms (next ascent and steepest ascent).
  */
-public
-boolean
-nextGeneration()
-{
+public boolean nextGeneration() {
   long [] sequence = new long[currentPopulation_d.size()];
   BufferedWriter writer_d;
 
@@ -159,8 +153,7 @@ nextGeneration()
  * Used for debugging, giving consecutive numbers for numbering
  * clusters
  */
-private void realignClusters(int[] c)
-{
+private void realignClusters(int[] c) {
   int[] map = new int[c.length];
   int index = 0;
 
@@ -189,15 +182,12 @@ private void realignClusters(int[] c)
  * This is method that is redefined by the subclasses for each specific
  * hill-climbing algorithm, i.e., where the hill-climbing is actually performed
  */
-protected abstract Cluster
-getLocalMaxGraph(Cluster c);
+protected abstract Cluster getLocalMaxGraph(Cluster c);
 
 /**
  * This method is used to "shake" or reinitialize clusters
  */
-public
-void
-reInit()
+public void reInit()
 {
     currentPopulation_d.shuffle();
 }
@@ -211,9 +201,7 @@ reInit()
  * @return the fully qualified class name for the hill-climbing configuration dialog
  * @see #getConfiguration()
  */
-public
-String
-getConfigurationDialogName()
+public String getConfigurationDialogName()
 {
   return "bunch.ui.HillClimbingClusteringConfigurationDialog";
 }
@@ -227,18 +215,14 @@ getConfigurationDialogName()
  *
  * @return a HillClimbing configuration object
  */
-public Configuration
-getConfiguration()
-{
+public Configuration getConfiguration() {
   if (configuration_d == null) {
     configuration_d = new HillClimbingConfiguration();
   }
   return configuration_d;
 }
 
-public
-void
-setConfiguration(HillClimbingConfiguration c)
+public void setConfiguration(HillClimbingConfiguration c)
 {
    configuration_d = c;
 }

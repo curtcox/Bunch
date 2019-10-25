@@ -179,8 +179,7 @@ public abstract Cluster getBestCluster();
  * @see #setConfigurable(boolean)
  * @see #getConfigurationDialogName()
  */
-public boolean isConfigurable()
-{
+public boolean isConfigurable() {
   return isConfigurable_d;
 }
 
@@ -219,9 +218,7 @@ public Configuration getConfiguration()
   return configuration_d;
 }
 
-public void setDefaultConfiguration()
-{
-}
+public void setDefaultConfiguration() {}
 
 /**
  * Obtains the fully qualified class name (ie. including package) for the
@@ -235,6 +232,7 @@ public String getConfigurationDialogName()
 {
   return null;
 }
+
 }
 
 

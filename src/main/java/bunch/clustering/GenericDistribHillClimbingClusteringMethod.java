@@ -110,10 +110,7 @@ public void initBunchEvent()
 /**
  * Initialize the generic distributed hill climbing clustering method
  */
-public
-void
-init()
-{
+public void init() {
   config_d = (NAHCConfiguration)getConfiguration();
 
   this.setNumOfExperiments(config_d.getNumOfIterations());
@@ -127,21 +124,16 @@ init()
  * Implementation of the nextGeneration method common to both
  * hill climbing algorithms (next ascent and steepest ascent).
  */
-public
-boolean
-nextGeneration()
-{
+public boolean nextGeneration() {
   long [] sequence = new long[currentPopulation_d.size()];
   BufferedWriter writer_d;
 
-  if (configuration_d.runBatch_d == true)
-  {
+  if (configuration_d.runBatch_d == true) {
     System.out.println("Run Batch = " + configuration_d.runBatch_d);
     System.out.println("Exp Number = " + configuration_d.expNumber_d);
   }
 
-  try
-  {
+  try {
     String outLine ="";
     String sCluster = "";
     String sAligned = "";
@@ -242,8 +234,7 @@ nextGeneration()
 /**
  * This is the manager/coordinator for the distribtued work.
  */
-private void manageDistribWorkIteration(String activity)
-{
+private void manageDistribWorkIteration(String activity) {
   Vector svrV = this.activeServerVector;
 
   if (svrV == null)
@@ -273,8 +264,7 @@ private void manageDistribWorkIteration(String activity)
 /**
  * This method renumbers the clusters so that they have sequential IDs
  */
-private void realignClusters(int[] c)
-{
+private void realignClusters(int[] c) {
   int[] map = new int[c.length];
   int index = 0;
 
@@ -303,13 +293,9 @@ private void realignClusters(int[] c)
  * This is method that is redefined by the subclasses for each specific
  * hill-climbing algorithm, i.e., where the hill-climbing is actually performed
  */
-protected abstract
-Cluster
-getLocalMaxGraph(Cluster g);
+protected abstract Cluster getLocalMaxGraph(Cluster g);
 
-public
-void
-reInit()
+public void reInit()
 {
     currentPopulation_d.shuffle();
 }
@@ -323,9 +309,7 @@ reInit()
  * @return the fully qualified class name for the hill-climbing configuration dialog
  * @see #getConfiguration()
  */
-public
-String
-getConfigurationDialogName()
+public String getConfigurationDialogName()
 {
   return "bunch.ui.HillClimbingClusteringConfigurationDialog";
 }
@@ -339,18 +323,14 @@ getConfigurationDialogName()
  *
  * @return a HillClimbing configuration object
  */
-public Configuration
-getConfiguration()
-{
+public Configuration getConfiguration() {
   if (configuration_d == null) {
     configuration_d = new HillClimbingConfiguration();
   }
   return configuration_d;
 }
 
-public
-void
-setConfiguration(HillClimbingConfiguration c)
+public void setConfiguration(HillClimbingConfiguration c)
 {
    configuration_d = c;
 }

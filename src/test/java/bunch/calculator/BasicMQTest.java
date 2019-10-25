@@ -44,8 +44,8 @@ public class BasicMQTest {
         var calc = new BasicMQ();
         var graph = new Graph(0);
         calc.init(graph);
-        int[] c1 = new int[0];
-        int[] c2 = new int[0];
+        int[] c1 = new int[1];
+        int[] c2 = new int[1];
         int nc1 = 0;
         int nc2 = 0;
         calc.calculateInterdependenciesValue(c1,c2,nc1,nc2);
@@ -57,7 +57,7 @@ public class BasicMQTest {
         var calc = new BasicMQ();
         var graph = new Graph(0);
         calc.init(graph);
-        int[] c = new int[0];
+        int[] c = new int[1];
         int numCluster = 0;
         calc.calculateIntradependenciesValue(c,numCluster);
     }

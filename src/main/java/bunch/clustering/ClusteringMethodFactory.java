@@ -46,8 +46,7 @@ public String[] getItemList() {
   String[] resList    = new String[masterList.length-2];
 
   int resPos = 0;
-  for(int i = 0; i < masterList.length; i++)
-  {
+  for(int i = 0; i < masterList.length; i++) {
     String item = masterList[i];
     if ((item.equals("SAHC")) || (item.equals("NAHC")))
       continue;

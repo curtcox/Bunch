@@ -167,8 +167,7 @@ public IterationListener getIterationListener()
 /**
  * Fires an Iteration event to this clustering method's iteration listener
  */
-public void fireIterationEvent(IterationEvent e)
-{
+public void fireIterationEvent(IterationEvent e) {
    if (listener_d != null) {
       listener_d.newIteration(e);
    }
@@ -240,9 +239,7 @@ public Configuration getConfiguration()
   return configuration_d;
 }
 
-public void setDefaultConfiguration()
-{
-}
+public void setDefaultConfiguration() {}
 
 /**
  * Obtains the fully qualified class name (ie. including package) for the
@@ -256,4 +253,5 @@ public String getConfigurationDialogName()
 {
   return null;
 }
+
 }

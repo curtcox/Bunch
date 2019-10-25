@@ -56,8 +56,7 @@ public static final int NO_SERVER_WORKING = -1;
  * @return Returns true if the work vectors were correclty built, false if
  *         not.
  */
-private boolean initWorkVectors(Cluster c)
-{
+private boolean initWorkVectors(Cluster c) {
    if (c == null) return false;
 
    int [] cv = c.getClusterVector();
@@ -74,8 +73,7 @@ private boolean initWorkVectors(Cluster c)
    /**
     * If the work queue is null, then allocate it
     */
-   if(workQueue == null)
-   {
+   if(workQueue == null) {
       workQueue = new int[vSize];
       serverWorkingElement = new int[vSize];
       status = new int[vSize];
@@ -84,13 +82,11 @@ private boolean initWorkVectors(Cluster c)
    /**
     * If the work queue is not of the proper size, reallocate it
     */
-   if(workQueue.length != vSize)
-   {
+   if(workQueue.length != vSize) {
       workQueue = new int[vSize];
       serverWorkingElement = new int[vSize];
       status = new int[vSize];
    }
-
 
    runningServers = 0;
 
@@ -100,8 +96,7 @@ private boolean initWorkVectors(Cluster c)
     * Initialze the work vectors to indicate that no server is working
     * and the status is pending.
     */
-   for(int i = 0; i < vSize; i++)
-   {
+   for(int i = 0; i < vSize; i++) {
       workQueue[i] = i;
       serverWorkingElement[i] = NO_SERVER_WORKING;
       status[i] = STAT_PENDING;
@@ -128,8 +123,7 @@ private boolean initWorkVectors(Cluster c)
  *
  * @param c The starting cluster
  */
-private boolean startIteration(Cluster c)
-{
+private boolean startIteration(Cluster c) {
    Vector svrV = this.activeServerVector;
    IterationManager im = new IterationManager();
    initWorkVectors(c);
@@ -148,11 +142,9 @@ private boolean startIteration(Cluster c)
     * Traverse the active servers, sending each one the start iteration
     * message
     */
-   for(int i = 0; i < svrV.size(); i++)
-   {
+   for(int i = 0; i < svrV.size(); i++) {
       Binding b = (Binding)activeServerVector.elementAt(i);
-      if (so != null)
-      {
+      if (so != null) {
          BunchSvrMsg bsm = (BunchSvrMsg)b.getObject();
          try{
             boolean rc = bsm.invokeMessage("StartIteration",so);
@@ -161,8 +153,7 @@ private boolean startIteration(Cluster c)
                if (rc == true)
                   runningServers++;
             }
-         }catch(Exception ex)
-         {
+         }catch(Exception ex) {
             System.out.println("EXCEPTION - startIteration():  " + ex.toString());
             return false;
          }
@@ -175,10 +166,7 @@ private boolean startIteration(Cluster c)
  * Given a starting cluster, this method produces the "improved" cluster
  * by using our hill climbing algorithm.
  */
-protected
-Cluster
-getLocalMaxGraph(Cluster c)
-{
+protected Cluster getLocalMaxGraph(Cluster c) {
   eventQ.setManagerThread(Thread.currentThread());
   initWorkVectors(c);
 
@@ -199,8 +187,7 @@ getLocalMaxGraph(Cluster c)
 
 //System.out.println("partitions to examine = " + partitionsToExamine + "  Min Pct = " + ((NAHCConfiguration)configuration_d).getMinPctToConsider()  );
 
-  try
-  {
+  try {
     /**
      * Start the current iteration
      */
@@ -210,8 +197,7 @@ getLocalMaxGraph(Cluster c)
     /**
      * Keep going while there is more work to process
      */
-    while(isMoreWork())
-    {
+    while(isMoreWork()) {
       /**
        * Get the current event (i.e., Work).  It is either going to be
        * a work request event so send work to the requester, or a work
@@ -220,8 +206,7 @@ getLocalMaxGraph(Cluster c)
        BunchEvent be = eventQ.getEvent();
 
        //Its a request for work...
-       if(be.getEventObj() instanceof WorkRequestEvent)
-       {
+       if(be.getEventObj() instanceof WorkRequestEvent) {
           WorkRequestEvent wre = (WorkRequestEvent)be.getEventObj();
 
           //How much work was requested...
@@ -266,20 +251,15 @@ getLocalMaxGraph(Cluster c)
         */
        eventQ.releaseEvent(be);
     }
-  }
-  catch(Exception e)
-  {
+  } catch(Exception e) {
     System.out.println("EXCEPTION - getLocalMaxGraph():  " + e.toString());
     return c;
   }
 
-  if (maxOF > originalMax)
-  {
+  if (maxOF > originalMax) {
     //we found a better max partition, save it into c
     c.copyFromCluster(maxC);
-  }
-  else
-  {
+  } else {
       //we didn't find a better max partition then it's a maximum
       c.setConverged(true);
   }
@@ -298,10 +278,8 @@ getLocalMaxGraph(Cluster c)
  *
  * @return true if more work exists, false if not
  */
-boolean isMoreWork() throws Exception
-{
-   if (currWorkVectorIdx == totalCount)
-   {
+boolean isMoreWork() throws Exception {
+   if (currWorkVectorIdx == totalCount) {
       synchronized(this)
       {
          if(runningServers == 0)
@@ -309,8 +287,7 @@ boolean isMoreWork() throws Exception
          else
             return true;
       }
-   }
-   else
+   } else
       return true;
 }
 
@@ -321,8 +298,7 @@ boolean isMoreWork() throws Exception
  *
  * @return An array of work to be processed, null if no more work remains.
  */
-int [] getMoreWork(int requestSz)
-{
+int [] getMoreWork(int requestSz) {
   /**
    * Persist indexes to the remaining work
    */
@@ -358,9 +334,7 @@ int [] getMoreWork(int requestSz)
  * This method is required by the base class to handle requests for
  * configuraiton information.
  */
-public Configuration
-getConfiguration()
-{
+public Configuration getConfiguration() {
   boolean reconf=false;
 
   /**
@@ -392,9 +366,7 @@ getConfiguration()
  * This is a request to setup the configuration.  The base configuration is
  * obtainined by the parent.
  */
-public void
-setDefaultConfiguration()
-{
+public void setDefaultConfiguration() {
   HillClimbingConfiguration hc = (HillClimbingConfiguration)super.getConfiguration();
 
   hc.setThreshold(0.1);
