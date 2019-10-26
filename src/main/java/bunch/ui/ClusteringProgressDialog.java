@@ -180,8 +180,7 @@ public void startClustering() {
          */
         clusteringMethod_x.run();
 
-        currentViewC = new Cluster(clusteringMethod_x.getBestGraph().cloneGraph(),
-              clusteringMethod_x.getBestGraph().getClusters());
+        currentViewC = new Cluster(clusteringMethod_x.getBestGraph().cloneGraph(), clusteringMethod_x.getBestGraph().getClusters());
 
         /**
          * Save the best cluster object from the clustering run
@@ -319,8 +318,7 @@ public void startClustering() {
        * If the mode is agglomerative then update the drop down list box
        * to enable the user to traverse the different levels.
        */
-      if(frame_d.isAgglomerativeTechnique())
-      {
+      if(frame_d.isAgglomerativeTechnique()) {
         Graph tmpG = clusteringMethod_x.getBestCluster().getGraph();
         int gLvl = tmpG.getGraphLevel();
         int medianLevel = tmpG.getMedianTree().getGraphLevel();
@@ -342,8 +340,7 @@ public void startClustering() {
         /**
          * Handle the specified output as specified by the user
          */
-        switch(outTechnique)
-        {
+        switch(outTechnique) {
           case GraphOutput.OUTPUT_ALL_LEVELS:
           case GraphOutput.OUTPUT_MEDIAN_ONLY:
           { lvlViewerCB.setSelectedIndex(median); break;  }

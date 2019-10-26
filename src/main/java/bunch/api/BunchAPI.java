@@ -1,6 +1,5 @@
 package bunch.api;
 
-import bunch.engine.*;
 import bunch.model.Graph;
 
 import java.util.*;
@@ -61,8 +60,7 @@ public final class BunchAPI {
     }
 
     String HCPct = (String)h.get(BunchProperties.ALG_NAHC_HC_PCT);
-    if(HCPct != null)
-    {
+    if(HCPct != null) {
       Integer pct = new Integer(HCPct);
       h.put(BunchProperties.ALG_NAHC_HC_PCT,pct);
       String rndPct = (String)h.get(BunchProperties.ALG_NAHC_RND_PCT);
@@ -74,22 +72,19 @@ public final class BunchAPI {
     }
 
     String TimeoutTime = (String)h.get(BunchProperties.TIMEOUT_TIME);
-    if(TimeoutTime != null)
-    {
+    if(TimeoutTime != null) {
       Integer toTime = new Integer(TimeoutTime);
       h.put(BunchProperties.TIMEOUT_TIME,toTime);
     }
 
     String NAHCPop = (String)h.get(BunchProperties.ALG_NAHC_POPULATION_SZ);
-    if(NAHCPop != null)
-    {
+    if(NAHCPop != null) {
       Integer pop = new Integer(NAHCPop);
       h.put(BunchProperties.ALG_NAHC_POPULATION_SZ,pop);
     }
 
     String SAHCPop = (String)h.get(BunchProperties.ALG_SAHC_POPULATION_SZ);
-    if(SAHCPop != null)
-    {
+    if(SAHCPop != null) {
       Integer pop = new Integer(SAHCPop);
       h.put(BunchProperties.ALG_SAHC_POPULATION_SZ,pop);
     }
@@ -98,8 +93,7 @@ public final class BunchAPI {
   }
 
   public void reset() {
-    if(bunchArgs != null)
-    {
+    if(bunchArgs != null) {
       bunchArgs.clear();
       bunchArgs = null;
     }
@@ -143,23 +137,20 @@ public final class BunchAPI {
     if(bunchProps.getProperty(BunchProperties.MDG_INPUT_FILE_NAME) == null)
       rc = false;
 
-    if(bunchProps.getProperty(BunchProperties.MDG_OUTPUT_FILE_BASE) == null)
-    {
+    if(bunchProps.getProperty(BunchProperties.MDG_OUTPUT_FILE_BASE) == null) {
       if (bunchProps.getProperty(BunchProperties.OUTPUT_DEVICE).equalsIgnoreCase(BunchProperties.OUTPUT_FILE))
         rc = false;
     }
     return rc;
   }
 
-  public void setProgressCallback(ProgressCallback cb)
-  {
+  public void setProgressCallback(ProgressCallback cb) {
     String sFreq = (String)bunchProps.getProperty(bunchProps.PROGRESS_CALLBACK_FREQ);
     Integer i = new Integer(sFreq);
     setProgressCallback(cb,i.intValue());
   }
 
-  public void setProgressCallback(ProgressCallback cb, int freqUpdate)
-  {
+  public void setProgressCallback(ProgressCallback cb, int freqUpdate) {
     progressCB = cb;
     progressUpdateFreq = freqUpdate;
   }
@@ -217,8 +208,7 @@ public final class BunchAPI {
     BunchGraph []bgA = new BunchGraph[maxLvl+2];
 
     Graph g = baseGraph;
-    while(g.getGraphLevel()>0)
-    {
+    while(g.getGraphLevel()>0) {
       BunchGraph bg = new BunchGraph();
       boolean rc = bg.construct(g);
       if (rc == false) return null;
