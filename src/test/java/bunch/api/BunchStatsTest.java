@@ -7,6 +7,8 @@ import bunch.parser.Parser;
 import java.util.*;
 import java.io.*;
 
+import static bunch.api.Key.*;
+
 public final class BunchStatsTest {
 
   public BunchStatsTest() {
@@ -79,12 +81,12 @@ public final class BunchStatsTest {
 
       var results = api.getResults();
 
-      String rt = (String) results.get(BunchAPI.RUNTIME);
-      String evals = (String) results.get(BunchAPI.MQEVALUATIONS);
-      String levels = (String) results.get(BunchAPI.TOTAL_CLUSTER_LEVELS);
-      String saMovesTaken = (String) results.get(BunchAPI.SA_NEIGHBORS_TAKEN);
+      String rt = (String) results.get(RUNTIME);
+      String evals = (String) results.get(MQEVALUATIONS);
+      String levels = (String) results.get(TOTAL_CLUSTER_LEVELS);
+      String saMovesTaken = (String) results.get(SA_NEIGHBORS_TAKEN);
 
-      var resultLevels = results.get(BunchAPI.RESULT_CLUSTER_OBJS);
+      var resultLevels = results.get(RESULT_CLUSTER_OBJS);
 
       String mq = "null";
       String depth="null";

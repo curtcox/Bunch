@@ -1,7 +1,7 @@
 package bunch.api;
 
 import bunch.*;
-import bunch.api.*;
+import static bunch.api.Key.*;
 import bunch.clustering.ClusteringMethod;
 import bunch.clustering.NAHCConfiguration;
 import bunch.ga.GAConfiguration;
@@ -17,8 +17,8 @@ import java.beans.*;
 
 final class BunchEngine {
 
-  Map<String,Object> bunchArgs;
-  Map<String,Object> results;
+  Map<Key,Object> bunchArgs;
+  Map<Key,Object> results;
   ClusteringMethod clusteringMethod_d;
   GraphOutput graphOutput_d;
   Graph initialGraph_d;
@@ -110,14 +110,14 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
   Object []centrals = null; //new Object[0]; //null;
   Object []libraries = null; //new Object[0]; //null;
 
-  if(special.get(BunchAPI.OMNIPRESENT_CENTRAL)!= null)
-    centrals = ((Collection)special.get(BunchAPI.OMNIPRESENT_CENTRAL)).toArray();
-  if(special.get(BunchAPI.OMNIPRESENT_CLIENT)!=null)
-    clients = ((Collection)special.get(BunchAPI.OMNIPRESENT_CLIENT)).toArray();
-  if(special.get(BunchAPI.OMNIPRESENT_SUPPLIER)!=null)
-    suppliers = ((Collection)special.get(BunchAPI.OMNIPRESENT_SUPPLIER)).toArray();
-  if(special.get(BunchAPI.LIBRARY_MODULE)!=null)
-    libraries = ((Collection)special.get(BunchAPI.LIBRARY_MODULE)).toArray();
+  if(special.get(OMNIPRESENT_CENTRAL)!= null)
+    centrals = ((Collection)special.get(OMNIPRESENT_CENTRAL)).toArray();
+  if(special.get(OMNIPRESENT_CLIENT)!=null)
+    clients = ((Collection)special.get(OMNIPRESENT_CLIENT)).toArray();
+  if(special.get(OMNIPRESENT_SUPPLIER)!=null)
+    suppliers = ((Collection)special.get(OMNIPRESENT_SUPPLIER)).toArray();
+  if(special.get(LIBRARY_MODULE)!=null)
+    libraries = ((Collection)special.get(LIBRARY_MODULE)).toArray();
 
   Node[] nodeList = g.getNodes();
   Node[] originalList = nodeList;
@@ -444,10 +444,10 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       //=====================================================
       //return the hashtable
       //=====================================================
-      h.put(BunchAPI.OMNIPRESENT_CENTRAL,centrals.values());
-      h.put(BunchAPI.OMNIPRESENT_CLIENT,clients.values());
-      h.put(BunchAPI.OMNIPRESENT_SUPPLIER,suppliers.values());
-      h.put(BunchAPI.LIBRARY_MODULE,libraries.values());
+      h.put(OMNIPRESENT_CENTRAL,centrals.values());
+      h.put(OMNIPRESENT_CLIENT,clients.values());
+      h.put(OMNIPRESENT_SUPPLIER,suppliers.values());
+      h.put(LIBRARY_MODULE,libraries.values());
       return h;
     } catch(Exception e) {
       e.printStackTrace();
@@ -466,37 +466,37 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       containsSpecial = true;
       String mods = (String)bunchArgs.get(BunchProperties.OMNIPRESENT_BOTH);
       Collection c = parseStringToCollection(mods);
-      h.put(BunchAPI.OMNIPRESENT_CENTRAL,c);
+      h.put(OMNIPRESENT_CENTRAL,c);
     }
     else
-      h.put(BunchAPI.OMNIPRESENT_CENTRAL,(Collection)emptyList);
+      h.put(OMNIPRESENT_CENTRAL,(Collection)emptyList);
 
     if(bunchArgs.get(BunchProperties.OMNIPRESENT_CLIENTS) != null) {
       containsSpecial = true;
       String mods = (String)bunchArgs.get(BunchProperties.OMNIPRESENT_CLIENTS);
       Collection c = parseStringToCollection(mods);
-      h.put(BunchAPI.OMNIPRESENT_CLIENT,c);
+      h.put(OMNIPRESENT_CLIENT,c);
     }
     else
-      h.put(BunchAPI.OMNIPRESENT_CLIENT,(Collection)emptyList);
+      h.put(OMNIPRESENT_CLIENT,(Collection)emptyList);
 
     if(bunchArgs.get(BunchProperties.OMNIPRESENT_SUPPLIERS) != null) {
       containsSpecial = true;
       String mods = (String)bunchArgs.get(BunchProperties.OMNIPRESENT_SUPPLIERS);
       Collection c = parseStringToCollection(mods);
-      h.put(BunchAPI.OMNIPRESENT_SUPPLIER,c);
+      h.put(OMNIPRESENT_SUPPLIER,c);
     }
     else
-      h.put(BunchAPI.OMNIPRESENT_SUPPLIER,(Collection)emptyList);
+      h.put(OMNIPRESENT_SUPPLIER,(Collection)emptyList);
 
     if(bunchArgs.get(BunchProperties.LIBRARY_LIST) != null) {
       containsSpecial = true;
       String mods = (String)bunchArgs.get(BunchProperties.LIBRARY_LIST);
       Collection c = parseStringToCollection(mods);
-      h.put(BunchAPI.LIBRARY_MODULE,c);
+      h.put(LIBRARY_MODULE,c);
     }
     else
-      h.put(BunchAPI.LIBRARY_MODULE,(Collection)emptyList);
+      h.put(LIBRARY_MODULE,(Collection)emptyList);
 
     if(containsSpecial == true)
       return h;
@@ -696,8 +696,8 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       stats.getInstance();
 
       //see if a callback class is setup, if so save a reference to the class
-      cbInterfaceObj = (ProgressCallbackInterface)bunchArgs.get(bunch.api.BunchAPI.CALLBACK_OBJECT_REF);
-      Integer iTmp = (Integer)bunchArgs.get(bunch.api.BunchAPI.CALLBACK_OBJECT_FREQ);
+      cbInterfaceObj = (ProgressCallbackInterface)bunchArgs.get(CALLBACK_OBJECT_REF);
+      Integer iTmp = (Integer)bunchArgs.get(CALLBACK_OBJECT_FREQ);
       if(iTmp != null)
         callbackFrequency = iTmp.intValue();
 
@@ -905,7 +905,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       return medianG.getGraphLevel();
   }
 
-  public Map<String,Object> getResultsHT() {
+  public Map<Key,Object> getResultsHT() {
     String runMode = (String)bunchArgs.get(BunchProperties.RUN_MODE);
     if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_CLUSTER)) {
       return getClusteringResultsHT();
@@ -922,22 +922,22 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
     return null;
   }
 
-  public Map<String, Object> getMQCalcResultsHT() {
+  public Map<Key, Object> getMQCalcResultsHT() {
     results = new HashMap<>();
     if (MQCalcValue == null)
       return null;
 
-    results.put(BunchAPI.MQCALC_RESULT_VALUE,MQCalcValue);
+    results.put(MQCALC_RESULT_VALUE,MQCalcValue);
     return results;
   }
 
-  public Map<String, Object> getPRResultsHT() {
+  public Map<Key, Object> getPRResultsHT() {
     results = new HashMap<>();
     if ((precision == null) || (recall == null))
       return null;
 
-    results.put(BunchAPI.PR_PRECISION_VALUE,precision);
-    results.put(BunchAPI.PR_RECALL_VALUE,recall);
+    results.put(PR_PRECISION_VALUE,precision);
+    results.put(PR_RECALL_VALUE,recall);
     return results;
   }
 
@@ -949,7 +949,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
     return this.clusterList;
   }
 
-  public Map<String,Object> getClusteringResultsHT() {
+  public Map<Key,Object> getClusteringResultsHT() {
       if(clusteringMethod_d == null) return null;
       if(baseCluster == null) return null;
 
@@ -961,22 +961,22 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       Long saMovesTaken = new Long(stats.getSAOverrides());
       Integer medianLvl = new Integer(getMedianLevelNumber());
 
-      results.put(BunchAPI.RUNTIME,rt.toString());
-      results.put(BunchAPI.MQEVALUATIONS,mqEvals.toString());
-      results.put(BunchAPI.TOTAL_CLUSTER_LEVELS,totalClusterLevels.toString());
-      results.put(BunchAPI.SA_NEIGHBORS_TAKEN,saMovesTaken.toString());
-      results.put(BunchAPI.MEDIAN_LEVEL_GRAPH,medianLvl.toString());
+      results.put(RUNTIME,rt.toString());
+      results.put(MQEVALUATIONS,mqEvals.toString());
+      results.put(TOTAL_CLUSTER_LEVELS,totalClusterLevels.toString());
+      results.put(SA_NEIGHBORS_TAKEN,saMovesTaken.toString());
+      results.put(MEDIAN_LEVEL_GRAPH,medianLvl.toString());
 
       //now handle errors & warnings
       Hashtable errorHT = new Hashtable();
-      results.put(BunchAPI.ERROR_HASHTABLE,errorHT);
+      results.put(ERROR_HASHTABLE,errorHT);
 
       Hashtable warningHT = new Hashtable();
       if (reflexiveEdgeCount > 0) {
         Integer re = new Integer(reflexiveEdgeCount);
-        warningHT.put(BunchAPI.REFLEXIVE_EDGE_COUNT,re.toString());
+        warningHT.put(REFLEXIVE_EDGE_COUNT,re.toString());
       }
-      results.put(BunchAPI.WARNING_HASHTABLE,warningHT);
+      results.put(WARNING_HASHTABLE,warningHT);
 
       Hashtable []resultClusters = new Hashtable[clusterList.size()];
 
@@ -990,15 +990,15 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
         Long clusterDepth = new Long(c.getDepth());
         Integer numClusters = new Integer(c.getClusterNames().length);
 
-        lvlHT.put(BunchAPI.CLUSTER_LEVEL,level.toString());
-        lvlHT.put(BunchAPI.MQVALUE,bestMQ.toString());
-        lvlHT.put(BunchAPI.CLUSTER_DEPTH,clusterDepth.toString());
-        lvlHT.put(BunchAPI.NUMBER_CLUSTERS,numClusters.toString());
+        lvlHT.put(CLUSTER_LEVEL,level.toString());
+        lvlHT.put(MQVALUE,bestMQ.toString());
+        lvlHT.put(CLUSTER_DEPTH,clusterDepth.toString());
+        lvlHT.put(NUMBER_CLUSTERS,numClusters.toString());
 
         resultClusters[i] = lvlHT;
       }
 
-      results.put(BunchAPI.RESULT_CLUSTER_OBJS,resultClusters);
+      results.put(RESULT_CLUSTER_OBJS,resultClusters);
       stats.cleanup();
 
       Configuration cTmp = clusteringMethod_d.getConfiguration();

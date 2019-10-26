@@ -2,6 +2,8 @@ package bunch.api;
 
 import java.util.*;
 
+import static bunch.api.Key.*;
+
 public final class BunchAPISimEdgeTest {
 
 long totalNodes;
@@ -291,7 +293,7 @@ String mode = "NAHC";
       api.setProperties(bp);
       api.run();
       var results = api.getResults();
-      String sMedLvl = (String) results.get(BunchAPI.MEDIAN_LEVEL_GRAPH);
+      String sMedLvl = (String) results.get(MEDIAN_LEVEL_GRAPH);
       Integer iMedLvl = new Integer(sMedLvl);
 
       //===============================================================

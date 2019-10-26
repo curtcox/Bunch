@@ -7,39 +7,9 @@ import java.io.*;
 
 public final class BunchAPI {
 
-  public static final String  CALLBACK_OBJECT_REF = "CallbackObjectReference";
-  public static final String  CALLBACK_OBJECT_FREQ = "CallbackObjectFrequency";
-
-  public static final String  RUNTIME             = "Runtime";
-  public static final String  MQEVALUATIONS       = "MQEvaluations";
-
-  public static final String  CLUSTER_LEVEL       = "ClusterLevel";
-  public static final String  MQVALUE             = "MQValue";
-  public static final String  CLUSTER_DEPTH       = "BestClusterDepth";
-  public static final String  NUMBER_CLUSTERS     = "BestPartitionClusters";
-
-  public static final String  TOTAL_CLUSTER_LEVELS= "TotalClusterLevels";
-  public static final String  RESULT_CLUSTER_OBJS = "ResultClusterObjects";
-  public static final String  SA_NEIGHBORS_TAKEN  = "SANeighborsTaken";
-  public static final String  MEDIAN_LEVEL_GRAPH  = "MedianLevelGraph";
-
-  public static final String  PR_PRECISION_VALUE  = "PRPrecisionValue";
-  public static final String  PR_RECALL_VALUE     = "PRRecallValue";
-
-  public static final String  MQCALC_RESULT_VALUE = "MQCalcResultValue";
-
-  public static final String  ERROR_HASHTABLE     = "ErrorHashtable";
-  public static final String  WARNING_HASHTABLE   = "WarningHashtable";
-    public static final String REFLEXIVE_EDGE_COUNT = "ReflexiveEdgeCount";
-
-  public static final String OMNIPRESENT_CLIENT = "OmnipresentClient";
-  public static final String OMNIPRESENT_SUPPLIER = "OmnipresentSupplier";
-  public static final String OMNIPRESENT_CENTRAL = "OmnipresentCentral";
-  public static final String LIBRARY_MODULE = "LibraryModule";
-
   BunchProperties   bunchProps;
   Hashtable         bunchArgs;
-  Hashtable         resultsHashtable=null;
+  Map<Key,Object>   resultsHashtable;
   ProgressCallback  progressCB = null;
   int               progressUpdateFreq=1000;
   BunchEngine       engine;
@@ -160,7 +130,7 @@ public final class BunchAPI {
   //  return resultsHashtable;
   //}
 
-  public Map<String, Object> getResults() {
+  public Map<Key, Object> getResults() {
     return engine.getResultsHT();
   }
 
@@ -174,10 +144,10 @@ public final class BunchAPI {
 
   public boolean run() {
     boolean rc = true;
-    resultsHashtable = new Hashtable();
+    resultsHashtable = new HashMap<>();
     if(progressCB != null){
-      bunchArgs.put(CALLBACK_OBJECT_REF,progressCB);
-      bunchArgs.put(CALLBACK_OBJECT_FREQ,new Integer(progressUpdateFreq));
+      bunchArgs.put(Key.CALLBACK_OBJECT_REF,progressCB);
+      bunchArgs.put(Key.CALLBACK_OBJECT_FREQ,new Integer(progressUpdateFreq));
     }
 
     engine = new BunchEngine();

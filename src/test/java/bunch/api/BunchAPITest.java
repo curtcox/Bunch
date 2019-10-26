@@ -6,6 +6,8 @@ import org.junit.Test;
 import java.util.*;
 import java.io.*;
 
+import static bunch.api.Key.*;
+
 public class BunchAPITest {
 
 long totalNodes;
@@ -69,10 +71,10 @@ int [] prIfreq = new int [11];
       var results = api.getResults();
       println("Results:");
 
-      String rt = (String)results.get(BunchAPI.RUNTIME);
-      String evals = (String)results.get(BunchAPI.MQEVALUATIONS);
-      String levels = (String)results.get(BunchAPI.TOTAL_CLUSTER_LEVELS);
-      String saMovesTaken = (String)results.get(BunchAPI.SA_NEIGHBORS_TAKEN);
+      String rt = (String)results.get(RUNTIME);
+      String evals = (String)results.get(MQEVALUATIONS);
+      String levels = (String)results.get(TOTAL_CLUSTER_LEVELS);
+      String saMovesTaken = (String)results.get(SA_NEIGHBORS_TAKEN);
 
       println("Runtime = " + rt + " ms.");
       println("Total MQ Evaluations = " + evals);
@@ -165,10 +167,10 @@ int [] prIfreq = new int [11];
         var results = api.getResults();
         println("Results:");
 
-        String rt = (String)results.get(BunchAPI.RUNTIME);
-        String evals = (String)results.get(BunchAPI.MQEVALUATIONS);
-        String levels = (String)results.get(BunchAPI.TOTAL_CLUSTER_LEVELS);
-        String saMovesTaken = (String)results.get(BunchAPI.SA_NEIGHBORS_TAKEN);
+        String rt = (String)results.get(RUNTIME);
+        String evals = (String)results.get(MQEVALUATIONS);
+        String levels = (String)results.get(TOTAL_CLUSTER_LEVELS);
+        String saMovesTaken = (String)results.get(SA_NEIGHBORS_TAKEN);
 
         println("Runtime = " + rt + " ms.");
         println("Total MQ Evaluations = " + evals);
@@ -574,11 +576,11 @@ println("ML:"+meclValue);
       var results = api.getResults();
       println("Results:");
 
-      String rt = (String)results.get(BunchAPI.RUNTIME);
-      String evals = (String)results.get(BunchAPI.MQEVALUATIONS);
-      String levels = (String)results.get(BunchAPI.TOTAL_CLUSTER_LEVELS);
-      String saMovesTaken = (String)results.get(BunchAPI.SA_NEIGHBORS_TAKEN);
-      String medLvl = (String)results.get(BunchAPI.MEDIAN_LEVEL_GRAPH);
+      String rt = (String)results.get(RUNTIME);
+      String evals = (String)results.get(MQEVALUATIONS);
+      String levels = (String)results.get(TOTAL_CLUSTER_LEVELS);
+      String saMovesTaken = (String)results.get(SA_NEIGHBORS_TAKEN);
+      String medLvl = (String)results.get(MEDIAN_LEVEL_GRAPH);
 
       println("Runtime = " + rt + " ms.");
       println("Total MQ Evaluations = " + evals);
@@ -591,7 +593,7 @@ println("ML:"+meclValue);
 
       if(true)System.exit(0);
 
-      Hashtable [] resultLevels = (Hashtable[])results.get(BunchAPI.RESULT_CLUSTER_OBJS);
+      Hashtable [] resultLevels = (Hashtable[])results.get(RESULT_CLUSTER_OBJS);
 
       BunchGraph bg = api.getPartitionedGraph();
       if (bg != null)
@@ -626,10 +628,10 @@ println("ML:"+meclValue);
       BunchAPI api = new BunchAPI();
       Hashtable htSpecial = api.getSpecialModules("e:\\linux\\linux");
 
-      Collection suppliers = (Collection)htSpecial.get(BunchAPI.OMNIPRESENT_SUPPLIER);
-      Collection clients  = (Collection)htSpecial.get(BunchAPI.OMNIPRESENT_CLIENT);
-      Collection centrals = (Collection)htSpecial.get(BunchAPI.OMNIPRESENT_CENTRAL);
-      Collection libraries = (Collection)htSpecial.get(BunchAPI.LIBRARY_MODULE);
+      Collection suppliers = (Collection)htSpecial.get(OMNIPRESENT_SUPPLIER);
+      Collection clients  = (Collection)htSpecial.get(OMNIPRESENT_CLIENT);
+      Collection centrals = (Collection)htSpecial.get(OMNIPRESENT_CENTRAL);
+      Collection libraries = (Collection)htSpecial.get(LIBRARY_MODULE);
       dump("clients",clients);
       dump("suppliers",suppliers);
       dump("centrals",centrals);
@@ -659,24 +661,24 @@ println("ML:"+meclValue);
     //println("MQ Value is: " + MQValue);
   }
 
-  public void printResutls(Map<String,Object> results) {
-        String rt = (String)results.get(BunchAPI.RUNTIME);
-      String evals = (String)results.get(BunchAPI.MQEVALUATIONS);
-      String levels = (String)results.get(BunchAPI.TOTAL_CLUSTER_LEVELS);
-      String saMovesTaken = (String)results.get(BunchAPI.SA_NEIGHBORS_TAKEN);
+  public void printResutls(Map<Key,Object> results) {
+        String rt = (String)results.get(RUNTIME);
+      String evals = (String)results.get(MQEVALUATIONS);
+      String levels = (String)results.get(TOTAL_CLUSTER_LEVELS);
+      String saMovesTaken = (String)results.get(SA_NEIGHBORS_TAKEN);
 
       println("Runtime = " + rt + " ms.");
       println("Total MQ Evaluations = " + evals);
       println("Simulated Annealing Moves Taken = " + saMovesTaken);
       println();
-      Hashtable [] resultLevels = (Hashtable[])results.get(BunchAPI.RESULT_CLUSTER_OBJS);
+      Hashtable [] resultLevels = (Hashtable[])results.get(RESULT_CLUSTER_OBJS);
 
       for(int i = 0; i < resultLevels.length; i++) {
         Hashtable lvlResults = resultLevels[i];
         println("***** LEVEL "+i+"*****");
-        String mq = (String)lvlResults.get(BunchAPI.MQVALUE);
-        String depth = (String)lvlResults.get(BunchAPI.CLUSTER_DEPTH);
-        String numC = (String)lvlResults.get(BunchAPI.NUMBER_CLUSTERS);
+        String mq = (String)lvlResults.get(MQVALUE);
+        String depth = (String)lvlResults.get(CLUSTER_DEPTH);
+        String numC = (String)lvlResults.get(NUMBER_CLUSTERS);
 
         println("  MQ Value = " + mq);
         println("  Best Cluster Depth = " + depth);
@@ -858,7 +860,7 @@ println("ML:"+meclValue);
       api.setProperties(bp);
       api.run();
       var results = api.getResults();
-      String sMedLvl = (String)results.get(BunchAPI.MEDIAN_LEVEL_GRAPH);
+      String sMedLvl = (String)results.get(MEDIAN_LEVEL_GRAPH);
       Integer iMedLvl = new Integer(sMedLvl);
 
       //===============================================================
@@ -1097,15 +1099,15 @@ println("ML:"+meclValue);
         var results = api.getResults();
         //println("Results:");
 
-        String rt = (String)results.get(BunchAPI.RUNTIME);
-        String evals = (String)results.get(BunchAPI.MQEVALUATIONS);
-        String medLvl = (String)results.get(BunchAPI.MEDIAN_LEVEL_GRAPH);
-        Hashtable [] resultLevels = (Hashtable[])results.get(BunchAPI.RESULT_CLUSTER_OBJS);
+        String rt = (String)results.get(RUNTIME);
+        String evals = (String)results.get(MQEVALUATIONS);
+        String medLvl = (String)results.get(MEDIAN_LEVEL_GRAPH);
+        Hashtable [] resultLevels = (Hashtable[])results.get(RESULT_CLUSTER_OBJS);
 
         Hashtable medLvlResults = resultLevels[Integer.parseInt(medLvl)];
 
-        String numClusters = (String)medLvlResults.get(BunchAPI.NUMBER_CLUSTERS);
-        String mqValue = (String)medLvlResults.get(BunchAPI.MQVALUE);
+        String numClusters = (String)medLvlResults.get(NUMBER_CLUSTERS);
+        String mqValue = (String)medLvlResults.get(MQVALUE);
 
         String outLine = outFileName + "\t" + numClusters.toString() + "\t" + mqValue.toString() + "\r\n";
         out.write(outLine);
@@ -1140,8 +1142,8 @@ println("ML:"+meclValue);
             api.setProperties(bp);
             api.run();
             var results = api.getResults();
-            String precision = (String)results.get(BunchAPI.PR_PRECISION_VALUE);
-            String recall = (String)results.get(BunchAPI.PR_RECALL_VALUE);
+            String precision = (String)results.get(PR_PRECISION_VALUE);
+            String recall = (String)results.get(PR_RECALL_VALUE);
             String outLine = "PR("+file1+", "+file2+")\t" + precision + "\t" + recall+"\r\n";
 
             out.write(outLine);
@@ -1184,23 +1186,23 @@ println("ML:"+meclValue);
       var results = api.getResults();
       println("Results:");
 
-      String rt = (String)results.get(BunchAPI.RUNTIME);
-      String evals = (String)results.get(BunchAPI.MQEVALUATIONS);
-      String levels = (String)results.get(BunchAPI.TOTAL_CLUSTER_LEVELS);
-      String saMovesTaken = (String)results.get(BunchAPI.SA_NEIGHBORS_TAKEN);
+      String rt = (String)results.get(RUNTIME);
+      String evals = (String)results.get(MQEVALUATIONS);
+      String levels = (String)results.get(TOTAL_CLUSTER_LEVELS);
+      String saMovesTaken = (String)results.get(SA_NEIGHBORS_TAKEN);
 
       println("Runtime = " + rt + " ms.");
       println("Total MQ Evaluations = " + evals);
       println("Simulated Annealing Moves Taken = " + saMovesTaken);
       println();
-      Hashtable [] resultLevels = (Hashtable[])results.get(BunchAPI.RESULT_CLUSTER_OBJS);
+      Hashtable [] resultLevels = (Hashtable[])results.get(RESULT_CLUSTER_OBJS);
 
       for(int i = 0; i < resultLevels.length; i++) {
         Hashtable lvlResults = resultLevels[i];
         println("***** LEVEL "+i+"*****");
-        String mq = (String)lvlResults.get(BunchAPI.MQVALUE);
-        String depth = (String)lvlResults.get(BunchAPI.CLUSTER_DEPTH);
-        String numC = (String)lvlResults.get(BunchAPI.NUMBER_CLUSTERS);
+        String mq = (String)lvlResults.get(MQVALUE);
+        String depth = (String)lvlResults.get(CLUSTER_DEPTH);
+        String numC = (String)lvlResults.get(NUMBER_CLUSTERS);
 
         println("  MQ Value = " + mq);
         println("  Best Cluster Depth = " + depth);
