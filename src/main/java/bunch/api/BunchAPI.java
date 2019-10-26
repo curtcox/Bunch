@@ -160,7 +160,7 @@ public final class BunchAPI {
   //  return resultsHashtable;
   //}
 
-  public Hashtable getResults() {
+  public Map<String, Object> getResults() {
     return engine.getResultsHT();
   }
 

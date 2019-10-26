@@ -269,8 +269,7 @@ String mode = "NAHC";
     return ((double)accum/(double)trials);
   }
 
-  public void runClustering(String mdgFileName, boolean removeSpecialNodes)
-  {
+  void runClustering(String mdgFileName, boolean removeSpecialNodes) {
       BunchAPI api = new BunchAPI();
       BunchProperties bp = new BunchProperties();
       bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,mdgFileName);
@@ -291,8 +290,8 @@ String mode = "NAHC";
 
       api.setProperties(bp);
       api.run();
-      Hashtable results = api.getResults();
-      String sMedLvl = (String)results.get(BunchAPI.MEDIAN_LEVEL_GRAPH);
+      var results = api.getResults();
+      String sMedLvl = (String) results.get(BunchAPI.MEDIAN_LEVEL_GRAPH);
       Integer iMedLvl = new Integer(sMedLvl);
 
       //===============================================================

@@ -47,7 +47,7 @@ public final class BunchStatsTest {
     { ex.printStackTrace(); }
   }
 
-  public void runStatsTest() {
+  void runStatsTest() {
 
     String fileName = "e:\\bunchstats.txt";
 
@@ -77,25 +77,24 @@ public final class BunchStatsTest {
 
       api.run();
 
-      Hashtable results = api.getResults();
+      var results = api.getResults();
 
-      String rt = (String)results.get(BunchAPI.RUNTIME);
-      String evals = (String)results.get(BunchAPI.MQEVALUATIONS);
-      String levels = (String)results.get(BunchAPI.TOTAL_CLUSTER_LEVELS);
-      String saMovesTaken = (String)results.get(BunchAPI.SA_NEIGHBORS_TAKEN);
+      String rt = (String) results.get(BunchAPI.RUNTIME);
+      String evals = (String) results.get(BunchAPI.MQEVALUATIONS);
+      String levels = (String) results.get(BunchAPI.TOTAL_CLUSTER_LEVELS);
+      String saMovesTaken = (String) results.get(BunchAPI.SA_NEIGHBORS_TAKEN);
 
-      Hashtable [] resultLevels = (Hashtable[])results.get(BunchAPI.RESULT_CLUSTER_OBJS);
+      var resultLevels = results.get(BunchAPI.RESULT_CLUSTER_OBJS);
 
       String mq = "null";
       String depth="null";
       String numC="null";
-      if(resultLevels.length>=1)
-      {
-        Hashtable lvlResults = resultLevels[0];
-        mq = (String)lvlResults.get(BunchAPI.MQVALUE);
-        depth = (String)lvlResults.get(BunchAPI.CLUSTER_DEPTH);
-        numC = (String)lvlResults.get(BunchAPI.NUMBER_CLUSTERS);
-      }
+//      if(resultLevels.length>=1) {
+//        Hashtable lvlResults = resultLevels[0];
+//        mq = (String)lvlResults.get(BunchAPI.MQVALUE);
+//        depth = (String)lvlResults.get(BunchAPI.CLUSTER_DEPTH);
+//        numC = (String)lvlResults.get(BunchAPI.NUMBER_CLUSTERS);
+//      }
 
       String outString = i+","+rt+","+mq+","+depth+","+numC+","+evals+","+saMovesTaken;
       System.out.println(outString);

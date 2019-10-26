@@ -17,8 +17,8 @@ import java.beans.*;
 
 final class BunchEngine {
 
-  Hashtable bunchArgs = null;
-  Hashtable results = null;
+  Map<String,Object> bunchArgs;
+  Map<String,Object> results;
   ClusteringMethod clusteringMethod_d;
   GraphOutput graphOutput_d;
   Graph initialGraph_d;
@@ -523,10 +523,8 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
         reflexiveEdgeCount = ((DependencyFileParser)p).getReflexiveEdges();
       }
 
-      if(bunchArgs.get(BunchProperties.MDG_GRAPH_OBJECT) != null)
-      {
-        bunch.api.BunchMDG mdgObj = (bunch.api.BunchMDG)
-            bunchArgs.get(BunchProperties.MDG_GRAPH_OBJECT);
+      if(bunchArgs.get(BunchProperties.MDG_GRAPH_OBJECT) != null) {
+        bunch.api.BunchMDG mdgObj = (bunch.api.BunchMDG) bunchArgs.get(BunchProperties.MDG_GRAPH_OBJECT);
 
         initialGraph_d = bunch.util.BunchUtilities.toInternalGraph(mdgObj);
         reflexiveEdgeCount = 0;
@@ -562,9 +560,8 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
         }
 
       //See if there are special modules
-      if(bunchArgs.get(BunchProperties.SPECIAL_MODULE_HASHTABLE) != null)
-      {
-        Hashtable special = (Hashtable)bunchArgs.get(BunchProperties.SPECIAL_MODULE_HASHTABLE);
+      if(bunchArgs.get(BunchProperties.SPECIAL_MODULE_HASHTABLE) != null) {
+        var special = (Hashtable)bunchArgs.get(BunchProperties.SPECIAL_MODULE_HASHTABLE);
         arrangeLibrariesClientsAndSuppliers(initialGraph_d,special);
       }
 
@@ -582,8 +579,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       if (initialGraph_d!=null&&configuration_d!=null)
         configuration_d.init(initialGraph_d);
 
-      if(clustAlg.equals(BunchProperties.ALG_GA))
-      {
+      if(clustAlg.equals(BunchProperties.ALG_GA)) {
         GAConfiguration gaConfig = (GAConfiguration)configuration_d;
 
         String method = (String)bunchArgs.get(BunchProperties.ALG_GA_SELECTION_METHOD);
@@ -592,8 +588,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
         String popSz = (String)bunchArgs.get(BunchProperties.ALG_GA_POPULATION_SZ);
         String numGens = (String)bunchArgs.get(BunchProperties.ALG_GA_NUM_GENERATIONS);
 
-        if(method != null)
-        {
+        if(method != null) {
           String tournMethod = "tournament";
           String roulMethod = "roulette wheel";
           if(method.equals(BunchProperties.ALG_GA_SELECTION_ROULETTE))
@@ -602,60 +597,49 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
             gaConfig.setMethod(tournMethod);
         }
 
-        if(numGens != null)
-        {
+        if(numGens != null) {
           int nGens = Integer.parseInt(numGens);
           gaConfig.setNumOfIterations(nGens);
         }
 
-        if(cProb != null)
-        {
+        if(cProb != null) {
           double crossProb = Double.parseDouble(cProb);
           gaConfig.setCrossoverThreshold(crossProb);
         }
 
-        if(mProb != null)
-        {
+        if(mProb != null) {
           double mutationProb = Double.parseDouble(mProb);
           gaConfig.setMutationThreshold(mutationProb);
         }
 
-        if(popSz != null)
-        {
+        if(popSz != null) {
           int pSize = Integer.parseInt(popSz);
           gaConfig.setPopulationSize(pSize);
         }
       }
 
-      if(clustAlg.equals(BunchProperties.ALG_SAHC))
-      {
+      if(clustAlg.equals(BunchProperties.ALG_SAHC)) {
         Integer popSz = (Integer)bunchArgs.get(BunchProperties.ALG_SAHC_POPULATION_SZ);
 
         if(popSz != null)
           configuration_d.setPopulationSize(popSz.intValue());
       }
 
-      if(clustAlg.equals(BunchProperties.ALG_HILL_CLIMBING))
-      {
+      if(clustAlg.equals(BunchProperties.ALG_HILL_CLIMBING)) {
         NAHCConfiguration c = (NAHCConfiguration)configuration_d;
-        if(bunchArgs.get(BunchProperties.ALG_HC_RND_PCT) != null)
-        {
+        if(bunchArgs.get(BunchProperties.ALG_HC_RND_PCT) != null) {
           Integer randomize = (Integer)bunchArgs.get(BunchProperties.ALG_HC_RND_PCT);
           c.setRandomizePct(randomize.intValue());
         }
 
-        if(bunchArgs.get(BunchProperties.ALG_HC_HC_PCT) != null)
-        {
-
+        if(bunchArgs.get(BunchProperties.ALG_HC_HC_PCT) != null) {
           Integer hcThreshold = (Integer)bunchArgs.get(BunchProperties.ALG_HC_HC_PCT);
           //System.out.println("Setting minumum to consider= "+hcThreshold);
           c.setMinPctToConsider(hcThreshold.intValue());
-
         }
       }
 
-      if(clustAlg.equals(BunchProperties.ALG_NAHC))
-      {
+      if(clustAlg.equals(BunchProperties.ALG_NAHC)) {
         Integer HCPct = (Integer)bunchArgs.get(BunchProperties.ALG_NAHC_HC_PCT);
         Integer rndPct = (Integer)bunchArgs.get(BunchProperties.ALG_NAHC_RND_PCT);
         Integer popSz = (Integer)bunchArgs.get(BunchProperties.ALG_NAHC_POPULATION_SZ);
@@ -665,22 +649,19 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
         if(popSz != null)
           c.setPopulationSize(popSz.intValue());
 
-        if(HCPct != null)
-        {
+        if(HCPct != null) {
           c.setMinPctToConsider(HCPct.intValue());
 
           if(rndPct != null)
             c.setRandomizePct(rndPct.intValue());
-          else
-          {
+          else {
             int pctTmp = 100-HCPct.intValue();
             c.setRandomizePct(pctTmp);
           }
         }
 
         String SAClass = (String)bunchArgs.get(BunchProperties.ALG_NAHC_SA_CLASS);
-        if(SAClass != null)
-        {
+        if(SAClass != null) {
           SATechnique saHandler = (SATechnique)Beans.instantiate(null,SAClass);
           if(saHandler != null)
           {
@@ -728,8 +709,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       //now set the graph output driver
       graphOutput_d = null;
       String outputMode = (String)bunchArgs.get(BunchProperties.OUTPUT_FORMAT);
-      if((outputMode != null)||(!outputMode.equalsIgnoreCase(BunchProperties.NULL_OUTPUT_FORMAT)))
-      {
+      if((outputMode != null)||(!outputMode.equalsIgnoreCase(BunchProperties.NULL_OUTPUT_FORMAT))) {
         String driver = null;
         if(outputMode.equalsIgnoreCase(BunchProperties.DOT_OUTPUT_FORMAT))
           driver = "Dotty";
@@ -747,10 +727,8 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
           graphOutput_d = preferences_d.getGraphOutputFactory().getOutput(driver);
 
           String outTree = (String)bunchArgs.get(BunchProperties.OUTPUT_TREE);
-          if(outTree != null)
-          {
-            if(outTree.equalsIgnoreCase("true"))
-            {
+          if(outTree != null) {
+            if(outTree.equalsIgnoreCase("true")) {
               graphOutput_d.setNestedLevels(true);
             }
           }
@@ -759,8 +737,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
           graphOutput_d.setBasicName(outFileName); //(String)bunchArgs.get(BunchProperties.MDG_INPUT_FILE_NAME));
           String outputFileName = graphOutput_d.getBaseName();
           String outputPath = (String)bunchArgs.get(BunchProperties.OUTPUT_DIRECTORY);
-          if(outputPath != null)
-          {
+          if(outputPath != null) {
             java.io.File f = new java.io.File(graphOutput_d.getBaseName());
             String filename = f.getName();
             outputFileName = outputPath+filename;
@@ -769,8 +746,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
           //System.out.println("Current name is " + outputFileName);
         }
       }
-    }catch(Exception e1)
-    {
+    }catch(Exception e1) {
       e1.printStackTrace();
       return false;
     }
@@ -929,28 +905,25 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       return medianG.getGraphLevel();
   }
 
-  public Hashtable getResultsHT() {
+  public Map<String,Object> getResultsHT() {
     String runMode = (String)bunchArgs.get(BunchProperties.RUN_MODE);
-    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_CLUSTER))
-    {
+    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_CLUSTER)) {
       return getClusteringResultsHT();
     }
 
-    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_PR_CALC))
-    {
+    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_PR_CALC)) {
       return getPRResultsHT();
     }
 
-    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_MQ_CALC))
-    {
+    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_MQ_CALC)) {
       return getMQCalcResultsHT();
     }
 
     return null;
   }
 
-  public Hashtable getMQCalcResultsHT() {
-    results = new Hashtable();
+  public Map<String, Object> getMQCalcResultsHT() {
+    results = new HashMap<>();
     if (MQCalcValue == null)
       return null;
 
@@ -958,8 +931,8 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
     return results;
   }
 
-  public Hashtable getPRResultsHT() {
-    results = new Hashtable();
+  public Map<String, Object> getPRResultsHT() {
+    results = new HashMap<>();
     if ((precision == null) || (recall == null))
       return null;
 
@@ -976,7 +949,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
     return this.clusterList;
   }
 
-  public Hashtable getClusteringResultsHT() {
+  public Map<String,Object> getClusteringResultsHT() {
       if(clusteringMethod_d == null) return null;
       if(baseCluster == null) return null;
 
@@ -999,8 +972,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       results.put(BunchAPI.ERROR_HASHTABLE,errorHT);
 
       Hashtable warningHT = new Hashtable();
-      if (reflexiveEdgeCount > 0)
-      {
+      if (reflexiveEdgeCount > 0) {
         Integer re = new Integer(reflexiveEdgeCount);
         warningHT.put(BunchAPI.REFLEXIVE_EDGE_COUNT,re.toString());
       }
@@ -1008,8 +980,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
 
       Hashtable []resultClusters = new Hashtable[clusterList.size()];
 
-      for(int i = 0; i < clusterList.size(); i++)
-      {
+      for(int i = 0; i < clusterList.size(); i++) {
         Integer level = new Integer(i);
         Hashtable lvlHT = new Hashtable();
         lvlHT.clear();
@@ -1031,8 +1002,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       stats.cleanup();
 
       Configuration cTmp = clusteringMethod_d.getConfiguration();
-      if(cTmp instanceof NAHCConfiguration)
-      {
+      if(cTmp instanceof NAHCConfiguration) {
         NAHCConfiguration nahcConf = (NAHCConfiguration)cTmp;
         if (nahcConf.getSATechnique() != null)
           nahcConf.getSATechnique().reset();

@@ -16,7 +16,7 @@ int [] prfreq = new int[11];
 int [] prIfreq = new int [11];
 
  @Test
- public void test4() {
+ public void doWithFile() {
 
       BunchAPI api = new BunchAPI();
       BunchProperties bp = new BunchProperties();
@@ -31,10 +31,73 @@ int [] prIfreq = new int [11];
       //bmdg.addMDGEdge("m5","m4");
       //bmdg.addMDGEdge("m4","m3");
 
-      boolean doWithFile = false;
+     bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME, "e:\\SampleMDGs\\paul.mdg");
+      //ArrayList edges = new ArrayList();
+      //BunchMDGDependency be1 = new BunchMDGDependency("m1","m2");
+      //BunchMDGDependency be2 = new BunchMDGDependency("m2","m1");
+      //BunchMDGDependency be3 = new BunchMDGDependency("m1","m3");
+      //BunchMDGDependency be4 = new BunchMDGDependency("m4","m5");
+      //BunchMDGDependency be5 = new BunchMDGDependency("m5","m4");
+      //BunchMDGDependency be6 = new BunchMDGDependency("m4","m3");
 
-      if(doWithFile == false)
-      {
+      //edges.add(be1);
+      //edges.add(be2);
+      //edges.add(be3);
+      //edges.add(be4);
+      //edges.add(be5);
+      //edges.add(be6);
+
+      //bmdg.addMDGEdges(edges);
+      ////api.setAPIProperty(BunchProperties.MDG_GRAPH_OBJECT,bmdg);
+     // bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,"e:\\expir\\rcs");
+      ////bp.setProperty(BunchProperties.OUTPUT_FILE,"e:\\samplemdgs\\rcsBrian2");
+      //bp.setProperty(BunchProperties.OMNIPRESENT_SUPPLIERS, "m4,m5");
+
+      bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_HILL_CLIMBING);
+      bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.NULL_OUTPUT_FORMAT);
+      ////bp.setProperty(BunchProperties.MDG_OUTPUT_MODE, BunchProperties.OUTPUT_DETAILED);
+
+
+      bp.setProperty(BunchProperties.CLUSTERING_APPROACH,BunchProperties.AGGLOMERATIVE);
+
+      //bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.NULL_OUTPUT_FORMAT);
+      bp.setProperty(BunchProperties.PROGRESS_CALLBACK_CLASS,"bunch.api.BunchAPITestCallback");
+      bp.setProperty(BunchProperties.PROGRESS_CALLBACK_FREQ,"5");
+      api.setProperties(bp);
+      println("Running...");
+        api.run();
+      var results = api.getResults();
+      println("Results:");
+
+      String rt = (String)results.get(BunchAPI.RUNTIME);
+      String evals = (String)results.get(BunchAPI.MQEVALUATIONS);
+      String levels = (String)results.get(BunchAPI.TOTAL_CLUSTER_LEVELS);
+      String saMovesTaken = (String)results.get(BunchAPI.SA_NEIGHBORS_TAKEN);
+
+      println("Runtime = " + rt + " ms.");
+      println("Total MQ Evaluations = " + evals);
+      println("Total Levels = " + levels);
+      println("Simulated Annealing Moves Taken = " + saMovesTaken);
+      println();
+
+      //Hashtable [] resultLevels = (Hashtable[])results.get(BunchAPI.RESULT_CLUSTER_OBJS);
+
+      //BunchGraph bg = api.getPartitionedGraph();
+      //if (bg != null)
+      //  bg.printGraph();
+
+      //Integer iLvls = new Integer(levels);
+      //for(int i = 0; i < iLvls.intValue(); i++)
+      //{
+      //  println(" ************* LEVEL "+i+" ******************");
+      //  BunchGraph bgLvl = api.getPartitionedGraph(i);
+      //  bgLvl.printGraph();
+      //  println("\n\n");
+      //}
+  }
+
+    BunchMDG newBunchMDG() {
+        BunchMDG bmdg = new BunchMDG();
         bmdg.addMDGEdge("50",  "105", 1);
         bmdg.addMDGEdge("170", "56",  7);
         bmdg.addMDGEdge("29",  "144", 4);
@@ -77,90 +140,66 @@ int [] prIfreq = new int [11];
         bmdg.addMDGEdge("50", "79",  12);
         bmdg.addMDGEdge("119", "328", 5);
         bmdg.addMDGEdge("144", "150", 10);
+        return bmdg;
+    }
 
+    @Test
+    public void doWithoutFile() {
+
+        BunchAPI api = new BunchAPI();
+        BunchProperties bp = new BunchProperties();
+
+        var bmdg = newBunchMDG();
         api.setAPIProperty(BunchProperties.MDG_GRAPH_OBJECT,bmdg);
-      }
-      else
-      {
-        bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,
-          "e:\\SampleMDGs\\paul.mdg");
-      }
-      //ArrayList edges = new ArrayList();
-      //BunchMDGDependency be1 = new BunchMDGDependency("m1","m2");
-      //BunchMDGDependency be2 = new BunchMDGDependency("m2","m1");
-      //BunchMDGDependency be3 = new BunchMDGDependency("m1","m3");
-      //BunchMDGDependency be4 = new BunchMDGDependency("m4","m5");
-      //BunchMDGDependency be5 = new BunchMDGDependency("m5","m4");
-      //BunchMDGDependency be6 = new BunchMDGDependency("m4","m3");
 
-      //edges.add(be1);
-      //edges.add(be2);
-      //edges.add(be3);
-      //edges.add(be4);
-      //edges.add(be5);
-      //edges.add(be6);
+        bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_HILL_CLIMBING);
+        bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.NULL_OUTPUT_FORMAT);
 
-      //bmdg.addMDGEdges(edges);
-      ////api.setAPIProperty(BunchProperties.MDG_GRAPH_OBJECT,bmdg);
-     // bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,"e:\\expir\\rcs");
-      ////bp.setProperty(BunchProperties.OUTPUT_FILE,"e:\\samplemdgs\\rcsBrian2");
-      //bp.setProperty(BunchProperties.OMNIPRESENT_SUPPLIERS, "m4,m5");
+        bp.setProperty(BunchProperties.CLUSTERING_APPROACH,BunchProperties.AGGLOMERATIVE);
 
-      bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_HILL_CLIMBING);
-      bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.NULL_OUTPUT_FORMAT);
-      ////bp.setProperty(BunchProperties.MDG_OUTPUT_MODE, BunchProperties.OUTPUT_DETAILED);
-
-
-      bp.setProperty(BunchProperties.CLUSTERING_APPROACH,BunchProperties.AGGLOMERATIVE);
-
-      //bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.NULL_OUTPUT_FORMAT);
-      bp.setProperty(BunchProperties.PROGRESS_CALLBACK_CLASS,"bunch.api.BunchAPITestCallback");
-      bp.setProperty(BunchProperties.PROGRESS_CALLBACK_FREQ,"5");
-      api.setProperties(bp);
-      System.out.println("Running...");
+        bp.setProperty(BunchProperties.PROGRESS_CALLBACK_CLASS,"bunch.api.BunchAPITestCallback");
+        bp.setProperty(BunchProperties.PROGRESS_CALLBACK_FREQ,"5");
+        api.setProperties(bp);
+        println("Running...");
         api.run();
-      Hashtable results = api.getResults();
-      System.out.println("Results:");
+        var results = api.getResults();
+        println("Results:");
 
-      String rt = (String)results.get(BunchAPI.RUNTIME);
-      String evals = (String)results.get(BunchAPI.MQEVALUATIONS);
-      String levels = (String)results.get(BunchAPI.TOTAL_CLUSTER_LEVELS);
-      String saMovesTaken = (String)results.get(BunchAPI.SA_NEIGHBORS_TAKEN);
+        String rt = (String)results.get(BunchAPI.RUNTIME);
+        String evals = (String)results.get(BunchAPI.MQEVALUATIONS);
+        String levels = (String)results.get(BunchAPI.TOTAL_CLUSTER_LEVELS);
+        String saMovesTaken = (String)results.get(BunchAPI.SA_NEIGHBORS_TAKEN);
 
-      System.out.println("Runtime = " + rt + " ms.");
-      System.out.println("Total MQ Evaluations = " + evals);
-      System.out.println("Total Levels = " + levels);
-      System.out.println("Simulated Annealing Moves Taken = " + saMovesTaken);
-      System.out.println();
+        println("Runtime = " + rt + " ms.");
+        println("Total MQ Evaluations = " + evals);
+        println("Total Levels = " + levels);
+        println("Simulated Annealing Moves Taken = " + saMovesTaken);
+        println();
+    }
 
-      //Hashtable [] resultLevels = (Hashtable[])results.get(BunchAPI.RESULT_CLUSTER_OBJS);
+    static void println(String message) {
+       System.out.println(message);
+    }
 
-      //BunchGraph bg = api.getPartitionedGraph();
-      //if (bg != null)
-      //  bg.printGraph();
+    static void print(Object message) {
+        System.out.print("" + message);
+    }
 
-      //Integer iLvls = new Integer(levels);
-      //for(int i = 0; i < iLvls.intValue(); i++)
-      //{
-      //  System.out.println(" ************* LEVEL "+i+" ******************");
-      //  BunchGraph bgLvl = api.getPartitionedGraph(i);
-      //  bgLvl.printGraph();
-      //  System.out.println("\n\n");
-      //}
-  }
+    static void println() {
+        println("");
+    }
 
-  public static Hashtable collectFinalGraphs(String mdgFileName, String baseFileDirectory, int howMany) {
+    static Hashtable collectFinalGraphs(String mdgFileName, String baseFileDirectory, int howMany) {
     BunchGraph  bgList[] = new BunchGraph[howMany];
     String baseOutputFileName = mdgFileName;
 
-    if((baseFileDirectory != null) && (!baseFileDirectory.equals("")))
-    {
+    if((baseFileDirectory != null) && (!baseFileDirectory.equals(""))) {
       File f = null;
       String baseFileName = "";
       try{
         f = new File(mdgFileName);
         baseFileName = f.getName();
-        //System.out.println(baseFileName);
+        //println(baseFileName);
       }
       catch(Exception e)
       {
@@ -192,8 +231,7 @@ int [] prIfreq = new int [11];
     return h;
   }
 
-  public static Hashtable processFinalResults(Hashtable in)
-  {
+  static Hashtable processFinalResults(Hashtable in) {
     BunchGraph [] bgList = (BunchGraph [])in.get("results");
     BunchGraph bgRef = (BunchGraph)in.get("reference");
 
@@ -208,7 +246,7 @@ int [] prIfreq = new int [11];
       BunchGraph bg = bgList[i];
 
       double esValue = BunchGraphUtils.calcEdgeSimiliarities(bg,bgRef);
-System.out.println("ES:"+esValue);
+println("ES:"+esValue);
       esAccum +=esValue;
       if(esValue < esMin) esMin = esValue;
       if(esValue > esMax) esMax = esValue;
@@ -216,7 +254,7 @@ System.out.println("ES:"+esValue);
       Hashtable h1 = BunchGraphUtils.calcPR(bg,bgRef);
       Double prValue = (Double)h1.get("AVERAGE");
       prAccum += prValue.doubleValue();
-System.out.println("PR:"+prValue.doubleValue());
+println("PR:"+prValue.doubleValue());
       if(prValue.doubleValue() < prMin) prMin = prValue.doubleValue();
       if(prValue.doubleValue() > prMax) prMax = prValue.doubleValue();
 
@@ -228,7 +266,7 @@ System.out.println("PR:"+prValue.doubleValue());
       double d2 = meclValue2.doubleValue();
       double meclValue = Math.max(d1,d2);
       meclAccum += meclValue;
-System.out.println("ML:"+meclValue);
+println("ML:"+meclValue);
       if(meclValue < meclMin) meclMin = meclValue;
       if(meclValue > meclMax) meclMax = meclValue;
     }
@@ -252,10 +290,10 @@ System.out.println("ML:"+meclValue);
     h.put("prMax",new Double(prMax));
     h.put("esMax",new Double(esMax));
 
-    System.out.println("==============STATS RESULTS=================");
-    System.out.println("Mecl = " + meclMin +", "+mecl+", "+meclMax);
-    System.out.println("PR   = " + prMin+", "+pr+", "+prMax);
-    System.out.println("ES   = " + esMin+", "+es+", "+esMax);
+    println("==============STATS RESULTS=================");
+    println("Mecl = " + meclMin +", "+mecl+", "+meclMax);
+    println("PR   = " + prMin+", "+pr+", "+prMax);
+    println("ES   = " + esMin+", "+es+", "+esMax);
 
     return h;
   }
@@ -271,8 +309,7 @@ System.out.println("ML:"+meclValue);
         Hashtable mes = processFinalResults(res);
   }
 
-  private double calcSlope(ArrayList inputX, ArrayList inputY)
-  {
+  private double calcSlope(ArrayList inputX, ArrayList inputY) {
     double n = (double)inputX.size();
     double SSxx = 0.0;
     double SSxy = 0.0;
@@ -284,8 +321,7 @@ System.out.println("ML:"+meclValue);
 
     if(inputX.size() != inputY.size()) return -1.0;
 
-    for(int i = 0; i < inputX.size(); i++)
-    {
+    for(int i = 0; i < inputX.size(); i++) {
       Double dxi = (Double)inputX.get(i);
       double xi = dxi.doubleValue();
       double xi2 = xi * xi;
@@ -324,8 +360,7 @@ System.out.println("ML:"+meclValue);
     //now setup for the acceleration, determine the average velocity intervals
     ArrayList axv = new ArrayList();
     ArrayList ayv = new ArrayList();
-    for(int i = 1; i < input.size(); i++)
-    {
+    for(int i = 1; i < input.size(); i++) {
       double deltaX;
       double deltaY;
       Double y1 = (Double)input.get(i-1);
@@ -353,12 +388,12 @@ System.out.println("ML:"+meclValue);
   }
 
   @Test
-public void BunchAPITest1x() {
+  public void BunchAPITest1x() {
     
     String mdgFile = "c:\\research\\mdgs\\pgsql";
     String cluFile = "c:\\research\\mdgs\\pgsql.clu";
 
-    System.out.println("Starting...");
+    println("Starting...");
     BunchProperties bp = new BunchProperties();
     bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,mdgFile);
     bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_HILL_CLIMBING);
@@ -369,7 +404,7 @@ public void BunchAPITest1x() {
     BunchAPI api = new BunchAPI();
     api.setProperties(bp);
     api.run();
-    System.out.println("Done");
+    println("Done");
 }
 
   @Test
@@ -383,10 +418,7 @@ public void BunchAPITest1x() {
   long max = 0;
   long accum = 0;
 
-
-
-  for(int i = 0; i < numRuns; i++)
-  {
+  for(int i = 0; i < numRuns; i++) {
     BunchAPI api = new BunchAPI();
     BunchProperties bp = new BunchProperties();
 
@@ -394,8 +426,7 @@ public void BunchAPITest1x() {
 
     bp.setProperty(BunchProperties.CLUSTERING_ALG, BunchProperties.ALG_HILL_CLIMBING);
 
-    if(useSA)
-    {
+    if(useSA) {
       bp.setProperty(BunchProperties.ALG_HC_HC_PCT, "30");
       bp.setProperty(BunchProperties.ALG_HC_RND_PCT, "20");
       bp.setProperty(BunchProperties.ALG_HC_SA_CLASS, "bunch.simple.SASimpleTechnique");
@@ -416,9 +447,8 @@ public void BunchAPITest1x() {
         api.run();
     long runTime = System.currentTimeMillis()-startTime;
     ArrayList cList = api.getClusters();
-    for(int zz = 0; zz< cList.size(); zz++)
-    {
-      System.out.println("LEVEL = "+zz);
+    for(int zz = 0; zz< cList.size(); zz++) {
+      println("LEVEL = "+zz);
       Cluster c = (Cluster)cList.get(zz);
       ArrayList alc = c.getClusteringDetails();
 
@@ -428,17 +458,15 @@ public void BunchAPITest1x() {
       int numClusters = c.getNumClusters();
       long numMQEvaluations = c.getNumMQEvaluations();
 
-
-      System.out.println("Depth: "+depth+"  BaseMQ: "+baseMQ+"  FinalMQ: "+finalMQ+
+      println("Depth: "+depth+"  BaseMQ: "+baseMQ+"  FinalMQ: "+finalMQ+
               "  NumClusters: "+numClusters+"  MQEvals: "+numMQEvaluations);
 
       if(alc != null){
 
         //for(int zzz = 0; zzz < alc.size(); zzz++)
-        //  System.out.print("["+alc.get(zzz)+"] " );
-        //System.out.println();
-        if(alc.size()>2)
-        {
+        //  print("["+alc.get(zzz)+"] " );
+        //println();
+        if(alc.size()>2) {
           double start = Double.parseDouble(alc.get(0).toString());
           double end   = Double.parseDouble(alc.get(alc.size()-1).toString());
           double mqInterval = end-start;
@@ -450,39 +478,35 @@ public void BunchAPITest1x() {
             double dsLast = Double.parseDouble(alc.get(zzz-1).toString());
             improvement += (ds - dsLast);
             double pct = (ds -start) / mqInterval;
-            System.out.println("   i["+zzz+"]="+pct);
+            println("   i["+zzz+"]="+pct);
             steps++;
           }
-          System.out.println("Steps = "+(int)steps+"  Avg. Step Size = "+(improvement/steps));
-          System.out.println();
+          println("Steps = "+(int)steps+"  Avg. Step Size = "+(improvement/steps));
+          println();
         }
 
         Hashtable h = this.calcVelocityAccel(alc);
-        if(h != null)
-        {
-          System.out.println("***** V = "+h.get("V"));
-          System.out.println("***** A = "+h.get("A"));
+        if(h != null) {
+          println("***** V = "+h.get("V"));
+          println("***** A = "+h.get("A"));
         }
-      }
-      else{
-        System.out.println("List of details is null");
+      } else {
+        println("List of details is null");
       }
     }
 
-
-
-    System.out.println("Run "+i+":  Finished in "+runTime+" ms.");
+    println("Run "+i+":  Finished in "+runTime+" ms.");
 
     if(runTime > max) max = runTime;
     if(runTime < min) min = runTime;
     accum += runTime;
   }
 
-  System.out.println();
-  System.out.println("MIN Runtime = "+min+" ms.");
-  System.out.println("MAX Runtime = "+max+" ms.");
-  System.out.println("AVG Runtime = "+((double)accum/(double)numRuns)+" ms.");
-  System.out.println("USE SA = "+useSA);
+  println();
+  println("MIN Runtime = "+min+" ms.");
+  println("MAX Runtime = "+max+" ms.");
+  println("AVG Runtime = "+((double)accum/(double)numRuns)+" ms.");
+  println("USE SA = "+useSA);
   }
 
   @Test
@@ -493,19 +517,19 @@ public void BunchAPITest1x() {
 /*
       BunchGraph g = BunchGraphUtils.constructFromSil(mdg,sil);
       double v = g.getMQValue();
-      System.out.println("Default Mq value= "+v);
+      println("Default Mq value= "+v);
 
       g = BunchGraphUtils.constructFromSil(mdg,sil,"bunch.calculator.BasicMQ");
       v = g.getMQValue();
-      System.out.println("Basic Mq value= "+v);
+      println("Basic Mq value= "+v);
 
       g = BunchGraphUtils.constructFromSil(mdg,sil,"bunch.calculator.TurboMQ");
       v = g.getMQValue();
-      System.out.println("Turbo Mq value= "+v);
+      println("Turbo Mq value= "+v);
 
       g = BunchGraphUtils.constructFromSil(mdg,sil,"bunch.ITurboMQ");
       v = g.getMQValue();
-      System.out.println("ITurbo Mq value= "+v);
+      println("ITurbo Mq value= "+v);
 
       if(true) System.exit(0);
  */
@@ -534,7 +558,7 @@ public void BunchAPITest1x() {
 
       //api.setAPIProperty(BunchProperties.RUN_ASYNC_NOTIFY_CLASS,nt);
 
-      System.out.println("Running...");
+      println("Running...");
         api.run();
 
       java.io.File f1 = new java.io.File("e:\\samplemdgs\\compiler.clu.bunch");
@@ -543,12 +567,12 @@ public void BunchAPITest1x() {
       f1.renameTo(fnew);
 
       //Thread t = nt.getThread();
-      //System.out.println("Thread ID is: " + nt.getThread());
+      //println("Thread ID is: " + nt.getThread());
       //nt.waitUntilDone();
 
 
-      Hashtable results = api.getResults();
-      System.out.println("Results:");
+      var results = api.getResults();
+      println("Results:");
 
       String rt = (String)results.get(BunchAPI.RUNTIME);
       String evals = (String)results.get(BunchAPI.MQEVALUATIONS);
@@ -556,14 +580,14 @@ public void BunchAPITest1x() {
       String saMovesTaken = (String)results.get(BunchAPI.SA_NEIGHBORS_TAKEN);
       String medLvl = (String)results.get(BunchAPI.MEDIAN_LEVEL_GRAPH);
 
-      System.out.println("Runtime = " + rt + " ms.");
-      System.out.println("Total MQ Evaluations = " + evals);
-      System.out.println("Simulated Annealing Moves Taken = " + saMovesTaken);
-      System.out.println("Median Level: "+medLvl);
-      System.out.println();
+      println("Runtime = " + rt + " ms.");
+      println("Total MQ Evaluations = " + evals);
+      println("Simulated Annealing Moves Taken = " + saMovesTaken);
+      println("Median Level: "+medLvl);
+      println();
 
       BunchGraph gg = api.getPartitionedGraph(Integer.parseInt("0"/*medLvl*/));
-      System.out.println("MQ Value = "+gg.getMQValue());
+      println("MQ Value = "+gg.getMQValue());
 
       if(true)System.exit(0);
 
@@ -574,29 +598,27 @@ public void BunchAPITest1x() {
         bg.printGraph();
 
       Integer iLvls = new Integer(levels);
-      for(int i = 0; i < iLvls.intValue(); i++)
-      {
-        System.out.println(" ************* LEVEL "+i+" ******************");
+      for(int i = 0; i < iLvls.intValue(); i++) {
+        println(" ************* LEVEL "+i+" ******************");
         BunchGraph bgLvl = api.getPartitionedGraph(i);
         bgLvl.printGraph();
-        System.out.println("\n\n");
+        println("\n\n");
       }
   }
 
-  private void dump(String s, Collection c)
-  {
-    System.out.println("Special Modules: "+s);
+  private void dump(String s, Collection c) {
+    println("Special Modules: "+s);
     if(c == null)
-      System.out.println("====>null");
+      println("====>null");
     else {
       Iterator i = c.iterator();
       while(i.hasNext())
       {
-        System.out.println("====>"+i.next());
+        println("====>"+i.next());
       }
     }
 
-    System.out.println();
+    println();
   }
 
   @Test
@@ -615,8 +637,7 @@ public void BunchAPITest1x() {
   }
 
   @Test
-  public void BunchAPITest5()
-  {
+  public void BunchAPITest5() {
     BunchProperties bp = new BunchProperties();
 
     bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,"e:\\expir\\small");
@@ -631,62 +652,57 @@ public void BunchAPITest1x() {
     BunchAPI api = new BunchAPI();
     api.setProperties(bp);
     api.run();
-    Hashtable results = api.getResults();
+    var results = api.getResults();
     printResutls(results);
 
     //String MQValue = (String)results.get(BunchAPI.MQCALC_RESULT_VALUE);
-    //System.out.println("MQ Value is: " + MQValue);
+    //println("MQ Value is: " + MQValue);
   }
 
-  public void printResutls(Hashtable results)
-  {
+  public void printResutls(Map<String,Object> results) {
         String rt = (String)results.get(BunchAPI.RUNTIME);
       String evals = (String)results.get(BunchAPI.MQEVALUATIONS);
       String levels = (String)results.get(BunchAPI.TOTAL_CLUSTER_LEVELS);
       String saMovesTaken = (String)results.get(BunchAPI.SA_NEIGHBORS_TAKEN);
 
-      System.out.println("Runtime = " + rt + " ms.");
-      System.out.println("Total MQ Evaluations = " + evals);
-      System.out.println("Simulated Annealing Moves Taken = " + saMovesTaken);
-      System.out.println();
+      println("Runtime = " + rt + " ms.");
+      println("Total MQ Evaluations = " + evals);
+      println("Simulated Annealing Moves Taken = " + saMovesTaken);
+      println();
       Hashtable [] resultLevels = (Hashtable[])results.get(BunchAPI.RESULT_CLUSTER_OBJS);
 
-      for(int i = 0; i < resultLevels.length; i++)
-      {
+      for(int i = 0; i < resultLevels.length; i++) {
         Hashtable lvlResults = resultLevels[i];
-        System.out.println("***** LEVEL "+i+"*****");
+        println("***** LEVEL "+i+"*****");
         String mq = (String)lvlResults.get(BunchAPI.MQVALUE);
         String depth = (String)lvlResults.get(BunchAPI.CLUSTER_DEPTH);
         String numC = (String)lvlResults.get(BunchAPI.NUMBER_CLUSTERS);
 
-        System.out.println("  MQ Value = " + mq);
-        System.out.println("  Best Cluster Depth = " + depth);
-        System.out.println("  Number of Clusters in Best Partition = " + numC);
-        System.out.println();
+        println("  MQ Value = " + mq);
+        println("  Best Cluster Depth = " + depth);
+        println("  Number of Clusters in Best Partition = " + numC);
+        println();
       }
   }
 
   @Test
-  public void BunchAPITest8()
-  {
+  public void BunchAPITest8() {
     String graphName = "e:\\expir\\rcs";
 
-    System.out.println("***** G R A P H   N A M E :   "+graphName+"\n");
+    println("***** G R A P H   N A M E :   "+graphName+"\n");
     writeHeader();
     runTest(graphName, false);
     runTest(graphName, true);
   }
 
-  public void runTest(String graphName, boolean removeSpecial)
-  {
+  public void runTest(String graphName, boolean removeSpecial) {
     totalNodes = totalAdjustments = 0;
     bunchGraphs = new ArrayList();
     //String graphName = "e:\\linux\\linux";
     //String graphName = "e:\\expir\\compiler";
     boolean removeSpecialModules = removeSpecial;
 
-    for(int i = 0; i < 2; i++)
-    {
+    for(int i = 0; i < 2; i++) {
       this.runClustering(graphName, removeSpecialModules);
       //this.runClustering("e:\\linux\\linux");
     }
@@ -696,47 +712,41 @@ public void BunchAPITest1x() {
     double avgIsomorphicCount = expirIsomorphicCount();
 
     //writeHeader();
-    if(removeSpecial == false)
-    {
+    if(removeSpecial == false) {
       dumpFreqArray("BASELINE       ", prfreq,avgValue,avgIsomorphicCount);
       dumpFreqArray("NO ISOMORPHIC  ",prIfreq,avgIsomorphicValue,avgIsomorphicCount);
-    }
-    else
-    {
+    } else {
       dumpFreqArray("NO SPECIAL     ", prfreq,avgValue, avgIsomorphicCount);
       dumpFreqArray("NO SPEC & ISO  ",prIfreq,avgIsomorphicValue,avgIsomorphicCount);
     }
-    //System.out.println("***** Graph Size: "+ bg.getNodes().size());
-    //System.out.println("***** Special Modules Removed:   " + removeSpecialModules);
-    //System.out.println("***** AVERAGE ISOMORPHIC COUNT:  " + avgIsomorphicCount);
-    //System.out.println("***** AVERAGE PR FOR ALL RUNS:   " + avgValue);
-    //System.out.println("***** AVERAGE ISOMORPHIC PR FOR ALL RUNS:  " + avgIsomorphicValue);
+    //println("***** Graph Size: "+ bg.getNodes().size());
+    //println("***** Special Modules Removed:   " + removeSpecialModules);
+    //println("***** AVERAGE ISOMORPHIC COUNT:  " + avgIsomorphicCount);
+    //println("***** AVERAGE PR FOR ALL RUNS:   " + avgValue);
+    //println("***** AVERAGE ISOMORPHIC PR FOR ALL RUNS:  " + avgIsomorphicValue);
     //double pct = (double)totalAdjustments / (double)totalNodes;
-    //System.out.println("***** ("+pct+") Total Nodes: "+totalNodes+"  Total Adjustments: "+totalAdjustments);
+    //println("***** ("+pct+") Total Nodes: "+totalNodes+"  Total Adjustments: "+totalAdjustments);
   }
 
-  private void writeHeader()
-  {
-    System.out.println("                 |-------------------------------- F R E Q U E N C Y --------------------------------|");
-    System.out.println("                   0-9   10-19   20-29   30-39   40-49   50-59   60-69   70-79   80-89   90-99     100     AVG  AVG-ISO");
-    System.out.println("                 =====   =====   =====   =====   =====   =====   =====   =====   =====   =====   =====    ====  =======");
+  private void writeHeader() {
+    println("                 |-------------------------------- F R E Q U E N C Y --------------------------------|");
+    println("                   0-9   10-19   20-29   30-39   40-49   50-59   60-69   70-79   80-89   90-99     100     AVG  AVG-ISO");
+    println("                 =====   =====   =====   =====   =====   =====   =====   =====   =====   =====   =====    ====  =======");
   }
 
-  private void dumpFreqArray(String lbl, int []a, double avgValue, double avgIso)
-  {
+  private void dumpFreqArray(String lbl, int []a, double avgValue, double avgIso) {
     StringBuffer sb = new StringBuffer("      ");
-    System.out.print(lbl+" [");
-    for(int i = 0; i < a.length; i++)
-    {
+    print(lbl+" [");
+    for(int i = 0; i < a.length; i++) {
       Integer count = new Integer(a[i]);
       String scnt = count.toString();
       StringBuffer sbItem = new StringBuffer(sb.toString());
       sbItem.replace((sbItem.length()-scnt.length()-1),sbItem.length()-1,scnt);
-      System.out.print(sbItem);
+      print(sbItem);
       if(i < (a.length-1))
-        System.out.print("  ");
+        print("  ");
     }
-    System.out.print("] ");
+    print("] ");
 
     int avg = (int)(avgValue*100.0);
     if(avg < 100)
@@ -745,29 +755,26 @@ public void BunchAPITest1x() {
     String scnt = avgI.toString();
     StringBuffer sbItem = new StringBuffer(sb.toString());
     sbItem.replace((sbItem.length()-scnt.length()-1),sbItem.length()-1,scnt);
-    System.out.print(sbItem);
+    print(sbItem);
 
     int avgIsoI = (int)(avgIso);
     avgI = new Integer(avgIsoI);
     scnt = avgI.toString();
     sbItem = new StringBuffer(sb.toString());
     sbItem.replace((sbItem.length()-scnt.length()-1),sbItem.length()-1,scnt);
-    System.out.println("   "+sbItem);
+    println("   "+sbItem);
   }
 
 
-  private double expirIsomorphicPR()
-  {
-    for(int i = 0; i < bunchGraphs.size(); i++)
-    {
+  private double expirIsomorphicPR() {
+    for(int i = 0; i < bunchGraphs.size(); i++) {
       BunchGraph g = (BunchGraph)bunchGraphs.get(i);
       g.determineIsomorphic();
     }
     return expirPR(prIfreq);
   }
 
-  private double expirIsomorphicCount()
-  {
+  private double expirIsomorphicCount() {
     int accum = 0;
     for(int i = 0; i < bunchGraphs.size(); i++)
     {
@@ -777,14 +784,12 @@ public void BunchAPITest1x() {
     return ((double)accum/(double)bunchGraphs.size());
   }
 
-  private void clearDistArray(int []distArray)
-  {
+  private void clearDistArray(int []distArray) {
     for(int i = 0; i < distArray.length; i++)
       distArray[i] = 0;
   }
 
-  private int findIndex(double value)
-  {
+  private int findIndex(double value) {
     if((value < 0)||(value > 1.0))
       return 0;
 
@@ -794,14 +799,12 @@ public void BunchAPITest1x() {
     return iTmp;
   }
 
-  private double expirPR(int []distArray)
-  {
+  private double expirPR(int []distArray) {
     long trials = 0;
     double accum = 0.0;
 
     clearDistArray(distArray);
-    for(int i = 0; i < bunchGraphs.size(); i++)
-    {
+    for(int i = 0; i < bunchGraphs.size(); i++) {
       BunchGraph g1 = (BunchGraph)bunchGraphs.get(i);
       for(int j = i; j < bunchGraphs.size(); j++)
       {
@@ -812,7 +815,7 @@ public void BunchAPITest1x() {
         Hashtable meClValue = BunchGraphUtils.getMeClMeasurement(g1,g2);
 
 
-        System.out.println("The distance is:  " + meClValue.get(BunchGraphUtils.MECL_VALUE) +
+        println("The distance is:  " + meClValue.get(BunchGraphUtils.MECL_VALUE) +
                     "   quality = "+meClValue.get(BunchGraphUtils.MECL_QUALITY_METRIC));
         /***************
          * This block of code is for Precision/Recall Analysis
@@ -826,7 +829,7 @@ public void BunchAPITest1x() {
           prValue = new Double(0.0);
         */
 
-        //System.out.println("AVG_PR(graph "+i+", graph"+j+") = "+prsValue);
+        //println("AVG_PR(graph "+i+", graph"+j+") = "+prsValue);
         if (i != j)
         {
           trials++;
@@ -839,8 +842,7 @@ public void BunchAPITest1x() {
     return ((double)accum/(double)trials);
   }
 
-  public void runClustering(String mdgFileName, boolean removeSpecialNodes)
-  {
+  public void runClustering(String mdgFileName, boolean removeSpecialNodes) {
       BunchAPI api = new BunchAPI();
       BunchProperties bp = new BunchProperties();
       bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,mdgFileName);
@@ -855,7 +857,7 @@ public void BunchAPITest1x() {
 
       api.setProperties(bp);
       api.run();
-      Hashtable results = api.getResults();
+      var results = api.getResults();
       String sMedLvl = (String)results.get(BunchAPI.MEDIAN_LEVEL_GRAPH);
       Integer iMedLvl = new Integer(sMedLvl);
 
@@ -877,16 +879,14 @@ public void BunchAPITest1x() {
       */
   }
 
-  public void findIsomorphic(BunchGraph bg)
-  {
+  public void findIsomorphic(BunchGraph bg) {
     Iterator nodeI = bg.getNodes().iterator();
     ArrayList theClusters = new ArrayList(bg.getClusters());
     int adjustCount = 0;
     int nodeAdjustCount = 0;
     int totalCount = bg.getNodes().size();
     boolean nodeIsomorphic = false;
-    while(nodeI.hasNext())
-    {
+    while(nodeI.hasNext()) {
       BunchNode bn = (BunchNode)nodeI.next();
       nodeIsomorphic = false;
       int[] cv = howConnected(bg,bn);
@@ -905,19 +905,18 @@ public void BunchAPITest1x() {
           bc.addOverlapNode(bn);
           adjustCount++;
           nodeIsomorphic = true;
-          //System.out.println("Node "+bn.getName()+" in cluster "+
+          //println("Node "+bn.getName()+" in cluster "+
           //    homeCluster.getName() +" is isomorphic to cluster "+ bc.getName());
         }
       }
       if(nodeIsomorphic == true) nodeAdjustCount++;
     }
-    System.out.println("Adjustments = Nodes: "+nodeAdjustCount+" --> "+adjustCount+"/"+totalCount);
+    println("Adjustments = Nodes: "+nodeAdjustCount+" --> "+adjustCount+"/"+totalCount);
     totalNodes+=totalCount;
     totalAdjustments+=nodeAdjustCount; //adjustCount;
   }
 
-  public void printConnectVector(BunchNode bn, int[] cv)
-  {
+  void printConnectVector(BunchNode bn, int[] cv) {
     String status = "OK:";
     String nodeName = bn.getName();
     int    nodeCluster = bn.getCluster();
@@ -947,11 +946,10 @@ public void BunchAPITest1x() {
       Integer clustStrength = new Integer(cv[i]);
       cvStr += "("+modifier+clustStrength.toString()+")";
     }
-    //System.out.println(status+" "+nodeName+" Cluster: "+nodeCluster+":  "+cvStr);
+    //println(status+" "+nodeName+" Cluster: "+nodeCluster+":  "+cvStr);
   }
 
-  public int[] howConnected(BunchGraph bg, BunchNode bn)
-  {
+  int[] howConnected(BunchGraph bg, BunchNode bn) {
     int howManyClusters = bg.getClusters().size();
     int [] connectVector = new int[howManyClusters];
     Iterator fdeps = null;
@@ -960,8 +958,7 @@ public void BunchAPITest1x() {
     for(int i=0; i<connectVector.length;i++)
       connectVector[i] = 0;
 
-    if (bn.getDeps() != null)
-    {
+    if (bn.getDeps() != null) {
       fdeps = bn.getDeps().iterator();
       while(fdeps.hasNext())
       {
@@ -972,9 +969,7 @@ public void BunchAPITest1x() {
       }
     }
 
-
-    if (bn.getBackDeps() != null)
-    {
+    if (bn.getBackDeps() != null) {
       bdeps = bn.getBackDeps().iterator();
       while(bdeps.hasNext())
       {
@@ -988,8 +983,7 @@ public void BunchAPITest1x() {
     return connectVector;
   }
 
-  public void printBunchGraph(BunchGraph bg)
-  {
+  void printBunchGraph(BunchGraph bg) {
     Collection nodeList = bg.getNodes();
     Collection edgeList = bg.getEdges();
     Collection clusterList = bg.getClusters();
@@ -997,12 +991,12 @@ public void BunchAPITest1x() {
     //======================================
     //PRINT THE GRAPH LEVEL INFORMATION
     //======================================
-    System.out.println("PRINTING BUNCH GRAPH\n");
-    System.out.println("Node Count:         " + nodeList.size());
-    System.out.println("Edge Count:         " + edgeList.size());
-    System.out.println("MQ Value:           " + bg.getMQValue());
-    System.out.println("Number of Clusters: " + bg.getNumClusters());
-    System.out.println();
+    println("PRINTING BUNCH GRAPH\n");
+    println("Node Count:         " + nodeList.size());
+    println("Edge Count:         " + edgeList.size());
+    println("MQ Value:           " + bg.getMQValue());
+    println("Number of Clusters: " + bg.getNumClusters());
+    println();
 
     //======================================
     //PRINT THE NODES AND THIER ASSOCIATED
@@ -1016,8 +1010,8 @@ public void BunchAPITest1x() {
       Iterator fdeps = null;
       Iterator bdeps = null;
 
-      System.out.println("NODE:         " + bn.getName());
-      System.out.println("Cluster ID:   " + bn.getCluster());
+      println("NODE:         " + bn.getName());
+      println("Cluster ID:   " + bn.getCluster());
 
       //PRINT THE CONNECTIONS TO OTHER NODES
       if (bn.getDeps() != null)
@@ -1028,7 +1022,7 @@ public void BunchAPITest1x() {
           BunchEdge be = (BunchEdge)fdeps.next();
           String depName = be.getDestNode().getName();
           int weight = be.getWeight();
-          System.out.println("   ===> " + depName+" ("+weight+")");
+          println("   ===> " + depName+" ("+weight+")");
         }
       }
 
@@ -1041,38 +1035,36 @@ public void BunchAPITest1x() {
           BunchEdge be = (BunchEdge)bdeps.next();
           String depName = be.getSrcNode().getName();
           int weight = be.getWeight();
-          System.out.println("   <=== " + depName+" ("+weight+")");
+          println("   <=== " + depName+" ("+weight+")");
         }
       }
-      System.out.println();
+      println();
     }
 
     //======================================
     //NOW PRINT THE INFORMATION ABOUT THE
     //CLUSTERS
     //======================================
-    System.out.println("Cluster Breakdown\n");
+    println("Cluster Breakdown\n");
     Iterator clusts = bg.getClusters().iterator();
-    while(clusts.hasNext())
-    {
+    while(clusts.hasNext()) {
       BunchCluster bc = (BunchCluster)clusts.next();
-      System.out.println("Cluster id:   " + bc.getID());
-      System.out.println("Custer name:  " + bc.getName());
-      System.out.println("Cluster size: " +bc.getSize());
+      println("Cluster id:   " + bc.getID());
+      println("Custer name:  " + bc.getName());
+      println("Cluster size: " +bc.getSize());
 
       Iterator members = bc.getClusterNodes().iterator();
       while(members.hasNext())
       {
         BunchNode bn = (BunchNode)members.next();
-        System.out.println("   --> " + bn.getName() + "   ("+bn.getCluster()+")");
+        println("   --> " + bn.getName() + "   ("+bn.getCluster()+")");
       }
-      System.out.println();
+      println();
     }
   }
 
   @Test
-  public void BunchAPITest3()
-  {
+  public void BunchAPITest3() {
     try{
       String mdgFile = "e:\\expir\\cia";
       int runCount = 50;
@@ -1098,12 +1090,12 @@ public void BunchAPITest1x() {
         bp.setProperty(BunchProperties.ECHO_RESULTS_TO_CONSOLE,"True");
         api.setProperties(bp);
 
-        //System.out.println("Running...");
+        //println("Running...");
           api.run();
-        //System.out.println("Done!");
+        //println("Done!");
 
-        Hashtable results = api.getResults();
-        //System.out.println("Results:");
+        var results = api.getResults();
+        //println("Results:");
 
         String rt = (String)results.get(BunchAPI.RUNTIME);
         String evals = (String)results.get(BunchAPI.MQEVALUATIONS);
@@ -1118,9 +1110,9 @@ public void BunchAPITest1x() {
         String outLine = outFileName + "\t" + numClusters.toString() + "\t" + mqValue.toString() + "\r\n";
         out.write(outLine);
         if ((i % 10) == 0)
-          System.out.println("Pct = " + (double)i / (double)runCount);
-        //System.out.println("Runtime = " + rt + " ms.");
-        //System.out.println("Total MQ Evaluations = " + evals);
+          println("Pct = " + (double)i / (double)runCount);
+        //println("Runtime = " + rt + " ms.");
+        //println("Total MQ Evaluations = " + evals);
       }
 
       out.close();
@@ -1131,12 +1123,10 @@ public void BunchAPITest1x() {
       long total = (runCount * (runCount-1))/2;
       long performed = 0;
 
-      for (int i = 0; i < runCount; i++)
-      {
+      for (int i = 0; i < runCount; i++) {
           BunchAPI api = new BunchAPI();
           BunchProperties bp = new BunchProperties();
-          for (int j = i+1; j < runCount; j++)
-          {
+          for (int j = i+1; j < runCount; j++) {
             if (i == j) continue;
             performed++;
 
@@ -1149,14 +1139,14 @@ public void BunchAPITest1x() {
             bp.setProperty(BunchProperties.PR_EXPERT_FILE,file2);
             api.setProperties(bp);
             api.run();
-            Hashtable results = api.getResults();
+            var results = api.getResults();
             String precision = (String)results.get(BunchAPI.PR_PRECISION_VALUE);
             String recall = (String)results.get(BunchAPI.PR_RECALL_VALUE);
             String outLine = "PR("+file1+", "+file2+")\t" + precision + "\t" + recall+"\r\n";
 
             out.write(outLine);
             if ((performed % 100) == 0)
-              System.out.println("Pct PR: " + (double)performed/(double)total);
+              println("Pct PR: " + (double)performed/(double)total);
           }
       }
     }catch(Exception e)
@@ -1188,40 +1178,39 @@ public void BunchAPITest1x() {
       //bp.setProperty(BunchProperties.PROGRESS_CALLBACK_CLASS,"bunch.api.BunchAPITestCallback");
       //bp.setProperty(BunchProperties.PROGRESS_CALLBACK_FREQ,"0");
       api.setProperties(bp);
-      System.out.println("Running...");
+      println("Running...");
 
       api.run();
-      Hashtable results = api.getResults();
-      System.out.println("Results:");
+      var results = api.getResults();
+      println("Results:");
 
       String rt = (String)results.get(BunchAPI.RUNTIME);
       String evals = (String)results.get(BunchAPI.MQEVALUATIONS);
       String levels = (String)results.get(BunchAPI.TOTAL_CLUSTER_LEVELS);
       String saMovesTaken = (String)results.get(BunchAPI.SA_NEIGHBORS_TAKEN);
 
-      System.out.println("Runtime = " + rt + " ms.");
-      System.out.println("Total MQ Evaluations = " + evals);
-      System.out.println("Simulated Annealing Moves Taken = " + saMovesTaken);
-      System.out.println();
+      println("Runtime = " + rt + " ms.");
+      println("Total MQ Evaluations = " + evals);
+      println("Simulated Annealing Moves Taken = " + saMovesTaken);
+      println();
       Hashtable [] resultLevels = (Hashtable[])results.get(BunchAPI.RESULT_CLUSTER_OBJS);
 
       for(int i = 0; i < resultLevels.length; i++) {
         Hashtable lvlResults = resultLevels[i];
-        System.out.println("***** LEVEL "+i+"*****");
+        println("***** LEVEL "+i+"*****");
         String mq = (String)lvlResults.get(BunchAPI.MQVALUE);
         String depth = (String)lvlResults.get(BunchAPI.CLUSTER_DEPTH);
         String numC = (String)lvlResults.get(BunchAPI.NUMBER_CLUSTERS);
 
-        System.out.println("  MQ Value = " + mq);
-        System.out.println("  Best Cluster Depth = " + depth);
-        System.out.println("  Number of Clusters in Best Partition = " + numC);
-        System.out.println();
+        println("  MQ Value = " + mq);
+        println("  Best Cluster Depth = " + depth);
+        println("  Number of Clusters in Best Partition = " + numC);
+        println();
       }
 
       Runtime r = Runtime.getRuntime();
       r.exec("dot -Tps e:\\pstopcl\\incl.dot > e:\\pstopcl\\in\\incl.ps");
   }
-
 
   public static void main(String[] args) throws IOException {
     BunchAPITest test = new BunchAPITest();
