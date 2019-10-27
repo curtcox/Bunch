@@ -363,33 +363,33 @@ public ClusteringMethod getClusteringMethod()
  * @param iCalc The ordinal value for the MQ Calculator
  */
 public void setMQCalc(int iCalc) {
-   mqFn = iCalc;
-
-   /**
-    * As of this writing the MQ calculator must be specified by name, this
-    * design has been improved and is incorporated into the new BunchAPI class.
-    */
-   switch(iCalc)
-   {
-      case MQ_TURBO:
-         mqCalc_d = "Turbo MQ Function";
-         break;
-      case MQ_ORIG:
-         mqCalc_d = "MQ Function";
-         break;
-      case MQ_WEIGHTED:
-         mqCalc_d = "Eperimental Weighted 2";
-         break;
-      default:
-         mqCalc_d = "Turbo MQ Function";
-         break;
-   }
-
-   /**
-    * Get the objective function calculator from the factory
-    */
-   String objFnCalc = mqCalc_d;
-   (preferences_d.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
+    throw new UnsupportedOperationException();
+//   mqFn = iCalc;
+//
+//   /**
+//    * As of this writing the MQ calculator must be specified by name, this
+//    * design has been improved and is incorporated into the new BunchAPI class.
+//    */
+//   switch(iCalc) {
+//      case MQ_TURBO:
+//         mqCalc_d = "Turbo MQ Function";
+//         break;
+//      case MQ_ORIG:
+//         mqCalc_d = "MQ Function";
+//         break;
+//      case MQ_WEIGHTED:
+//         mqCalc_d = "Eperimental Weighted 2";
+//         break;
+//      default:
+//         mqCalc_d = "Turbo MQ Function";
+//         break;
+//   }
+//
+//   /**
+//    * Get the objective function calculator from the factory
+//    */
+//   String objFnCalc = mqCalc_d;
+//   (preferences_d.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
 }
 
 /**
@@ -397,8 +397,9 @@ public void setMQCalc(int iCalc) {
  * this includes setting the objective function calculator.
  */
 public void configureOptions() {
-   String objFnCalc = mqCalc_d;
-   (preferences_d.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
+    throw new UnsupportedOperationException();
+//   String objFnCalc = mqCalc_d;
+//   (preferences_d.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
 }
 
 /**

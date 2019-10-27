@@ -2,6 +2,8 @@ package bunch.api;
 
 import bunch.*;
 import static bunch.api.Key.*;
+
+import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.clustering.ClusteringMethod;
 import bunch.clustering.NAHCConfiguration;
 import bunch.ga.GAConfiguration;
@@ -697,7 +699,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
   private void setUpCalculator() {
     //now setup the calculator
-    String objFnCalc = bunchArgs.mqCalculatorClass;
+    ObjectiveFunctionCalculator objFnCalc = bunchArgs.mqCalculatorClass;
     (preferences_d.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
     Graph.setObjectiveFunctionCalculatorFactory(preferences_d.getObjectiveFunctionCalculatorFactory());
     initialGraph_d.setObjectiveFunctionCalculator(objFnCalc);
@@ -871,7 +873,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   boolean runMQCalc() {
     MQCalcMdgFileName = bunchArgs.MQCALC_MDG_FILE;
     MQCalcSilFileName = bunchArgs.MQCALC_SIL_FILE;
-    String MQCalcClass = bunchArgs.mqCalculatorClass;
+    ObjectiveFunctionCalculator MQCalcClass = bunchArgs.mqCalculatorClass;
 
     double mqResult = bunch.util.MQCalculator.CalcMQ(MQCalcMdgFileName,MQCalcSilFileName,MQCalcClass);
     Double Dmq = new Double(mqResult);

@@ -1,6 +1,7 @@
 package bunch.ui;
 
 import bunch.*;
+import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.server.BunchSvrMsg;
 import bunch.clustering.*;
 import bunch.event.BunchEvent;
@@ -216,7 +217,7 @@ private void jbInit() throws IOException, ClassNotFoundException {
     ClusteringAlgEF.addItem(mqFnList[i]);
   }
 
-  String defaultMqFn = preferences_d.getObjectiveFunctionCalculatorFactory().getDefaultMethod();
+  var defaultMqFn = preferences_d.getObjectiveFunctionCalculatorFactory().getDefaultMethod();
   ClusteringAlgEF.setSelectedItem(defaultMqFn);
 
   String defOutputType = preferences_d.getGraphOutputFactory().defaultOption;
@@ -2019,7 +2020,7 @@ private boolean usesModule(DefaultListModel list, String element) {
  * Acttion listner class for when the clustering algorithm is changed by the user
  */
 void ClusteringAlgEF_actionPerformed(ActionEvent e) {
-    String objFnCalc = (String)ClusteringAlgEF.getSelectedItem();
+  ObjectiveFunctionCalculator objFnCalc = (ObjectiveFunctionCalculator) ClusteringAlgEF.getSelectedItem();
     (preferences_d.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
 
     setupClusteringOptions();

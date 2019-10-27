@@ -2,6 +2,7 @@ package bunch.api;
 
 import java.util.*;
 
+import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 import bunch.model.Graph;
 import bunch.model.Node;
@@ -97,7 +98,7 @@ public final class BunchGraphUtils {
   }
   
   public static BunchGraph constructFromSil(String mdgFileName, String sFileName,
-              String mqCalcClass)
+                                            ObjectiveFunctionCalculator mqCalcClass)
   {
       BunchGraph bg = new BunchGraph();
 
@@ -115,12 +116,9 @@ public final class BunchGraphUtils {
       ObjectiveFunctionCalculatorFactory ocf = new ObjectiveFunctionCalculatorFactory();
       g.setObjectiveFunctionCalculatorFactory(ocf);
 
-      if(mqCalcClass == null)
-      {
+      if(mqCalcClass == null) {
         g.setObjectiveFunctionCalculator(ocf.getDefaultMethod());
-      }
-      else
-      {
+      } else {
         ocf.setCurrentCalculator(mqCalcClass);
         g.setObjectiveFunctionCalculator(mqCalcClass);
       }

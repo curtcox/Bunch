@@ -73,7 +73,6 @@ public Graph(int nodes) {
  * method must be called before any instance of the Graph class is created.
  *
  * @param of the function calculator factory to set
- * @see #setObjectiveFunctionCalculator(java.lang.String)
  */
 public static void setObjectiveFunctionCalculatorFactory(ObjectiveFunctionCalculatorFactory of) {
   objectiveFunctionCalculatorFactory_sd = of;
@@ -100,8 +99,8 @@ public void initGraph(int nodes) {
  * @param name the name of the calculator to set for this graph
  * @see #setObjectiveFunctionCalculatorFactory(ObjectiveFunctionCalculatorFactory)
  */
-public void setObjectiveFunctionCalculator(String name) {
-  calculator_d = objectiveFunctionCalculatorFactory_sd.getCalculator(name);
+public void setObjectiveFunctionCalculator(ObjectiveFunctionCalculator calc) {
+  calculator_d = calc;
   calculator_d.init(this);
 }
 

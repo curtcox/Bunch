@@ -1,5 +1,6 @@
 package bunch.util;
 
+import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 import bunch.model.Graph;
 import bunch.model.Node;
@@ -11,7 +12,7 @@ public final class MQCalculator {
 
   public MQCalculator() { }
 
-  public static double CalcMQ(String mdgFileName, String silFileName, String calculatorName) {
+  public static double CalcMQ(String mdgFileName, String silFileName, ObjectiveFunctionCalculator calculatorName) {
     try {
       String mdg = mdgFileName;
       String sil = silFileName;

@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 import bunch.api.*;
+import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 
 /**
@@ -207,7 +208,7 @@ public final class BunchClusteringUtil extends JDialog {
       }
 
       double mqResult = bunch.util.MQCalculator.CalcMQ(mdg,outputSil,
-                    (String)calculatorCB.getSelectedItem());
+              (ObjectiveFunctionCalculator) calculatorCB.getSelectedItem());
 
       if (mqResult > bestMQ)
       {
@@ -234,7 +235,7 @@ public final class BunchClusteringUtil extends JDialog {
       }
 
       double mqResult = bunch.util.MQCalculator.CalcMQ(mdg,outputSil,
-                    (String)calculatorCB.getSelectedItem());
+              (ObjectiveFunctionCalculator) calculatorCB.getSelectedItem());
     }
   }
 

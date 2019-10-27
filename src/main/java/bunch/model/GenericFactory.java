@@ -40,7 +40,7 @@ public GenericFactory()
  * Sets the type of factory of this class, normally the name of the class
  * of objects that will be stored in this factory
  *
- * @param the name of the class
+ * @param name of the class
  * @see #getFactoryType()
  */
 public void setFactoryType(String name)
@@ -144,7 +144,7 @@ public Object getItemInstanceFromClass(String cls) {
  * overriden in a concreate class, then a null string will be
  * returned
  */
-public String getDefaultMethod()
+public Object getDefaultMethod()
 {
   return null;
 }

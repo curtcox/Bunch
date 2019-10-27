@@ -1,5 +1,7 @@
 package bunch.api;
 
+import bunch.calculator.ObjectiveFunctionCalculator;
+
 import java.util.Collection;
 import java.util.Map;
 
@@ -16,7 +18,7 @@ final class EngineArgs {
   public String algNahcSaClass;
   public Map algNahcSaConfig;
   public String clusteringApproach;
-  public String mqCalculatorClass;
+  public ObjectiveFunctionCalculator mqCalculatorClass;
   public String MQCALC_MDG_FILE;
   public String MQCALC_SIL_FILE;
   public Integer callbackObjectFrequency;

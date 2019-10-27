@@ -1,5 +1,7 @@
 package bunch.api;
 
+import bunch.calculator.ObjectiveFunctionCalculator;
+import bunch.calculator.TurboMQIncrW;
 import bunch.model.Cluster;
 import bunch.model.Graph;
 import bunch.parser.Parser;
@@ -11,14 +13,12 @@ import static bunch.api.Key.*;
 
 public final class BunchStatsTest {
 
-  public BunchStatsTest() {
+  public BunchStatsTest() throws Exception {
     //runStatsTest();
     checkGraphTest();
   }
 
-  public void checkGraphTest() {
-    try
-    {
+  public void checkGraphTest() throws Exception {
       String filename = "d:\\proj\\bunch\\examples\\bison"; //"e:\\incl";
       bunch.BunchPreferences pref = (bunch.BunchPreferences)(java.beans.Beans.instantiate(null, "bunch.BunchPreferences"));
 
@@ -27,7 +27,7 @@ public final class BunchStatsTest {
       p.setDelims(" \t");
       Graph g = (Graph)p.parse();
 
-      String objFnCalc =  "bunch.calculator.TurboMQIncrW";
+      var objFnCalc =  new TurboMQIncrW();
       (pref.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
       Graph.setObjectiveFunctionCalculatorFactory(pref.getObjectiveFunctionCalculatorFactory());
       g.setObjectiveFunctionCalculator(objFnCalc);
@@ -44,9 +44,6 @@ public final class BunchStatsTest {
         Cluster c = new Cluster(g,clusterV);
         System.out.println("NumClusters = "+c.getClusterNames().length+" MQ Value = "+c.getObjFnValue());
       }
-
-    }catch(Exception ex)
-    { ex.printStackTrace(); }
   }
 
   void runStatsTest() {
@@ -112,7 +109,7 @@ public final class BunchStatsTest {
   catch(Exception e) { e.printStackTrace(); }
    }
 
-  public static void main(String[] args) {
-    BunchStatsTest bunchStatsTest1 = new BunchStatsTest();
+  public static void main(String[] args) throws Exception {
+    new BunchStatsTest();
   }
 }
