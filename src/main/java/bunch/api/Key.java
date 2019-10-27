@@ -1,6 +1,6 @@
 package bunch.api;
 
-public enum Key {
+enum Key {
 
      CALLBACK_OBJECT_REF,
      CALLBACK_OBJECT_FREQ,

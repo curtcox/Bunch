@@ -1,15 +1,11 @@
 package bunch.api;
 
-import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.calculator.TurboMQIncrW;
 import bunch.model.Cluster;
 import bunch.model.Graph;
 import bunch.parser.Parser;
 
-import java.util.*;
 import java.io.*;
-
-import static bunch.api.Key.*;
 
 public final class BunchStatsTest {
 
