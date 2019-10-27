@@ -32,10 +32,9 @@ final class BunchEngine {
   long startTime;
   long endTime;
   long totalTime=0;
-  Cluster baseCluster = null;
-  ArrayList clusterList = null;
-  javax.swing.Timer timeoutTimer = null;
-  Thread clusteringProcessThread = null;
+  Cluster baseCluster;
+  ArrayList clusterList;
+  javax.swing.Timer timeoutTimer;
   int reflexiveEdgeCount = 0;
 
   String precision;
@@ -727,9 +726,9 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   boolean runClustering() throws IOException, ClassNotFoundException {
     initClustering();
 
-    ExecuteClusteringEngine ce = new ExecuteClusteringEngine();//clusteringMethod_d,bunchArgs);
+    executeClusteringEngine();//clusteringMethod_d,bunchArgs);
 
-    Cluster bestC = clusteringMethod_d.getBestCluster();
+    clusteringMethod_d.getBestCluster();
     baseCluster = clusteringMethod_d.getBestCluster().cloneCluster();
     clusterList.add(clusteringMethod_d.getBestCluster().cloneCluster());
 
@@ -750,9 +749,9 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
         clusteringMethod_d.setGraph(newG);
         clusteringMethod_d.initialize();
 
-        ce = new ExecuteClusteringEngine();//clusteringMethod_d,bunchArgs);
+        executeClusteringEngine();//clusteringMethod_d,bunchArgs);
 
-        bestC = clusteringMethod_d.getBestCluster();
+        clusteringMethod_d.getBestCluster();
         clusterList.add(clusteringMethod_d.getBestCluster().cloneCluster());
 
         g = clusteringMethod_d.getBestGraph().cloneGraph();
@@ -933,81 +932,26 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     return false;
   }
 
-class ExecuteClusteringEngine {
-    //ClusteringMethod clusteringMethod_d;
-    //Hashtable bunchArgs;
-    Object    monitor;
-
-    ExecuteClusteringEngine()
-    {
-      //clusteringMethod_d = cm;
-      //bunchArgs = ba;
-      monitor = new Object();
-      run();
-    }
-
-    public void run()
-    {
-      Runnable runThread = () -> {
-      try{
-        clusteringProcessThread = Thread.currentThread();
-
+    private void executeClusteringEngine() {
         startTime = System.currentTimeMillis();
 
         if(timeoutTimer != null)
           timeoutTimer.start();
 
-            clusteringMethod_d.run();
+        clusteringMethod_d.run();
         endTime = System.currentTimeMillis();
         totalTime += (endTime-startTime);
 
         if(timeoutTimer != null)
           timeoutTimer.stop();
 
-        synchronized(monitor)
-        { monitor.notifyAll();  }
-
-        if(clusteringProcessThread != null)
-          synchronized(clusteringProcessThread)
-          { clusteringProcessThread = null;}
       }
-      //catch(InterruptedException iExcpt) {System.out.println("Thrad interrupted");}
-      catch(Exception threadEx){ threadEx.printStackTrace(); }
-      };
-
-      Thread t = new Thread(runThread);
-      //clusteringProcessThread = t;
-      t.start();
-      //t.interrupt();
-
-      try
-      {
-        synchronized(monitor)
-        {  monitor.wait();  }
-      }catch(Exception e1)
-      {e1.printStackTrace();}
-    }
-}
 
 //********************
 // For handling timeouts
 //
-class TimeoutTimer implements java.awt.event.ActionListener
-  {
-    public void actionPerformed(java.awt.event.ActionEvent e)
-    {
-      try
-      {
-        synchronized(clusteringProcessThread)
-        {
-          if(clusteringProcessThread == null)
-            return;
-          //System.out.println("Interrupting thread");
-          clusteringProcessThread.interrupt();
-        }
-      }catch(Exception timerEx)
-      { timerEx.printStackTrace(); }
-    }
-  }
+static class TimeoutTimer implements java.awt.event.ActionListener {
+    public void actionPerformed(java.awt.event.ActionEvent e) { }
+}
 
 }
