@@ -46,11 +46,10 @@ public final class BunchStatsTest {
       }
   }
 
-  void runStatsTest() {
+  void runStatsTest() throws IOException, ClassNotFoundException {
 
     String fileName = "e:\\bunchstats.txt";
 
-  try{
     BufferedWriter writer_d = new BufferedWriter(new FileWriter(fileName));
     double mqAccum = 0.0;
     int    testRuns = 0;
@@ -61,18 +60,17 @@ public final class BunchStatsTest {
     for(int i = 0; i < 100; i++)
     {
       BunchAPI api = new BunchAPI();
-      BunchProperties bp = new BunchProperties();
-      bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,"e:\\incl");
-      bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.NULL_OUTPUT_FORMAT);
+      var bp = api.bunchArgs;
+      bp.MDG_INPUT_FILE_NAME = "e:\\incl";
+      bp.OUTPUT_FORMAT = BunchProperties.NULL_OUTPUT_FORMAT;
 
-      bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_NAHC);
-      bp.setProperty(BunchProperties.ALG_NAHC_HC_PCT,"1");
+      bp.CLUSTERING_ALG = BunchProperties.ALG_NAHC;
+      bp.algNahcHcPct = 1;
       //bp.setProperty(BunchProperties.ALG_NAHC_RND_PCT,"20");
       //bp.setProperty(BunchProperties.ALG_NAHC_SA_CLASS,"bunch.simple.SASimpleTechnique");
       //bp.setProperty(BunchProperties.ALG_NAHC_SA_CONFIG,"InitialTemp=179.0,Alpha=0.995");
       //bp.setProperty(BunchProperties.ALG_NAHC_SA_CONFIG,"InitialTemp=1.0,Alpha=0.85");
 
-      api.setProperties(bp);
 
       api.run();
 
@@ -106,8 +104,6 @@ public final class BunchStatsTest {
     System.out.println("***** Average MQ = " + (mqAccum/((double)testRuns)));
 
   }
-  catch(Exception e) { e.printStackTrace(); }
-   }
 
   public static void main(String[] args) throws Exception {
     new BunchStatsTest();

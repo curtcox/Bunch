@@ -34,12 +34,12 @@ final class EngineArgs {
   public String OUTPUT_FORMAT;
   public String OUTPUT_FILE;
   public String MDG_INPUT_FILE_NAME;
-  public String OUTPUT_TREE;
+  public boolean OUTPUT_TREE;
   public String OUTPUT_DIRECTORY;
   public String ALG_GA_SELECTION_METHOD;
   public String ALG_GA_CROSSOVER_PROB;
   public String ALG_GA_MUTATION_PROB;
-  public String ALG_GA_POPULATION_SZ;
+  public Integer ALG_GA_POPULATION_SZ;
   public String ALG_GA_NUM_GENERATIONS;
   public Integer ALG_SAHC_POPULATION_SZ;
   public String PR_CLUSTER_FILE;
@@ -52,4 +52,7 @@ final class EngineArgs {
   public boolean MDG_PARSER_USE_TABS;
   public String PROGRESS_CALLBACK_CLASS;
   public Integer PROGRESS_CALLBACK_FREQ;
+  public Class ALG_HC_SA_CLASS;
+  public String ALG_HC_SA_CONFIG;
+  public boolean ECHO_RESULTS_TO_CONSOLE;
 }

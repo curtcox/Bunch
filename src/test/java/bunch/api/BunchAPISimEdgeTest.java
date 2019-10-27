@@ -273,24 +273,22 @@ String mode = "NAHC";
 
   void runClustering(String mdgFileName, boolean removeSpecialNodes) throws Exception {
       BunchAPI api = new BunchAPI();
-      BunchProperties bp = new BunchProperties();
-      bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,mdgFileName);
+      var bp = api.bunchArgs;
+      bp.MDG_INPUT_FILE_NAME = mdgFileName;
 
       Hashtable htSpecial = api.getSpecialModules(mdgFileName);
 
-      bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_HILL_CLIMBING);
-      bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.TEXT_OUTPUT_FORMAT);
+      bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
+      bp.OUTPUT_FORMAT = BunchProperties.TEXT_OUTPUT_FORMAT;
 
-      if(mode.equals("SAHC"))
-      {
-        bp.setProperty(BunchProperties.ALG_HC_HC_PCT,"100");
-        bp.setProperty(BunchProperties.ALG_HC_RND_PCT,"0");
+      if(mode.equals("SAHC")) {
+        bp.algHcHcPct= 100;
+        bp.algHcRndPct = 0;
       }
 
       if(removeSpecialNodes)
         api.bunchArgs.SPECIAL_MODULE_HASHTABLE = htSpecial;
 
-      api.setProperties(bp);
       api.run();
       var results = api.getResults();
       Integer iMedLvl = results.MEDIAN_LEVEL_GRAPH;

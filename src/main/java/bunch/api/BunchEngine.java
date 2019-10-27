@@ -548,7 +548,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       String method = bunchArgs.ALG_GA_SELECTION_METHOD;
       String cProb = bunchArgs.ALG_GA_CROSSOVER_PROB;
       String mProb = bunchArgs.ALG_GA_MUTATION_PROB;
-      String popSz = bunchArgs.ALG_GA_POPULATION_SZ;
+      Integer popSz = bunchArgs.ALG_GA_POPULATION_SZ;
       String numGens = bunchArgs.ALG_GA_NUM_GENERATIONS;
 
       if(method != null) {
@@ -576,8 +576,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       }
 
       if(popSz != null) {
-        int pSize = Integer.parseInt(popSz);
-        gaConfig.setPopulationSize(pSize);
+        gaConfig.setPopulationSize(popSz);
       }
     }
 
@@ -669,11 +668,8 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
         graphOutput_d = preferences_d.getGraphOutputFactory().getOutput(driver);
 
-        String outTree = bunchArgs.OUTPUT_TREE;
-        if(outTree != null) {
-          if(outTree.equalsIgnoreCase("true")) {
+        if (bunchArgs.OUTPUT_TREE) {
             graphOutput_d.setNestedLevels(true);
-          }
         }
 
         graphOutput_d.setBaseName(outFileName); //(String)bunchArgs.get(BunchProperties.MDG_INPUT_FILE_NAME));

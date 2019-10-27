@@ -1,6 +1,7 @@
 package bunch.api;
 
 import bunch.model.Cluster;
+import bunch.simple.SASimpleTechnique;
 import org.junit.Test;
 
 import java.util.*;
@@ -21,7 +22,7 @@ int [] prIfreq = new int [11];
  public void doWithFile() throws Exception {
 
       BunchAPI api = new BunchAPI();
-      BunchProperties bp = new BunchProperties();
+      var bp = api.bunchArgs;
 
       BunchMDG bmdg = new BunchMDG();
 
@@ -33,7 +34,7 @@ int [] prIfreq = new int [11];
       //bmdg.addMDGEdge("m5","m4");
       //bmdg.addMDGEdge("m4","m3");
 
-     bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME, "e:\\SampleMDGs\\paul.mdg");
+     bp.MDG_INPUT_FILE_NAME = "e:\\SampleMDGs\\paul.mdg";
       //ArrayList edges = new ArrayList();
       //BunchMDGDependency be1 = new BunchMDGDependency("m1","m2");
       //BunchMDGDependency be2 = new BunchMDGDependency("m2","m1");
@@ -55,17 +56,16 @@ int [] prIfreq = new int [11];
       ////bp.setProperty(BunchProperties.OUTPUT_FILE,"e:\\samplemdgs\\rcsBrian2");
       //bp.setProperty(BunchProperties.OMNIPRESENT_SUPPLIERS, "m4,m5");
 
-      bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_HILL_CLIMBING);
-      bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.NULL_OUTPUT_FORMAT);
+      bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
+      bp.OUTPUT_FORMAT = BunchProperties.NULL_OUTPUT_FORMAT;
       ////bp.setProperty(BunchProperties.MDG_OUTPUT_MODE, BunchProperties.OUTPUT_DETAILED);
 
 
-      bp.setProperty(BunchProperties.CLUSTERING_APPROACH,BunchProperties.AGGLOMERATIVE);
+      bp.clusteringApproach = BunchProperties.AGGLOMERATIVE;
 
       //bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.NULL_OUTPUT_FORMAT);
-      bp.setProperty(BunchProperties.PROGRESS_CALLBACK_CLASS,"bunch.api.BunchAPITestCallback");
-      bp.setProperty(BunchProperties.PROGRESS_CALLBACK_FREQ,"5");
-      api.setProperties(bp);
+      bp.PROGRESS_CALLBACK_CLASS = "bunch.api.BunchAPITestCallback";
+      bp.PROGRESS_CALLBACK_FREQ = 5;
       println("Running...");
         api.run();
       var results = api.getResults();
@@ -396,15 +396,14 @@ println("ML:"+meclValue);
     String cluFile = "c:\\research\\mdgs\\pgsql.clu";
 
     println("Starting...");
-    BunchProperties bp = new BunchProperties();
-    bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,mdgFile);
-    bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_HILL_CLIMBING);
-    bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.TEXT_OUTPUT_FORMAT);
-    bp.setProperty(BunchProperties.OUTPUT_TREE,"true");
-    bp.setProperty(BunchProperties.OUTPUT_FILE,cluFile);
-
     BunchAPI api = new BunchAPI();
-    api.setProperties(bp);
+    var bp = api.bunchArgs;
+    bp.MDG_INPUT_FILE_NAME = mdgFile;
+    bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
+    bp.OUTPUT_FORMAT = BunchProperties.TEXT_OUTPUT_FORMAT;
+    bp.OUTPUT_TREE = true;
+    bp.OUTPUT_FILE = cluFile;
+
     api.run();
     println("Done");
 }
@@ -422,27 +421,24 @@ println("ML:"+meclValue);
 
   for(int i = 0; i < numRuns; i++) {
     BunchAPI api = new BunchAPI();
-    BunchProperties bp = new BunchProperties();
+    var bp = api.bunchArgs;
 
-    bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,mdg);
+    bp.MDG_INPUT_FILE_NAME = mdg;
 
-    bp.setProperty(BunchProperties.CLUSTERING_ALG, BunchProperties.ALG_HILL_CLIMBING);
+    bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
 
     if(useSA) {
-      bp.setProperty(BunchProperties.ALG_HC_HC_PCT, "30");
-      bp.setProperty(BunchProperties.ALG_HC_RND_PCT, "20");
-      bp.setProperty(BunchProperties.ALG_HC_SA_CLASS, "bunch.simple.SASimpleTechnique");
-      bp.setProperty(BunchProperties.ALG_HC_SA_CONFIG, "InitialTemp=10.0,Alpha=0.85");
-      bp.setProperty(BunchProperties.OUTPUT_FORMAT, BunchProperties.NULL_OUTPUT_FORMAT);
+      bp.algHcHcPct = 30;
+      bp.algHcRndPct = 20;
+      bp.ALG_HC_SA_CLASS = SASimpleTechnique.class;
+      bp.ALG_HC_SA_CONFIG = "InitialTemp=10.0,Alpha=0.85";
+      bp.OUTPUT_FORMAT = BunchProperties.NULL_OUTPUT_FORMAT;
     }
 
-    bp.setProperty(BunchProperties.ALG_HC_HC_PCT,"100");
+    bp.algHcHcPct = 100;
 
 
-    bp.setProperty(BunchProperties.OUTPUT_FORMAT, BunchProperties.GXL_OUTPUT_FORMAT);
-
-    api.setProperties(bp);
-
+    bp.OUTPUT_FORMAT = BunchProperties.GXL_OUTPUT_FORMAT;
 
     //api.setDebugStats(true);
     long startTime = System.currentTimeMillis();
@@ -536,16 +532,16 @@ println("ML:"+meclValue);
       if(true) System.exit(0);
  */
       BunchAPI api = new BunchAPI();
-      BunchProperties bp = new BunchProperties();
+      var bp = api.bunchArgs;
       //BunchAsyncNotifyTest nt = new BunchAsyncNotifyTest();
 
-      bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,mdg);
-      bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_HILL_CLIMBING);
+      bp.MDG_INPUT_FILE_NAME = mdg;
+      bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
 
       //bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_GA);
-      bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.TEXT_OUTPUT_FORMAT);
-      bp.setProperty(BunchProperties.OUTPUT_TREE,"true");
-      bp.setProperty(BunchProperties.OUTPUT_FILE,"e:\\samplemdgs\\compiler.clu");
+      bp.OUTPUT_FORMAT = BunchProperties.TEXT_OUTPUT_FORMAT;
+      bp.OUTPUT_TREE = true;
+      bp.OUTPUT_FILE = "e:\\samplemdgs\\compiler.clu";
 
       //bp.setProperty(BunchProperties.USER_DIRECTED_CLUSTER_SIL,"e:\\samplemdgs\\compiler.locks");
       //bp.setProperty(BunchProperties.LIBRARY_LIST,"declarations");
@@ -555,8 +551,6 @@ println("ML:"+meclValue);
       //bp.setProperty(BunchProperties.ALG_GA_NUM_GENERATIONS,"100");
 
       //gerations = 100, population = 100
-
-      api.setProperties(bp);
 
       //api.setAPIProperty(BunchProperties.RUN_ASYNC_NOTIFY_CLASS,nt);
 
@@ -640,19 +634,18 @@ println("ML:"+meclValue);
 
   @Test
   public void BunchAPITest5() throws Exception {
-    BunchProperties bp = new BunchProperties();
+      BunchAPI api = new BunchAPI();
+    var bp = api.bunchArgs;
 
-    bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,"e:\\expir\\small");
-    bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_GA);
+    bp.MDG_INPUT_FILE_NAME = "e:\\expir\\small";
+    bp.CLUSTERING_ALG = BunchProperties.ALG_GA;
 
-    bp.setProperty(BunchProperties.ALG_GA_POPULATION_SZ,"50");
+    bp.ALG_GA_POPULATION_SZ = 50;
 
     //bp.setProperty(BunchProperties.RUN_MODE,BunchProperties.RUN_MODE_MQ_CALC);
     //bp.setProperty(BunchProperties.MQCALC_MDG_FILE,"e:\\expir\\compiler");
     //bp.setProperty(BunchProperties.MQCALC_SIL_FILE,"e:\\expir\\compilerSIL.bunch");
 
-    BunchAPI api = new BunchAPI();
-    api.setProperties(bp);
     api.run();
     var results = api.getResults();
     printResutls(results);
@@ -846,18 +839,17 @@ println("ML:"+meclValue);
 
   public void runClustering(String mdgFileName, boolean removeSpecialNodes) throws Exception {
       BunchAPI api = new BunchAPI();
-      BunchProperties bp = new BunchProperties();
-      bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,mdgFileName);
+      var bp = api.bunchArgs;
+      bp.MDG_INPUT_FILE_NAME = mdgFileName;
 
       Hashtable htSpecial = api.getSpecialModules(mdgFileName);
 
-      bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_HILL_CLIMBING);
-      bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.TEXT_OUTPUT_FORMAT);
+      bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
+      bp.OUTPUT_FORMAT = BunchProperties.TEXT_OUTPUT_FORMAT;
 
       if(removeSpecialNodes)
         api.bunchArgs.SPECIAL_MODULE_HASHTABLE = htSpecial;
 
-      api.setProperties(bp);
       api.run();
       var results = api.getResults();
       Integer iMedLvl = results.MEDIAN_LEVEL_GRAPH;
@@ -923,21 +915,17 @@ println("ML:"+meclValue);
     int    nodeCluster = bn.getCluster();
     int    homeStrength = cv[nodeCluster];
     String cvStr = "";
-    for(int i = 0; i < cv.length; i++)
-    {
+    for(int i = 0; i < cv.length; i++) {
       String modifier = "";
       int cstr = cv[i];
       if(i == nodeCluster) modifier = "*";
-      if(i != nodeCluster)
-      {
-        if(cstr > homeStrength)
-        {
+      if(i != nodeCluster) {
+        if(cstr > homeStrength) {
           modifier = ">";
           status = "BAD:";
         }
         if(cstr < homeStrength) modifier = "<";
-        if(cstr == homeStrength)
-        {
+        if(cstr == homeStrength) {
           if(!status.equals("BAD:"))
             status = "ISOMORPHIC:";
           modifier = "=";
@@ -961,8 +949,7 @@ println("ML:"+meclValue);
 
     if (bn.getDeps() != null) {
       fdeps = bn.getDeps().iterator();
-      while(fdeps.hasNext())
-      {
+      while(fdeps.hasNext()) {
         BunchEdge be = (BunchEdge)fdeps.next();
         BunchNode target = be.getDestNode();
         int targetCluster = target.getCluster();
@@ -972,8 +959,7 @@ println("ML:"+meclValue);
 
     if (bn.getBackDeps() != null) {
       bdeps = bn.getBackDeps().iterator();
-      while(bdeps.hasNext())
-      {
+      while(bdeps.hasNext()) {
         BunchEdge be = (BunchEdge)bdeps.next();
         BunchNode target = be.getSrcNode();
         int targetCluster = target.getCluster();
@@ -1005,8 +991,7 @@ println("ML:"+meclValue);
     //======================================
     Iterator nodeI = nodeList.iterator();
 
-    while(nodeI.hasNext())
-    {
+    while(nodeI.hasNext()) {
       BunchNode bn = (BunchNode)nodeI.next();
       Iterator fdeps = null;
       Iterator bdeps = null;
@@ -1015,8 +1000,7 @@ println("ML:"+meclValue);
       println("Cluster ID:   " + bn.getCluster());
 
       //PRINT THE CONNECTIONS TO OTHER NODES
-      if (bn.getDeps() != null)
-      {
+      if (bn.getDeps() != null) {
         fdeps = bn.getDeps().iterator();
         while(fdeps.hasNext())
         {
@@ -1028,11 +1012,9 @@ println("ML:"+meclValue);
       }
 
       //PRINT THE CONNECTIONS FROM OTHER NODES
-      if (bn.getBackDeps() != null)
-      {
+      if (bn.getBackDeps() != null) {
         bdeps = bn.getBackDeps().iterator();
-        while(bdeps.hasNext())
-        {
+        while(bdeps.hasNext()) {
           BunchEdge be = (BunchEdge)bdeps.next();
           String depName = be.getSrcNode().getName();
           int weight = be.getWeight();
@@ -1073,23 +1055,21 @@ println("ML:"+meclValue);
       FileWriter outF = new FileWriter(mdgFile+".txt");
       java.io.BufferedWriter out = new BufferedWriter(outF);
 
-      for(int i = 0; i < runCount; i++)
-      {
+      for(int i = 0; i < runCount; i++) {
         BunchAPI api = new BunchAPI();
-        BunchProperties bp = new BunchProperties();
+        var bp = api.bunchArgs;
 
-        bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,mdgFile);
-        bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.TEXT_OUTPUT_FORMAT);
+        bp.MDG_INPUT_FILE_NAME = mdgFile;
+        bp.OUTPUT_FORMAT = BunchProperties.TEXT_OUTPUT_FORMAT;
 
-        bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_HILL_CLIMBING);
-        bp.setProperty(BunchProperties.ALG_HC_HC_PCT,"100");
-        bp.setProperty(BunchProperties.ALG_HC_RND_PCT,"0");
+        bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
+        bp.algHcHcPct = 100;
+        bp.algHcRndPct = 0;
 
         Integer cnt = new Integer(i);
         String outFileName = mdgFile + cnt.toString();
-        bp.setProperty(BunchProperties.OUTPUT_FILE,outFileName);
-        bp.setProperty(BunchProperties.ECHO_RESULTS_TO_CONSOLE,"True");
-        api.setProperties(bp);
+        bp.OUTPUT_FILE = outFileName;
+        bp.ECHO_RESULTS_TO_CONSOLE = true;
 
         //println("Running...");
           api.run();
@@ -1126,7 +1106,7 @@ println("ML:"+meclValue);
 
       for (int i = 0; i < runCount; i++) {
           BunchAPI api = new BunchAPI();
-          BunchProperties bp = new BunchProperties();
+          var bp = api.bunchArgs;
           for (int j = i+1; j < runCount; j++) {
             if (i == j) continue;
             performed++;
@@ -1135,10 +1115,9 @@ println("ML:"+meclValue);
             Integer iJ = new Integer(j);
             String file1 = mdgFile + iI.toString() + ".bunch";
             String file2 = mdgFile + iJ.toString() + ".bunch";
-            bp.setProperty(BunchProperties.RUN_MODE, BunchProperties.RUN_MODE_PR_CALC);
-            bp.setProperty(BunchProperties.PR_CLUSTER_FILE,file1);
-            bp.setProperty(BunchProperties.PR_EXPERT_FILE,file2);
-            api.setProperties(bp);
+            bp.runMode =  BunchProperties.RUN_MODE_PR_CALC;
+            bp.PR_CLUSTER_FILE = file1;
+            bp.PR_EXPERT_FILE = file2;
             api.run();
             var results = api.getResults();
             String precision = results.prPrecisionValue;
@@ -1157,28 +1136,27 @@ println("ML:"+meclValue);
   @Test
   public void run() throws Exception {
       BunchAPI api = new BunchAPI();
-      BunchProperties bp = new BunchProperties();
-      bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,"/Users/brianmitchell/dev/mdgs/incl");
+      var bp = api.bunchArgs;
+      bp.MDG_INPUT_FILE_NAME = "/Users/brianmitchell/dev/mdgs/incl";
 
-      bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_HILL_CLIMBING);
+      bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
      //bp.setProperty(BunchProperties.ALG_HC_POPULATION_SZ,"12");
       //bp.setProperty(BunchProperties.ALG_HC_POPULATION_SIZE,"12");
-      bp.setProperty(BunchProperties.ALG_HC_HC_PCT,"55");
-      bp.setProperty(BunchProperties.ALG_HC_RND_PCT,"20");
-      bp.setProperty(BunchProperties.ALG_HC_SA_CLASS,"bunch.simple.SASimpleTechnique");
-      bp.setProperty(BunchProperties.ALG_HC_SA_CONFIG,"InitialTemp=100.0,Alpha=0.95");
+      bp.algHcHcPct = 55;
+      bp.algHcRndPct = 20;
+      bp.ALG_HC_SA_CLASS = SASimpleTechnique.class;
+      bp.ALG_HC_SA_CONFIG = "InitialTemp=100.0,Alpha=0.95";
       //bp.setProperty(BunchProperties.TIMEOUT_TIME,"500");
 
 /*
       bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_SAHC);
       bp.setProperty(BunchProperties.ALG_SAHC_POPULATION_SZ,"10");
 */
-      bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.DOT_OUTPUT_FORMAT);
-      bp.setProperty(BunchProperties.OUTPUT_DIRECTORY,"/Users/brianmitchell/dev/mdgs");
+      bp.OUTPUT_FORMAT = BunchProperties.DOT_OUTPUT_FORMAT;
+      bp.OUTPUT_DIRECTORY = "/Users/brianmitchell/dev/mdgs";
 
       //bp.setProperty(BunchProperties.PROGRESS_CALLBACK_CLASS,"bunch.api.BunchAPITestCallback");
       //bp.setProperty(BunchProperties.PROGRESS_CALLBACK_FREQ,"0");
-      api.setProperties(bp);
       println("Running...");
 
       api.run();
