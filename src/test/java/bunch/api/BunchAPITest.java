@@ -26,7 +26,7 @@ int [] prIfreq = new int [11];
       BunchAPI api = new BunchAPI();
       var bp = api.bunchArgs;
 
-      BunchMDG bmdg = new BunchMDG();
+      var bmdg = new BunchMDG();
 
 
       //bmdg.addMDGEdge("m1","m2");
@@ -253,8 +253,7 @@ int [] prIfreq = new int [11];
 
     if((bgList == null)||(bgRef == null)) return null;
 
-    for(int i = 0; i < bgList.length; i++)
-    {
+    for(int i = 0; i < bgList.length; i++) {
       BunchGraph bg = bgList[i];
 
       double esValue = BunchGraphUtils.calcEdgeSimiliarities(bg,bgRef);
@@ -317,8 +316,8 @@ println("ML:"+meclValue);
     String pathMDG = baseDir+mdgFileName;
     int    howMany = 50;
 
-        Hashtable res = collectFinalGraphs(pathMDG,baseDir,howMany);
-        Hashtable mes = processFinalResults(res);
+        var res = collectFinalGraphs(pathMDG,baseDir,howMany);
+        var mes = processFinalResults(res);
   }
 
   private double calcSlope(ArrayList inputX, ArrayList inputY) {
@@ -1201,8 +1200,4 @@ println("ML:"+meclValue);
       r.exec("dot -Tps e:\\pstopcl\\incl.dot > e:\\pstopcl\\in\\incl.ps");
   }
 
-  public static void main(String[] args) throws Exception {
-    BunchAPITest test = new BunchAPITest();
-    test.run();
-  }
 }

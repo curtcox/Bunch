@@ -66,9 +66,8 @@ public void setInput(String fileName) {
   try {
     reader_d = new BufferedReader(new FileReader(fileName));
     inputFileName = fileName;
-  } catch (Exception e) {
-    e.printStackTrace();
-    System.exit(1);
+  } catch (FileNotFoundException e) {
+    throw new RuntimeException(e);
   }
 }
 

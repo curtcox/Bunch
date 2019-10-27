@@ -117,8 +117,7 @@ String mode = "NAHC";
   }
 
 
-  private double expirIsomorphicPR()
-  {
+  private double expirIsomorphicPR() {
     for(int i = 0; i < bunchGraphs.size(); i++)
     {
       BunchGraph g = (BunchGraph)bunchGraphs.get(i);
@@ -127,8 +126,7 @@ String mode = "NAHC";
     return expirPR(prIfreq);
   }
 
-  private double expirIsomorphicCount()
-  {
+  private double expirIsomorphicCount() {
     int accum = 0;
     for(int i = 0; i < bunchGraphs.size(); i++)
     {
@@ -138,14 +136,12 @@ String mode = "NAHC";
     return ((double)accum/(double)bunchGraphs.size());
   }
 
-  private void clearDistArray(int []distArray)
-  {
+  private void clearDistArray(int []distArray) {
     for(int i = 0; i < distArray.length; i++)
       distArray[i] = 0;
   }
 
-  private int findIndex(double value)
-  {
+  private int findIndex(double value) {
     if((value < 0)||(value > 1.0))
       return 0;
 
@@ -155,17 +151,14 @@ String mode = "NAHC";
     return iTmp;
   }
 
-  private double expirES(int []distArray)
-  {
+  private double expirES(int []distArray) {
     long trials = 0;
     double accum = 0.0;
 
     clearDistArray(distArray);
-    for(int i = 0; i < bunchGraphs.size(); i++)
-    {
+    for(int i = 0; i < bunchGraphs.size(); i++) {
       BunchGraph g1 = (BunchGraph)bunchGraphs.get(i);
-      for(int j = i; j < bunchGraphs.size(); j++)
-      {
+      for(int j = i; j < bunchGraphs.size(); j++) {
         BunchGraph g2 = (BunchGraph)bunchGraphs.get(j);
 
         Double prValue = new Double(BunchGraphUtils.calcEdgeSimiliarities(g1,g2));
@@ -183,8 +176,7 @@ String mode = "NAHC";
         */
 
         //System.out.println("AVG_PR(graph "+i+", graph"+j+") = "+prsValue);
-        if (i != j)
-        {
+        if (i != j) {
           trials++;
           int idx = this.findIndex(prValue.doubleValue());
           distArray[idx]++;
@@ -195,17 +187,14 @@ String mode = "NAHC";
     return ((double)accum/(double)trials);
   }
 
-  private double expirPR(int []distArray)
-  {
+  private double expirPR(int []distArray) {
     long trials = 0;
     double accum = 0.0;
 
     clearDistArray(distArray);
-    for(int i = 0; i < bunchGraphs.size(); i++)
-    {
+    for(int i = 0; i < bunchGraphs.size(); i++) {
       BunchGraph g1 = (BunchGraph)bunchGraphs.get(i);
-      for(int j = i; j < bunchGraphs.size(); j++)
-      {
+      for(int j = i; j < bunchGraphs.size(); j++) {
         BunchGraph g2 = (BunchGraph)bunchGraphs.get(j);
 
         //Double prValue = new Double(BunchGraphUtils.calcEdgeSimiliarities(g1,g2));
@@ -220,8 +209,7 @@ String mode = "NAHC";
 
 
         //System.out.println("AVG_PR(graph "+i+", graph"+j+") = "+prsValue);
-        if (i != j)
-        {
+        if (i != j) {
           trials++;
           int idx = this.findIndex(prValue.doubleValue());
           distArray[idx]++;
@@ -232,8 +220,7 @@ String mode = "NAHC";
     return ((double)accum/(double)trials);
   }
 
-  private double expirMecl(int []distArray)
-  {
+  private double expirMecl(int []distArray) {
     long trials = 0;
     double accum = 0.0;
 

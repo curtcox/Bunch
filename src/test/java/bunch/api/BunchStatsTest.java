@@ -4,16 +4,13 @@ import bunch.calculator.TurboMQIncrW;
 import bunch.model.Cluster;
 import bunch.model.Graph;
 import bunch.parser.Parser;
+import org.junit.Test;
 
 import java.io.*;
 
 public final class BunchStatsTest {
 
-  public BunchStatsTest() throws Exception {
-    //runStatsTest();
-    checkGraphTest();
-  }
-
+  @Test
   public void checkGraphTest() throws Exception {
       String filename = "d:\\proj\\bunch\\examples\\bison"; //"e:\\incl";
       bunch.BunchPreferences pref = (bunch.BunchPreferences)(java.beans.Beans.instantiate(null, "bunch.BunchPreferences"));
@@ -28,21 +25,20 @@ public final class BunchStatsTest {
       Graph.setObjectiveFunctionCalculatorFactory(pref.getObjectiveFunctionCalculatorFactory());
       g.setObjectiveFunctionCalculator(objFnCalc);
 
-      if(g == null)
-      {
+      if(g == null) {
         System.out.println("The graph is null");
         return;
       }
 
-      for(int i = 0; i < 100; i++)
-      {
+      for(int i = 0; i < 100; i++) {
         int [] clusterV = g.genRandomClusterSize(); //.getRandomCluster();
         Cluster c = new Cluster(g,clusterV);
         System.out.println("NumClusters = "+c.getClusterNames().length+" MQ Value = "+c.getObjFnValue());
       }
   }
 
-  void runStatsTest() throws IOException, ClassNotFoundException {
+  @Test
+  public void runStatsTest() throws IOException, ClassNotFoundException {
 
     String fileName = "e:\\bunchstats.txt";
 
@@ -53,8 +49,7 @@ public final class BunchStatsTest {
     System.out.println(header);
     writer_d.write(header+"\r\n");
 
-    for(int i = 0; i < 100; i++)
-    {
+    for(int i = 0; i < 100; i++) {
       BunchAPI api = new BunchAPI();
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = "e:\\incl";
@@ -101,7 +96,4 @@ public final class BunchStatsTest {
 
   }
 
-  public static void main(String[] args) throws Exception {
-    new BunchStatsTest();
-  }
 }
