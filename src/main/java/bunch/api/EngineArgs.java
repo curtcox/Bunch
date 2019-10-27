@@ -44,7 +44,6 @@ final class EngineArgs {
   public Integer ALG_SAHC_POPULATION_SZ;
   public String PR_CLUSTER_FILE;
   public String PR_EXPERT_FILE;
-  public BunchAsyncNotify RUN_ASYNC_NOTIFY_CLASS;
   public String CLUSTERING_ALG;
   public Map SPECIAL_MODULE_HASHTABLE;
   public String MDG_PARSER_DELIMS;

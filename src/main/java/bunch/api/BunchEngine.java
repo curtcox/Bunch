@@ -692,32 +692,32 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     return clusteringMethod_d.getBestGraph().cloneGraph();
   }
 
-  boolean runClusteringAsync(final BunchAsyncNotify nObject) {
-
-    nObject.setStatus(bunch.api.BunchAsyncNotify.STATUS_RUNNING);
-    SwingWorker worker_d = new SwingWorker() {
-      public Object construct() {
-        try{
-          runClustering();
-        }
-        catch(Exception threadEx){ threadEx.printStackTrace(); }
-        return "Done";
-      }
-      public void interrupt() {
-        this.suspend();
-        super.interrupt();
-      }
-      public void finished() {
-        nObject.setStatus(bunch.api.BunchAsyncNotify.STATUS_DONE);
-        nObject.notifyDone();
-      }
-    };
-
-    worker_d.setPriority(Thread.MIN_PRIORITY);
-    worker_d.start();
-    nObject.setThread(worker_d.getThread());
-    return true;
-  }
+//  boolean runClusteringAsync(final BunchAsyncNotify nObject) {
+//
+//    nObject.setStatus(bunch.api.BunchAsyncNotify.STATUS_RUNNING);
+//    SwingWorker worker_d = new SwingWorker() {
+//      public Object construct() {
+//        try{
+//          runClustering();
+//        }
+//        catch(Exception threadEx){ threadEx.printStackTrace(); }
+//        return "Done";
+//      }
+//      public void interrupt() {
+//        this.suspend();
+//        super.interrupt();
+//      }
+//      public void finished() {
+//        nObject.setStatus(bunch.api.BunchAsyncNotify.STATUS_DONE);
+//        nObject.notifyDone();
+//      }
+//    };
+//
+//    worker_d.setPriority(Thread.MIN_PRIORITY);
+//    worker_d.start();
+//    nObject.setThread(worker_d.getThread());
+//    return true;
+//  }
 
   boolean runClustering() throws IOException, ClassNotFoundException {
     initClustering();
@@ -905,16 +905,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     if (runMode == null) return false;
 
     if (runMode == CLUSTER) {
-      boolean rc;
-      BunchAsyncNotify notifyClass = null;
-      if (bunchArgs.RUN_ASYNC_NOTIFY_CLASS != null)
-        notifyClass = bunchArgs.RUN_ASYNC_NOTIFY_CLASS;
-
-      if(notifyClass == null)
-        rc = runClustering();
-      else
-        rc = runClusteringAsync(notifyClass);
-      return rc;
+      return runClustering();
     }
     if (runMode == PR_CALC) {
       return runPRCalc();
