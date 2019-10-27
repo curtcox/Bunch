@@ -2,11 +2,13 @@ package bunch.api;
 
 import bunch.model.Cluster;
 import bunch.simple.SASimpleTechnique;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.util.*;
 import java.io.*;
 
+import static bunch.api.BunchProperties.*;
 import static bunch.api.Key.*;
 
 public class BunchAPITest {
@@ -51,19 +53,19 @@ int [] prIfreq = new int [11];
       //edges.add(be6);
 
       //bmdg.addMDGEdges(edges);
-      ////api.setAPIProperty(BunchProperties.MDG_GRAPH_OBJECT,bmdg);
-     // bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,"e:\\expir\\rcs");
-      ////bp.setProperty(BunchProperties.OUTPUT_FILE,"e:\\samplemdgs\\rcsBrian2");
-      //bp.setProperty(BunchProperties.OMNIPRESENT_SUPPLIERS, "m4,m5");
+      ////api.setAPIProperty(MDG_GRAPH_OBJECT,bmdg);
+     // bp.setProperty(MDG_INPUT_FILE_NAME,"e:\\expir\\rcs");
+      ////bp.setProperty(OUTPUT_FILE,"e:\\samplemdgs\\rcsBrian2");
+      //bp.setProperty(OMNIPRESENT_SUPPLIERS, "m4,m5");
 
-      bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
-      bp.OUTPUT_FORMAT = BunchProperties.NULL_OUTPUT_FORMAT;
-      ////bp.setProperty(BunchProperties.MDG_OUTPUT_MODE, BunchProperties.OUTPUT_DETAILED);
+      bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
+      bp.OUTPUT_FORMAT = NULL_OUTPUT_FORMAT;
+      ////bp.setProperty(MDG_OUTPUT_MODE, OUTPUT_DETAILED);
 
 
-      bp.clusteringApproach = BunchProperties.AGGLOMERATIVE;
+      bp.clusteringApproach = AGGLOMERATIVE;
 
-      //bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.NULL_OUTPUT_FORMAT);
+      //bp.setProperty(OUTPUT_FORMAT,NULL_OUTPUT_FORMAT);
       bp.PROGRESS_CALLBACK_CLASS = "bunch.api.BunchAPITestCallback";
       bp.PROGRESS_CALLBACK_FREQ = 5;
       println("Running...");
@@ -152,13 +154,13 @@ int [] prIfreq = new int [11];
 
         var bmdg = newBunchMDG();
         var args = api.bunchArgs;
-        args.runMode = BunchProperties.RUN_MODE_CLUSTER;
+        args.runMode = RUN_MODE_CLUSTER;
         args.mdgGraphObject = bmdg;
 
-        args.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
-        args.OUTPUT_FORMAT = BunchProperties.NULL_OUTPUT_FORMAT;
+        args.CLUSTERING_ALG = ALG_HILL_CLIMBING;
+        args.OUTPUT_FORMAT = NULL_OUTPUT_FORMAT;
 
-        args.clusteringApproach = BunchProperties.AGGLOMERATIVE;
+        args.clusteringApproach = AGGLOMERATIVE;
 
         args.PROGRESS_CALLBACK_CLASS = "bunch.api.BunchAPITestCallback";
         args.PROGRESS_CALLBACK_FREQ = 5;
@@ -167,16 +169,24 @@ int [] prIfreq = new int [11];
         var results = api.getResults();
         println("Results:");
 
-        Long rt = results.RUNTIME;
-        Long evals = results.MQEVALUATIONS;
-        Integer levels = results.TOTAL_CLUSTER_LEVELS;
-        Long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
-
-        println("Runtime = " + rt + " ms.");
-        println("Total MQ Evaluations = " + evals);
-        println("Total Levels = " + levels);
-        println("Simulated Annealing Moves Taken = " + saMovesTaken);
+        assertTrue(results.RUNTIME < 20);
+        assertBetween(results.MQEVALUATIONS,500,5000);
+        assertBetween(results.TOTAL_CLUSTER_LEVELS,1,10);
+        assertEquals(0,results.SA_NEIGHBORS_TAKEN);
         println();
+    }
+
+    static void assertBetween(long value, long min, long max) {
+        assertLessThan(value,max);
+        assertGreaterThan(value,min);
+    }
+
+    static void assertLessThan(long value,long goal) {
+        assertTrue("Expected value " + value + " is not < " + goal,value < goal);
+    }
+
+    static void assertGreaterThan(long value,long goal) {
+        assertTrue("Expected value " + value + " is not > " + goal,value > goal);
     }
 
     static void println(String message) {
@@ -399,8 +409,8 @@ println("ML:"+meclValue);
     BunchAPI api = new BunchAPI();
     var bp = api.bunchArgs;
     bp.MDG_INPUT_FILE_NAME = mdgFile;
-    bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
-    bp.OUTPUT_FORMAT = BunchProperties.TEXT_OUTPUT_FORMAT;
+    bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
+    bp.OUTPUT_FORMAT = TEXT_OUTPUT_FORMAT;
     bp.OUTPUT_TREE = true;
     bp.OUTPUT_FILE = cluFile;
 
@@ -425,20 +435,20 @@ println("ML:"+meclValue);
 
     bp.MDG_INPUT_FILE_NAME = mdg;
 
-    bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
+    bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
 
     if(useSA) {
       bp.algHcHcPct = 30;
       bp.algHcRndPct = 20;
       bp.ALG_HC_SA_CLASS = SASimpleTechnique.class;
       bp.ALG_HC_SA_CONFIG = "InitialTemp=10.0,Alpha=0.85";
-      bp.OUTPUT_FORMAT = BunchProperties.NULL_OUTPUT_FORMAT;
+      bp.OUTPUT_FORMAT = NULL_OUTPUT_FORMAT;
     }
 
     bp.algHcHcPct = 100;
 
 
-    bp.OUTPUT_FORMAT = BunchProperties.GXL_OUTPUT_FORMAT;
+    bp.OUTPUT_FORMAT = GXL_OUTPUT_FORMAT;
 
     //api.setDebugStats(true);
     long startTime = System.currentTimeMillis();
@@ -536,23 +546,23 @@ println("ML:"+meclValue);
       //BunchAsyncNotifyTest nt = new BunchAsyncNotifyTest();
 
       bp.MDG_INPUT_FILE_NAME = mdg;
-      bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
+      bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
 
-      //bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_GA);
-      bp.OUTPUT_FORMAT = BunchProperties.TEXT_OUTPUT_FORMAT;
+      //bp.setProperty(CLUSTERING_ALG,ALG_GA);
+      bp.OUTPUT_FORMAT = TEXT_OUTPUT_FORMAT;
       bp.OUTPUT_TREE = true;
       bp.OUTPUT_FILE = "e:\\samplemdgs\\compiler.clu";
 
-      //bp.setProperty(BunchProperties.USER_DIRECTED_CLUSTER_SIL,"e:\\samplemdgs\\compiler.locks");
-      //bp.setProperty(BunchProperties.LIBRARY_LIST,"declarations");
-      //bp.setProperty(BunchProperties.MQ_CALCULATOR_CLASS,"bunch.calculator.TurboMQIncrW");
+      //bp.setProperty(USER_DIRECTED_CLUSTER_SIL,"e:\\samplemdgs\\compiler.locks");
+      //bp.setProperty(LIBRARY_LIST,"declarations");
+      //bp.setProperty(MQ_CALCULATOR_CLASS,"bunch.calculator.TurboMQIncrW");
 
-      //bp.setProperty(BunchProperties.ALG_GA_POPULATION_SZ,"100");
-      //bp.setProperty(BunchProperties.ALG_GA_NUM_GENERATIONS,"100");
+      //bp.setProperty(ALG_GA_POPULATION_SZ,"100");
+      //bp.setProperty(ALG_GA_NUM_GENERATIONS,"100");
 
       //gerations = 100, population = 100
 
-      //api.setAPIProperty(BunchProperties.RUN_ASYNC_NOTIFY_CLASS,nt);
+      //api.setAPIProperty(RUN_ASYNC_NOTIFY_CLASS,nt);
 
       println("Running...");
         api.run();
@@ -638,13 +648,13 @@ println("ML:"+meclValue);
     var bp = api.bunchArgs;
 
     bp.MDG_INPUT_FILE_NAME = "e:\\expir\\small";
-    bp.CLUSTERING_ALG = BunchProperties.ALG_GA;
+    bp.CLUSTERING_ALG = ALG_GA;
 
     bp.ALG_GA_POPULATION_SZ = 50;
 
-    //bp.setProperty(BunchProperties.RUN_MODE,BunchProperties.RUN_MODE_MQ_CALC);
-    //bp.setProperty(BunchProperties.MQCALC_MDG_FILE,"e:\\expir\\compiler");
-    //bp.setProperty(BunchProperties.MQCALC_SIL_FILE,"e:\\expir\\compilerSIL.bunch");
+    //bp.setProperty(RUN_MODE,RUN_MODE_MQ_CALC);
+    //bp.setProperty(MQCALC_MDG_FILE,"e:\\expir\\compiler");
+    //bp.setProperty(MQCALC_SIL_FILE,"e:\\expir\\compilerSIL.bunch");
 
     api.run();
     var results = api.getResults();
@@ -844,8 +854,8 @@ println("ML:"+meclValue);
 
       Hashtable htSpecial = api.getSpecialModules(mdgFileName);
 
-      bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
-      bp.OUTPUT_FORMAT = BunchProperties.TEXT_OUTPUT_FORMAT;
+      bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
+      bp.OUTPUT_FORMAT = TEXT_OUTPUT_FORMAT;
 
       if(removeSpecialNodes)
         api.bunchArgs.SPECIAL_MODULE_HASHTABLE = htSpecial;
@@ -1060,9 +1070,9 @@ println("ML:"+meclValue);
         var bp = api.bunchArgs;
 
         bp.MDG_INPUT_FILE_NAME = mdgFile;
-        bp.OUTPUT_FORMAT = BunchProperties.TEXT_OUTPUT_FORMAT;
+        bp.OUTPUT_FORMAT = TEXT_OUTPUT_FORMAT;
 
-        bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
+        bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
         bp.algHcHcPct = 100;
         bp.algHcRndPct = 0;
 
@@ -1115,7 +1125,7 @@ println("ML:"+meclValue);
             Integer iJ = new Integer(j);
             String file1 = mdgFile + iI.toString() + ".bunch";
             String file2 = mdgFile + iJ.toString() + ".bunch";
-            bp.runMode =  BunchProperties.RUN_MODE_PR_CALC;
+            bp.runMode =  RUN_MODE_PR_CALC;
             bp.PR_CLUSTER_FILE = file1;
             bp.PR_EXPERT_FILE = file2;
             api.run();
@@ -1139,24 +1149,24 @@ println("ML:"+meclValue);
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = "/Users/brianmitchell/dev/mdgs/incl";
 
-      bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
-     //bp.setProperty(BunchProperties.ALG_HC_POPULATION_SZ,"12");
-      //bp.setProperty(BunchProperties.ALG_HC_POPULATION_SIZE,"12");
+      bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
+     //bp.setProperty(ALG_HC_POPULATION_SZ,"12");
+      //bp.setProperty(ALG_HC_POPULATION_SIZE,"12");
       bp.algHcHcPct = 55;
       bp.algHcRndPct = 20;
       bp.ALG_HC_SA_CLASS = SASimpleTechnique.class;
       bp.ALG_HC_SA_CONFIG = "InitialTemp=100.0,Alpha=0.95";
-      //bp.setProperty(BunchProperties.TIMEOUT_TIME,"500");
+      //bp.setProperty(TIMEOUT_TIME,"500");
 
 /*
-      bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_SAHC);
-      bp.setProperty(BunchProperties.ALG_SAHC_POPULATION_SZ,"10");
+      bp.setProperty(CLUSTERING_ALG,ALG_SAHC);
+      bp.setProperty(ALG_SAHC_POPULATION_SZ,"10");
 */
-      bp.OUTPUT_FORMAT = BunchProperties.DOT_OUTPUT_FORMAT;
+      bp.OUTPUT_FORMAT = DOT_OUTPUT_FORMAT;
       bp.OUTPUT_DIRECTORY = "/Users/brianmitchell/dev/mdgs";
 
-      //bp.setProperty(BunchProperties.PROGRESS_CALLBACK_CLASS,"bunch.api.BunchAPITestCallback");
-      //bp.setProperty(BunchProperties.PROGRESS_CALLBACK_FREQ,"0");
+      //bp.setProperty(PROGRESS_CALLBACK_CLASS,"bunch.api.BunchAPITestCallback");
+      //bp.setProperty(PROGRESS_CALLBACK_FREQ,"0");
       println("Running...");
 
       api.run();
