@@ -13,19 +13,12 @@ import bunch.model.Node;
 
 public final class BunchUtilities {
 
-
-
-
-
 public final static double defaultPrecision = 0.0001;
 
 /**
  *		Deserialize an object from a byte array
  */
-public static
-Object
-fromByteArray(byte[] byteArray)
-{
+public static Object fromByteArray(byte[] byteArray) {
    if (byteArray == null || byteArray.length == 0) {
   	   return null;
    }
@@ -45,10 +38,7 @@ fromByteArray(byte[] byteArray)
 /**
  *    Serialize an object into a byte array
  */
-public static
-byte[]
-toByteArray(Serializable obj)
-{
+public static byte[] toByteArray(Serializable obj) {
 	if (obj == null) {
   	return null;
   }
@@ -63,13 +53,11 @@ toByteArray(Serializable obj)
 			  return bao.toByteArray();
 	}
 	catch (Exception e) {
-		e.printStackTrace();
-		return null;
+	    throw new RuntimeException(e);
 	}
 }
 
-public static String DelimitString(String input, int rowWidth)
-{
+public static String DelimitString(String input, int rowWidth) {
    System.out.println(input);
    StringBuffer sb = new StringBuffer(input);
    int totalLen = input.length();
@@ -97,8 +85,7 @@ public static String DelimitString(String input, int rowWidth)
 }
 
 
-public static boolean compareEqual(double a, double b)
-{
+public static boolean compareEqual(double a, double b) {
   int ia = (int)(a/defaultPrecision);
   int ib = (int)(b/defaultPrecision);
 
@@ -284,30 +271,3 @@ private static int[] ht2ArrayValFromKey(Hashtable key, Hashtable values) {
 
 }
 
-/**
- * Inner class used by the parsing process to store the graph
- * information temporarily before converting it into a Graph
- */
-class ParserNode
-{
-public String name;
-public Hashtable dependencies;
-public Hashtable backEdges;
-public Hashtable dWeights;
-public Hashtable beWeights;
-public int[] arrayDependencies;
-public int[] arrayWeights;
-
-/**
- * Data structure to keep track of the node and its dependencies
- */
-public
-ParserNode(String n)
-{
-  name = n;
-  dependencies = new Hashtable();
-  dWeights = new Hashtable();
-  backEdges = new Hashtable();
-  beWeights = new Hashtable();
-}
-}
