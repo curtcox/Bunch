@@ -2,6 +2,7 @@ package bunch.api;
 
 import bunch.*;
 import static bunch.api.Key.*;
+import static bunch.api.RunMode.*;
 
 import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.clustering.ClusteringMethod;
@@ -800,20 +801,20 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   }
 
   public EngineResults getResultsHT() {
-    String runMode = bunchArgs.runMode;
-    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_CLUSTER)) {
+    var runMode = bunchArgs.runMode;
+    if (runMode == CLUSTER) {
       return getClusteringResultsHT();
     }
 
-    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_PR_CALC)) {
+    if (runMode == PR_CALC) {
       return getPRResultsHT();
     }
 
-    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_MQ_CALC)) {
+    if (runMode == MQ_CALC) {
       return getMQCalcResultsHT();
     }
 
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public EngineResults getMQCalcResultsHT() {
@@ -905,10 +906,10 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   public boolean run(EngineArgs args) throws IOException, ClassNotFoundException {
     bunchArgs = args;
 
-    String runMode = bunchArgs.runMode;
-    if(runMode == null) return false;
+    var runMode = bunchArgs.runMode;
+    if (runMode == null) return false;
 
-    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_CLUSTER)) {
+    if (runMode == CLUSTER) {
       boolean rc;
       BunchAsyncNotify notifyClass = null;
       if (bunchArgs.RUN_ASYNC_NOTIFY_CLASS != null)
@@ -918,15 +919,13 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
         rc = runClustering();
       else
         rc = runClusteringAsync(notifyClass);
-
-      //prepareResultsHT();
       return rc;
     }
-    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_PR_CALC)) {
+    if (runMode == PR_CALC) {
       return runPRCalc();
     }
 
-    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_MQ_CALC)) {
+    if (runMode == MQ_CALC) {
       return runMQCalc();
     }
     return false;

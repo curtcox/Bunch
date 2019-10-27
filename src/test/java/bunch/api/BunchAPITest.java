@@ -2,6 +2,8 @@ package bunch.api;
 
 import bunch.model.Cluster;
 import bunch.simple.SASimpleTechnique;
+
+import static bunch.api.RunMode.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -154,7 +156,7 @@ int [] prIfreq = new int [11];
 
         var bmdg = newBunchMDG();
         var args = api.bunchArgs;
-        args.runMode = RUN_MODE_CLUSTER;
+        args.runMode = CLUSTER;
         args.mdgGraphObject = bmdg;
 
         args.CLUSTERING_ALG = ALG_HILL_CLIMBING;
@@ -1124,7 +1126,7 @@ println("ML:"+meclValue);
             Integer iJ = new Integer(j);
             String file1 = mdgFile + iI.toString() + ".bunch";
             String file2 = mdgFile + iJ.toString() + ".bunch";
-            bp.runMode =  RUN_MODE_PR_CALC;
+            bp.runMode =  PR_CALC;
             bp.PR_CLUSTER_FILE = file1;
             bp.PR_EXPERT_FILE = file2;
             api.run();
