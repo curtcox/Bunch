@@ -22,8 +22,6 @@ final class MeCl {
     edgeA.clear();
     HashMap Ca = determineSubClusters();
 
-    //dumpSubClusters(Ca);
-
     constructEdgeSet();
 
     meclValue = collectSubClusters(Ca);
@@ -31,53 +29,22 @@ final class MeCl {
     return meclValue;
   }
 
-  public long getMeClValue()
-  { return meclValue; }
-
-  public double getQualityMetric()
-  {
+  public double getQualityMetric() {
     int edgeCount = A.getEdges().size();
     double pct = ((double)meclValue / (double)edgeCount);
     return (1.0 - pct);
   }
 
-  private void dumpSubClusters(HashMap h)
-  {
-    Iterator i = h.keySet().iterator();
-    while (i.hasNext())
-    {
-      String clusterName = (String)i.next();
-      HashMap Cc = (HashMap)h.get(clusterName);
-      Iterator j = Cc.keySet().iterator();
-      while(j.hasNext())
-      {
-        String subCluster = (String)j.next();
-        ArrayList al = (ArrayList)Cc.get(subCluster);
-        System.out.print(clusterName+"->"+subCluster+": ");
-        for(int k = 0; k < al.size(); k++)
-        {
-          BunchNode bn = (BunchNode)al.get(k);
-          System.out.print(bn.getName()+"  ");
-        }
-        System.out.println();
-      }
-    }
-    System.out.println("\n\n");
-  }
-
-  private long collectSubClusters(HashMap Ca)
-  {
+  private long collectSubClusters(HashMap Ca) {
     long tally=0;
     HashMap Ccollected = new HashMap();
     Ccollected.clear();
 
     Iterator i = Ca.values().iterator();
-    while(i.hasNext())
-    {
+    while(i.hasNext()) {
       HashMap Ci = (HashMap)i.next();
       Iterator j = Ci.keySet().iterator();
-      while(j.hasNext())
-      {
+      while(j.hasNext()) {
         String key = (String)j.next();
         ArrayList value = (ArrayList)Ci.get(key);
         tally+=mergeSubCluster(Ccollected,key,value);
@@ -86,26 +53,20 @@ final class MeCl {
     return tally;
   }
 
-  private long mergeSubCluster(HashMap Ccollected, String key, ArrayList value)
-  {
+  private long mergeSubCluster(HashMap Ccollected, String key, ArrayList value) {
     long tally = 0;
 
     ArrayList currentSubCluster = (ArrayList)Ccollected.get(key);
-    if(currentSubCluster == null)
-    {
+    if(currentSubCluster == null) {
       Ccollected.put(key,value);
       return 0;
     }
 
-    for(int i = 0; i < currentSubCluster.size(); i++)
-    {
+    for(int i = 0; i < currentSubCluster.size(); i++) {
       BunchNode bn1 = (BunchNode)currentSubCluster.get(i);
-      for(int j = 0; j < value.size(); j++)
-      {
+      for(int j = 0; j < value.size(); j++) {
         BunchNode bn2 = (BunchNode)value.get(j);
-        if (!bn2.isAMemberOfCluster(bn1.getMemberCluster().getName()))
-        {
-          //System.out.println("Looking for edge: " + bn1.getName()+" --> "+bn2.getName());
+        if (!bn2.isAMemberOfCluster(bn1.getMemberCluster().getName())) {
           tally += this.getConnectedWeight(bn1.getName(),bn2.getName());
         }
       }
@@ -114,40 +75,32 @@ final class MeCl {
     return tally;
   }
 
-  private void constructEdgeSet()
-  {
+  private void constructEdgeSet() {
     Iterator i = A.getEdges().iterator();
 
-    while(i.hasNext())
-    {
+    while(i.hasNext()) {
       BunchEdge be = (BunchEdge)i.next();
       String key = be.getSrcNode().getName() + be.getDestNode().getName();
       Integer weight = new Integer(be.getWeight());
-      //System.out.println("Putting edge:  " + key+ "  weight:"+weight);
       edgeA.put(key,weight);
     }
   }
 
-  public int getConnectedWeight(String n1, String n2)
-  {
+  public int getConnectedWeight(String n1, String n2) {
     String key1 = n1+n2;
     String key2 = n2+n1;
     int    total = 0;
 
     Integer forward = (Integer)edgeA.get(key1);
     if(forward != null){
-      //System.out.println("Here forward");
       total += forward.intValue();
     }
 
     Integer reverse = (Integer)edgeA.get(key2);
     if(reverse != null) {
-      //System.out.println("Here reverse");
       total += reverse.intValue();
     }
 
-    //if(total>0)
-    //  System.out.println("total = "+total);
     return total;
   }
 
@@ -155,13 +108,11 @@ final class MeCl {
     HashMap Ca = new HashMap();
 
     Iterator i = A.getClusters().iterator();
-    while(i.hasNext())
-    {
+    while(i.hasNext()) {
       HashMap subClustersA = new HashMap();
       BunchCluster Ai = (BunchCluster)i.next();
       Iterator j = Ai.getClusterNodes().iterator();
-      while(j.hasNext())
-      {
+      while(j.hasNext()) {
         BunchNode bnInA = (BunchNode)j.next();
         String nodeName = bnInA.getName();
 

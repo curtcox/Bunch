@@ -12,7 +12,6 @@ import bunch.model.*;
 import bunch.parser.Parser;
 import bunch.simple.SATechnique;
 import bunch.stats.*;
-import bunch.ui.SwingWorker;
 
 import java.io.IOException;
 import java.util.*;
@@ -691,33 +690,6 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
     return clusteringMethod_d.getBestGraph().cloneGraph();
   }
-
-//  boolean runClusteringAsync(final BunchAsyncNotify nObject) {
-//
-//    nObject.setStatus(bunch.api.BunchAsyncNotify.STATUS_RUNNING);
-//    SwingWorker worker_d = new SwingWorker() {
-//      public Object construct() {
-//        try{
-//          runClustering();
-//        }
-//        catch(Exception threadEx){ threadEx.printStackTrace(); }
-//        return "Done";
-//      }
-//      public void interrupt() {
-//        this.suspend();
-//        super.interrupt();
-//      }
-//      public void finished() {
-//        nObject.setStatus(bunch.api.BunchAsyncNotify.STATUS_DONE);
-//        nObject.notifyDone();
-//      }
-//    };
-//
-//    worker_d.setPriority(Thread.MIN_PRIORITY);
-//    worker_d.start();
-//    nObject.setThread(worker_d.getThread());
-//    return true;
-//  }
 
   boolean runClustering() throws IOException, ClassNotFoundException {
     initClustering();

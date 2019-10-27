@@ -21,21 +21,10 @@ import java.util.*;
  */
 
 public final class BunchMDG {
-ArrayList mdgEdges = null;
+ArrayList mdgEdges;
 
   public BunchMDG() {
     mdgEdges = new ArrayList();
-  }
-
-  public boolean addMDGEdges(Collection c)
-  {
-    return mdgEdges.addAll(c);
-  }
-
-  public boolean setMDGEdges(Collection c)
-  {
-    mdgEdges.clear();
-    return addMDGEdges(c);
   }
 
   public boolean addMDGEdge(BunchMDGDependency d)
@@ -43,31 +32,12 @@ ArrayList mdgEdges = null;
     return mdgEdges.add(d);
   }
 
-  public boolean addMDGEdge(String s, String d, int w, String r)
-  {
-    BunchMDGDependency bmd = new BunchMDGDependency(s,d,w,r);
-    return addMDGEdge(bmd);
-  }
-
-  public boolean addMDGEdge(String s, String d, int w)
-  {
+  public boolean addMDGEdge(String s, String d, int w) {
     BunchMDGDependency bmd = new BunchMDGDependency(s,d,w);
     return addMDGEdge(bmd);
   }
 
-  public boolean addMDGEdge(String s, String d)
-  {
-    BunchMDGDependency bmd = new BunchMDGDependency(s,d);
-    return addMDGEdge(bmd);
-  }
-
-  public void clearMDG()
-  {
-    mdgEdges.clear();
-  }
-
-  public Collection getMDGEdges()
-  {
+  public Collection getMDGEdges() {
     return mdgEdges;
   }
 }

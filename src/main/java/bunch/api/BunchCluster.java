@@ -33,16 +33,14 @@ public final class BunchCluster {
   public Collection getOverlapNodes()
   { return overlapNodes;  }
 
-  public int getOverlapNodeCount()
-  {
+  public int getOverlapNodeCount() {
     if(overlapNodes != null)
       return overlapNodes.size();
     else
       return 0;
   }
 
-  public void addOverlapNode(BunchNode bn)
-  {
+  public void addOverlapNode(BunchNode bn) {
     if (overlapNodes == null)
       overlapNodes = new ArrayList();
 
@@ -83,16 +81,14 @@ public final class BunchCluster {
     h.clear();
 
     if(clusterNodes != null) {
-      for(int i = 0; i < clusterNodes.size(); i++)
-      {
+      for(int i = 0; i < clusterNodes.size(); i++) {
         BunchNode bn = (BunchNode)clusterNodes.get(i);
         String key = bn.getName();
         h.put(key,bn);
       }
     }
     if(overlapNodes != null) {
-      for(int i = 0; i < overlapNodes.size(); i++)
-      {
+      for(int i = 0; i < overlapNodes.size(); i++) {
         BunchNode bn = (BunchNode)overlapNodes.get(i);
         String key = bn.getName();
         h.put(key,bn);

@@ -6,19 +6,14 @@ public final class BunchNode {
 
   static public final int NOT_A_MEMBER_OF_A_CLUSTER = -1;
 
-  String nodeName = "";
-  int    nodeIndex = -1;
-  int    nodeCluster = -1;
+  String nodeName;
+  int    nodeIndex;
+  int    nodeCluster;
   BunchCluster memberCluster = null;
-  boolean isNodeCluster = false;
+  boolean isNodeCluster;
   ArrayList   deps = null;
   ArrayList   backDeps = null;
-  HashMap     clusterMemberships = null;
-
-  //public BunchNode()
-  //{
-  //  BunchNode("",-1,-1);
-  //}
+  HashMap     clusterMemberships;
 
   public BunchNode(String name, int index, int cluster,  boolean isCluster) {
     nodeName = name;
@@ -28,8 +23,7 @@ public final class BunchNode {
     clusterMemberships = new HashMap();
   }
 
-  public void subscribeToCluster(BunchCluster bc)
-  {
+  public void subscribeToCluster(BunchCluster bc) {
     if(bc != null)
       clusterMemberships.put(bc.getName(),bc);
   }
@@ -69,8 +63,7 @@ public final class BunchNode {
   public BunchCluster getMemberCluster()
   { return memberCluster; }
 
-  public void setMemberCluster(BunchCluster bc)
-  {
+  public void setMemberCluster(BunchCluster bc) {
     memberCluster = bc;
     subscribeToCluster(bc);
   }
