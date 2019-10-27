@@ -44,7 +44,7 @@ final class BunchEngine {
   String MQCalcSilFileName;
   String MQCalcValue;
 
-  public BunchEngine() {}
+  BunchEngine() {}
 
   String getFileDelims() {
     String delims = "";
@@ -59,48 +59,6 @@ final class BunchEngine {
 
     return delims;
   }
-
-  Hashtable getSAConfigHTFromString(String saKey) {
-    Hashtable h = new Hashtable();
-
-    StringTokenizer st = new StringTokenizer(saKey,",");
-    while(st.hasMoreElements())
-    {
-      String key = st.nextToken();
-      StringTokenizer keyTokenizer = new StringTokenizer(key,"=");
-      if(keyTokenizer.countTokens() != 2)
-        continue;
-      String keyValue = keyTokenizer.nextToken();
-      Double value = new Double(keyTokenizer.nextToken());
-      h.put(keyValue,value);
-    }
-
-    return h;
-  }
-
-  Collection parseStringToCollection(String saKey) {
-    ArrayList al = new ArrayList();
-
-    StringTokenizer st = new StringTokenizer(saKey,",");
-    while(st.hasMoreElements()) {
-      al.add(st.nextToken());
-    }
-    return al;
-  }
-
-private String[] stringArrayFromString(String in) {
-  if(in == null) return null;
-
-  StringTokenizer st = new StringTokenizer(in," ,\n\r");
-  int howMany = st.countTokens();
-  String []retArray = new String[howMany];
-  int idx = 0;
-  while(st.hasMoreElements())
-    retArray[idx++] = st.nextToken();
-
-  if(idx == 0) return null;
-  return retArray;
-}
 
 /**
  * This method sets the libraries, clients and suppliers defined in their
@@ -176,18 +134,13 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       int supplier = 0;
       int central = 0;
       int library = 0;
-      for(int j = 0; j < tmpDeps.length; j++)
-      {
+      for(int j = 0; j < tmpDeps.length; j++) {
         if ((originalList[tmpDeps[j]].getType() == Node.NORMAL) ||
-            (originalList[tmpDeps[j]].getType() >= Node.DEAD))
-        {
+            (originalList[tmpDeps[j]].getType() >= Node.DEAD)) {
           noNormalDeps = false;
           break;
-        }
-        else
-        {
-          switch(originalList[tmpDeps[j]].getType())
-          {
+        } else {
+          switch(originalList[tmpDeps[j]].getType()) {
             case Node.CLIENT:
               client++; break;
             case Node.SUPPLIER:
@@ -199,18 +152,14 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
           }
         }
       }
-      for(int j = 0; j < tmpBeDeps.length; j++)
-      {
+      for(int j = 0; j < tmpBeDeps.length; j++) {
         if ((originalList[tmpBeDeps[j]].getType() == Node.NORMAL) ||
             (originalList[tmpBeDeps[j]].getType() >= Node.DEAD))
         {
           noNormalDeps = false;
           break;
-        }
-        else
-        {
-          switch(originalList[tmpBeDeps[j]].getType())
-          {
+        } else {
+          switch(originalList[tmpBeDeps[j]].getType()) {
             case Node.CLIENT:
               client++; break;
             case Node.SUPPLIER:
@@ -222,8 +171,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
           }
         }
       }
-      if (noNormalDeps == true)
-      {
+      if (noNormalDeps == true) {
         deadNodes++;
         int n1 = Math.max(client,supplier);
         int n2 = Math.max(central,library);
@@ -254,10 +202,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     }
   }
 
-
-
-  for (int i = 0; i < nodeList.length; ++i)
-  {
+  for (int i = 0; i < nodeList.length; ++i) {
     nodeList[i].nodeID = i;
     int[] deps = nodeList[i].getDependencies();
     int[] beDeps = nodeList[i].getBackEdges();
@@ -267,8 +212,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     int beDeptsRemoveCount = 0;
 
     Integer tmpAssoc;
-    for(int z = 0; z < deps.length; z++)
-    {
+    for(int z = 0; z < deps.length; z++) {
       tmpAssoc = (Integer)normal.get(new Integer(deps[z]));
       if (tmpAssoc == null) {
         deps[z] = -1;
@@ -288,8 +232,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       }
     }
 
-    if(depsRemoveCount  > 0)
-    {
+    if(depsRemoveCount  > 0) {
       int []newDeps = new int[deps.length-depsRemoveCount];
       int []newWeight = new int[deps.length-depsRemoveCount];
 
@@ -304,8 +247,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
         weight = newWeight;
     }
 
-    if(beDeptsRemoveCount  > 0)
-    {
+    if(beDeptsRemoveCount  > 0) {
       int []newBeDeps = new int[beDeps.length-beDeptsRemoveCount];
       int []newBeWeight = new int[beDeps.length-beDeptsRemoveCount];
 
@@ -325,7 +267,6 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     nodeList[i].setBackEdges(beDeps);
     nodeList[i].setBeWeights(beWeight);
   }
-
 
   //reinitialize the graph with the new nodes
   g.initGraph(nodeList.length);
@@ -375,9 +316,6 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
           libraries.put(nodeList[i].getName(), nodeList[i].getName());
         }
       }
-
-
-      //Code at around line 2020 in bunchframe.java
 
       //find clients
       double avg = 0.0, sum = 0.0;
@@ -436,8 +374,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       }
 
       Enumeration e = centrals.elements();
-      while(e.hasMoreElements())
-      {
+      while(e.hasMoreElements()) {
         String elem = (String)e.nextElement();
         clients.remove(elem);
         suppliers.remove(elem);
@@ -596,7 +533,6 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
       if(bunchArgs.algHcHcPct != null) {
         Integer hcThreshold = bunchArgs.algHcHcPct;
-        //System.out.println("Setting minumum to consider= "+hcThreshold);
         c.setMinPctToConsider(hcThreshold.intValue());
       }
     }
@@ -761,7 +697,6 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
     nObject.setStatus(bunch.api.BunchAsyncNotify.STATUS_RUNNING);
     SwingWorker worker_d = new SwingWorker()
-      //Runnable runThread = new Runnable()
     {
       public Object construct()
       {
@@ -792,19 +727,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   boolean runClustering() throws IOException, ClassNotFoundException {
     initClustering();
 
-    BunchAsyncNotify notifyClass = null;
-
-    //clusteringMethod_d.run();
-    //if (bunchArgs.get(BunchProperties.RUN_ASYNC_NOTIFY_CLASS) != null)
-    //    notifyClass = (BunchAsyncNotify)bunchArgs.get(BunchProperties.RUN_ASYNC_NOTIFY_CLASS);
-    //if(notifyClass == null)
-    //{
-      ExecuteClusteringEngine ce = new ExecuteClusteringEngine();//clusteringMethod_d,bunchArgs);
-    //}
-    //else
-    //{
-    //  ExecuteClusteringEngineAsync ce = new ExecuteClusteringEngineAsync(notifyClass);
-    //}
+    ExecuteClusteringEngine ce = new ExecuteClusteringEngine();//clusteringMethod_d,bunchArgs);
 
     Cluster bestC = clusteringMethod_d.getBestCluster();
     baseCluster = clusteringMethod_d.getBestCluster().cloneCluster();
@@ -827,41 +750,19 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
         clusteringMethod_d.setGraph(newG);
         clusteringMethod_d.initialize();
 
-        //if(notifyClass == null)
-        //{
-        //  ExecuteClusteringEngine ce = new ExecuteClusteringEngine();//clusteringMethod_d,bunchArgs);
-        //}
-        //else
-        //{
-        //  ExecuteClusteringEngineAsync ce = new ExecuteClusteringEngineAsync(notifyClass);
-        //}
-
         ce = new ExecuteClusteringEngine();//clusteringMethod_d,bunchArgs);
 
-
-        //clusteringMethod_d.run();
         bestC = clusteringMethod_d.getBestCluster();
         clusterList.add(clusteringMethod_d.getBestCluster().cloneCluster());
-        //System.out.println("MQ-Lvl"+ bestC.getGraph().getGraphLevel()+" is: " + bestC.getObjFnValue());
-        //currentViewC = new Cluster(clusteringMethod_x.getBestGraph().cloneGraph(),
-        //                clusteringMethod_x.getBestGraph().getClusters());
-        //          currentViewC.force();
-        //          bestCLL.addLast(currentViewC);
-                  //bestCLL.addLast(clusteringMethod_x.getBestCluster());
 
         g = clusteringMethod_d.getBestGraph().cloneGraph();
-                  //c = clusteringMethod_x.getBestCluster();
         cNames = g.getClusterNames();  //c.getClusterNames();
       }
     }
-    if(graphOutput_d != null)
-    {
+    if(graphOutput_d != null) {
       graphOutput_d.setGraph(clusteringMethod_d.getBestGraph());
       graphOutput_d.write();
     }
-
-    //if(notifyClass != null)
-    //  notifyClass.notifyDone();
 
     return true;
   }
@@ -869,7 +770,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   boolean runMQCalc() {
     MQCalcMdgFileName = bunchArgs.MQCALC_MDG_FILE;
     MQCalcSilFileName = bunchArgs.MQCALC_SIL_FILE;
-    ObjectiveFunctionCalculator MQCalcClass = bunchArgs.mqCalculatorClass;
+    var MQCalcClass = bunchArgs.mqCalculatorClass;
 
     double mqResult = bunch.util.MQCalculator.CalcMQ(MQCalcMdgFileName,MQCalcSilFileName,MQCalcClass);
     Double Dmq = new Double(mqResult);
@@ -934,9 +835,6 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     results.prRecallValue = recall;
     return results;
   }
-
-  public void setDebugStats(boolean b)
-  { stats.setCollectClusteringDetails(b);}
 
   public ArrayList getClusterList()
   {
@@ -1050,35 +948,31 @@ class ExecuteClusteringEngine {
 
     public void run()
     {
-      Runnable runThread = new Runnable()
-      {
-        public void run()
-        {
-        try{
-          clusteringProcessThread = Thread.currentThread();
+      Runnable runThread = () -> {
+      try{
+        clusteringProcessThread = Thread.currentThread();
 
-          startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
 
-          if(timeoutTimer != null)
-            timeoutTimer.start();
+        if(timeoutTimer != null)
+          timeoutTimer.start();
 
-              clusteringMethod_d.run();
-          endTime = System.currentTimeMillis();
-          totalTime += (endTime-startTime);
+            clusteringMethod_d.run();
+        endTime = System.currentTimeMillis();
+        totalTime += (endTime-startTime);
 
-          if(timeoutTimer != null)
-            timeoutTimer.stop();
+        if(timeoutTimer != null)
+          timeoutTimer.stop();
 
-          synchronized(monitor)
-          { monitor.notifyAll();  }
+        synchronized(monitor)
+        { monitor.notifyAll();  }
 
-          if(clusteringProcessThread != null)
-            synchronized(clusteringProcessThread)
-            { clusteringProcessThread = null;}
-        }
-        //catch(InterruptedException iExcpt) {System.out.println("Thrad interrupted");}
-        catch(Exception threadEx){ threadEx.printStackTrace(); }
-        }
+        if(clusteringProcessThread != null)
+          synchronized(clusteringProcessThread)
+          { clusteringProcessThread = null;}
+      }
+      //catch(InterruptedException iExcpt) {System.out.println("Thrad interrupted");}
+      catch(Exception threadEx){ threadEx.printStackTrace(); }
       };
 
       Thread t = new Thread(runThread);
@@ -1092,73 +986,6 @@ class ExecuteClusteringEngine {
         {  monitor.wait();  }
       }catch(Exception e1)
       {e1.printStackTrace();}
-    }
-}
-
-class ExecuteClusteringEngineAsync {
-    //ClusteringMethod clusteringMethod_d;
-    //Hashtable bunchArgs;
-    BunchAsyncNotify    notifyObject = null;
-    SwingWorker worker_d = null;
-
-    ExecuteClusteringEngineAsync(BunchAsyncNotify nObject)
-    {
-      notifyObject = nObject;
-      //clusteringMethod_d = cm;
-      //bunchArgs = ba;
-      //monitor = new Object();
-      run();
-    }
-
-    public void run()
-    {
-      notifyObject.setStatus(bunch.api.BunchAsyncNotify.STATUS_RUNNING);
-      worker_d = new SwingWorker()
-      //Runnable runThread = new Runnable()
-      {
-        public Object construct()
-        {
-          try{
-
-            clusteringProcessThread = Thread.currentThread();
-
-            startTime = System.currentTimeMillis();
-
-            if(timeoutTimer != null)
-              timeoutTimer.start();
-
-            clusteringMethod_d.run();
-            endTime = System.currentTimeMillis();
-            totalTime += (endTime-startTime);
-
-            if(timeoutTimer != null)
-              timeoutTimer.stop();
-
-            //synchronized(monitor)
-            //{ monitor.notifyAll();  }
-
-            //if(clusteringProcessThread != null)
-            //  synchronized(clusteringProcessThread)
-            //  { clusteringProcessThread = null;}
-          }
-          //catch(InterruptedException iExcpt) {System.out.println("Thrad interrupted");}
-          catch(Exception threadEx){ threadEx.printStackTrace(); }
-          return "Done";
-        }
-        public void interrupt()
-        {
-            this.suspend();
-            super.interrupt();
-        }
-        public void finished()
-        {
-          notifyObject.setStatus(bunch.api.BunchAsyncNotify.STATUS_DONE);
-          //notifyObject.notifyDone();
-        }
-      };
-
-      worker_d.setPriority(Thread.MIN_PRIORITY);
-      worker_d.start();
     }
 }
 
