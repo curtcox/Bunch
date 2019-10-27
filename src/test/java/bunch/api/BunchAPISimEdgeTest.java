@@ -1,5 +1,6 @@
 package bunch.api;
 
+import java.io.IOException;
 import java.util.*;
 
 import static bunch.api.Key.*;
@@ -19,7 +20,7 @@ int [] meclIFreq = new int[11];
 
 String mode = "NAHC";
 
-  public BunchAPISimEdgeTest() {
+  public BunchAPISimEdgeTest() throws Exception {
     String graphName = "d:\\linux\\linux"; //"e:\\expir\\grappa"; //"e:\\linux\\linux"; //"e:\\expir\\compiler";
     mode = "NAHC";
 
@@ -29,13 +30,12 @@ String mode = "NAHC";
     runTest(graphName, true);
   }
 
-  public void runTest(String graphName, boolean removeSpecial) {
+  public void runTest(String graphName, boolean removeSpecial) throws Exception {
     totalNodes = totalAdjustments = 0;
     bunchGraphs = new ArrayList();
     boolean removeSpecialModules = removeSpecial;
 
-    for(int i = 0; i < 10; i++)
-    {
+    for(int i = 0; i < 10; i++) {
       this.runClustering(graphName, removeSpecialModules);
       //this.runClustering("e:\\linux\\linux");
     }
@@ -271,7 +271,7 @@ String mode = "NAHC";
     return ((double)accum/(double)trials);
   }
 
-  void runClustering(String mdgFileName, boolean removeSpecialNodes) {
+  void runClustering(String mdgFileName, boolean removeSpecialNodes) throws Exception {
       BunchAPI api = new BunchAPI();
       BunchProperties bp = new BunchProperties();
       bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,mdgFileName);
@@ -506,7 +506,7 @@ String mode = "NAHC";
     }
   }
 
-  public static void main(String[] args) {
-    BunchAPISimEdgeTest bunchAPISimEdgeTest1 = new BunchAPISimEdgeTest();
+  public static void main(String[] args) throws Exception {
+    new BunchAPISimEdgeTest();
   }
 }

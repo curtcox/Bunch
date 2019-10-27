@@ -2,14 +2,15 @@ package bunch.api;
 
 import bunch.model.Graph;
 
+import java.io.IOException;
 import java.util.*;
 //import java.io.*;
 
 public final class BunchAPI {
 
 //  BunchProperties   bunchProps;
-  BunchEngine.Args bunchArgs = new BunchEngine.Args();
-  BunchEngine.Results resultsHashtable;
+  EngineArgs bunchArgs = new EngineArgs();
+  EngineResults resultsHashtable;
   ProgressCallback  progressCB = null;
   int               progressUpdateFreq=1000;
   BunchEngine       engine;
@@ -129,7 +130,7 @@ public final class BunchAPI {
   //  return resultsHashtable;
   //}
 
-  public BunchEngine.Results getResults() {
+  public EngineResults getResults() {
     return engine.getResultsHT();
   }
 
@@ -141,9 +142,9 @@ public final class BunchAPI {
 //    return engine.getDefaultSpecialNodes(mdgFileName,threshold);
 //  }
 
-  public boolean run() {
+  public boolean run() throws IOException, ClassNotFoundException {
     boolean rc = true;
-    resultsHashtable = new BunchEngine.Results();
+    resultsHashtable = new EngineResults();
     if(progressCB != null){
       bunchArgs.CALLBACK_OBJECT_REF = progressCB;
       bunchArgs.callbackObjectFrequency = progressUpdateFreq;

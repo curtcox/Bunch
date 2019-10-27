@@ -17,8 +17,8 @@ public final class PrecisionRecallCalculator {
   Vector m_v_tested_modules_content;
 
   public PrecisionRecallCalculator(String expertFileName, String testFileName) {
-    m_S_filename1= new String(expertFileName);
-    m_S_filename2= new String(testFileName);
+    m_S_filename1= expertFileName;
+    m_S_filename2= testFileName;
     m_v_expert_modules_names = new Vector();
     m_v_expert_modules_content = new Vector();
     m_v_tested_modules_names = new Vector();
@@ -63,8 +63,7 @@ public final class PrecisionRecallCalculator {
     //System.out.println("P: "+S_precision+"\nR: "+S_recall);
   }
 
-  public void ReadBunch()
-  {
+  public void ReadBunch() {
     Hashtable ht1 = new Hashtable();
     GBunchRW bunch1= new GBunchRW(m_S_filename1);
 
@@ -307,7 +306,7 @@ final class GBunchRW {
 
   public GBunchRW(String filename) {
     m_ht_bunchread = new Hashtable(); //the main hashtable that will be returned
-    m_S_filename = new String(filename);
+    m_S_filename = filename;
   }
 
   public Hashtable read()

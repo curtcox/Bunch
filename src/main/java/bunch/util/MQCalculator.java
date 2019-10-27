@@ -25,7 +25,7 @@ public final class MQCalculator {
       ofc.setCurrentCalculator(calculatorName);
       g.setObjectiveFunctionCalculatorFactory(ofc);
 
-      g.setObjectiveFunctionCalculator((String)calculatorName);
+      g.setObjectiveFunctionCalculator(calculatorName);
 
       ClusterFileParser cfp = new ClusterFileParser();
       cfp.setInput(sil);

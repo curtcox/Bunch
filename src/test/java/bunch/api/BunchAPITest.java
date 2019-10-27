@@ -18,7 +18,7 @@ int [] prfreq = new int[11];
 int [] prIfreq = new int [11];
 
  @Test
- public void doWithFile() {
+ public void doWithFile() throws Exception {
 
       BunchAPI api = new BunchAPI();
       BunchProperties bp = new BunchProperties();
@@ -146,13 +146,13 @@ int [] prIfreq = new int [11];
     }
 
     @Test
-    public void doWithoutFile() {
+    public void doWithoutFile() throws Exception {
 
         BunchAPI api = new BunchAPI();
 
         var bmdg = newBunchMDG();
         var args = api.bunchArgs;
-        args.runMode = BunchProperties.RUN_MODE_MQ_CALC;
+        args.runMode = BunchProperties.RUN_MODE_CLUSTER;
         args.mdgGraphObject = bmdg;
 
         args.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
@@ -390,7 +390,7 @@ println("ML:"+meclValue);
   }
 
   @Test
-  public void BunchAPITest1x() {
+  public void BunchAPITest1x() throws Exception {
     
     String mdgFile = "c:\\research\\mdgs\\pgsql";
     String cluFile = "c:\\research\\mdgs\\pgsql.clu";
@@ -410,7 +410,7 @@ println("ML:"+meclValue);
 }
 
   @Test
-  public void BunchAPITestOld99() {
+  public void BunchAPITestOld99() throws Exception {
 
   String mdg     = "e:\\samplemdgs\\bison";
   int    numRuns = 1;
@@ -512,7 +512,7 @@ println("ML:"+meclValue);
   }
 
   @Test
-  public void BunchAPITestBigBad() {
+  public void BunchAPITestBigBad() throws Exception {
 
       String mdg="e:\\samplemdgs\\compiler";
       String sil="e:\\samplemdgs\\compiler.bunch";
@@ -624,7 +624,7 @@ println("ML:"+meclValue);
   }
 
   @Test
-  public void BunchAPITestOld() {
+  public void BunchAPITestOld() throws Exception {
       BunchAPI api = new BunchAPI();
       Hashtable htSpecial = api.getSpecialModules("e:\\linux\\linux");
 
@@ -639,7 +639,7 @@ println("ML:"+meclValue);
   }
 
   @Test
-  public void BunchAPITest5() {
+  public void BunchAPITest5() throws Exception {
     BunchProperties bp = new BunchProperties();
 
     bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,"e:\\expir\\small");
@@ -661,7 +661,7 @@ println("ML:"+meclValue);
     //println("MQ Value is: " + MQValue);
   }
 
-  public void printResutls(BunchEngine.Results results) {
+  public void printResutls(EngineResults results) {
       Long rt = results.RUNTIME;
       Long evals = results.MQEVALUATIONS;
       Integer levels = results.TOTAL_CLUSTER_LEVELS;
@@ -688,7 +688,7 @@ println("ML:"+meclValue);
   }
 
   @Test
-  public void BunchAPITest8() {
+  public void BunchAPITest8() throws Exception {
     String graphName = "e:\\expir\\rcs";
 
     println("***** G R A P H   N A M E :   "+graphName+"\n");
@@ -697,7 +697,7 @@ println("ML:"+meclValue);
     runTest(graphName, true);
   }
 
-  public void runTest(String graphName, boolean removeSpecial) {
+  public void runTest(String graphName, boolean removeSpecial) throws Exception {
     totalNodes = totalAdjustments = 0;
     bunchGraphs = new ArrayList();
     //String graphName = "e:\\linux\\linux";
@@ -844,7 +844,7 @@ println("ML:"+meclValue);
     return ((double)accum/(double)trials);
   }
 
-  public void runClustering(String mdgFileName, boolean removeSpecialNodes) {
+  public void runClustering(String mdgFileName, boolean removeSpecialNodes) throws Exception {
       BunchAPI api = new BunchAPI();
       BunchProperties bp = new BunchProperties();
       bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,mdgFileName);
@@ -1155,7 +1155,7 @@ println("ML:"+meclValue);
   }
 
   @Test
-  public void run() throws IOException {
+  public void run() throws Exception {
       BunchAPI api = new BunchAPI();
       BunchProperties bp = new BunchProperties();
       bp.setProperty(BunchProperties.MDG_INPUT_FILE_NAME,"/Users/brianmitchell/dev/mdgs/incl");
@@ -1213,7 +1213,7 @@ println("ML:"+meclValue);
       r.exec("dot -Tps e:\\pstopcl\\incl.dot > e:\\pstopcl\\in\\incl.ps");
   }
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws Exception {
     BunchAPITest test = new BunchAPITest();
     test.run();
   }
