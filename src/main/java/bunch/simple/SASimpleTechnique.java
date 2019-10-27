@@ -21,11 +21,9 @@ public class SASimpleTechnique extends SATechnique {
   double  currTemp = initTemp;
   boolean initialized = true;
 
-  public SASimpleTechnique() {
-  }
+  public SASimpleTechnique() { }
 
-  public Hashtable getConfig()
-  {
+  public Hashtable getConfig() {
     Double Alpha = new Double(alpha);
     Double Temp  = new Double(initTemp);
     Hashtable h = new Hashtable();
@@ -35,8 +33,7 @@ public class SASimpleTechnique extends SATechnique {
     return h;
   }
 
-  public boolean setConfig(Hashtable h)
-  {
+  public boolean setConfig(Hashtable h) {
     Double Alpha = (Double)h.get(SET_ALPHA_KEY);
     Double Temp = (Double)h.get(SET_INITIAL_TEMP_KEY);
 
@@ -122,16 +119,14 @@ public class SASimpleTechnique extends SATechnique {
     return true;
   }
 
-  public void reset()
-  {
+  public void reset() {
     stats = bunch.stats.StatsManager.getInstance();
     initTemp = configuredTemp;
     alpha = configuredAlpha;
     currTemp = initTemp;
   }
 
-  public boolean changeTemp(Hashtable args)
-  {
+  public boolean changeTemp(Map args) {
     if(initialized == false) return false;
 
     //System.out.println("Changing Temp");
@@ -140,8 +135,7 @@ public class SASimpleTechnique extends SATechnique {
     return true;
   }
 
-  public boolean  accept(Hashtable args)
-  {
+  public boolean  accept(Hashtable args) {
     if (initialized == false) return false;
 
     Double deltaMQ = (Double)args.get(SET_DELTA_MQ);
@@ -152,8 +146,7 @@ public class SASimpleTechnique extends SATechnique {
     return accept(dMQ);
   }
 
-  public boolean  accept(double dMQ)
-  {
+  public boolean  accept(double dMQ) {
     if (initialized == false) return false;
 
 

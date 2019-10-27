@@ -288,13 +288,12 @@ String mode = "NAHC";
       }
 
       if(removeSpecialNodes)
-        api.setAPIProperty(BunchProperties.SPECIAL_MODULE_HASHTABLE,htSpecial);
+        api.bunchArgs.SPECIAL_MODULE_HASHTABLE = htSpecial;
 
       api.setProperties(bp);
       api.run();
       var results = api.getResults();
-      String sMedLvl = (String) results.get(MEDIAN_LEVEL_GRAPH);
-      Integer iMedLvl = new Integer(sMedLvl);
+      Integer iMedLvl = results.MEDIAN_LEVEL_GRAPH;
 
       //===============================================================
       //We could have used any level we want to here.  The median level

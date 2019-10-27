@@ -81,12 +81,12 @@ public final class BunchStatsTest {
 
       var results = api.getResults();
 
-      String rt = (String) results.get(RUNTIME);
-      String evals = (String) results.get(MQEVALUATIONS);
-      String levels = (String) results.get(TOTAL_CLUSTER_LEVELS);
-      String saMovesTaken = (String) results.get(SA_NEIGHBORS_TAKEN);
+      Long rt = results.RUNTIME;
+      Long evals = results.MQEVALUATIONS;
+      Integer levels = results.TOTAL_CLUSTER_LEVELS;
+      Long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
 
-      var resultLevels = results.get(RESULT_CLUSTER_OBJS);
+      var resultLevels = results.RESULT_CLUSTER_OBJS;
 
       String mq = "null";
       String depth="null";

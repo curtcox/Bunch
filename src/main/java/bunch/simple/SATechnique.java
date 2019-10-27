@@ -4,7 +4,7 @@ import java.util.*;
 
 public abstract class SATechnique {
 
-  protected Hashtable SAargs = new Hashtable();
+  protected Map SAargs = new HashMap();
   protected Random    rndNum = new Random();
   protected bunch.stats.StatsManager stats = bunch.stats.StatsManager.getInstance();
 
@@ -18,7 +18,7 @@ public abstract class SATechnique {
 
   public abstract boolean configure();
 
-  public abstract boolean changeTemp(Hashtable h);
+  public abstract boolean changeTemp(Map h);
 
   public boolean configureUsingDialog(java.awt.Frame parent)
   { return false; }
@@ -26,7 +26,7 @@ public abstract class SATechnique {
   public boolean  accept()
   { return false; }
 
-  public boolean  accept(Hashtable args)
+  public boolean  accept(Map args)
   { return false; }
 
   public boolean accept(double dMQ)
@@ -35,7 +35,7 @@ public abstract class SATechnique {
   public Hashtable getConfig()
   { return null;  }
 
-  public boolean setConfig(Hashtable h)
+  public boolean setConfig(Map h)
   { return false; }
 
   public double   getNextRndNumber()

@@ -71,10 +71,10 @@ int [] prIfreq = new int [11];
       var results = api.getResults();
       println("Results:");
 
-      String rt = (String)results.get(RUNTIME);
-      String evals = (String)results.get(MQEVALUATIONS);
-      String levels = (String)results.get(TOTAL_CLUSTER_LEVELS);
-      String saMovesTaken = (String)results.get(SA_NEIGHBORS_TAKEN);
+      Long rt = results.RUNTIME;
+      Long evals = results.MQEVALUATIONS;
+      Integer levels = results.TOTAL_CLUSTER_LEVELS;
+      Long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
 
       println("Runtime = " + rt + " ms.");
       println("Total MQ Evaluations = " + evals);
@@ -149,28 +149,28 @@ int [] prIfreq = new int [11];
     public void doWithoutFile() {
 
         BunchAPI api = new BunchAPI();
-        BunchProperties bp = new BunchProperties();
 
         var bmdg = newBunchMDG();
-        api.setAPIProperty(BunchProperties.MDG_GRAPH_OBJECT,bmdg);
+        var args = api.bunchArgs;
+        args.runMode = BunchProperties.RUN_MODE_MQ_CALC;
+        args.mdgGraphObject = bmdg;
 
-        bp.setProperty(BunchProperties.CLUSTERING_ALG,BunchProperties.ALG_HILL_CLIMBING);
-        bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.NULL_OUTPUT_FORMAT);
+        args.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
+        args.OUTPUT_FORMAT = BunchProperties.NULL_OUTPUT_FORMAT;
 
-        bp.setProperty(BunchProperties.CLUSTERING_APPROACH,BunchProperties.AGGLOMERATIVE);
+        args.clusteringApproach = BunchProperties.AGGLOMERATIVE;
 
-        bp.setProperty(BunchProperties.PROGRESS_CALLBACK_CLASS,"bunch.api.BunchAPITestCallback");
-        bp.setProperty(BunchProperties.PROGRESS_CALLBACK_FREQ,"5");
-        api.setProperties(bp);
+        args.PROGRESS_CALLBACK_CLASS = "bunch.api.BunchAPITestCallback";
+        args.PROGRESS_CALLBACK_FREQ = 5;
         println("Running...");
         api.run();
         var results = api.getResults();
         println("Results:");
 
-        String rt = (String)results.get(RUNTIME);
-        String evals = (String)results.get(MQEVALUATIONS);
-        String levels = (String)results.get(TOTAL_CLUSTER_LEVELS);
-        String saMovesTaken = (String)results.get(SA_NEIGHBORS_TAKEN);
+        Long rt = results.RUNTIME;
+        Long evals = results.MQEVALUATIONS;
+        Integer levels = results.TOTAL_CLUSTER_LEVELS;
+        Long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
 
         println("Runtime = " + rt + " ms.");
         println("Total MQ Evaluations = " + evals);
@@ -576,11 +576,11 @@ println("ML:"+meclValue);
       var results = api.getResults();
       println("Results:");
 
-      String rt = (String)results.get(RUNTIME);
-      String evals = (String)results.get(MQEVALUATIONS);
-      String levels = (String)results.get(TOTAL_CLUSTER_LEVELS);
-      String saMovesTaken = (String)results.get(SA_NEIGHBORS_TAKEN);
-      String medLvl = (String)results.get(MEDIAN_LEVEL_GRAPH);
+      Long rt = results.RUNTIME;
+      Long evals = results.MQEVALUATIONS;
+      Integer levels = results.TOTAL_CLUSTER_LEVELS;
+      Long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
+      Integer medLvl = results.MEDIAN_LEVEL_GRAPH;
 
       println("Runtime = " + rt + " ms.");
       println("Total MQ Evaluations = " + evals);
@@ -593,7 +593,7 @@ println("ML:"+meclValue);
 
       if(true)System.exit(0);
 
-      Hashtable [] resultLevels = (Hashtable[])results.get(RESULT_CLUSTER_OBJS);
+      Map[] resultLevels = results.RESULT_CLUSTER_OBJS;
 
       BunchGraph bg = api.getPartitionedGraph();
       if (bg != null)
@@ -661,20 +661,20 @@ println("ML:"+meclValue);
     //println("MQ Value is: " + MQValue);
   }
 
-  public void printResutls(Map<Key,Object> results) {
-        String rt = (String)results.get(RUNTIME);
-      String evals = (String)results.get(MQEVALUATIONS);
-      String levels = (String)results.get(TOTAL_CLUSTER_LEVELS);
-      String saMovesTaken = (String)results.get(SA_NEIGHBORS_TAKEN);
+  public void printResutls(BunchEngine.Results results) {
+      Long rt = results.RUNTIME;
+      Long evals = results.MQEVALUATIONS;
+      Integer levels = results.TOTAL_CLUSTER_LEVELS;
+      Long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
 
       println("Runtime = " + rt + " ms.");
       println("Total MQ Evaluations = " + evals);
       println("Simulated Annealing Moves Taken = " + saMovesTaken);
       println();
-      Hashtable [] resultLevels = (Hashtable[])results.get(RESULT_CLUSTER_OBJS);
+      Map [] resultLevels = results.RESULT_CLUSTER_OBJS;
 
       for(int i = 0; i < resultLevels.length; i++) {
-        Hashtable lvlResults = resultLevels[i];
+        Map lvlResults = resultLevels[i];
         println("***** LEVEL "+i+"*****");
         String mq = (String)lvlResults.get(MQVALUE);
         String depth = (String)lvlResults.get(CLUSTER_DEPTH);
@@ -855,13 +855,12 @@ println("ML:"+meclValue);
       bp.setProperty(BunchProperties.OUTPUT_FORMAT,BunchProperties.TEXT_OUTPUT_FORMAT);
 
       if(removeSpecialNodes)
-        api.setAPIProperty(BunchProperties.SPECIAL_MODULE_HASHTABLE,htSpecial);
+        api.bunchArgs.SPECIAL_MODULE_HASHTABLE = htSpecial;
 
       api.setProperties(bp);
       api.run();
       var results = api.getResults();
-      String sMedLvl = (String)results.get(MEDIAN_LEVEL_GRAPH);
-      Integer iMedLvl = new Integer(sMedLvl);
+      Integer iMedLvl = results.MEDIAN_LEVEL_GRAPH;
 
       //===============================================================
       //We could have used any level we want to here.  The median level
@@ -1099,12 +1098,12 @@ println("ML:"+meclValue);
         var results = api.getResults();
         //println("Results:");
 
-        String rt = (String)results.get(RUNTIME);
-        String evals = (String)results.get(MQEVALUATIONS);
-        String medLvl = (String)results.get(MEDIAN_LEVEL_GRAPH);
-        Hashtable [] resultLevels = (Hashtable[])results.get(RESULT_CLUSTER_OBJS);
+          Long rt = results.RUNTIME;
+          Long evals = results.MQEVALUATIONS;
+          Integer medLvl = results.MEDIAN_LEVEL_GRAPH;
+        Map [] resultLevels = results.RESULT_CLUSTER_OBJS;
 
-        Hashtable medLvlResults = resultLevels[Integer.parseInt(medLvl)];
+        Map medLvlResults = resultLevels[medLvl];
 
         String numClusters = (String)medLvlResults.get(NUMBER_CLUSTERS);
         String mqValue = (String)medLvlResults.get(MQVALUE);
@@ -1142,8 +1141,8 @@ println("ML:"+meclValue);
             api.setProperties(bp);
             api.run();
             var results = api.getResults();
-            String precision = (String)results.get(PR_PRECISION_VALUE);
-            String recall = (String)results.get(PR_RECALL_VALUE);
+            String precision = results.prPrecisionValue;
+            String recall = results.prRecallValue;
             String outLine = "PR("+file1+", "+file2+")\t" + precision + "\t" + recall+"\r\n";
 
             out.write(outLine);
@@ -1186,19 +1185,19 @@ println("ML:"+meclValue);
       var results = api.getResults();
       println("Results:");
 
-      String rt = (String)results.get(RUNTIME);
-      String evals = (String)results.get(MQEVALUATIONS);
-      String levels = (String)results.get(TOTAL_CLUSTER_LEVELS);
-      String saMovesTaken = (String)results.get(SA_NEIGHBORS_TAKEN);
+      Long rt = results.RUNTIME;
+      Long evals = results.MQEVALUATIONS;
+      Integer levels = results.TOTAL_CLUSTER_LEVELS;
+      Long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
 
       println("Runtime = " + rt + " ms.");
       println("Total MQ Evaluations = " + evals);
       println("Simulated Annealing Moves Taken = " + saMovesTaken);
       println();
-      Hashtable [] resultLevels = (Hashtable[])results.get(RESULT_CLUSTER_OBJS);
+      Map [] resultLevels = results.RESULT_CLUSTER_OBJS;
 
       for(int i = 0; i < resultLevels.length; i++) {
-        Hashtable lvlResults = resultLevels[i];
+        Map lvlResults = resultLevels[i];
         println("***** LEVEL "+i+"*****");
         String mq = (String)lvlResults.get(MQVALUE);
         String depth = (String)lvlResults.get(CLUSTER_DEPTH);

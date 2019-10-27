@@ -1,6 +1,7 @@
 package bunch.api;
 
 public enum Key {
+
      CALLBACK_OBJECT_REF,
      CALLBACK_OBJECT_FREQ,
 
@@ -31,4 +32,4 @@ public enum Key {
     OMNIPRESENT_CENTRAL,
     LIBRARY_MODULE
 
-    }
+}

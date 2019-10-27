@@ -22,7 +22,7 @@ public final class MQCalculator {
 
       Graph g = (Graph)p.parse();
       ObjectiveFunctionCalculatorFactory ofc = new ObjectiveFunctionCalculatorFactory();
-      ofc.setCurrentCalculator((String)calculatorName);
+      ofc.setCurrentCalculator(calculatorName);
       g.setObjectiveFunctionCalculatorFactory(ofc);
 
       g.setObjectiveFunctionCalculator((String)calculatorName);
@@ -36,8 +36,7 @@ public final class MQCalculator {
       //figure out the total number of edges
       long edgeCnt = 0;
       Node[] n = g.getNodes();
-      for(int i = 0; i < n.length; i++)
-      {
+      for(int i = 0; i < n.length; i++) {
         if (n[i].dependencies != null)
           edgeCnt += n[i].dependencies.length;
       }
@@ -46,9 +45,7 @@ public final class MQCalculator {
       return g.getObjectiveFunctionValue();
       //System.out.println("Objective function value = " + g.getObjectiveFunctionValue());
 
-    }
-    catch(Exception calcExcept)
-    {
+    } catch(Exception calcExcept) {
       calcExcept.printStackTrace();
       return -1.0;
     }

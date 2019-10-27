@@ -17,8 +17,70 @@ import java.beans.*;
 
 final class BunchEngine {
 
-  Map<Key,Object> bunchArgs;
-  Map<Key,Object> results;
+  static final class Args {
+
+    public Collection omnipresentBoth;
+    public Collection omnipresentClients;
+    public Collection omnipresentSuppliers;
+    public Collection libraryList;
+    public String mdgInputFileName;
+    public BunchMDG mdgGraphObject;
+    public String userDirectedClusterSil;
+    public boolean lockUserSetClusters;
+    public String algNahcSaClass;
+    public Map algNahcSaConfig;
+    public String clusteringApproach;
+    public String mqCalculatorClass;
+    public String MQCALC_MDG_FILE;
+    public String MQCALC_SIL_FILE;
+    public Integer callbackObjectFrequency;
+    public ProgressCallbackInterface CALLBACK_OBJECT_REF;
+    public Integer algHcRndPct;
+    public Integer algHcHcPct;
+    public Integer algNahcHcPct;
+    public Integer algNahcRndPct;
+    public Integer algNahcPopulationSz;
+    public Integer TIMEOUT_TIME;
+    public String runMode;
+    public String OUTPUT_FORMAT;
+    public String OUTPUT_FILE;
+    public String MDG_INPUT_FILE_NAME;
+    public String OUTPUT_TREE;
+    public String OUTPUT_DIRECTORY;
+    public String ALG_GA_SELECTION_METHOD;
+    public String ALG_GA_CROSSOVER_PROB;
+    public String ALG_GA_MUTATION_PROB;
+    public String ALG_GA_POPULATION_SZ;
+    public String ALG_GA_NUM_GENERATIONS;
+    public Integer ALG_SAHC_POPULATION_SZ;
+    public String PR_CLUSTER_FILE;
+    public String PR_EXPERT_FILE;
+    public BunchAsyncNotify RUN_ASYNC_NOTIFY_CLASS;
+    public String CLUSTERING_ALG;
+    public Map SPECIAL_MODULE_HASHTABLE;
+    public String MDG_PARSER_DELIMS;
+    public boolean MDG_PARSER_USE_SPACES;
+    public boolean MDG_PARSER_USE_TABS;
+    public String PROGRESS_CALLBACK_CLASS;
+    public Integer PROGRESS_CALLBACK_FREQ;
+  }
+
+  static final class Results {
+    public String prPrecisionValue;
+    public String mqCalcResultValue;
+    public String prRecallValue;
+    public Long RUNTIME;
+    public Long MQEVALUATIONS;
+    public Integer TOTAL_CLUSTER_LEVELS;
+    public Long SA_NEIGHBORS_TAKEN;
+    public Integer MEDIAN_LEVEL_GRAPH;
+    public Map ERROR_HASHTABLE;
+    public Map WARNING_HASHTABLE;
+    public Map[] RESULT_CLUSTER_OBJS;
+  }
+  
+  Args bunchArgs = new Args();
+  Results results = new Results();
   ClusteringMethod clusteringMethod_d;
   GraphOutput graphOutput_d;
   Graph initialGraph_d;
@@ -46,13 +108,13 @@ final class BunchEngine {
 
   String getFileDelims() {
     String delims = "";
-    String def_delims = (String)bunchArgs.get(BunchProperties.MDG_PARSER_DELIMS);
+    String def_delims = bunchArgs.MDG_PARSER_DELIMS;
     if(def_delims != null)
       delims += def_delims;
 
-    if (((String)bunchArgs.get(BunchProperties.MDG_PARSER_USE_SPACES)).equalsIgnoreCase("TRUE"))
+    if (bunchArgs.MDG_PARSER_USE_SPACES)
       delims = " " + delims;  //includes the space character
-    if (((String)bunchArgs.get(BunchProperties.MDG_PARSER_USE_TABS)).equalsIgnoreCase("TRUE"))
+    if (bunchArgs.MDG_PARSER_USE_TABS)
       delims = "\t" + delims; //includes the tab character
 
     return delims;
@@ -104,7 +166,7 @@ private String[] stringArrayFromString(String in) {
  * This method sets the libraries, clients and suppliers defined in their
  * respective panes to the graph, just previous to processing.
  */
-public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
+public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   Object []suppliers = null; //new Object[0]; //null;
   Object []clients = null; //new Object[0]; //null;
   Object []centrals = null; //new Object[0]; //null;
@@ -462,41 +524,30 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
 
     emptyList.clear();
 
-    if(bunchArgs.get(BunchProperties.OMNIPRESENT_BOTH) != null) {
+    if(bunchArgs.omnipresentBoth != null) {
       containsSpecial = true;
-      String mods = (String)bunchArgs.get(BunchProperties.OMNIPRESENT_BOTH);
-      Collection c = parseStringToCollection(mods);
-      h.put(OMNIPRESENT_CENTRAL,c);
-    }
-    else
-      h.put(OMNIPRESENT_CENTRAL,(Collection)emptyList);
+      h.put(OMNIPRESENT_CENTRAL,bunchArgs.omnipresentBoth);
+    } else
+      h.put(OMNIPRESENT_CENTRAL,emptyList);
 
-    if(bunchArgs.get(BunchProperties.OMNIPRESENT_CLIENTS) != null) {
+    if(bunchArgs.omnipresentClients != null) {
       containsSpecial = true;
-      String mods = (String)bunchArgs.get(BunchProperties.OMNIPRESENT_CLIENTS);
-      Collection c = parseStringToCollection(mods);
-      h.put(OMNIPRESENT_CLIENT,c);
-    }
-    else
-      h.put(OMNIPRESENT_CLIENT,(Collection)emptyList);
+      h.put(OMNIPRESENT_CLIENT,bunchArgs.omnipresentClients);
+    } else
+      h.put(OMNIPRESENT_CLIENT,emptyList);
 
-    if(bunchArgs.get(BunchProperties.OMNIPRESENT_SUPPLIERS) != null) {
+    if(bunchArgs.omnipresentSuppliers != null) {
       containsSpecial = true;
-      String mods = (String)bunchArgs.get(BunchProperties.OMNIPRESENT_SUPPLIERS);
-      Collection c = parseStringToCollection(mods);
-      h.put(OMNIPRESENT_SUPPLIER,c);
+      h.put(OMNIPRESENT_SUPPLIER,bunchArgs.omnipresentSuppliers);
     }
     else
-      h.put(OMNIPRESENT_SUPPLIER,(Collection)emptyList);
+      h.put(OMNIPRESENT_SUPPLIER,emptyList);
 
-    if(bunchArgs.get(BunchProperties.LIBRARY_LIST) != null) {
+    if(bunchArgs.libraryList != null) {
       containsSpecial = true;
-      String mods = (String)bunchArgs.get(BunchProperties.LIBRARY_LIST);
-      Collection c = parseStringToCollection(mods);
-      h.put(LIBRARY_MODULE,c);
-    }
-    else
-      h.put(LIBRARY_MODULE,(Collection)emptyList);
+      h.put(LIBRARY_MODULE,bunchArgs.libraryList);
+    } else
+      h.put(LIBRARY_MODULE,emptyList);
 
     if(containsSpecial == true)
       return h;
@@ -514,17 +565,16 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
 
 
       //Construct Graph
-      if(bunchArgs.get(BunchProperties.MDG_INPUT_FILE_NAME) != null)
-      {
+      if(bunchArgs.mdgInputFileName != null) {
         Parser p = preferences_d.getParserFactory().getParser("dependency");
-        p.setInput((String)bunchArgs.get(BunchProperties.MDG_INPUT_FILE_NAME));
+        p.setInput(bunchArgs.mdgInputFileName);
         p.setDelims(getFileDelims());
         initialGraph_d = (Graph)p.parse();
-        reflexiveEdgeCount = ((DependencyFileParser)p).getReflexiveEdges();
+        reflexiveEdgeCount = p.getReflexiveEdges();
       }
 
-      if(bunchArgs.get(BunchProperties.MDG_GRAPH_OBJECT) != null) {
-        bunch.api.BunchMDG mdgObj = (bunch.api.BunchMDG) bunchArgs.get(BunchProperties.MDG_GRAPH_OBJECT);
+      if (bunchArgs.mdgGraphObject != null) {
+        bunch.api.BunchMDG mdgObj = bunchArgs.mdgGraphObject;
 
         initialGraph_d = bunch.util.BunchUtilities.toInternalGraph(mdgObj);
         reflexiveEdgeCount = 0;
@@ -532,13 +582,9 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
 
 
         //NOW HANDLE USER DIRECTED CLUSTERING, IF SET AND THE LOCKS
-        String userSILFile = (String)bunchArgs.get(BunchProperties.USER_DIRECTED_CLUSTER_SIL);
-        if(userSILFile != null)
-        {
-          boolean lock = true;
-          String lockStr = (String)bunchArgs.get(BunchProperties.LOCK_USER_SET_CLUSTERS);
-          if(lockStr != null)
-            if(lockStr.equalsIgnoreCase("false")) lock = false;
+        String userSILFile = bunchArgs.userDirectedClusterSil;
+        if(userSILFile != null) {
+          boolean lock = bunchArgs.lockUserSetClusters;
 
           Parser cp = preferences_d.getParserFactory().getParser("cluster");
           cp.setInput(userSILFile);
@@ -560,8 +606,8 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
         }
 
       //See if there are special modules
-      if(bunchArgs.get(BunchProperties.SPECIAL_MODULE_HASHTABLE) != null) {
-        var special = (Hashtable)bunchArgs.get(BunchProperties.SPECIAL_MODULE_HASHTABLE);
+      if(bunchArgs.SPECIAL_MODULE_HASHTABLE != null) {
+        var special = bunchArgs.SPECIAL_MODULE_HASHTABLE;
         arrangeLibrariesClientsAndSuppliers(initialGraph_d,special);
       }
 
@@ -570,7 +616,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
         arrangeLibrariesClientsAndSuppliers(initialGraph_d,specialFromInput);
 
       //Load Clusteirng Method Handler
-      String clustAlg = (String)bunchArgs.get(BunchProperties.CLUSTERING_ALG);
+      String clustAlg = (String)bunchArgs.CLUSTERING_ALG;
       if(clustAlg==null) return false;
       clusteringMethod_d = preferences_d.getClusteringMethodFactory().getMethod(clustAlg);
       if(clusteringMethod_d == null) return false;
@@ -582,11 +628,11 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       if(clustAlg.equals(BunchProperties.ALG_GA)) {
         GAConfiguration gaConfig = (GAConfiguration)configuration_d;
 
-        String method = (String)bunchArgs.get(BunchProperties.ALG_GA_SELECTION_METHOD);
-        String cProb = (String)bunchArgs.get(BunchProperties.ALG_GA_CROSSOVER_PROB);
-        String mProb = (String)bunchArgs.get(BunchProperties.ALG_GA_MUTATION_PROB);
-        String popSz = (String)bunchArgs.get(BunchProperties.ALG_GA_POPULATION_SZ);
-        String numGens = (String)bunchArgs.get(BunchProperties.ALG_GA_NUM_GENERATIONS);
+        String method = bunchArgs.ALG_GA_SELECTION_METHOD;
+        String cProb = bunchArgs.ALG_GA_CROSSOVER_PROB;
+        String mProb = bunchArgs.ALG_GA_MUTATION_PROB;
+        String popSz = bunchArgs.ALG_GA_POPULATION_SZ;
+        String numGens = bunchArgs.ALG_GA_NUM_GENERATIONS;
 
         if(method != null) {
           String tournMethod = "tournament";
@@ -619,30 +665,30 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       }
 
       if(clustAlg.equals(BunchProperties.ALG_SAHC)) {
-        Integer popSz = (Integer)bunchArgs.get(BunchProperties.ALG_SAHC_POPULATION_SZ);
+        Integer popSz = bunchArgs.ALG_SAHC_POPULATION_SZ;
 
         if(popSz != null)
           configuration_d.setPopulationSize(popSz.intValue());
       }
 
-      if(clustAlg.equals(BunchProperties.ALG_HILL_CLIMBING)) {
+      if (clustAlg.equals(BunchProperties.ALG_HILL_CLIMBING)) {
         NAHCConfiguration c = (NAHCConfiguration)configuration_d;
-        if(bunchArgs.get(BunchProperties.ALG_HC_RND_PCT) != null) {
-          Integer randomize = (Integer)bunchArgs.get(BunchProperties.ALG_HC_RND_PCT);
+        if(bunchArgs.algHcRndPct != null) {
+          Integer randomize = bunchArgs.algHcRndPct;
           c.setRandomizePct(randomize.intValue());
         }
 
-        if(bunchArgs.get(BunchProperties.ALG_HC_HC_PCT) != null) {
-          Integer hcThreshold = (Integer)bunchArgs.get(BunchProperties.ALG_HC_HC_PCT);
+        if(bunchArgs.algHcHcPct != null) {
+          Integer hcThreshold = bunchArgs.algHcHcPct;
           //System.out.println("Setting minumum to consider= "+hcThreshold);
           c.setMinPctToConsider(hcThreshold.intValue());
         }
       }
 
       if(clustAlg.equals(BunchProperties.ALG_NAHC)) {
-        Integer HCPct = (Integer)bunchArgs.get(BunchProperties.ALG_NAHC_HC_PCT);
-        Integer rndPct = (Integer)bunchArgs.get(BunchProperties.ALG_NAHC_RND_PCT);
-        Integer popSz = (Integer)bunchArgs.get(BunchProperties.ALG_NAHC_POPULATION_SZ);
+        Integer HCPct = bunchArgs.algNahcHcPct;
+        Integer rndPct = bunchArgs.algNahcRndPct;
+        Integer popSz = bunchArgs.algNahcPopulationSz;
 
         NAHCConfiguration c = (NAHCConfiguration)configuration_d;
 
@@ -660,16 +706,13 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
           }
         }
 
-        String SAClass = (String)bunchArgs.get(BunchProperties.ALG_NAHC_SA_CLASS);
-        if(SAClass != null) {
+        String SAClass = bunchArgs.algNahcSaClass;
+        if (SAClass != null) {
           SATechnique saHandler = (SATechnique)Beans.instantiate(null,SAClass);
-          if(saHandler != null)
-          {
-            String saHandlerArgs = (String)bunchArgs.get(BunchProperties.ALG_NAHC_SA_CONFIG);
-            if(saHandlerArgs != null)
-            {
-              Hashtable saConfig = getSAConfigHTFromString(saHandlerArgs);
-              saHandler.setConfig(saConfig);
+          if (saHandler != null) {
+            Map saHandlerArgs = bunchArgs.algNahcSaConfig;
+            if(saHandlerArgs != null) {
+              saHandler.setConfig(saHandlerArgs);
             }
             c.setSATechnique(saHandler);
           }
@@ -677,13 +720,13 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       }
 
       //now set if we are clustering trees or one level
-      if (((String)bunchArgs.get(BunchProperties.CLUSTERING_APPROACH)).equalsIgnoreCase(BunchProperties.AGGLOMERATIVE))
+      if ((bunchArgs.clusteringApproach).equalsIgnoreCase(BunchProperties.AGGLOMERATIVE))
         initialGraph_d.setIsClusterTree(true);
       else
         initialGraph_d.setIsClusterTree(false);
 
       //now setup the calculator
-      String objFnCalc = (String)bunchArgs.get(BunchProperties.MQ_CALCULATOR_CLASS);
+      String objFnCalc = bunchArgs.mqCalculatorClass;
       (preferences_d.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
       Graph.setObjectiveFunctionCalculatorFactory(preferences_d.getObjectiveFunctionCalculatorFactory());
       initialGraph_d.setObjectiveFunctionCalculator(objFnCalc);
@@ -696,19 +739,19 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       stats.getInstance();
 
       //see if a callback class is setup, if so save a reference to the class
-      cbInterfaceObj = (ProgressCallbackInterface)bunchArgs.get(CALLBACK_OBJECT_REF);
-      Integer iTmp = (Integer)bunchArgs.get(CALLBACK_OBJECT_FREQ);
+      cbInterfaceObj = bunchArgs.CALLBACK_OBJECT_REF;
+      Integer iTmp = bunchArgs.callbackObjectFrequency;
       if(iTmp != null)
         callbackFrequency = iTmp.intValue();
 
       //see if there is a timout requested
-      Integer toTime = (Integer)bunchArgs.get(BunchProperties.TIMEOUT_TIME);
+      Integer toTime = bunchArgs.TIMEOUT_TIME;
       if(toTime != null)
         timeoutTimer = new javax.swing.Timer(toTime.intValue(),new TimeoutTimer());
 
       //now set the graph output driver
       graphOutput_d = null;
-      String outputMode = (String)bunchArgs.get(BunchProperties.OUTPUT_FORMAT);
+      String outputMode = bunchArgs.OUTPUT_FORMAT;
       if((outputMode != null)||(!outputMode.equalsIgnoreCase(BunchProperties.NULL_OUTPUT_FORMAT))) {
         String driver = null;
         if(outputMode.equalsIgnoreCase(BunchProperties.DOT_OUTPUT_FORMAT))
@@ -718,15 +761,14 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
         else if(outputMode.equalsIgnoreCase(BunchProperties.GXL_OUTPUT_FORMAT))
           driver = "GXL";
 
-        if(driver != null)
-        {
-          String outFileName = (String)bunchArgs.get(BunchProperties.OUTPUT_FILE);
+        if(driver != null) {
+          String outFileName = bunchArgs.OUTPUT_FILE;
           if (outFileName == null)
-            outFileName = (String)bunchArgs.get(BunchProperties.MDG_INPUT_FILE_NAME);
+            outFileName = bunchArgs.MDG_INPUT_FILE_NAME;
 
           graphOutput_d = preferences_d.getGraphOutputFactory().getOutput(driver);
 
-          String outTree = (String)bunchArgs.get(BunchProperties.OUTPUT_TREE);
+          String outTree = bunchArgs.OUTPUT_TREE;
           if(outTree != null) {
             if(outTree.equalsIgnoreCase("true")) {
               graphOutput_d.setNestedLevels(true);
@@ -736,7 +778,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
           graphOutput_d.setBaseName(outFileName); //(String)bunchArgs.get(BunchProperties.MDG_INPUT_FILE_NAME));
           graphOutput_d.setBasicName(outFileName); //(String)bunchArgs.get(BunchProperties.MDG_INPUT_FILE_NAME));
           String outputFileName = graphOutput_d.getBaseName();
-          String outputPath = (String)bunchArgs.get(BunchProperties.OUTPUT_DIRECTORY);
+          String outputPath = bunchArgs.OUTPUT_DIRECTORY;
           if(outputPath != null) {
             java.io.File f = new java.io.File(graphOutput_d.getBaseName());
             String filename = f.getName();
@@ -815,14 +857,12 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
     clusterList.add(clusteringMethod_d.getBestCluster().cloneCluster());
 
     //System.out.println("MQ-Lvl"+ bestC.getGraph().getGraphLevel()+" is: " + bestC.getObjFnValue());
-    String cApproach = (String)bunchArgs.get(BunchProperties.CLUSTERING_APPROACH);
-    if(cApproach.equalsIgnoreCase(BunchProperties.AGGLOMERATIVE))
-    {
+    String cApproach = bunchArgs.clusteringApproach;
+    if(cApproach.equalsIgnoreCase(BunchProperties.AGGLOMERATIVE)) {
       Graph g = clusteringMethod_d.getBestGraph().cloneGraph();
 
       int []cNames = g.getClusterNames();  //c.getClusterNames();
-      while(cNames.length>1)
-      {
+      while(cNames.length>1) {
         //level++;
         NextLevelGraph nextL = new NextLevelGraph();
         Graph newG=nextL.genNextLevelGraph(g);
@@ -873,9 +913,9 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
   }
 
   boolean runMQCalc() {
-    MQCalcMdgFileName = (String)bunchArgs.get(BunchProperties.MQCALC_MDG_FILE);
-    MQCalcSilFileName = (String)bunchArgs.get(BunchProperties.MQCALC_SIL_FILE);
-    String MQCalcClass = (String)bunchArgs.get(BunchProperties.MQ_CALCULATOR_CLASS);
+    MQCalcMdgFileName = bunchArgs.MQCALC_MDG_FILE;
+    MQCalcSilFileName = bunchArgs.MQCALC_SIL_FILE;
+    String MQCalcClass = bunchArgs.mqCalculatorClass;
 
     double mqResult = bunch.util.MQCalculator.CalcMQ(MQCalcMdgFileName,MQCalcSilFileName,MQCalcClass);
     Double Dmq = new Double(mqResult);
@@ -884,8 +924,8 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
   }
 
   boolean runPRCalc() {
-    String clusterF = (String)bunchArgs.get(BunchProperties.PR_CLUSTER_FILE);
-    String expertF = (String)bunchArgs.get(BunchProperties.PR_EXPERT_FILE);
+    String clusterF = bunchArgs.PR_CLUSTER_FILE;
+    String expertF = bunchArgs.PR_EXPERT_FILE;
 
     bunch.util.PrecisionRecallCalculator calc =
       new bunch.util.PrecisionRecallCalculator(expertF,clusterF);
@@ -905,8 +945,8 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       return medianG.getGraphLevel();
   }
 
-  public Map<Key,Object> getResultsHT() {
-    String runMode = (String)bunchArgs.get(BunchProperties.RUN_MODE);
+  public Results getResultsHT() {
+    String runMode = bunchArgs.runMode;
     if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_CLUSTER)) {
       return getClusteringResultsHT();
     }
@@ -922,22 +962,22 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
     return null;
   }
 
-  public Map<Key, Object> getMQCalcResultsHT() {
-    results = new HashMap<>();
+  public Results getMQCalcResultsHT() {
+    results = new Results();
     if (MQCalcValue == null)
       return null;
 
-    results.put(MQCALC_RESULT_VALUE,MQCalcValue);
+    results.mqCalcResultValue = MQCalcValue;
     return results;
   }
 
-  public Map<Key, Object> getPRResultsHT() {
-    results = new HashMap<>();
+  public Results getPRResultsHT() {
+    results = new Results();
     if ((precision == null) || (recall == null))
       return null;
 
-    results.put(PR_PRECISION_VALUE,precision);
-    results.put(PR_RECALL_VALUE,recall);
+    results.prPrecisionValue = precision;
+    results.prRecallValue = recall;
     return results;
   }
 
@@ -949,11 +989,11 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
     return this.clusterList;
   }
 
-  public Map<Key,Object> getClusteringResultsHT() {
+  public Results getClusteringResultsHT() {
       if(clusteringMethod_d == null) return null;
       if(baseCluster == null) return null;
 
-      results = new Hashtable();
+      results = new Results();
 
       Long rt = new Long(totalTime);
       Long mqEvals = new Long(stats.getMQCalculations());
@@ -961,24 +1001,24 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       Long saMovesTaken = new Long(stats.getSAOverrides());
       Integer medianLvl = new Integer(getMedianLevelNumber());
 
-      results.put(RUNTIME,rt.toString());
-      results.put(MQEVALUATIONS,mqEvals.toString());
-      results.put(TOTAL_CLUSTER_LEVELS,totalClusterLevels.toString());
-      results.put(SA_NEIGHBORS_TAKEN,saMovesTaken.toString());
-      results.put(MEDIAN_LEVEL_GRAPH,medianLvl.toString());
+      results.RUNTIME = rt;
+      results.MQEVALUATIONS = mqEvals;
+      results.TOTAL_CLUSTER_LEVELS = totalClusterLevels;
+      results.SA_NEIGHBORS_TAKEN = saMovesTaken;
+      results.MEDIAN_LEVEL_GRAPH = medianLvl;
 
       //now handle errors & warnings
-      Hashtable errorHT = new Hashtable();
-      results.put(ERROR_HASHTABLE,errorHT);
+      Map errorHT = new Hashtable();
+      results.ERROR_HASHTABLE = errorHT;
 
-      Hashtable warningHT = new Hashtable();
+      Map warningHT = new Hashtable();
       if (reflexiveEdgeCount > 0) {
         Integer re = new Integer(reflexiveEdgeCount);
         warningHT.put(REFLEXIVE_EDGE_COUNT,re.toString());
       }
-      results.put(WARNING_HASHTABLE,warningHT);
+      results.WARNING_HASHTABLE = warningHT;
 
-      Hashtable []resultClusters = new Hashtable[clusterList.size()];
+      Map []resultClusters = new Hashtable[clusterList.size()];
 
       for(int i = 0; i < clusterList.size(); i++) {
         Integer level = new Integer(i);
@@ -998,7 +1038,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
         resultClusters[i] = lvlHT;
       }
 
-      results.put(RESULT_CLUSTER_OBJS,resultClusters);
+      results.RESULT_CLUSTER_OBJS = resultClusters;
       stats.cleanup();
 
       Configuration cTmp = clusteringMethod_d.getConfiguration();
@@ -1011,17 +1051,17 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       return results;
   }
 
-  public boolean run(Hashtable args) {
+  public boolean run(Args args) {
     bunchArgs = args;
 
-    String runMode = (String)bunchArgs.get(BunchProperties.RUN_MODE);
+    String runMode = bunchArgs.runMode;
     if(runMode == null) return false;
 
     if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_CLUSTER)) {
       boolean rc;
       BunchAsyncNotify notifyClass = null;
-      if (bunchArgs.get(BunchProperties.RUN_ASYNC_NOTIFY_CLASS) != null)
-        notifyClass = (BunchAsyncNotify)bunchArgs.get(BunchProperties.RUN_ASYNC_NOTIFY_CLASS);
+      if (bunchArgs.RUN_ASYNC_NOTIFY_CLASS != null)
+        notifyClass = bunchArgs.RUN_ASYNC_NOTIFY_CLASS;
 
       if(notifyClass == null)
         rc = runClustering();
@@ -1031,13 +1071,11 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Hashtable special) {
       //prepareResultsHT();
       return rc;
     }
-    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_PR_CALC))
-    {
+    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_PR_CALC)) {
       return runPRCalc();
     }
 
-    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_MQ_CALC))
-    {
+    if(runMode.equalsIgnoreCase(BunchProperties.RUN_MODE_MQ_CALC)) {
       return runMQCalc();
     }
     return false;
