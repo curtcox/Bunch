@@ -2,8 +2,7 @@ package bunch.api;
 
 import java.util.Iterator;
 
-final class BunchGraphPR
-{
+final class BunchGraphPR {
   BunchGraph expertG;
   BunchGraph clusterG;
   double precision = 0.0;
@@ -11,28 +10,24 @@ final class BunchGraphPR
   long  combinationsConsidered = 0;
   long  matchingCombinations = 0;
 
-  public BunchGraphPR(BunchGraph expert, BunchGraph cluster)
-  {
+  public BunchGraphPR(BunchGraph expert, BunchGraph cluster) {
     expertG = expert;
     clusterG = cluster;
   }
 
-  public boolean run()
-  {
+  public boolean run() {
     precision = runPR(clusterG,expertG);
     recall = runPR(expertG,clusterG);
     return true;
   }
 
-  private double runPR(BunchGraph g1, BunchGraph g2)
-  {
+  private double runPR(BunchGraph g1, BunchGraph g2) {
     double result = 0.0;
     combinationsConsidered = 0;
     matchingCombinations = 0;
 
     Iterator clusterList = g1.getClusters().iterator();
-    while(clusterList.hasNext())
-    {
+    while(clusterList.hasNext()) {
       BunchCluster bc = (BunchCluster)clusterList.next();
       processCluster(bc,g2);
     }
@@ -42,11 +37,9 @@ final class BunchGraphPR
     return result;
   }
 
-  private boolean processCluster(BunchCluster bc, BunchGraph bg)
-  {
+  private boolean processCluster(BunchCluster bc, BunchGraph bg) {
     Object[] nodeO = bc.getClusterNodes().toArray();
-    for(int i = 0; i < nodeO.length; i++)
-    {
+    for(int i = 0; i < nodeO.length; i++) {
       BunchNode srcNode = (BunchNode)nodeO[i];
       BunchCluster srcClusterInGraph = bg.findNode(srcNode.getName()).getMemberCluster();
       for(int j = i+1; j < nodeO.length; j++)

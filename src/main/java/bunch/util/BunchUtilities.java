@@ -151,8 +151,7 @@ public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
   ArrayList al = new ArrayList(bunchMDG.getMDGEdges());
   Hashtable nodes = new Hashtable();
 
-  for(int i = 0; i < al.size(); i++)
-  {
+  for(int i = 0; i < al.size(); i++) {
     bunch.api.BunchMDGDependency bmd = (bunch.api.BunchMDGDependency)al.get(i);
 
     ParserNode currentNode = null;
@@ -166,16 +165,14 @@ public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
 
     currentNode = (ParserNode)nodes.get(bmd.getSrcNode());
     //Node is not known yet, add it to the list
-    if (currentNode == null)
-    {
+    if (currentNode == null) {
         currentNode = new ParserNode(bmd.getSrcNode());
         nodes.put(bmd.getSrcNode(),currentNode);
     }
 
     targetNode = (ParserNode)nodes.get(bmd.getDestNode());
     //Node is not known yet, add it to the list
-    if (targetNode == null)
-    {
+    if (targetNode == null) {
         targetNode = new ParserNode(bmd.getDestNode());
         nodes.put(bmd.getDestNode(),targetNode);
     }
@@ -186,26 +183,20 @@ public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
 
     //Add source to target, and target to source if they don't already
     //exist as forward and backward dependencies
-    if (!currentNode.dependencies.containsKey(dep))
-    {
+    if (!currentNode.dependencies.containsKey(dep)) {
       currentNode.dependencies.put (dep,dep);
       currentNode.dWeights.put(dep,w);
       //System.out.println("Adding weight " + w);
-    }
-    else
-    {
+    } else {
       Integer wExisting = (Integer)currentNode.dWeights.get(dep);
       Integer wtemp = new Integer(w.intValue() + wExisting.intValue());
       currentNode.dWeights.put(dep,wtemp);
     }
 
-    if (!targetNode.backEdges.containsKey(src))
-    {
+    if (!targetNode.backEdges.containsKey(src)) {
       targetNode.backEdges.put(src,src);
       targetNode.beWeights.put(src,w);
-    }
-    else
-    {
+    } else {
       Integer wExisting = (Integer)targetNode.beWeights.get(src);
       Integer wtemp = new Integer(w.intValue() + wExisting.intValue());
       targetNode.beWeights.put(src,wtemp);
@@ -222,8 +213,7 @@ public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
 
   //build temporary name to ID mapping table
   Object [] oa = nodes.keySet().toArray();
-  for (int i = 0; i < oa.length; i++)
-  {
+  for (int i = 0; i < oa.length; i++) {
     String n = (String)oa[i];
     nameTable.put(n,new Integer(i));
   }
@@ -235,8 +225,7 @@ public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
 
   //now setup the datastructure
   Object [] nl = nodes.values().toArray();
-  for(int i = 0; i < nl.length; i++)
-  {
+  for(int i = 0; i < nl.length; i++) {
     Node n = new Node();
     nodeList[i]  = n;
     ParserNode p = (ParserNode)nl[i];
@@ -256,24 +245,19 @@ public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
  * Helper routine that given a hashtable of values and a key returns an
  * object array of values
  */
-private static int[] ht2ArrayFromKey(Hashtable key, Hashtable values)
-{
+private static int[] ht2ArrayFromKey(Hashtable key, Hashtable values) {
     int [] retArray = new int[values.size()];
 
-    try{
+    try {
       Object [] oa = values.keySet().toArray();
-      for(int i = 0; i < oa.length; i++)
-      {
+      for(int i = 0; i < oa.length; i++) {
         String s = (String)oa[i];
         Integer val = (Integer)key.get(s);
         retArray[i] = val.intValue();
       }
       return retArray;
-    }
-    catch(Exception e)
-    {
-      e.printStackTrace();
-      return null;
+    } catch(Exception e) {
+        throw new RuntimeException(e);
     }
 }
 
@@ -281,8 +265,7 @@ private static int[] ht2ArrayFromKey(Hashtable key, Hashtable values)
  * Since this is a hashtable of hashtables we want to return
  * the contents of the inner hashtable in an integer array format.
  */
-private static int[] ht2ArrayValFromKey(Hashtable key, Hashtable values)
-{
+private static int[] ht2ArrayValFromKey(Hashtable key, Hashtable values) {
     int [] retArray = new int[values.size()];
 
     try{
@@ -294,11 +277,8 @@ private static int[] ht2ArrayValFromKey(Hashtable key, Hashtable values)
         retArray[i] = value.intValue();
       }
       return retArray;
-    }
-    catch(Exception e)
-    {
-      e.printStackTrace();
-      return null;
+    } catch(Exception e) {
+        throw new RuntimeException(e);
     }
 }
 

@@ -18,7 +18,7 @@ package bunch.api;
  * @version 1.0
  */
 
-public class BunchMDGDependency {
+public final class BunchMDGDependency {
 
   String srcNode;
   String destNode;
@@ -32,23 +32,20 @@ public class BunchMDGDependency {
     relType = null;
   }
 
-  public BunchMDGDependency(String s, String d, int w, String r)
-  {
+  public BunchMDGDependency(String s, String d, int w, String r) {
     srcNode = s;
     destNode = d;
     edgeW = w;
     relType = r;
   }
 
-  public BunchMDGDependency(String s, String d, int w)
-  {
+  public BunchMDGDependency(String s, String d, int w) {
     srcNode = s;
     destNode = d;
     edgeW = w;
   }
 
-  public BunchMDGDependency(String s, String d)
-  {
+  public BunchMDGDependency(String s, String d) {
     srcNode = s;
     destNode = d;
     edgeW = 1;

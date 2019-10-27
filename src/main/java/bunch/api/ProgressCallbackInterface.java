@@ -2,7 +2,7 @@ package bunch.api;
 
 import java.util.*;
 
-public interface ProgressCallbackInterface {
+interface ProgressCallbackInterface {
 
   void stats(Hashtable h);
 }

@@ -1,5 +1,5 @@
 package bunch.api;
 
-public enum RunMode {
+enum RunMode {
     CLUSTER, PR_CALC, MQ_CALC
 }

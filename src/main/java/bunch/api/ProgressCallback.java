@@ -2,7 +2,7 @@ package bunch.api;
 
 import java.util.Hashtable;
 
-public final class ProgressCallback implements ProgressCallbackInterface{
+final class ProgressCallback implements ProgressCallbackInterface{
 
   public ProgressCallback() {}
 
