@@ -23,8 +23,5 @@ final class BunchProperties {
       //
       public final static String ALG_HILL_CLIMBING      = "NAHC";
       public final static String ALG_SAHC               = "SAHC";
-      public final static String RUN_MODE_CLUSTER       = "Cluster";
-      public final static String RUN_MODE_MQ_CALC       = "MQCalculator";
-      public final static String RUN_MODE_PR_CALC       = "PRCalculator";
 
 }

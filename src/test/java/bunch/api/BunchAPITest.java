@@ -630,8 +630,8 @@ println("ML:"+meclValue);
 
   @Test
   public void BunchAPITestOld() throws Exception {
-      BunchAPI api = new BunchAPI();
-      Hashtable htSpecial = api.getSpecialModules("e:\\linux\\linux");
+      var api = new BunchAPI();
+      var htSpecial = api.getSpecialModules("e:\\linux\\linux");
 
       Collection suppliers = (Collection)htSpecial.get(OMNIPRESENT_SUPPLIER);
       Collection clients  = (Collection)htSpecial.get(OMNIPRESENT_CLIENT);
@@ -853,7 +853,7 @@ println("ML:"+meclValue);
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = mdgFileName;
 
-      Hashtable htSpecial = api.getSpecialModules(mdgFileName);
+      var htSpecial = api.getSpecialModules(mdgFileName);
 
       bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
       bp.OUTPUT_FORMAT = TEXT_OUTPUT_FORMAT;

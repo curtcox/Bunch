@@ -21,7 +21,7 @@ public final class BunchAPI {
     return engine.getResultsHT();
   }
 
-  public Hashtable getSpecialModules(String mdgFileName) {
+  public Map getSpecialModules(String mdgFileName) {
     return engine.getDefaultSpecialNodes(mdgFileName);
   }
 

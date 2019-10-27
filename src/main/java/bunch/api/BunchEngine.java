@@ -275,10 +275,10 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   g.setOriginalNodes(originalList);
 }
 
-  public Hashtable getDefaultSpecialNodes(String graphName)
+  public Map getDefaultSpecialNodes(String graphName)
   { return getDefaultSpecialNodes(graphName, 3.0);  }
 
-  public Hashtable getDefaultSpecialNodes(String graphName, double threshold) {
+  public Map getDefaultSpecialNodes(String graphName, double threshold) {
     try {
       Hashtable h = new Hashtable();
       Hashtable centrals = new Hashtable();
@@ -388,9 +388,8 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       h.put(OMNIPRESENT_SUPPLIER,suppliers.values());
       h.put(LIBRARY_MODULE,libraries.values());
       return h;
-    } catch(Exception e) {
-      e.printStackTrace();
-      return null;
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 
@@ -696,23 +695,19 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   boolean runClusteringAsync(final BunchAsyncNotify nObject) {
 
     nObject.setStatus(bunch.api.BunchAsyncNotify.STATUS_RUNNING);
-    SwingWorker worker_d = new SwingWorker()
-    {
-      public Object construct()
-      {
+    SwingWorker worker_d = new SwingWorker() {
+      public Object construct() {
         try{
           runClustering();
         }
         catch(Exception threadEx){ threadEx.printStackTrace(); }
         return "Done";
       }
-      public void interrupt()
-      {
+      public void interrupt() {
         this.suspend();
         super.interrupt();
       }
-      public void finished()
-      {
+      public void finished() {
         nObject.setStatus(bunch.api.BunchAsyncNotify.STATUS_DONE);
         nObject.notifyDone();
       }

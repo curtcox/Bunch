@@ -1,9 +1,6 @@
 package bunch.api;
 
-import java.io.IOException;
 import java.util.*;
-
-import static bunch.api.Key.*;
 
 public final class BunchAPISimEdgeTest {
 
@@ -263,7 +260,7 @@ String mode = "NAHC";
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = mdgFileName;
 
-      Hashtable htSpecial = api.getSpecialModules(mdgFileName);
+      var htSpecial = api.getSpecialModules(mdgFileName);
 
       bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
       bp.OUTPUT_FORMAT = BunchProperties.TEXT_OUTPUT_FORMAT;

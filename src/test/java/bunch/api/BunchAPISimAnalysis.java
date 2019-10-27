@@ -1,12 +1,14 @@
 package bunch.api;
 
+import org.junit.Test;
+
 import java.util.*;
 import java.io.*;
 import java.sql.*;
 
 public final class BunchAPISimAnalysis {
 
-  String testID = "CIAT1";
+  final String testID = "CIAT1";
   Connection con = null;
   PreparedStatement writeRecord = null;
 
@@ -18,8 +20,8 @@ public final class BunchAPISimAnalysis {
   double mc1 = 0;
   int total = 0;
 
-  public BunchAPISimAnalysis() {
-    testID = "CIAT1";
+  @Test
+  public void doTest25() {
 
     //doTest("d:\\linux\\linux","d:\\linux\\linux",10);
     doTest("e:\\hack\\hack","e:\\hack\\hack",25);
@@ -58,8 +60,7 @@ public final class BunchAPISimAnalysis {
     }
   }
 
-  public void dumpRandomOutput(String baseFName, int id, Hashtable h)
-  {
+  public void dumpRandomOutput(String baseFName, int id, Hashtable h) {
     String outFileName = baseFName+id+".bunch";
     try
     {
@@ -93,8 +94,7 @@ public final class BunchAPISimAnalysis {
   }
 
 
-  public void genHackMDG(String baseFName, int howMany)
-  {
+  public void genHackMDG(String baseFName, int howMany) {
     String outFileName = baseFName;
     Random r = new Random(System.currentTimeMillis());
     try
@@ -125,6 +125,7 @@ public final class BunchAPISimAnalysis {
       ex.printStackTrace();
     }
   }
+
   public void doTest(String mdgFileName, String baseFileName, int howMany)
   {
     BunchGraph  bgList[] = new BunchGraph[howMany];
@@ -270,8 +271,7 @@ public final class BunchAPISimAnalysis {
       }
   }
 
-  public void setDB()
-  {
+  public void setDB() {
       try
     {
       Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
@@ -335,8 +335,4 @@ public final class BunchAPISimAnalysis {
     }
   }
 
-  public static void main(String[] args) {
-  System.out.println("HACK1");
-    BunchAPISimAnalysis bunchAPISimAnalysis1 = new BunchAPISimAnalysis();
-  }
 }
