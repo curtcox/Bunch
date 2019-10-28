@@ -1,6 +1,7 @@
 package bunch.ui;
 
 import bunch.*;
+import bunch.api.Algorithm;
 import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.server.BunchSvrMsg;
 import bunch.clustering.*;
@@ -207,7 +208,7 @@ private void jbInit() throws IOException, ClassNotFoundException {
   }
 
   //Setup the default clustering method
-  String defaultCM = preferences_d.getClusteringMethodFactory().getDefaultMethod();
+  var defaultCM = preferences_d.getClusteringMethodFactory().getDefaultMethod();
   setClusteringMethod(defaultCM);
   clusteringMethodList_d.setSelectedItem(defaultCM);
 
@@ -755,9 +756,9 @@ public boolean isUserDrivenTechnique()
  *
  * @param method the name of the ClusteringMethod to load
  */
-private void setClusteringMethod(String method) {
+private void setClusteringMethod(ClusteringMethod method) {
   if (!method.getClass().getName().equals(method)) {
-    clusteringMethod_d = preferences_d.getClusteringMethodFactory().getMethod(method);
+    clusteringMethod_d = method;
     clusteringOptionsButton_d.setEnabled(clusteringMethod_d.isConfigurable());
     configuration_d = clusteringMethod_d.getConfiguration();
     if (initialGraph_d!=null&&configuration_d!=null) {
@@ -979,9 +980,8 @@ void clusteringOptionsButton_d_actionPerformed(ActionEvent e) {
     dlg.setConfiguration(configuration_d);
     dlg.jbInit();
     dlg.pack();
-  }
-  catch (Exception ex) {
-    ex.printStackTrace();
+  } catch (Exception ex) {
+    throw new RuntimeException(ex);
   }
   if (inputGraphFilename_d.getText() == null
             || inputGraphFilename_d.getText().equals("")
@@ -1005,7 +1005,7 @@ void clusteringOptionsButton_d_actionPerformed(ActionEvent e) {
  * Called when a new item is selected on the list of Clustering Methods
  */
 void clusteringMethodList_d_itemStateChanged(ItemEvent e) {
-  setClusteringMethod((String)clusteringMethodList_d.getSelectedItem());
+  setClusteringMethod((ClusteringMethod) clusteringMethodList_d.getSelectedItem());
   setupClusteringOptions();
 }
 

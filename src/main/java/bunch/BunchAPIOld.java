@@ -1,5 +1,6 @@
 package bunch;
 
+import bunch.api.Algorithm;
 import bunch.clustering.ClusteringMethod;
 import bunch.clustering.ClusteringMethodFactory;
 import bunch.clustering.HillClimbingConfiguration;
@@ -103,8 +104,7 @@ public BunchAPIOld(String sMDGFile, String delims) throws Exception {
  * The init method initializes the clustering engine with default parameters
  * similar to those found on the BunchAPI front end.
  *
- * @param sMDGFile  The name of the mdg file to be used for the clustering
- *                  process
+ * @param sMDG  The name of the mdg file to be used for the clustering process
  *
  * @param  delims   The list of delimters to use in the parsing process
  */
@@ -126,11 +126,10 @@ public void init(String sMDG, String delims) throws Exception {
  * Loads the ClusteringMethod class that corresponds to the name passed as parameter
  * The class is loaded by asking the ClusteringMethodFactory for it.
  *
- * @param method the name of the ClusteringMethod to load
- * @see ClusteringMethodFactory.getMethod(ClusteringMethod)
+ * @param iMethod the name of the ClusteringMethod to load
  */
 public void setClusteringMethod(int iMethod) {
-  String method;
+  Algorithm method;
 
    alg = iMethod;
 
@@ -139,29 +138,28 @@ public void setClusteringMethod(int iMethod) {
     * used to select the name from the factory.  This is not a good coding
     * approach and has been improved in the non-deprecated version of the BunchAPI
     */
-   switch(iMethod)
-   {
+   switch(iMethod) {
       case ALG_NAHC:
-         method = "NAHC:    nodes in [50,100)";
+         method = Algorithm.NAHC;//"NAHC:    nodes in [50,100)";
          setHillClimbingConfiguration(1,10,0.1); //NAHC
          configuration_d = hcc;
          break;
       case ALG_SAHC:
-         method = "SAHC:    nodes in [10,50)";
+         method = Algorithm.SAHC;//"SAHC:    nodes in [10,50)";
          setHillClimbingConfiguration(1,5,0.1); //SAHC
          configuration_d = hcc;
          break;
       case ALG_GA:
-         method = "GA:          nodes in [100,...)";
+         method = Algorithm.GA;//"GA:          nodes in [100,...)";
          setGAConfiguration(6900,230,0.6,0.025,GAMETHOD_RW); //GA
          configuration_d = gac;
          break;
-      case ALG_OPTIMAL:
-         method = "Optimal: nodes in [1, 10)";
-         configuration_d = null;
-         break;
+//      case ALG_OPTIMAL:
+//         method = "Optimal: nodes in [1, 10)";
+//         configuration_d = null;
+//         break;
       default:
-         method = "SAHC:    nodes in [10,50)";
+         method = Algorithm.SAHC;//"SAHC:    nodes in [10,50)";
          break;
    }
    setPreferencesObject(method);
@@ -173,7 +171,7 @@ public void setClusteringMethod(int iMethod) {
  * clustering method.  Also set the clustering method factory with the
  * appropriate clustering algorithm
  */
-private void setPreferencesObject(String method) {
+private void setPreferencesObject(Algorithm method) {
     if (!method.getClass().getName().equals(method)) {
         clusteringMethod_d = preferences_d.getClusteringMethodFactory().getMethod(method);
         if (configuration_d == null)
@@ -193,7 +191,7 @@ private void setPreferencesObject(String method) {
  * object for the api class.  This graph object will be used by the other
  * methods in this class.
  *
- * @param sMDGFile  The name of the mdg file to be used for the clustering
+ * @param filename  The name of the mdg file to be used for the clustering
  *                  process
  *
  * @param  delims   The list of delimiters to use in the parsing process
@@ -405,8 +403,8 @@ public void configureOptions() {
 /**
  * Sets the hill climbing configuration paramers.
  *
- * @param iIterations The number of iterations to perform
- * @param iPopSize    The population size
+ * @param iInterations The number of iterations to perform
+ * @param iPopSz    The population size
  * @param dThreshold  The threshold to determine convergance
  */
 public void setHillClimbingConfiguration(int iInterations, int iPopSz, double dThreshold ) {
@@ -420,10 +418,10 @@ public void setHillClimbingConfiguration(int iInterations, int iPopSz, double dT
 /**
  * Sets the genetic algorithm configuration paramers.
  *
- * @param iIterations     The number of iterations to perform
- * @param iPopSize        The population size
+ * @param iInterations     The number of iterations to perform
+ * @param iPopSz        The population size
  * @param crossThreshold  The crossover probability 0 <= x <= 1
- * @param mutationThreshod The mutation probability 0 <= x <= 1
+ * @param mutationThreshold The mutation probability 0 <= x <= 1
  * @param iMethod         The selection method
  */
 public void setGAConfiguration(int iInterations, int iPopSz, double crossThreshold,
@@ -481,7 +479,7 @@ public void setOutputMethod(int iMethod) {
 /**
  * Used to indicate if "drifter" modules should be orphan adopted
  *
- * @param doIT If true, consolidate the drifters, if false dont consolidate
+ * @param doIt If true, consolidate the drifters, if false dont consolidate
  *             the drifters.
  */
 public void setDriftersOptimization(boolean doIt)
@@ -540,7 +538,7 @@ public void excludeOmnipresentModules()
 /**
  * Excludes omnipresent modules based on the specified threshold.
  *
- * @param threshod  The multiple of average edge weight used to determine if a
+ * @param threshold  The multiple of average edge weight used to determine if a
  *                  module is omnipresent
  */
 public void excludeOmnipresentModules(float threshold) {

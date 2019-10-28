@@ -3,6 +3,7 @@ package bunch.api;
 import bunch.model.Cluster;
 import bunch.simple.SASimpleTechnique;
 
+import static bunch.api.Algorithm.*;
 import static bunch.api.OutputFormat.*;
 import static bunch.api.RunMode.*;
 import static org.junit.Assert.*;
@@ -61,7 +62,7 @@ int [] prIfreq = new int [11];
       ////bp.setProperty(OUTPUT_FILE,"e:\\samplemdgs\\rcsBrian2");
       //bp.setProperty(OMNIPRESENT_SUPPLIERS, "m4,m5");
 
-      bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
+      bp.CLUSTERING_ALG = HILL_CLIMBING;
       bp.OUTPUT_FORMAT = NULL;
       ////bp.setProperty(MDG_OUTPUT_MODE, OUTPUT_DETAILED);
 
@@ -160,7 +161,7 @@ int [] prIfreq = new int [11];
         args.runMode = CLUSTER;
         args.mdgGraphObject = bmdg;
 
-        args.CLUSTERING_ALG = ALG_HILL_CLIMBING;
+        args.CLUSTERING_ALG = HILL_CLIMBING;
         args.OUTPUT_FORMAT = NULL;
 
         args.clusteringApproach = AGGLOMERATIVE;
@@ -411,7 +412,7 @@ println("ML:"+meclValue);
     BunchAPI api = new BunchAPI();
     var bp = api.bunchArgs;
     bp.MDG_INPUT_FILE_NAME = mdgFile;
-    bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
+    bp.CLUSTERING_ALG = HILL_CLIMBING;
     bp.OUTPUT_FORMAT = TEXT;
     bp.OUTPUT_TREE = true;
     bp.OUTPUT_FILE = cluFile;
@@ -437,7 +438,7 @@ println("ML:"+meclValue);
 
     bp.MDG_INPUT_FILE_NAME = mdg;
 
-    bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
+    bp.CLUSTERING_ALG = HILL_CLIMBING;
 
     if(useSA) {
       bp.algHcHcPct = 30;
@@ -548,7 +549,7 @@ println("ML:"+meclValue);
       //BunchAsyncNotifyTest nt = new BunchAsyncNotifyTest();
 
       bp.MDG_INPUT_FILE_NAME = mdg;
-      bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
+      bp.CLUSTERING_ALG = HILL_CLIMBING;
 
       //bp.setProperty(CLUSTERING_ALG,ALG_GA);
       bp.OUTPUT_FORMAT = TEXT;
@@ -650,7 +651,7 @@ println("ML:"+meclValue);
     var bp = api.bunchArgs;
 
     bp.MDG_INPUT_FILE_NAME = "e:\\expir\\small";
-    bp.CLUSTERING_ALG = ALG_GA;
+    bp.CLUSTERING_ALG = GA;
 
     bp.ALG_GA_POPULATION_SZ = 50;
 
@@ -856,7 +857,7 @@ println("ML:"+meclValue);
 
       var htSpecial = api.getSpecialModules(mdgFileName);
 
-      bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
+      bp.CLUSTERING_ALG = HILL_CLIMBING;
       bp.OUTPUT_FORMAT = TEXT;
 
       if(removeSpecialNodes)
@@ -1074,7 +1075,7 @@ println("ML:"+meclValue);
         bp.MDG_INPUT_FILE_NAME = mdgFile;
         bp.OUTPUT_FORMAT = TEXT;
 
-        bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
+        bp.CLUSTERING_ALG = HILL_CLIMBING;
         bp.algHcHcPct = 100;
         bp.algHcRndPct = 0;
 
@@ -1151,7 +1152,7 @@ println("ML:"+meclValue);
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = "/Users/brianmitchell/dev/mdgs/incl";
 
-      bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
+      bp.CLUSTERING_ALG = HILL_CLIMBING;
      //bp.setProperty(ALG_HC_POPULATION_SZ,"12");
       //bp.setProperty(ALG_HC_POPULATION_SIZE,"12");
       bp.algHcHcPct = 55;

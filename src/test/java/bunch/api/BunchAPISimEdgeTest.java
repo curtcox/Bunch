@@ -2,6 +2,7 @@ package bunch.api;
 
 import java.util.*;
 
+import static bunch.api.Algorithm.HILL_CLIMBING;
 import static bunch.api.OutputFormat.TEXT;
 
 public final class BunchAPISimEdgeTest {
@@ -264,7 +265,7 @@ String mode = "NAHC";
 
       var htSpecial = api.getSpecialModules(mdgFileName);
 
-      bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
+      bp.CLUSTERING_ALG = HILL_CLIMBING;
       bp.OUTPUT_FORMAT = TEXT;
 
       if(mode.equals("SAHC")) {

@@ -1,6 +1,8 @@
 package bunch.api;
 
 import bunch.*;
+
+import static bunch.api.Algorithm.*;
 import static bunch.api.Key.*;
 import static bunch.api.OutputFormat.*;
 import static bunch.api.RunMode.*;
@@ -469,7 +471,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
   private void loadClusteringMethodHandler() throws IOException, ClassNotFoundException {
     //Load Clusteirng Method Handler
-    String clustAlg = bunchArgs.CLUSTERING_ALG;
+    var clustAlg = bunchArgs.CLUSTERING_ALG;
     if(clustAlg==null) throw new IllegalArgumentException();
     clusteringMethod_d = preferences_d.getClusteringMethodFactory().getMethod(clustAlg);
     if(clusteringMethod_d == null) throw new IllegalArgumentException();
@@ -478,7 +480,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     if (initialGraph_d!=null&&configuration_d!=null)
       configuration_d.init(initialGraph_d);
 
-    if(clustAlg.equals(BunchProperties.ALG_GA)) {
+    if (clustAlg == GA) {
       GAConfiguration gaConfig = (GAConfiguration)configuration_d;
 
       String method = bunchArgs.ALG_GA_SELECTION_METHOD;
@@ -516,14 +518,14 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       }
     }
 
-    if(clustAlg.equals(BunchProperties.ALG_SAHC)) {
+    if (clustAlg == SAHC) {
       Integer popSz = bunchArgs.ALG_SAHC_POPULATION_SZ;
 
       if(popSz != null)
         configuration_d.setPopulationSize(popSz.intValue());
     }
 
-    if (clustAlg.equals(BunchProperties.ALG_HILL_CLIMBING)) {
+    if (clustAlg == HILL_CLIMBING) {
       NAHCConfiguration c = (NAHCConfiguration)configuration_d;
       if(bunchArgs.algHcRndPct != null) {
         Integer randomize = bunchArgs.algHcRndPct;
@@ -536,7 +538,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       }
     }
 
-    if(clustAlg.equals(BunchProperties.ALG_NAHC)) {
+    if (clustAlg == NAHC) {
       Integer HCPct = bunchArgs.algNahcHcPct;
       Integer rndPct = bunchArgs.algNahcRndPct;
       Integer popSz = bunchArgs.algNahcPopulationSz;
@@ -770,17 +772,9 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
   public EngineResults getResultsHT() {
     var runMode = bunchArgs.runMode;
-    if (runMode == CLUSTER) {
-      return getClusteringResultsHT();
-    }
-
-    if (runMode == PR_CALC) {
-      return getPRResultsHT();
-    }
-
-    if (runMode == MQ_CALC) {
-      return getMQCalcResultsHT();
-    }
+    if (runMode == CLUSTER) return getClusteringResultsHT();
+    if (runMode == PR_CALC) return getPRResultsHT();
+    if (runMode == MQ_CALC) return getMQCalcResultsHT();
 
     throw new UnsupportedOperationException();
   }
@@ -877,17 +871,11 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     var runMode = bunchArgs.runMode;
     if (runMode == null) return false;
 
-    if (runMode == CLUSTER) {
-      return runClustering();
-    }
-    if (runMode == PR_CALC) {
-      return runPRCalc();
-    }
+    if (runMode == CLUSTER) return runClustering();
+    if (runMode == PR_CALC) return runPRCalc();
+    if (runMode == MQ_CALC) return runMQCalc();
 
-    if (runMode == MQ_CALC) {
-      return runMQCalc();
-    }
-    return false;
+    throw new IllegalArgumentException();
   }
 
     private void executeClusteringEngine() {

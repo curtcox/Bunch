@@ -1,6 +1,9 @@
 package bunch.clustering;
 
+import bunch.api.Algorithm;
 import bunch.model.GenericFactory;
+
+import static bunch.api.Algorithm.*;
 
 /**
  * A factory for different kinds of objects that calculate the
@@ -11,50 +14,21 @@ import bunch.model.GenericFactory;
  * @see ClusteringMethod
  * @see GenericFactory
  */
-public final class ClusteringMethodFactory extends GenericFactory {
+public final class ClusteringMethodFactory {
 
-final String defaultMethod = "Hill Climbing";
+final ClusteringMethod defaultMethod = new GeneralHillClimbingClusteringMethod();
 
-/**
- * Class constructor, defines the objects that the factory will be able
- * to create
- */
-public ClusteringMethodFactory() {
-  setFactoryType("ClusteringMethod");
-  addItem("Hill Climbing", bunch.clustering.GeneralHillClimbingClusteringMethod.class.getName());
-  addItem("NAHC", bunch.clustering.NextAscentHillClimbingClusteringMethod.class.getName());
-  addItem("SAHC", bunch.clustering.SteepestAscentHillClimbingClusteringMethod.class.getName());
-  addItem("GA", bunch.clustering.GAClusteringMethod.class.getName());
-  addItem("Exhaustive", bunch.clustering.OptimalClusteringMethod.class.getName());
-}
 
 /**
  * This method returns the default clustering method.  It is used in the GUI and
  * API when the clustering algorithm is not explicitly specified.
  */
-public String getDefaultMethod() {
+public ClusteringMethod getDefaultMethod() {
   return defaultMethod;
 }
 
-/**
- * This method returns a list of items in the factory.
- *
- * @return A string array containing the keys in the factory.
- */
 public String[] getItemList() {
-  String[] masterList = super.getItemList();
-  String[] resList    = new String[masterList.length-2];
-
-  int resPos = 0;
-  for(int i = 0; i < masterList.length; i++) {
-    String item = masterList[i];
-    if ((item.equals("SAHC")) || (item.equals("NAHC")))
-      continue;
-    else
-      resList[resPos++] = item;
-  }
-
-  return resList;
+  throw new UnsupportedOperationException();
 }
 
 /**
@@ -62,10 +36,15 @@ public String[] getItemList() {
  * Utility method that uses the #getItemInstance(java.lang.String) method
  * from GenericFactory and casts the object to a ClusteringMethod object.
  *
- * @param the name for the desired method
+ * @param name for the desired method
  * @return the clustering method corresponding to the name
  */
-public ClusteringMethod getMethod(String name) {
-  return (ClusteringMethod)getItemInstance(name);
+public ClusteringMethod getMethod(Algorithm name) {
+  if (name == HILL_CLIMBING) return new GeneralHillClimbingClusteringMethod();
+  if (name == NAHC) return new NextAscentHillClimbingClusteringMethod();
+  if (name == SAHC) return new SteepestAscentHillClimbingClusteringMethod();
+  if (name == GA) return new GAClusteringMethod();
+  return defaultMethod;
 }
+
 }
