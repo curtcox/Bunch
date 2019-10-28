@@ -18,7 +18,7 @@ final class EngineArgs {
   public boolean lockUserSetClusters;
   public String algNahcSaClass;
   public Map algNahcSaConfig;
-  public String clusteringApproach;
+  public boolean AGGLOMERATIVE;
   public ObjectiveFunctionCalculator mqCalculatorClass = new TurboMQIncrW();
   public String MQCALC_MDG_FILE;
   public String MQCALC_SIL_FILE;

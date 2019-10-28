@@ -12,7 +12,6 @@ import org.junit.Test;
 import java.util.*;
 import java.io.*;
 
-import static bunch.api.BunchProperties.*;
 import static bunch.api.Key.*;
 
 public class BunchAPITest {
@@ -67,7 +66,7 @@ int [] prIfreq = new int [11];
       ////bp.setProperty(MDG_OUTPUT_MODE, OUTPUT_DETAILED);
 
 
-      bp.clusteringApproach = AGGLOMERATIVE;
+      bp.AGGLOMERATIVE = true;
 
       //bp.setProperty(OUTPUT_FORMAT,NULL_OUTPUT_FORMAT);
       bp.PROGRESS_CALLBACK_CLASS = "bunch.api.BunchAPITestCallback";
@@ -164,7 +163,7 @@ int [] prIfreq = new int [11];
         args.CLUSTERING_ALG = HILL_CLIMBING;
         args.OUTPUT_FORMAT = NULL;
 
-        args.clusteringApproach = AGGLOMERATIVE;
+        args.AGGLOMERATIVE = true;
 
         args.PROGRESS_CALLBACK_CLASS = "bunch.api.BunchAPITestCallback";
         args.PROGRESS_CALLBACK_FREQ = 5;

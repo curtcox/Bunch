@@ -466,7 +466,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
   private void setIsClusterTree() {
     //now set if we are clustering trees or one level
-    initialGraph_d.setIsClusterTree((bunchArgs.clusteringApproach).equalsIgnoreCase(BunchProperties.AGGLOMERATIVE));
+    initialGraph_d.setIsClusterTree(bunchArgs.AGGLOMERATIVE);
   }
 
   private void loadClusteringMethodHandler() throws IOException, ClassNotFoundException {
@@ -703,9 +703,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     baseCluster = clusteringMethod_d.getBestCluster().cloneCluster();
     clusterList.add(clusteringMethod_d.getBestCluster().cloneCluster());
 
-    //System.out.println("MQ-Lvl"+ bestC.getGraph().getGraphLevel()+" is: " + bestC.getObjFnValue());
-    String cApproach = bunchArgs.clusteringApproach;
-    if(cApproach.equalsIgnoreCase(BunchProperties.AGGLOMERATIVE)) {
+    if(bunchArgs.AGGLOMERATIVE) {
       Graph g = clusteringMethod_d.getBestGraph().cloneGraph();
 
       int []cNames = g.getClusterNames();  //c.getClusterNames();
