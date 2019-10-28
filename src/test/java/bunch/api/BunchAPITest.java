@@ -3,6 +3,7 @@ package bunch.api;
 import bunch.model.Cluster;
 import bunch.simple.SASimpleTechnique;
 
+import static bunch.api.OutputFormat.*;
 import static bunch.api.RunMode.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -61,7 +62,7 @@ int [] prIfreq = new int [11];
       //bp.setProperty(OMNIPRESENT_SUPPLIERS, "m4,m5");
 
       bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
-      bp.OUTPUT_FORMAT = NULL_OUTPUT_FORMAT;
+      bp.OUTPUT_FORMAT = NULL;
       ////bp.setProperty(MDG_OUTPUT_MODE, OUTPUT_DETAILED);
 
 
@@ -160,7 +161,7 @@ int [] prIfreq = new int [11];
         args.mdgGraphObject = bmdg;
 
         args.CLUSTERING_ALG = ALG_HILL_CLIMBING;
-        args.OUTPUT_FORMAT = NULL_OUTPUT_FORMAT;
+        args.OUTPUT_FORMAT = NULL;
 
         args.clusteringApproach = AGGLOMERATIVE;
 
@@ -411,7 +412,7 @@ println("ML:"+meclValue);
     var bp = api.bunchArgs;
     bp.MDG_INPUT_FILE_NAME = mdgFile;
     bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
-    bp.OUTPUT_FORMAT = TEXT_OUTPUT_FORMAT;
+    bp.OUTPUT_FORMAT = TEXT;
     bp.OUTPUT_TREE = true;
     bp.OUTPUT_FILE = cluFile;
 
@@ -443,13 +444,13 @@ println("ML:"+meclValue);
       bp.algHcRndPct = 20;
       bp.ALG_HC_SA_CLASS = SASimpleTechnique.class;
       bp.ALG_HC_SA_CONFIG = "InitialTemp=10.0,Alpha=0.85";
-      bp.OUTPUT_FORMAT = NULL_OUTPUT_FORMAT;
+      bp.OUTPUT_FORMAT = NULL;
     }
 
     bp.algHcHcPct = 100;
 
 
-    bp.OUTPUT_FORMAT = GXL_OUTPUT_FORMAT;
+    bp.OUTPUT_FORMAT = GXL;
 
     //api.setDebugStats(true);
     long startTime = System.currentTimeMillis();
@@ -550,7 +551,7 @@ println("ML:"+meclValue);
       bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
 
       //bp.setProperty(CLUSTERING_ALG,ALG_GA);
-      bp.OUTPUT_FORMAT = TEXT_OUTPUT_FORMAT;
+      bp.OUTPUT_FORMAT = TEXT;
       bp.OUTPUT_TREE = true;
       bp.OUTPUT_FILE = "e:\\samplemdgs\\compiler.clu";
 
@@ -856,7 +857,7 @@ println("ML:"+meclValue);
       var htSpecial = api.getSpecialModules(mdgFileName);
 
       bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
-      bp.OUTPUT_FORMAT = TEXT_OUTPUT_FORMAT;
+      bp.OUTPUT_FORMAT = TEXT;
 
       if(removeSpecialNodes)
         api.bunchArgs.SPECIAL_MODULE_HASHTABLE = htSpecial;
@@ -1071,7 +1072,7 @@ println("ML:"+meclValue);
         var bp = api.bunchArgs;
 
         bp.MDG_INPUT_FILE_NAME = mdgFile;
-        bp.OUTPUT_FORMAT = TEXT_OUTPUT_FORMAT;
+        bp.OUTPUT_FORMAT = TEXT;
 
         bp.CLUSTERING_ALG = ALG_HILL_CLIMBING;
         bp.algHcHcPct = 100;
@@ -1163,7 +1164,7 @@ println("ML:"+meclValue);
       bp.setProperty(CLUSTERING_ALG,ALG_SAHC);
       bp.setProperty(ALG_SAHC_POPULATION_SZ,"10");
 */
-      bp.OUTPUT_FORMAT = DOT_OUTPUT_FORMAT;
+      bp.OUTPUT_FORMAT = DOT;
       bp.OUTPUT_DIRECTORY = "/Users/brianmitchell/dev/mdgs";
 
       //bp.setProperty(PROGRESS_CALLBACK_CLASS,"bunch.api.BunchAPITestCallback");

@@ -2,6 +2,8 @@ package bunch.api;
 
 import java.util.*;
 
+import static bunch.api.OutputFormat.TEXT;
+
 public final class BunchAPISimEdgeTest {
 
 long totalNodes;
@@ -263,7 +265,7 @@ String mode = "NAHC";
       var htSpecial = api.getSpecialModules(mdgFileName);
 
       bp.CLUSTERING_ALG = BunchProperties.ALG_HILL_CLIMBING;
-      bp.OUTPUT_FORMAT = BunchProperties.TEXT_OUTPUT_FORMAT;
+      bp.OUTPUT_FORMAT = TEXT;
 
       if(mode.equals("SAHC")) {
         bp.algHcHcPct= 100;

@@ -2,6 +2,7 @@ package bunch.api;
 
 import bunch.*;
 import static bunch.api.Key.*;
+import static bunch.api.OutputFormat.*;
 import static bunch.api.RunMode.*;
 
 import bunch.calculator.ObjectiveFunctionCalculator;
@@ -585,14 +586,14 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   private void setGraphOutputDriver() {
     //now set the graph output driver
     graphOutput_d = null;
-    String outputMode = bunchArgs.OUTPUT_FORMAT;
-    if((outputMode != null)||(!outputMode.equalsIgnoreCase(BunchProperties.NULL_OUTPUT_FORMAT))) {
+    var outputMode = bunchArgs.OUTPUT_FORMAT;
+    if (outputMode != null || !(outputMode==NULL)) {
       String driver = null;
-      if(outputMode.equalsIgnoreCase(BunchProperties.DOT_OUTPUT_FORMAT))
+      if(outputMode == DOT)
         driver = "Dotty";
-      else if(outputMode.equalsIgnoreCase(BunchProperties.TEXT_OUTPUT_FORMAT))
+      else if(outputMode == TEXT)
         driver = "Text";
-      else if(outputMode.equalsIgnoreCase(BunchProperties.GXL_OUTPUT_FORMAT))
+      else if (outputMode == GXL)
         driver = "GXL";
 
       if(driver != null) {

@@ -31,7 +31,7 @@ final class EngineArgs {
   public Integer algNahcPopulationSz;
   public Integer TIMEOUT_TIME;
   public RunMode runMode;
-  public String OUTPUT_FORMAT;
+  public OutputFormat OUTPUT_FORMAT;
   public String OUTPUT_FILE;
   public String MDG_INPUT_FILE_NAME;
   public boolean OUTPUT_TREE;

@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import java.io.*;
 
+import static bunch.api.OutputFormat.NULL;
+
 public final class BunchStatsTest {
 
   @Test
@@ -53,7 +55,7 @@ public final class BunchStatsTest {
       BunchAPI api = new BunchAPI();
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = "e:\\incl";
-      bp.OUTPUT_FORMAT = BunchProperties.NULL_OUTPUT_FORMAT;
+      bp.OUTPUT_FORMAT = NULL;
 
       bp.CLUSTERING_ALG = BunchProperties.ALG_NAHC;
       bp.algNahcHcPct = 1;
