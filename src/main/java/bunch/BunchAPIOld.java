@@ -1,6 +1,7 @@
 package bunch;
 
 import bunch.api.Algorithm;
+import bunch.api.OutputFormat;
 import bunch.clustering.ClusteringMethod;
 import bunch.clustering.HillClimbingConfiguration;
 import bunch.ga.GAConfiguration;
@@ -61,7 +62,7 @@ DefaultListModel centralListModel_d = new DefaultListModel();
 DefaultListModel librariesListModel_d = new DefaultListModel();
 String mqCalc_d = "default";
 String clusterName_d = "";
-String outputMethod = "Dotty";
+OutputFormat outputMethod = OutputFormat.DOT;
 String inputFileName = "";
 String outputFileName = "";
 boolean doDrifters = true;
@@ -449,25 +450,24 @@ public void setGAConfiguration(int iInterations, int iPopSz, double crossThresho
  * @param iMethod The output method based on the defined constnts.
  */
 public void setOutputMethod(int iMethod) {
-   String sMethod;
+   OutputFormat sMethod;
 
    /**
     * As of this writing the mehod must be specified by string. This has
     * been improved in the latest version of the BunchAPI.
     */
-   switch(iMethod)
-   {
+   switch(iMethod) {
       case OUTPUT_DOTTY:
-         sMethod = "Dotty";
+         sMethod = OutputFormat.DOT;
          break;
-      case OUTPUT_TOMSAWYER:
-         sMethod = "Tom Sawyer";
-         break;
+//      case OUTPUT_TOMSAWYER:
+//         sMethod = "Tom Sawyer";
+//         break;
       case OUTPUT_TEXT:
-         sMethod = "Text";
+         sMethod = OutputFormat.TEXT;
          break;
       default:
-         sMethod = "Dotty";
+         sMethod = OutputFormat.DOT;
          break;
    }
 

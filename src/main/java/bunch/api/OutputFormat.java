@@ -1,6 +1,6 @@
 package bunch.api;
 
-enum OutputFormat {
+public enum OutputFormat {
 
  DOT,
  TEXT,

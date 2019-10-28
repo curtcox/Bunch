@@ -562,15 +562,9 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     graphOutput_d = null;
     var outputMode = bunchArgs.OUTPUT_FORMAT;
     if (outputMode != null || !(outputMode==NULL)) {
-      String driver = null;
-      if(outputMode == DOT)
-        driver = "Dotty";
-      else if(outputMode == TEXT)
-        driver = "Text";
-      else if (outputMode == GXL)
-        driver = "GXL";
+      var driver = outputMode;
 
-      if(driver != null) {
+      if (driver != null) {
         String outFileName = bunchArgs.OUTPUT_FILE;
         if (outFileName == null)
           outFileName = bunchArgs.MDG_INPUT_FILE_NAME;

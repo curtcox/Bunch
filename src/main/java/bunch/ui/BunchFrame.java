@@ -2,6 +2,7 @@ package bunch.ui;
 
 import bunch.*;
 import bunch.api.Algorithm;
+import bunch.api.OutputFormat;
 import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.server.BunchSvrMsg;
 import bunch.clustering.*;
@@ -221,7 +222,7 @@ private void jbInit() throws IOException, ClassNotFoundException {
   var defaultMqFn = preferences_d.getObjectiveFunctionCalculatorFactory().getDefaultMethod();
   ClusteringAlgEF.setSelectedItem(defaultMqFn);
 
-  String defOutputType = preferences_d.getGraphOutputFactory().defaultOption;
+  var defOutputType = preferences_d.getGraphOutputFactory().defaultOption;
 
   outputFileFormatList_d.setSelectedItem(defOutputType);
     outputFileFormatList_d.addActionListener(new java.awt.event.ActionListener() {
@@ -712,12 +713,12 @@ private void jbInit() throws IOException, ClassNotFoundException {
   setLastResultGraph(null);
 
   //obtain the available output formats and add them to the list
-  methodList = preferences_d.getGraphOutputFactory().getItemList();
-  for (int i=0; i<methodList.length; ++i) {
-    outputFileFormatList_d.addItem(methodList[i]);
-  }
-  String defaultOutput = preferences_d.getGraphOutputFactory().defaultOption;
-  outputFileFormatList_d.setSelectedItem(defaultOutput);
+//  methodList = preferences_d.getGraphOutputFactory().getItemList();
+//  for (int i=0; i<methodList.length; ++i) {
+//    outputFileFormatList_d.addItem(methodList[i]);
+//  }
+//  String defaultOutput = preferences_d.getGraphOutputFactory().defaultOption;
+//  outputFileFormatList_d.setSelectedItem(defaultOutput);
 
 
 }
@@ -1099,7 +1100,7 @@ void runActionButton_d_actionPerformed(ActionEvent e) {
    * Determine the appropriate options based on the GUI parameters
    */
   String method = (String)clusteringMethodList_d.getSelectedItem();
-  String outputMethod = (String)outputFileFormatList_d.getSelectedItem();
+  OutputFormat outputMethod = (OutputFormat) outputFileFormatList_d.getSelectedItem();
 
   mainTabbedPane_d.setSelectedComponent(bunchSettingsPanel_d);
 
@@ -1652,7 +1653,7 @@ void outputLastButton_d_actionPerformed(ActionEvent e) {
       return;
     }
 
-    String outputMethod = (String)outputFileFormatList_d.getSelectedItem();
+    OutputFormat outputMethod = (OutputFormat) outputFileFormatList_d.getSelectedItem();
     graphOutput_d = preferences_d.getGraphOutputFactory().getOutput(outputMethod);
     graphOutput_d.setBaseName(outputClusterFilename_d.getText());
     graphOutput_d.setBasicName(fileBasicName_d);

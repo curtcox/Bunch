@@ -1,40 +1,27 @@
 package bunch.model;
 
+import bunch.api.OutputFormat;
+import static bunch.api.OutputFormat.*;
+
 /**
  * A factory for graph output generators
  */
-public final class GraphOutputFactory extends GenericFactory {
+public final class GraphOutputFactory {
 
-public String defaultOption = "Dotty";
-/**
- * Class constructor, defines the objects that the factory will be able
- * to create
- */
-public GraphOutputFactory() {
-  super();
-  setFactoryType("GraphOutput");
-  addItem("Dotty", "bunch.model.DotGraphOutput");
-  addItem("Text", "bunch.model.TXTGraphOutput");
-  addItem("GXL","bunch.gxl.io.GXLGraphOutput");
-  //addItem("Tom Sawyer", "bunch.model.TSGraphOutput");
-  //addItem("Text Tree","bunch.model.TXTTreeGraphOutput");
-}
+public GraphOutput defaultOption = new DotGraphOutput();
 
 /**
  * Obtains the graph output generator corresponding to name passed as parameter.
  * Utility method that uses the #getItemInstance(java.lang.String) method
  * from GenericFactory and casts the object to a GraphOutput object.
  *
- * @param the name for the desired output generator
+ * @param name for the desired output generator
  * @return the graph output generator corresponding to the name
  */
-public GraphOutput getOutput(String name)
-{
-  return (GraphOutput)getItemInstance(name);
+public GraphOutput getOutput(OutputFormat name) {
+  if (name == DOT) { return new DotGraphOutput(); }
+  if (name == TEXT) { return new TXTGraphOutput(); }
+  return defaultOption;
 }
 
-public String getDefaultMethod()
-{
-  return this.defaultOption;
-}
 }
