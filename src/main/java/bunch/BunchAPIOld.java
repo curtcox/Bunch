@@ -2,7 +2,6 @@ package bunch;
 
 import bunch.api.Algorithm;
 import bunch.clustering.ClusteringMethod;
-import bunch.clustering.ClusteringMethodFactory;
 import bunch.clustering.HillClimbingConfiguration;
 import bunch.ga.GAConfiguration;
 import bunch.model.Configuration;
@@ -14,6 +13,8 @@ import bunch.parser.Parser;
 import java.awt.*;
 import java.beans.Beans;
 import javax.swing.*;
+
+import static bunch.api.GaSelection.*;
 
 /**
  * This is the old bunch api class.  It was renamed to BunchAPIOld after the
@@ -435,11 +436,11 @@ public void setGAConfiguration(int iInterations, int iPopSz, double crossThresho
    gac.setMutationThreshold(mutationThreshold);
 
    if (iMethod == GAMETHOD_RW)
-      gac.setMethod("roulette wheel");
+      gac.setMethod(ROULETTE);
    else if (iMethod == GAMETHOD_TOURNAMENT)
-      gac.setMethod("tournament");
+      gac.setMethod(TOURNAMENT);
    else
-      gac.setMethod("roulette wheel");
+      gac.setMethod(ROULETTE);
 }
 
 /**

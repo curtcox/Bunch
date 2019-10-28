@@ -294,10 +294,6 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       BunchPreferences prefs =
         (BunchPreferences)(Beans.instantiate(null, "bunch.BunchPreferences"));
 
-      //Parser p = prefs.getParserFactory().getParser("dependency");
-      //p.setInput(graphName);
-      //Graph g = (Graph)p.parse();
-
       String parserClass = "dependency";
       if(graphName.endsWith(".gxl") || graphName.endsWith(".GXL"))
         parserClass = "gxl";
@@ -480,97 +476,73 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     if (initialGraph_d!=null&&configuration_d!=null)
       configuration_d.init(initialGraph_d);
 
-    if (clustAlg == GA) {
-      GAConfiguration gaConfig = (GAConfiguration)configuration_d;
+    if (clustAlg == GA)            { loadGaConfig(); }
+    if (clustAlg == SAHC)          { loadSahcConfig(); }
+    if (clustAlg == HILL_CLIMBING) { loadHillClimbingConfig(); }
+    if (clustAlg == NAHC)          { loadNahcConfig(); }
+  }
 
-      String method = bunchArgs.ALG_GA_SELECTION_METHOD;
-      String cProb = bunchArgs.ALG_GA_CROSSOVER_PROB;
-      String mProb = bunchArgs.ALG_GA_MUTATION_PROB;
-      Integer popSz = bunchArgs.ALG_GA_POPULATION_SZ;
-      String numGens = bunchArgs.ALG_GA_NUM_GENERATIONS;
+  private void loadNahcConfig() throws IOException, ClassNotFoundException {
+    Integer HCPct = bunchArgs.algNahcHcPct;
+    Integer rndPct = bunchArgs.algNahcRndPct;
+    Integer popSz = bunchArgs.algNahcPopulationSz;
 
-      if(method != null) {
-        String tournMethod = "tournament";
-        String roulMethod = "roulette wheel";
-        if(method.equals(BunchProperties.ALG_GA_SELECTION_ROULETTE))
-          gaConfig.setMethod(roulMethod);
-        if(method.equals(BunchProperties.ALG_GA_SELECTION_TOURNAMENT))
-          gaConfig.setMethod(tournMethod);
-      }
+    NAHCConfiguration c = (NAHCConfiguration)configuration_d;
 
-      if(numGens != null) {
-        int nGens = Integer.parseInt(numGens);
-        gaConfig.setNumOfIterations(nGens);
-      }
+    if(popSz != null)
+      c.setPopulationSize(popSz.intValue());
 
-      if(cProb != null) {
-        double crossProb = Double.parseDouble(cProb);
-        gaConfig.setCrossoverThreshold(crossProb);
-      }
+    if(HCPct != null) {
+      c.setMinPctToConsider(HCPct.intValue());
 
-      if(mProb != null) {
-        double mutationProb = Double.parseDouble(mProb);
-        gaConfig.setMutationThreshold(mutationProb);
-      }
-
-      if(popSz != null) {
-        gaConfig.setPopulationSize(popSz);
+      if(rndPct != null)
+        c.setRandomizePct(rndPct.intValue());
+      else {
+        int pctTmp = 100-HCPct.intValue();
+        c.setRandomizePct(pctTmp);
       }
     }
 
-    if (clustAlg == SAHC) {
-      Integer popSz = bunchArgs.ALG_SAHC_POPULATION_SZ;
-
-      if(popSz != null)
-        configuration_d.setPopulationSize(popSz.intValue());
-    }
-
-    if (clustAlg == HILL_CLIMBING) {
-      NAHCConfiguration c = (NAHCConfiguration)configuration_d;
-      if(bunchArgs.algHcRndPct != null) {
-        Integer randomize = bunchArgs.algHcRndPct;
-        c.setRandomizePct(randomize.intValue());
-      }
-
-      if(bunchArgs.algHcHcPct != null) {
-        Integer hcThreshold = bunchArgs.algHcHcPct;
-        c.setMinPctToConsider(hcThreshold.intValue());
-      }
-    }
-
-    if (clustAlg == NAHC) {
-      Integer HCPct = bunchArgs.algNahcHcPct;
-      Integer rndPct = bunchArgs.algNahcRndPct;
-      Integer popSz = bunchArgs.algNahcPopulationSz;
-
-      NAHCConfiguration c = (NAHCConfiguration)configuration_d;
-
-      if(popSz != null)
-        c.setPopulationSize(popSz.intValue());
-
-      if(HCPct != null) {
-        c.setMinPctToConsider(HCPct.intValue());
-
-        if(rndPct != null)
-          c.setRandomizePct(rndPct.intValue());
-        else {
-          int pctTmp = 100-HCPct.intValue();
-          c.setRandomizePct(pctTmp);
+    String SAClass = bunchArgs.algNahcSaClass;
+    if (SAClass != null) {
+      SATechnique saHandler = (SATechnique) Beans.instantiate(null,SAClass);
+      if (saHandler != null) {
+        Map saHandlerArgs = bunchArgs.algNahcSaConfig;
+        if(saHandlerArgs != null) {
+          saHandler.setConfig(saHandlerArgs);
         }
-      }
-
-      String SAClass = bunchArgs.algNahcSaClass;
-      if (SAClass != null) {
-        SATechnique saHandler = (SATechnique) Beans.instantiate(null,SAClass);
-        if (saHandler != null) {
-          Map saHandlerArgs = bunchArgs.algNahcSaConfig;
-          if(saHandlerArgs != null) {
-            saHandler.setConfig(saHandlerArgs);
-          }
-          c.setSATechnique(saHandler);
-        }
+        c.setSATechnique(saHandler);
       }
     }
+  }
+
+  private void loadHillClimbingConfig() {
+    NAHCConfiguration c = (NAHCConfiguration)configuration_d;
+    if(bunchArgs.algHcRndPct != null) {
+      Integer randomize = bunchArgs.algHcRndPct;
+      c.setRandomizePct(randomize.intValue());
+    }
+
+    if(bunchArgs.algHcHcPct != null) {
+      Integer hcThreshold = bunchArgs.algHcHcPct;
+      c.setMinPctToConsider(hcThreshold.intValue());
+    }
+  }
+
+  private void loadSahcConfig() {
+    Integer popSz = bunchArgs.ALG_SAHC_POPULATION_SZ;
+
+    if(popSz != null)
+      configuration_d.setPopulationSize(popSz.intValue());
+  }
+
+  private void loadGaConfig() {
+    GAConfiguration gaConfig = (GAConfiguration)configuration_d;
+    gaConfig.setMethod(bunchArgs.ALG_GA_SELECTION_METHOD);
+    gaConfig.setNumOfIterations(bunchArgs.ALG_GA_NUM_GENERATIONS);
+    gaConfig.setCrossoverThreshold(bunchArgs.ALG_GA_CROSSOVER_PROB);
+    gaConfig.setMutationThreshold(bunchArgs.ALG_GA_MUTATION_PROB);
+    gaConfig.setPopulationSize(bunchArgs.ALG_GA_POPULATION_SZ);
   }
 
   private void seeIfThereAreSpecialModules() {

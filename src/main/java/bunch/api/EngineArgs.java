@@ -36,11 +36,11 @@ final class EngineArgs {
   public String MDG_INPUT_FILE_NAME;
   public boolean OUTPUT_TREE;
   public String OUTPUT_DIRECTORY;
-  public String ALG_GA_SELECTION_METHOD;
-  public String ALG_GA_CROSSOVER_PROB;
-  public String ALG_GA_MUTATION_PROB;
+  public GaSelection ALG_GA_SELECTION_METHOD;
+  public Double ALG_GA_CROSSOVER_PROB;
+  public Double ALG_GA_MUTATION_PROB;
   public Integer ALG_GA_POPULATION_SZ;
-  public String ALG_GA_NUM_GENERATIONS;
+  public Integer ALG_GA_NUM_GENERATIONS;
   public Integer ALG_SAHC_POPULATION_SZ;
   public String PR_CLUSTER_FILE;
   public String PR_EXPERT_FILE;

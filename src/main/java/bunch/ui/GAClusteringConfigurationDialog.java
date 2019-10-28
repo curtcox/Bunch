@@ -1,5 +1,6 @@
 package bunch.ui;
 
+import bunch.api.GaSelection;
 import bunch.model.Configuration;
 import bunch.ga.GAConfiguration;
 import bunch.clustering.GAClusteringMethod;
@@ -47,9 +48,7 @@ GAClusteringConfigurationDialog()
 /**
  * Component initialization and layout
  */
-public
-void
-jbInit()
+public void jbInit()
   throws Exception
 {
   numGenlabel_d.setText("Number Of Generations:");
@@ -62,10 +61,6 @@ jbInit()
   popSize_d.setText(Integer.toString(configuration_d.getPopulationSize()));
   jTextField2.setText(Double.toString(((GAConfiguration)configuration_d).getCrossoverThreshold()));
   jTextField3.setText(Double.toString(((GAConfiguration)configuration_d).getMutationThreshold()));
-  java.util.Enumeration e = ((GAConfiguration)configuration_d).getMethodFactory().getAvailableItems();
-  while (e.hasMoreElements()) {
-    methodList_d.addItem((String)e.nextElement());
-  }
 
   optionsPanel_d.add(new JLabel("GA Selection Method:"), new GridBagConstraints2(0, 0, 1, 1, 0.0, 0.0
             ,GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 5), 0, 0));
@@ -105,7 +100,7 @@ createConfiguration()
   configuration_d.setPopulationSize(Integer.parseInt(popSize_d.getText()));
   ((GAConfiguration)configuration_d).setCrossoverThreshold(Double.valueOf(jTextField2.getText()).doubleValue());
   ((GAConfiguration)configuration_d).setMutationThreshold(Double.valueOf(jTextField3.getText()).doubleValue());
-  ((GAConfiguration)configuration_d).setMethod((String)methodList_d.getSelectedItem());
+  ((GAConfiguration)configuration_d).setMethod((GaSelection) methodList_d.getSelectedItem());
   return configuration_d;
 }
 }

@@ -1,5 +1,6 @@
 package bunch.ga;
 
+import bunch.api.GaSelection;
 import bunch.model.Configuration;
 import bunch.model.Graph;
 import bunch.clustering.GAClusteringMethod;
@@ -25,8 +26,7 @@ GAMethodFactory methodFactory_d;
 /**
  * Parameterless class constructor.
  */
-public
-GAConfiguration()
+public GAConfiguration()
 {
   methodFactory_d = new GAMethodFactory();
 }
@@ -37,8 +37,7 @@ GAConfiguration()
  * @param g the graph used to set the default values
  * @see #init(Graph)
  */
-public
-GAConfiguration(Graph g)
+public GAConfiguration(Graph g)
 {
   init(g);
 }
@@ -50,10 +49,7 @@ GAConfiguration(Graph g)
  * @param g the graph that will be used to create the default values for the
  * configuration object
  */
-public
-void
-init(Graph g)
-{
+public void init(Graph g) {
   int nodes = g.getNumberOfNodes();
   setNumOfIterations(nodes * 100);
   setPopulationSize(nodes * 10);
@@ -66,7 +62,7 @@ init(Graph g)
     }
   }
   setMutationThreshold(0.005 * bitsize);
-  setMethod(methodFactory_d.getMethod((String)(methodFactory_d.getAvailableItems().nextElement())));
+  setMethod(methodFactory_d.defaultMethod);
 }
 
 /**
@@ -76,9 +72,7 @@ init(Graph g)
  *
  * @return the ga method factory
  */
-public
-GAMethodFactory
-getMethodFactory()
+public GAMethodFactory getMethodFactory()
 {
   return methodFactory_d;
 }
@@ -89,9 +83,7 @@ getMethodFactory()
  * @return the ga method selected
  * @see #setMethod(GAMethod)
  */
-public
-GAMethod
-getMethod()
+public GAMethod getMethod()
 {
   return method_d;
 }
@@ -102,9 +94,7 @@ getMethod()
  * @param m the ga method to set to this configuration instance
  * @see #getMethod()
  */
-public
-void
-setMethod(GAMethod m)
+public void setMethod(GAMethod m)
 {
   method_d = m;
 }
@@ -118,10 +108,7 @@ setMethod(GAMethod m)
  * @see #getMethod()
  * @see #setMethod(GAMethod)
  */
-public
-void
-setMethod(String m)
-{
+public void setMethod(GaSelection m) {
   setMethod(methodFactory_d.getMethod(m));
 }
 
@@ -129,12 +116,10 @@ setMethod(String m)
  * Sets the mutation threshold for this configuration object, expressed in chance of
  * a mutation ocurring. (e.g., 0.004 is a chance of 4 in a thousand)
  *
- * @param t the mutation threshold
+ * @param m the mutation threshold
  * @see #getMutationThreshold()
  */
-public
-void
-setMutationThreshold(double m)
+public void setMutationThreshold(double m)
 {
   mutationThreshold_d = m;
 }
@@ -145,9 +130,7 @@ setMutationThreshold(double m)
  * @return the mutation threshold
  * @see #setMutationThreshold(double)
  */
-public
-double
-getMutationThreshold()
+public double getMutationThreshold()
 {
   return mutationThreshold_d;
 }
@@ -156,12 +139,10 @@ getMutationThreshold()
  * Sets the crossover threshold for this method, expressed in chance of
  * a crossover ocurring. (e.g., 0.6 is a 60% chance of a crossover happening)
  *
- * @param t the crossover threshold
+ * @param c the crossover threshold
  * @see #getCrossoverThreshold()
  */
-public
-void
-setCrossoverThreshold(double c)
+public void setCrossoverThreshold(double c)
 {
   crossoverThreshold_d = c;
 }
@@ -172,9 +153,7 @@ setCrossoverThreshold(double c)
  * @return the crossover threshold
  * @see #setCrossoverThreshold(double)
  */
-public
-double
-getCrossoverThreshold()
+public double getCrossoverThreshold()
 {
   return crossoverThreshold_d;
 }
