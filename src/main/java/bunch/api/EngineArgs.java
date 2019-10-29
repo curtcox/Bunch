@@ -30,7 +30,7 @@ final class EngineArgs {
   public Integer algNahcRndPct;
   public Integer algNahcPopulationSz;
   public Integer TIMEOUT_TIME;
-  public RunMode runMode;
+  public RunMode runMode = RunMode.CLUSTER;
   public OutputFormat OUTPUT_FORMAT;
   public String OUTPUT_FILE;
   public String MDG_INPUT_FILE_NAME;
@@ -44,7 +44,7 @@ final class EngineArgs {
   public Integer ALG_SAHC_POPULATION_SZ;
   public String PR_CLUSTER_FILE;
   public String PR_EXPERT_FILE;
-  public Algorithm CLUSTERING_ALG;
+  public Algorithm CLUSTERING_ALG = Algorithm.HILL_CLIMBING;
   public Map SPECIAL_MODULE_HASHTABLE;
   public String MDG_PARSER_DELIMS;
   public boolean MDG_PARSER_USE_SPACES;

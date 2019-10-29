@@ -488,8 +488,7 @@ public final class MeasurementUtil extends JDialog {
       String sampleFileName = sampleFileEF.getText();
 
       PrecisionRecallCalculator prcalc = new PrecisionRecallCalculator(expertFileName,sampleFileName);
-      precisionST.setText(prcalc.get_precision());
-      recallST.setText(prcalc.get_recall());
+      throw new UnsupportedOperationException();
   }
 
   void GraphASPB_actionPerformed(ActionEvent e) {

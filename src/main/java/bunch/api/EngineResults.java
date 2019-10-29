@@ -3,9 +3,9 @@ package bunch.api;
 import java.util.Map;
 
 final class EngineResults {
-  public String prPrecisionValue;
-  public String mqCalcResultValue;
-  public String prRecallValue;
+  public Double prPrecisionValue;
+  public Double mqCalcResultValue;
+  public Double prRecallValue;
   public long RUNTIME;
   public long MQEVALUATIONS;
   public int TOTAL_CLUSTER_LEVELS;

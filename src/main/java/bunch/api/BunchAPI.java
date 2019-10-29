@@ -1,5 +1,6 @@
 package bunch.api;
 
+import bunch.model.Cluster;
 import bunch.model.Graph;
 
 import java.io.IOException;
@@ -38,7 +39,7 @@ public final class BunchAPI {
     return rc;
   }
 
-  public ArrayList getClusters() {
+  public List<Cluster> getClusters() {
     return engine.getClusterList();
   }
 

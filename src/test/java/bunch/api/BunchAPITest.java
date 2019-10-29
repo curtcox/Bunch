@@ -456,7 +456,7 @@ println("ML:"+meclValue);
     long startTime = System.currentTimeMillis();
         api.run();
     long runTime = System.currentTimeMillis()-startTime;
-    ArrayList cList = api.getClusters();
+    var cList = api.getClusters();
     for(int zz = 0; zz< cList.size(); zz++) {
       println("LEVEL = "+zz);
       Cluster c = (Cluster)cList.get(zz);
@@ -1132,8 +1132,8 @@ println("ML:"+meclValue);
             bp.PR_EXPERT_FILE = file2;
             api.run();
             var results = api.getResults();
-            String precision = results.prPrecisionValue;
-            String recall = results.prRecallValue;
+            var precision = results.prPrecisionValue;
+            var recall = results.prRecallValue;
             String outLine = "PR("+file1+", "+file2+")\t" + precision + "\t" + recall+"\r\n";
 
             out.write(outLine);

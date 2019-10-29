@@ -26,7 +26,7 @@ final class BunchEngine {
   EngineResults results = new EngineResults();
   ClusteringMethod clusteringMethod_d;
   GraphOutput graphOutput_d;
-  Graph initialGraph_d;
+  Graph initialGraph_d = new Graph(0);
   BunchPreferences preferences_d;
   StatsManager stats = bunch.stats.StatsManager.getInstance();
   Configuration configuration_d;
@@ -36,15 +36,15 @@ final class BunchEngine {
   long endTime;
   long totalTime=0;
   Cluster baseCluster;
-  ArrayList clusterList;
+  List<Cluster> clusterList;
   javax.swing.Timer timeoutTimer;
   int reflexiveEdgeCount = 0;
 
-  String precision;
-  String recall;
+  Double precision;
+  Double recall;
   String MQCalcMdgFileName;
   String MQCalcSilFileName;
-  String MQCalcValue;
+  Double MQCalcValue;
 
   BunchEngine() {}
 
@@ -707,8 +707,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     var MQCalcClass = bunchArgs.mqCalculatorClass;
 
     double mqResult = bunch.util.MQCalculator.CalcMQ(MQCalcMdgFileName,MQCalcSilFileName,MQCalcClass);
-    Double Dmq = new Double(mqResult);
-    MQCalcValue =  Dmq.toString();
+    MQCalcValue = mqResult;
     return true;
   }
 
@@ -762,28 +761,22 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     return results;
   }
 
-  public ArrayList getClusterList()
+  public List<Cluster> getClusterList()
   {
     return this.clusterList;
   }
 
   public EngineResults getClusteringResultsHT() {
-      if(clusteringMethod_d == null) return null;
-      if(baseCluster == null) return null;
+      if (clusteringMethod_d == null) return null;
+      if (baseCluster == null)        return null;
 
       results = new EngineResults();
 
-      Long rt = new Long(totalTime);
-      Long mqEvals = new Long(stats.getMQCalculations());
-      Integer totalClusterLevels = new Integer(clusterList.size());
-      Long saMovesTaken = new Long(stats.getSAOverrides());
-      Integer medianLvl = new Integer(getMedianLevelNumber());
-
-      results.RUNTIME = rt;
-      results.MQEVALUATIONS = mqEvals;
-      results.TOTAL_CLUSTER_LEVELS = totalClusterLevels;
-      results.SA_NEIGHBORS_TAKEN = saMovesTaken;
-      results.MEDIAN_LEVEL_GRAPH = medianLvl;
+      results.RUNTIME = totalTime;
+      results.MQEVALUATIONS = stats.getMQCalculations();
+      results.TOTAL_CLUSTER_LEVELS = clusterList.size();
+      results.SA_NEIGHBORS_TAKEN = stats.getSAOverrides();
+      results.MEDIAN_LEVEL_GRAPH = getMedianLevelNumber();
 
       //now handle errors & warnings
       Map errorHT = new Hashtable();
@@ -791,28 +784,21 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
       Map warningHT = new Hashtable();
       if (reflexiveEdgeCount > 0) {
-        Integer re = new Integer(reflexiveEdgeCount);
-        warningHT.put(REFLEXIVE_EDGE_COUNT,re.toString());
+        warningHT.put(REFLEXIVE_EDGE_COUNT,reflexiveEdgeCount);
       }
       results.WARNING_HASHTABLE = warningHT;
 
       Map []resultClusters = new Hashtable[clusterList.size()];
 
       for(int i = 0; i < clusterList.size(); i++) {
-        Integer level = new Integer(i);
         Hashtable lvlHT = new Hashtable();
         lvlHT.clear();
 
-        Cluster c = (Cluster)clusterList.get(i);
-        Double bestMQ = new Double(c.getObjFnValue());
-        Long clusterDepth = new Long(c.getDepth());
-        Integer numClusters = new Integer(c.getClusterNames().length);
-
-        lvlHT.put(CLUSTER_LEVEL,level.toString());
-        lvlHT.put(MQVALUE,bestMQ.toString());
-        lvlHT.put(CLUSTER_DEPTH,clusterDepth.toString());
-        lvlHT.put(NUMBER_CLUSTERS,numClusters.toString());
-
+        Cluster c = clusterList.get(i);
+        lvlHT.put(CLUSTER_LEVEL,i);
+        lvlHT.put(MQVALUE,c.getObjFnValue());
+        lvlHT.put(CLUSTER_DEPTH,c.getDepth());
+        lvlHT.put(NUMBER_CLUSTERS,c.getClusterNames().length);
         resultClusters[i] = lvlHT;
       }
 

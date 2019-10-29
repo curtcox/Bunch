@@ -2,7 +2,6 @@ package bunch.util;
 
 import java.util.*;
 import java.io.*;
-import java.lang.Math.*;
 import java.text.*;
 
 public final class PrecisionRecallCalculator {
@@ -10,7 +9,7 @@ public final class PrecisionRecallCalculator {
   String m_S_filename1;
   String m_S_filename2;
 
-  String S_precision, S_recall;
+  Double S_precision, S_recall;
   Vector m_v_expert_modules_names;
   Vector m_v_expert_modules_content;
   Vector m_v_tested_modules_names;
@@ -43,22 +42,19 @@ public final class PrecisionRecallCalculator {
 
   ***********/
 
-  public String get_precision()
-  {
+  public Double get_precision() {
     return S_precision;
   }
 
-  public String get_recall()
-  {
+  public Double get_recall() {
     return S_recall;
   }
 
-  public void compare()
-  {
+  public void compare() {
     Compare cp = new Compare(m_v_expert_modules_content, m_v_tested_modules_content, m_v_tested_modules_names);
     cp.do_compare();
-    S_precision = cp.get_precision()+"%";
-    S_recall = cp.get_recall()+"%";
+    S_precision = cp.get_precision();
+    S_recall = cp.get_recall();
 
     //System.out.println("P: "+S_precision+"\nR: "+S_recall);
   }
@@ -145,29 +141,23 @@ public final class PrecisionRecallCalculator {
 
 
 final class Compare {
-  private Hashtable m_ht_vars_orig; // used to get the index of the original vars
-  private Hashtable m_ht_vars_new; // used to get the index of the new vars
   private Vector m_v_original_distance, m_v_new_distance_name, m_v_new_distance_number;
   private double m_d_recall, m_d_precision;
 
-  public String get_precision()
-  {
-    NumberFormat nf = NumberFormat.getNumberInstance();
-    String fx = nf.format(m_d_precision);
-    return fx;
+  public double get_precision() {
+    return m_d_precision;
   }
 
-  public String get_recall()
-  {
-    NumberFormat nf = NumberFormat.getNumberInstance();
-    String fx = nf.format(m_d_recall);
-    return fx;
+  public double get_recall() {
+    return m_d_recall;
   }
 
   public Compare(Vector orig, Vector newname, Vector newnumber)
   {
-    m_ht_vars_orig = new Hashtable();
-    m_ht_vars_new = new Hashtable();
+    // used to get the index of the original vars
+    Hashtable m_ht_vars_orig = new Hashtable();
+    // used to get the index of the new vars
+    Hashtable m_ht_vars_new = new Hashtable();
     m_v_original_distance = new Vector(orig);
     m_v_new_distance_name = new Vector(newname);
     m_v_new_distance_number = new Vector(newnumber);
@@ -175,33 +165,20 @@ final class Compare {
     m_d_precision=0.0;
   }
 
-  public void do_compare()
-  {
-
-    //System.out.println("Orig: \n"+m_v_original_distance);
-    //System.out.println("new names: \n"+m_v_new_distance_name);
-    //System.out.println("new numbers: \n"+m_v_new_distance_number);
-
-// this section will try to calculate the Recall % : it will compare the
-// % of intra pairs in the expert partition that were found by the algorithem
-
-    boolean found1 = false;
-    boolean found2 = false;
+  public void do_compare() {
+    boolean found1;
     int pairs_found = 0 ;
     int pairs_total = 0;
-    int not_found = 0;
 
-    Vector v_temp = new Vector();
+    Vector v_temp;
     Vector v_new = new Vector();
-    for (int i=0; i<m_v_original_distance.size(); i++)
-    {
+    for (int i=0; i<m_v_original_distance.size(); i++) {
       v_temp = (Vector)m_v_original_distance.get(i);
       //System.out.println(v_temp.size());
       pairs_total += v_temp.size() * (v_temp.size()-1) /2;
       //System.out.println("Total number of pairs: "+pairs_total);
 
-      for (int j=0; j<v_temp.size()-1; j++)
-      {
+      for (int j=0; j<v_temp.size()-1; j++) {
         found1=false;
         String s_var1 = new String(v_temp.get(j).toString());
         for (int l=0; l<m_v_new_distance_name.size() && !found1;l++) //this will find the first variable in the new clusters
@@ -216,7 +193,6 @@ final class Compare {
         //System.out.println("Total: "+pairs_total);
         if (!found1)
         {
-          not_found++;
           pairs_total-=(v_temp.size()-1-j);
           //System.out.println("Total after not found: "+pairs_total+" removed: "+(v_temp.size()-1-j));
         }
@@ -246,7 +222,6 @@ final class Compare {
 
     pairs_found = 0 ;
     pairs_total = 0;
-    not_found = 0;
 
     for (int i=0; i<m_v_new_distance_name.size(); i++)
     {
@@ -271,7 +246,6 @@ final class Compare {
         //System.out.println("Total: "+pairs_total);
         if (!found1)
         {
-          not_found++;
           pairs_total-=(v_temp.size()-1-j);
           //System.out.println("Total after not found: "+pairs_total+" removed: "+(v_temp.size()-1-j));
         }
@@ -355,15 +329,13 @@ final class GBunchRW {
     return (Hashtable)m_ht_bunchread.clone();
   }
 
-  public void write(Hashtable ht)
-  {
+  public void write(Hashtable ht) {
     try {
       FileWriter fos = new FileWriter(m_S_filename);
 
       fos.write("//Created automatically using GBunchRW...\n");
     Enumeration keys = ht.keys();
-    while (keys.hasMoreElements())
-    {
+    while (keys.hasMoreElements()) {
       String S_temp = new String(keys.nextElement().toString());
       Vector v_temp = new Vector((Vector)ht.get(S_temp));
 
@@ -382,28 +354,23 @@ final class GBunchRW {
 
   }//end of method
 
-  public Vector getModuleNames()
-  {
+  public Vector getModuleNames() {
     Vector v_temp = new Vector();
     Enumeration keys = m_ht_bunchread.keys();
-    while (keys.hasMoreElements())
-    {
-      String S_temp = new String(keys.nextElement().toString());
+    while (keys.hasMoreElements()) {
+      String S_temp = keys.nextElement().toString();
       v_temp.add(S_temp);
     }
 
     return (Vector)v_temp.clone();
   }
 
-  public Vector getModulesContent()
-  {
+  public Vector getModulesContent() {
     Vector v_modules = new Vector();
-    //Vector v_temp = new Vector();
 
     Enumeration keys = m_ht_bunchread.keys();
-    while (keys.hasMoreElements())
-    {
-      String S_temp = new String(keys.nextElement().toString());
+    while (keys.hasMoreElements()) {
+      String S_temp = keys.nextElement().toString();
       Vector v_temp = new Vector((Vector)m_ht_bunchread.get(S_temp));
       v_modules.add(v_temp);
     }
