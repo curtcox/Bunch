@@ -30,7 +30,7 @@ public final class BunchGraph {
     int total = 0;
     if(clusterList != null) {
       for(int i = 0; i < clusterList.size(); i++) {
-        BunchCluster bc = (BunchCluster)clusterList.get(i);
+        BunchCluster bc = clusterList.get(i);
         total += bc.getOverlapNodeCount();
       }
     }
@@ -61,14 +61,14 @@ public final class BunchGraph {
     if(nodeHT == null)
       nodeHT = constructNodeHT();
 
-    return (BunchNode)nodeHT.get(nodeName);
+    return nodeHT.get(nodeName);
   }
 
   private Hashtable constructNodeHT() {
     Hashtable h = new Hashtable();
     h.clear();
     for(int i = 0; i < nodeList.size(); i++) {
-      BunchNode theNode = (BunchNode)nodeList.get(i);
+      BunchNode theNode = nodeList.get(i);
       String key = theNode.getName();
       h.put(key,theNode);
     }
@@ -81,7 +81,7 @@ public final class BunchGraph {
     java.io.BufferedWriter out = new BufferedWriter(outF);
 
     for(int i = 0; i < clusterList.size(); i++) {
-      BunchCluster bc = (BunchCluster)clusterList.get(i);
+      BunchCluster bc = clusterList.get(i);
       ArrayList clusterNodes = new ArrayList(bc.getClusterNodes());
       if(clusterNodes.size()==0)
         continue;
@@ -246,8 +246,8 @@ public final class BunchGraph {
         int srcIdx = i;
         int destIdx = deps[j];
         BunchEdge be = new BunchEdge(edgeWeight,
-          (BunchNode)nodeList.get(srcIdx),
-          (BunchNode)nodeList.get(destIdx));
+                nodeList.get(srcIdx),
+                nodeList.get(destIdx));
         edgeList.add(be);
         forwardList.add(be);
       }
@@ -259,13 +259,13 @@ public final class BunchGraph {
         int srcIdx = backDeps[j];
         int destIdx = i;
         BunchEdge be = new BunchEdge(edgeWeight,
-          (BunchNode)nodeList.get(srcIdx),
-          (BunchNode)nodeList.get(destIdx));
+                nodeList.get(srcIdx),
+                nodeList.get(destIdx));
 
         backList.add(be);
       }
 
-      BunchNode bn = (BunchNode)nodeList.get(i);
+      BunchNode bn = nodeList.get(i);
       bn.setDeps(forwardList,backList);
     }
 
