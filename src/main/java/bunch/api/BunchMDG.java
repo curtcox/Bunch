@@ -2,29 +2,12 @@ package bunch.api;
 
 import java.util.*;
 
-/****
- *
- *	$Log: BunchMDG.java,v $
- *	Revision 1.1.1.1  2002/02/03 18:30:05  bsmitc
- *	CVS Import
- *	
- *
- */
-
-/**
- * Title:        Bunch Clustering Tool
- * Description:
- * Copyright:    Copyright (c) 2000
- * Company:      Drexel University
- * @author
- * @version 1.0
- */
-
 public final class BunchMDG {
-ArrayList mdgEdges;
+
+  final List<BunchMDGDependency> mdgEdges;
 
   public BunchMDG() {
-    mdgEdges = new ArrayList();
+    mdgEdges = new ArrayList<>();
   }
 
   public boolean addMDGEdge(BunchMDGDependency d)
@@ -33,11 +16,14 @@ ArrayList mdgEdges;
   }
 
   public boolean addMDGEdge(String s, String d, int w) {
-    BunchMDGDependency bmd = new BunchMDGDependency(s,d,w);
-    return addMDGEdge(bmd);
+    return addMDGEdge(new BunchMDGDependency(s,d,w));
   }
 
-  public Collection getMDGEdges() {
+  public boolean addMDGEdge(String s, String d) {
+    return addMDGEdge(new BunchMDGDependency(s,d,1));
+  }
+
+  public List<BunchMDGDependency> getMDGEdges() {
     return mdgEdges;
   }
 }

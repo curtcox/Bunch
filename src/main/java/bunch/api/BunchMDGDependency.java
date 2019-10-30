@@ -12,12 +12,19 @@ public final class BunchMDGDependency {
     edgeW = w;
   }
 
-  public String getSrcNode()
-  { return srcNode; }
+  public BunchMDGDependency(String s, String d) {
+    this(s,d,1);
+  }
 
-  public String getDestNode()
-  { return destNode; }
+  public String getSrcNode() {
+    return srcNode;
+  }
 
-  public int getEdgeW()
-  { return edgeW; }
+  public String getDestNode() {
+    return destNode;
+  }
+
+  public int getEdgeW() {
+    return edgeW;
+  }
 }
