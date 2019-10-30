@@ -8,11 +8,8 @@ import java.util.*;
 
 public final class BunchAPI {
 
-  EngineArgs bunchArgs = new EngineArgs();
-  EngineResults resultsHashtable;
-  ProgressCallback  progressCB = null;
-  int               progressUpdateFreq=1000;
-  BunchEngine       engine;
+  final EngineArgs bunchArgs = new EngineArgs();
+  private BunchEngine engine;
 
   public BunchAPI() {
     engine = new BunchEngine();
@@ -26,17 +23,10 @@ public final class BunchAPI {
     return engine.getDefaultSpecialNodes(mdgFileName);
   }
 
-  public boolean run() throws IOException, ClassNotFoundException {
-    boolean rc = true;
-    resultsHashtable = new EngineResults();
-    if(progressCB != null){
-      bunchArgs.CALLBACK_OBJECT_REF = progressCB;
-      bunchArgs.callbackObjectFrequency = progressUpdateFreq;
-    }
-
+  public EngineResults run() throws IOException, ClassNotFoundException {
     engine = new BunchEngine();
     engine.run(bunchArgs);
-    return rc;
+    return getResults();
   }
 
   public List<Cluster> getClusters() {
