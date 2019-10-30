@@ -9,10 +9,10 @@ import  java.io.*;
 
 public final class BunchGraph {
 
-  ArrayList nodeList = null;
-  ArrayList edgeList = null;
-  ArrayList clusterList = null;
-  Hashtable nodeHT = null;
+  List<BunchNode> nodeList;
+  List<BunchEdge> edgeList;
+  List<BunchCluster> clusterList;
+  Map<String,BunchNode> nodeHT;
   boolean includesIsomorphicUpdates = false;
 
   double mqValue = 0;
