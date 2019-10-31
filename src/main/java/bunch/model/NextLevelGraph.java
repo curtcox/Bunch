@@ -13,8 +13,6 @@ final class NodeInfo {
   public Hashtable<Integer,Integer> dWeights;
   public Hashtable<Integer,Integer> beWeights;
   public Hashtable<Integer,Node> childNodes;
-  public int[] arrayDependencies;
-  public int[] arrayWeights;
 
   public NodeInfo(String n) {
     name = n;
@@ -31,37 +29,33 @@ final class NodeInfo {
 
   public Graph genNextLevelGraph(Graph g) {
     int    lvl          = g.getGraphLevel()+1;
-    int[]  cnames       = g.getClusterNames();
     Node[] nodeList     = g.getNodes();
-    Node[] newNodeList  = new Node[cnames.length];
-    Hashtable cnameht   = new Hashtable();
-    Hashtable clusterMap = new Hashtable();
+    Hashtable<Integer,NodeInfo> cnameht   = new Hashtable<>();
+    Hashtable<Integer,Integer> clusterMap = new Hashtable();
     int       nodeLevel = g.getGraphLevel();
 
     int [] clusters = g.getClusters();
     for(int i = 0; i < nodeList.length; i++) {
       nodeList[i].cluster = clusters[i];
     }
-    cnames = g.getClusterNames();
-
+    int[]  cnames = g.getClusterNames();
     for(int i = 0; i < cnames.length; i++) {
       String name = "clusterLvl"+lvl+"Num"+i;
       NodeInfo ni = new NodeInfo(name);
       ni.id = i;
-      cnameht.put(new Integer(cnames[i]),ni);
+      cnameht.put(cnames[i],ni);
     }
 
 
     for(int i = 0; i < nodeList.length; i++) {
         Node srcNode = nodeList[i];
-//System.out.println("Node Name="+srcNode.getName());
 
         int[] edges = srcNode.getDependencies();
         int[] weights = srcNode.getWeights();
 
         clusterMap.put(srcNode.nodeID, srcNode.cluster);
 
-        NodeInfo niTmp =  (NodeInfo)cnameht.get(srcNode.cluster);
+        NodeInfo niTmp = cnameht.get(srcNode.cluster);
         niTmp.childNodes.put(srcNode.nodeID,srcNode);
 
         for(int j = 0; j < edges.length; j++) {
@@ -71,11 +65,10 @@ final class NodeInfo {
 
           if(srcCluster == destCluster) continue;
 
-
           int weight = weights[j];
 
-          NodeInfo niSrc  = (NodeInfo)cnameht.get(srcCluster);
-          NodeInfo niDest = (NodeInfo)cnameht.get(destCluster);
+          NodeInfo niSrc  = cnameht.get(srcCluster);
+          NodeInfo niDest = cnameht.get(destCluster);
 
           Integer src = niSrc.id;
           Integer dest= niDest.id;
@@ -85,8 +78,8 @@ final class NodeInfo {
             niSrc.dependencies.put(dest, dest);
             niSrc.dWeights.put(dest,w);
           } else {
-            Integer edgeW = (Integer)niSrc.dWeights.get(dest);
-            w = new Integer(w.intValue()+edgeW.intValue());
+            Integer edgeW = niSrc.dWeights.get(dest);
+            w = w.intValue() + edgeW.intValue();
             niSrc.dWeights.put(dest,w);
           }
 
@@ -94,8 +87,8 @@ final class NodeInfo {
             niDest.backEdges.put(src,src);
             niDest.beWeights.put(src,w);
           } else {
-            Integer edgeW = (Integer)niDest.beWeights.get(src);
-            w = new Integer(w.intValue()+edgeW.intValue());
+            Integer edgeW = niDest.beWeights.get(src);
+            w = w.intValue() + edgeW.intValue();
             niDest.beWeights.put(src,w);
           }
        }
@@ -106,11 +99,10 @@ final class NodeInfo {
     retGraph.clear();
     Node[] newNL = retGraph.getNodes();
 
-    Object [] nl = cnameht.values().toArray();
-    for(int i = 0; i < nl.length; i++)
-    {
+    NodeInfo [] nl = cnameht.values().toArray(new NodeInfo[0]);
+    for(int i = 0; i < nl.length; i++) {
       Node        n = new Node();
-      NodeInfo    ni = (NodeInfo)nl[i];
+      NodeInfo    ni = nl[i];
       newNL[ni.id]=n;
       n.setName(ni.name);
       n.nodeID = ni.id;
@@ -128,10 +120,6 @@ final class NodeInfo {
       for(Enumeration e = ni.childNodes.elements(); e.hasMoreElements();)
         n.children[j++]=(Node)e.nextElement();
 
-      //Object [] oa = ni.childNodes.entrySet().toArray();
-      //for(int j = 0; j < oa.length; j++)
-      //  n.children[j] = (Node)oa[j];
-
       updateEdgeArrays(ni.dependencies,n.dependencies,ni.dWeights,n.weights);
       updateEdgeArrays(ni.backEdges,n.backEdges,ni.beWeights,n.beWeights);
 
@@ -146,8 +134,7 @@ final class NodeInfo {
     return retGraph;
   }
 
-  private void dumpNode(Node n)
-  {
+  private void dumpNode(Node n) {
     System.out.println("Node: " + n.name_d);
     System.out.println("Node ID:  " + n.nodeID);
     System.out.print("EDGES(Weight): ");
@@ -165,23 +152,19 @@ final class NodeInfo {
     System.out.println("======================================");
   }
 
-  private void updateEdgeArrays(Hashtable edgeH, int[]edge, Hashtable weightH, int[]weight)
-  {
+  private void updateEdgeArrays(Hashtable<Integer,Integer> edgeH, int[]edge, Hashtable<Integer,Integer> weightH, int[]weight) {
     int [] tmpEdge = edge; //new int[edgeH.size()];
     int [] tmpWeight = weight; //new int[edgeH.size()];
 
-    Object [] eo = edgeH.keySet().toArray();
-    for(int i = 0; i < eo.length; i++)
-    {
-      Integer Ikey = (Integer)eo[i];
-      Integer Iweight = (Integer)weightH.get(Ikey);
+    Integer [] eo = edgeH.keySet().toArray(new Integer[0]);
+    for(int i = 0; i < eo.length; i++) {
+      Integer Ikey = eo[i];
+      Integer Iweight = weightH.get(Ikey);
       int edgeTo = Ikey.intValue();
       int edgeWeight = Iweight.intValue();
       tmpEdge[i]=edgeTo;
       tmpWeight[i]=edgeWeight;
     }
-    edge = tmpEdge;
-    weight = tmpWeight;
   }
 }
 

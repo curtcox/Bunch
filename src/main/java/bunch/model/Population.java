@@ -7,7 +7,6 @@ public final class Population {
 
   Vector   pop = new Vector();
   static   Graph g = null;
-  Cluster bestCluster = null;
 
   public Population(Graph graph) {
       g = graph.cloneGraph();

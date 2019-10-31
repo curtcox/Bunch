@@ -547,8 +547,7 @@ public Graph cloneWithRandomClusters() {
           g.clusters_d[i] = g.findFreeRandomCluster(g.getClusterNames());
         }
       }
-    }
-    else {
+    } else {
       for (int i=0; i<g.clusters_d.length; ++i) {
         if (!g.locked_d[i]) {
           g.clusters_d[i] = (int)(random_d.nextFloat()*(g.clusters_d.length-1));
@@ -573,8 +572,7 @@ public int[] getRandomCluster() {
           c[i] = findFreeRandomCluster(getClusterNames());
         }
       }
-    }
-    else {
+    } else {
       for (int i=0; i<clusters_d.length; ++i) {
         if (!locked_d[i]) {
           c[i] = (int)(random_d.nextFloat()*(clusters_d.length-1));
