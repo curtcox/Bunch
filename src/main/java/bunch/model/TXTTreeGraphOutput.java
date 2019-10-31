@@ -9,16 +9,14 @@ public final class TXTTreeGraphOutput extends GraphOutput {
 
   public TXTTreeGraphOutput() {}
 
-  public void writeHeader(Graph gBase) throws IOException
-{
+  public void writeHeader(Graph gBase) throws IOException {
     writer_d.write("// ------------------------------------------------------------ \n");
     writer_d.write("// created with bunch v2 \n");
     writer_d.write("// Objective Function value = "+gBase.getObjectiveFunctionValue()+"\n");
     writer_d.write("// ------------------------------------------------------------ \n\n");
 }
 
-public void writeSpecialModules(Node[] originalNodes) throws IOException
-{
+public void writeSpecialModules(Node[] originalNodes) throws IOException {
     if (originalNodes != null) {
       boolean hasSuppliers = false;
       boolean hasClients = false;
@@ -108,30 +106,23 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException
 }
 
 
-public void writeClosing() throws IOException
-{
+public void writeClosing() throws IOException {
     writer_d.close();
 }
 
-public void genCluster(Node n, long baseID) throws IOException
-{
+public void genCluster(Node n, long baseID) throws IOException {
   Stack st = new Stack();
   Hashtable ht = new Hashtable();
 
   st.push(n);
-  while(!st.empty())
-  {
+  while(!st.empty()) {
       Node tmp = (Node)st.peek();
-      if(tmp.isCluster())
-      {
-        if(ht.containsKey(tmp.name_d))
-        {
+      if(tmp.isCluster()) {
+        if(ht.containsKey(tmp.name_d)) {
           writer_d.write("}\n\n");
           ht.remove(tmp.name_d);
           st.pop();
-        }
-        else
-        {
+        } else {
             long clustID = tmp.nodeID+(baseID++);
             writer_d.write("subgraph cluster"+clustID+" {\n");
             writer_d.write("label = \""+tmp.name_d+"\";\n");

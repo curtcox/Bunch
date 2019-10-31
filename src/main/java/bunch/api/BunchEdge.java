@@ -2,9 +2,9 @@ package bunch.api;
 
 public final class BunchEdge {
 
-  int weight;
-  BunchNode srcNode;
-  BunchNode destNode;
+  final int weight;
+  final BunchNode srcNode;
+  final BunchNode destNode;
 
   public BunchEdge(int w, BunchNode src, BunchNode dest) {
     weight = w;

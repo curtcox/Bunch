@@ -72,9 +72,7 @@ public boolean getAgglomWriteAllLevels()
  *
  * @param g the graph to print
  */
-public
-void
-setGraph(Graph g)
+public void setGraph(Graph g)
 {
   graph_d = g;
 }
@@ -84,9 +82,7 @@ setGraph(Graph g)
  *
  * @return the graph to print
  */
-public
-Graph
-getGraph()
+public Graph getGraph()
 {
   return graph_d;
 }
@@ -105,9 +101,7 @@ getGraph()
  * @see #setBaseName(java.lang.String)
  * @see #setCurrentName(java.lang.String)
  */
-public
-void
-setBaseName(String name)
+public void setBaseName(String name)
 {
   fileName_d = name;
 }
@@ -118,9 +112,7 @@ setBaseName(String name)
  * @return the output file's base name
  * @see #setBaseName(java.lang.String)
  */
-public
-String
-getBaseName()
+public String getBaseName()
 {
   return fileName_d;
 }
@@ -136,9 +128,7 @@ getBaseName()
  * @see #setCurrentName(java.lang.String)
  * @see #setBaseName(java.lang.String)
  */
-public
-void
-setCurrentName(String n)
+public void setCurrentName(String n)
 {
   currentName_d = n;
 }
@@ -149,9 +139,7 @@ setCurrentName(String n)
  * @return the output file's current name
  * @see #setCurrentName(java.lang.String)
  */
-public
-String
-getCurrentName()
+public String getCurrentName()
 {
   return currentName_d;
 }
@@ -166,9 +154,7 @@ getCurrentName()
  * @return the output file's basic name
  * @see #getBasicName()
  */
-public
-void
-setBasicName(String bn)
+public void setBasicName(String bn)
 {
   basicName_d = bn;
 }
@@ -179,9 +165,7 @@ setBasicName(String bn)
  * @return the output file's basic name
  * @see #setBasicName(java.lang.String)
  */
-public
-String
-getBasicName()
+public String getBasicName()
 {
   return basicName_d;
 }
@@ -191,7 +175,5 @@ getBasicName()
  * This method's implementations should output the graph into a file
  * or files in the format specific to that subclass.
  */
-public abstract
-void
-write();
+public abstract void write();
 }

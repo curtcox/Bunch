@@ -21,8 +21,7 @@ public final class BunchGraph {
   //default constructor
   public BunchGraph() { }
 
-  public Collection getNodes()
-  {
+  public Collection<BunchNode> getNodes() {
     return nodeList;
   }
 
@@ -37,12 +36,12 @@ public final class BunchGraph {
     return total;
   }
 
-  public Collection getEdges()
+  public Collection<BunchEdge> getEdges()
   {
     return edgeList;
   }
 
-  public Collection getClusters()
+  public Collection<BunchCluster> getClusters()
   { return clusterList; }
 
   public double getMQValue()
@@ -64,8 +63,8 @@ public final class BunchGraph {
     return nodeHT.get(nodeName);
   }
 
-  private Hashtable constructNodeHT() {
-    Hashtable h = new Hashtable();
+  private Map<String,BunchNode> constructNodeHT() {
+    Map<String,BunchNode> h = new HashMap();
     h.clear();
     for(int i = 0; i < nodeList.size(); i++) {
       BunchNode theNode = nodeList.get(i);
@@ -82,23 +81,23 @@ public final class BunchGraph {
 
     for(int i = 0; i < clusterList.size(); i++) {
       BunchCluster bc = clusterList.get(i);
-      ArrayList clusterNodes = new ArrayList(bc.getClusterNodes());
+      List<BunchNode> clusterNodes = new ArrayList(bc.getClusterNodes());
       if(clusterNodes.size()==0)
         continue;
       out.write("SS("+bc.getName()+")=");
       for(int j = 0; j < clusterNodes.size(); j++) {
-        BunchNode bn = (BunchNode)clusterNodes.get(j);
+        BunchNode bn = clusterNodes.get(j);
         out.write(bn.getName());
         if(j < (clusterNodes.size()-1))
           out.write(", ");
       }
       if((includeOverlapNodes == true)&&(bc.getOverlapNodes()!=null)) {
-        ArrayList overlapNodes = new ArrayList(bc.getOverlapNodes());
+        List<BunchNode> overlapNodes = new ArrayList(bc.getOverlapNodes());
         if(overlapNodes.size()>0)
           out.write(", ");
 
         for(int j = 0; j < overlapNodes.size(); j++) {
-          BunchNode bn = (BunchNode)overlapNodes.get(j);
+          BunchNode bn = overlapNodes.get(j);
           out.write(bn.getName());
           if(j < (overlapNodes.size()-1))
             out.write(", ");
@@ -109,16 +108,16 @@ public final class BunchGraph {
     out.close();
   }
 
-  private ArrayList getChildrenList(Node n) {
-    ArrayList a = new ArrayList();
+  private List<Node> getChildrenList(Node n) {
+    List<Node> a = new ArrayList();
     if (n.isCluster() == false) {
       a.add(n);
       return a;
     }
-    Stack s = new Stack();
+    Stack<Node> s = new Stack();
     s.push(n);
     while(s.isEmpty() == false) {
-      Node c = (Node)s.pop();
+      Node c = s.pop();
       Node []childrenList = c.children;
       for (int i = 0; i < childrenList.length; i++) {
         Node aChild = childrenList[i];
@@ -136,28 +135,26 @@ public final class BunchGraph {
       return;
 
     includesIsomorphicUpdates = true;
-    Iterator nodeI = getNodes().iterator();
-    ArrayList theClusters = new ArrayList(getClusters());
+    Iterator<BunchNode> nodeI = getNodes().iterator();
+    List<BunchCluster> theClusters = new ArrayList(getClusters());
     int adjustCount = 0;
     int nodeAdjustCount = 0;
     int totalCount = getNodes().size();
     boolean nodeIsomorphic = false;
 
     while(nodeI.hasNext()) {
-      BunchNode bn = (BunchNode)nodeI.next();
+      BunchNode bn = nodeI.next();
       nodeIsomorphic = false;
       int[] cv = howConnected(bn);
 
       int currClust = bn.getCluster();
       int currStrength = cv[currClust];
-      BunchCluster homeCluster = (BunchCluster)theClusters.get(currClust);
-      for(int i = 0; i < cv.length; i++)
-      {
+      BunchCluster homeCluster = theClusters.get(currClust);
+      for(int i = 0; i < cv.length; i++) {
         if(i == currClust) continue;
         int connectStrength = cv[i];
-        if(connectStrength == currStrength)
-        {
-          BunchCluster bc = (BunchCluster)theClusters.get(i);
+        if(connectStrength == currStrength) {
+          BunchCluster bc = theClusters.get(i);
           bc.addOverlapNode(bn);
           bn.subscribeToCluster(bc);
           adjustCount++;
@@ -172,8 +169,8 @@ public final class BunchGraph {
   private int[] howConnected(BunchNode bn) {
     int howManyClusters = getClusters().size();
     int [] connectVector = new int[howManyClusters];
-    Iterator fdeps = null;
-    Iterator bdeps = null;
+    Iterator<BunchEdge> fdeps;
+    Iterator<BunchEdge> bdeps;
 
     for(int i=0; i<connectVector.length;i++)
       connectVector[i] = 0;
@@ -181,7 +178,7 @@ public final class BunchGraph {
     if (bn.getDeps() != null) {
       fdeps = bn.getDeps().iterator();
       while(fdeps.hasNext()) {
-        BunchEdge be = (BunchEdge)fdeps.next();
+        BunchEdge be = fdeps.next();
         BunchNode target = be.getDestNode();
         int targetCluster = target.getCluster();
         connectVector[targetCluster]++;
@@ -192,7 +189,7 @@ public final class BunchGraph {
     if (bn.getBackDeps() != null) {
       bdeps = bn.getBackDeps().iterator();
       while(bdeps.hasNext()) {
-        BunchEdge be = (BunchEdge)bdeps.next();
+        BunchEdge be = bdeps.next();
         BunchNode target = be.getSrcNode();
         int targetCluster = target.getCluster();
         connectVector[targetCluster]++;
@@ -235,8 +232,8 @@ public final class BunchGraph {
       if ((backDeps != null) && (backDeps.length != backWeights.length))
         return false;
 
-      ArrayList forwardList = null;
-      ArrayList backList = null;
+      List<BunchEdge> forwardList = null;
+      List<BunchEdge> backList = null;
 
       if (deps != null)
         forwardList = new ArrayList();
@@ -274,7 +271,7 @@ public final class BunchGraph {
     numClusters = cnames.length; //  c.getClusterNames().length;
 
     //Now construct the cluster objects
-    Graph nextLvlG = null;
+    Graph nextLvlG;
     Graph cLvlG = gBase.cloneGraph();
 
     NextLevelGraph nextLvl = new NextLevelGraph();
@@ -289,12 +286,12 @@ public final class BunchGraph {
 
       for(int j = 0; j < members.length; j++) {
         Node aMember = members[j];
-        ArrayList childrenList = getChildrenList(aMember);
+        List<Node> childrenList = getChildrenList(aMember);
         for(int k = 0; k < childrenList.size(); k++) {
-          Node leafMember = (Node)childrenList.get(k);
+          Node leafMember = childrenList.get(k);
           String memberName = leafMember.getName();
           for(int l = 0; l < nodeList.size(); l++) {
-            BunchNode bn = (BunchNode)nodeList.get(l);
+            BunchNode bn = nodeList.get(l);
             String nodeName = bn.getName();
             if (memberName.equals(nodeName)) {
               if(bn.getCluster() != BunchNode.NOT_A_MEMBER_OF_A_CLUSTER) {
@@ -316,60 +313,67 @@ public final class BunchGraph {
   }
 
   public void printGraph() {
-    System.out.println("PRINTING GRAPH\n");
-    System.out.println("Node Count:         " + nodeList.size());
-    System.out.println("Edge Count:         " + edgeList.size());
-    System.out.println("MQ Value:           " + mqValue);
-    System.out.println("Number of Clusters: " + numClusters);
-    System.out.println();
+    println("PRINTING GRAPH\n");
+    println("Node Count:         " + nodeList.size());
+    println("Edge Count:         " + edgeList.size());
+    println("MQ Value:           " + mqValue);
+    println("Number of Clusters: " + numClusters);
+    println();
 
     for(int i = 0; i < nodeList.size(); i++) {
-      BunchNode bn = (BunchNode)nodeList.get(i);
-      ArrayList fdeps = null;
-      ArrayList bdeps = null;
+      BunchNode bn = nodeList.get(i);
+      List<BunchEdge> fdeps;
+      List<BunchEdge> bdeps;
 
-      System.out.println("NODE:   " + bn.getName());
-      System.out.println("Cluster ID:   " + bn.getCluster());
+      println("NODE:   " + bn.getName());
+      println("Cluster ID:   " + bn.getCluster());
 
       if (bn.getDeps() != null) {
         fdeps = new ArrayList(bn.getDeps());
         for(int j = 0; j < fdeps.size(); j++) {
-          BunchEdge be = (BunchEdge)fdeps.get(j);
+          BunchEdge be = fdeps.get(j);
           String depName = be.getDestNode().getName();
           int weight = be.getWeight();
-          System.out.println("   ===> " + depName+" ("+weight+")");
+          println("   ===> " + depName+" ("+weight+")");
         }
       }
 
       if (bn.getBackDeps() != null) {
         bdeps = new ArrayList(bn.getBackDeps());
-        for(int j = 0; j < bdeps.size(); j++)
-        {
-          BunchEdge be = (BunchEdge)bdeps.get(j);
+        for(int j = 0; j < bdeps.size(); j++) {
+          BunchEdge be = bdeps.get(j);
           String depName = be.getSrcNode().getName();
           int weight = be.getWeight();
-          System.out.println("   <=== " + depName+" ("+weight+")");
+          println("   <=== " + depName+" ("+weight+")");
         }
       }
-      System.out.println();
+      println();
     }
 
     //Now view as clusters
-    System.out.println("Cluster Breakdown\n");
-    ArrayList clusts = new ArrayList(this.getClusters());
+    println("Cluster Breakdown\n");
+    List<BunchCluster> clusts = new ArrayList(this.getClusters());
     for(int i = 0; i < clusts.size(); i++) {
-      BunchCluster bc = (BunchCluster)clusts.get(i);
-      System.out.println("Cluster id:   " + bc.getID());
-      System.out.println("Custer name:  " + bc.getName());
-      System.out.println("Cluster size: " +bc.getSize());
+      BunchCluster bc = clusts.get(i);
+      println("Cluster id:   " + bc.getID());
+      println("Custer name:  " + bc.getName());
+      println("Cluster size: " +bc.getSize());
 
-      ArrayList members = new ArrayList(bc.getClusterNodes());
-      for (int j = 0; j < members.size(); j++)
-      {
-        BunchNode bn = (BunchNode)members.get(j);
-        System.out.println("   --> " + bn.getName() + "   ("+bn.getCluster()+")");
+      List<BunchNode> members = new ArrayList(bc.getClusterNodes());
+      for (int j = 0; j < members.size(); j++) {
+        BunchNode bn = members.get(j);
+        println("   --> " + bn.getName() + "   ("+bn.getCluster()+")");
       }
-      System.out.println();
+      println();
     }
   }
+
+  static void println(String message) {
+    System.out.println(message);
+  }
+
+  static void println() {
+    System.out.println("");
+  }
+
 }

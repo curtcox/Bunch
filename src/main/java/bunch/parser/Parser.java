@@ -11,8 +11,7 @@ import java.io.*;
  * @version 1.0
  * @see ParserFactory
  */
-public abstract class Parser
-{
+public abstract class Parser {
 protected BufferedReader reader_d;
 protected String delims_d = " \t\r\n";
 protected String inputFileName;
@@ -33,14 +32,12 @@ public String getDelims()
    return delims_d;
 }
 
-public boolean hasReflexiveEdges()
-{
+public boolean hasReflexiveEdges() {
   //implement functionality in specific parser, default behavior is false
   return false;
 }
 
-public int getReflexiveEdges()
-{
+public int getReflexiveEdges() {
   //implement functionality in specific parser, default behavior is to return 0
   return 0;
 }
@@ -50,9 +47,7 @@ public int getReflexiveEdges()
  *
  * @param is the InputStream that will be used as input
  */
-public
-void
-setInput(InputStream is)
+public void setInput(InputStream is)
 {
   reader_d = new BufferedReader(new InputStreamReader(is));
 }
@@ -81,10 +76,7 @@ public String getInputFileName()
  *
  * @param obj the object to be used for internal processing
  */
-public
-void
-setObject(Object obj)
-{
+public void setObject(Object obj) {
 }
 
 /**
@@ -92,9 +84,7 @@ setObject(Object obj)
  *
  * @return the object used for internal processing
  */
-public
-Object
-getObject()
+public Object getObject()
 {
   return null;
 }
@@ -104,9 +94,7 @@ getObject()
  *
  * @return the reader class
  */
-public
-BufferedReader
-getReader()
+public BufferedReader getReader()
 {
   return reader_d;
 }
@@ -116,7 +104,5 @@ getReader()
  *
  * @return the object resultant of the parsing, usually a Graph
  */
-public abstract
-Object
-parse();
+public abstract Object parse();
 }

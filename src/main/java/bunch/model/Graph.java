@@ -96,7 +96,7 @@ public void initGraph(int nodes) {
  * as parameter. The calculator will be obtained from the calculator factory
  * that should have been set before using any Graph class
  *
- * @param name the name of the calculator to set for this graph
+ * @param calc the name of the calculator to set for this graph
  * @see #setObjectiveFunctionCalculatorFactory(ObjectiveFunctionCalculatorFactory)
  */
 public void setObjectiveFunctionCalculator(ObjectiveFunctionCalculator calc) {
@@ -277,7 +277,7 @@ public double getObjectiveFunctionValue() {
  * "internal" use by the class and the OF Calculator Object used by the
  * class.
  *
- * @param the new objective function value for this graph
+ * @param objVal new objective function value for this graph
  * @see #getObjectiveFunctionValue()
  */
 public void setObjectiveFunctionValue(double objVal) {
@@ -491,7 +491,7 @@ public Graph cloneSingleNodeClusters() {
  * Defines the current graph clusters as "double locked" i.e., nodes cannot
  * leave OR enter the clusters already defined when the parameter is true.
  *
- * @param a boolean defining is the graph is "double locked" or not
+ * @param v boolean defining is the graph is "double locked" or not
  * @see #hasDoubleLocks()
  */
 public void setDoubleLocks(boolean v) {
@@ -611,13 +611,10 @@ public int[] genRandomClusterSize() {
 
     int currC = 0;
     int currNode = 0;
-    while(currC < numClusters)
-    {
+    while(currC < numClusters) {
       int currCSize = 0;
-      while(currCSize < clustSize)
-      {
-        if(!locked_d[currNode])
-        {
+      while(currCSize < clustSize) {
+        if(!locked_d[currNode]) {
           currCSize++;
           c[currNode]=currC;
         }
@@ -627,8 +624,7 @@ public int[] genRandomClusterSize() {
     }
 
     //now handle the remainders
-    if(currNode < clusters_d.length)
-    {
+    if(currNode < clusters_d.length) {
       //init
       int []clustStack = new int[numClusters];
 
@@ -636,8 +632,7 @@ public int[] genRandomClusterSize() {
         clustStack[i] = i;
 
       //now randomize
-      for(int i = 0; i < clustStack.length;i++)
-      {
+      for(int i = 0; i < clustStack.length;i++) {
         int pos1 = (int)(random_d.nextFloat()*(clustStack.length-1));
         int pos2 = (int)(random_d.nextFloat()*(clustStack.length-1));
         int tmp = clustStack[pos1];
@@ -647,8 +642,7 @@ public int[] genRandomClusterSize() {
 
       //now assign the cluster numbers
       int stackIdx = 0;
-      for(int i = currNode; i < clusters_d.length;i++)
-      {
+      for(int i = currNode; i < clusters_d.length;i++) {
         if(!locked_d[i])
           c[i] = clustStack[stackIdx++];
       }
@@ -699,13 +693,10 @@ public int[] genRandomClusterSizeWithLimits(int min, int max) {
 
     int currC = 0;
     int currNode = 0;
-    while(currC < numClusters)
-    {
+    while(currC < numClusters) {
       int currCSize = 0;
-      while(currCSize < clustSize)
-      {
-        if(!locked_d[currNode])
-        {
+      while(currCSize < clustSize) {
+        if(!locked_d[currNode]) {
           currCSize++;
           c[currNode]=currC;
         }
@@ -715,8 +706,7 @@ public int[] genRandomClusterSizeWithLimits(int min, int max) {
     }
 
     //now handle the remainders
-    if(currNode < clusters_d.length)
-    {
+    if(currNode < clusters_d.length) {
       //init
       int []clustStack = new int[numClusters];
 
@@ -724,8 +714,7 @@ public int[] genRandomClusterSizeWithLimits(int min, int max) {
         clustStack[i] = i;
 
       //now randomize
-      for(int i = 0; i < clustStack.length;i++)
-      {
+      for(int i = 0; i < clustStack.length;i++) {
         int pos1 = (int)(random_d.nextFloat()*(clustStack.length-1));
         int pos2 = (int)(random_d.nextFloat()*(clustStack.length-1));
         int tmp = clustStack[pos1];
@@ -735,8 +724,7 @@ public int[] genRandomClusterSizeWithLimits(int min, int max) {
 
       //now assign the cluster numbers
       int stackIdx = 0;
-      for(int i = currNode; i < clusters_d.length;i++)
-      {
+      for(int i = currNode; i < clusters_d.length;i++) {
         if(!locked_d[i])
           c[i] = clustStack[stackIdx++];
       }

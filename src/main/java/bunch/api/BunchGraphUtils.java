@@ -17,8 +17,7 @@ public final class BunchGraphUtils {
 
   public BunchGraphUtils() { }
 
-  public static BunchGraph constructFromSil(String mdgFileName, String sFileName)
-  {
+  public static BunchGraph constructFromSil(String mdgFileName, String sFileName) {
       return constructFromSil(mdgFileName, sFileName,null);
   }
 
@@ -184,8 +183,7 @@ public final class BunchGraphUtils {
     return calcEdgeSimiliarities(g1,g2);
   }
 
-  public static double calcEdgeSimiliarities(BunchGraph g1, BunchGraph g2)
-  {
+  public static double calcEdgeSimiliarities(BunchGraph g1, BunchGraph g2) {
     long matches = 0;
     long total = 0;
     HashMap g1Lookup = new HashMap();

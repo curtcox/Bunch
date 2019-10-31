@@ -8,10 +8,10 @@ import java.util.Map;
 
 final class EngineArgs {
 
-  public Collection omnipresentBoth;
-  public Collection omnipresentClients;
-  public Collection omnipresentSuppliers;
-  public Collection libraryList;
+  public Collection<String> omnipresentBoth;
+  public Collection<String> omnipresentClients;
+  public Collection<String> omnipresentSuppliers;
+  public Collection<String> libraryList;
   public String mdgInputFileName;
   public BunchMDG mdgGraphObject;
   public String userDirectedClusterSil;

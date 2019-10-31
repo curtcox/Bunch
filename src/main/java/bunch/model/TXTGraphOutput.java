@@ -13,16 +13,14 @@ boolean hasLibraries = false;
 
 public TXTGraphOutput() { }
 
-public void writeHeader(Graph gBase) throws IOException
-{
+public void writeHeader(Graph gBase) throws IOException {
     writer_d.write("// ------------------------------------------------------------ \n");
     writer_d.write("// created with bunch v2 \n");
     writer_d.write("// Objective Function value = "+gBase.getObjectiveFunctionValue()+"\n");
     writer_d.write("// ------------------------------------------------------------ \n\n");
 }
 
-public void checkForSpecialModules(Node[] originalNodes)
-{
+public void checkForSpecialModules(Node[] originalNodes) {
     if (originalNodes != null) {
       hasSuppliers = false;
       hasClients = false;
@@ -46,8 +44,7 @@ public void checkForSpecialModules(Node[] originalNodes)
     }
 }
 
-public void writeSpecialModules(Node[] originalNodes) throws IOException
-{
+public void writeSpecialModules(Node[] originalNodes) throws IOException {
     ArrayList deadList = new ArrayList();
     deadList.clear();
 
@@ -159,19 +156,16 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException
 }
 
 
-public void writeClosing() throws IOException
-{
+public void writeClosing() throws IOException {
     //writer_d.close();
 }
 
-public void genClusterOLD(Node n, long baseID) throws IOException
-{
+public void genClusterOLD(Node n, long baseID) throws IOException {
   Stack st = new Stack();
   Hashtable ht = new Hashtable();
 
   st.push(n);
-  while(!st.empty())
-  {
+  while(!st.empty()) {
       Node tmp = (Node)st.peek();
       if(tmp.isCluster())
       {
@@ -201,8 +195,7 @@ public void genClusterOLD(Node n, long baseID) throws IOException
   }
 }
 
-public void generateClustersOLD(Node []na) throws IOException
-{
+public void generateClustersOLD(Node []na) throws IOException {
   long base=1000;
   for(int i = 0; i<na.length;i++)
   {
@@ -211,13 +204,11 @@ public void generateClustersOLD(Node []na) throws IOException
   }
 }
 
-public void echoNestedChildrenOLD(Node n) throws IOException
-{
+public void echoNestedChildrenOLD(Node n) throws IOException {
   Stack s = new Stack();
   boolean firstNode = true;
   s.push(n);
-  while(!s.isEmpty())
-  {
+  while(!s.isEmpty()) {
     Node tmpNode = (Node)s.pop();
     if(tmpNode.children==null)
       continue;
@@ -238,14 +229,12 @@ public void echoNestedChildrenOLD(Node n) throws IOException
   }
 }
 
-public void genChildrenFromOneLevelOLD(Graph cLvlG) throws IOException
-{
+public void genChildrenFromOneLevelOLD(Graph cLvlG) throws IOException {
   NextLevelGraph nextLvl = new NextLevelGraph();
   Graph          nextLvlG = nextLvl.genNextLevelGraph(cLvlG);
   Node[]         nodeList = nextLvlG.getNodes();
 
-  for(int i = 0; i<nodeList.length;i++)
-  {
+  for(int i = 0; i<nodeList.length;i++) {
     Node tmp = nodeList[i];
     if(tmp.children == null)
       continue;
@@ -264,19 +253,15 @@ public void genChildrenFromOneLevelOLD(Graph cLvlG) throws IOException
   }
 }
 
-public void genCluster(Node n, long baseID) throws IOException
-{
+public void genCluster(Node n, long baseID) throws IOException {
   Stack st = new Stack();
   Hashtable ht = new Hashtable();
 
   st.push(n);
-  while(!st.empty())
-  {
+  while(!st.empty()) {
       Node tmp = (Node)st.peek();
-      if(tmp.isCluster())
-      {
-        if(ht.containsKey(tmp.name_d))
-        {
+      if(tmp.isCluster()) {
+        if(ht.containsKey(tmp.name_d)) {
           writer_d.write("}\n\n");
           ht.remove(tmp.name_d);
           st.pop();
@@ -304,8 +289,7 @@ public void genCluster(Node n, long baseID) throws IOException
   }
 }
 
-public void generateClusters(Graph cLvlG) throws IOException
-{
+public void generateClusters(Graph cLvlG) throws IOException {
   Graph nextLvlG = null;
 
   if((cLvlG.getClusterNames().length <= 1)&&(cLvlG.getPreviousLevelGraph()!=null))
@@ -348,8 +332,7 @@ public void generateClusters(Graph cLvlG) throws IOException
     writer_d.write(ssName);
   }
 
-  if(hasSuppliers)
-  {
+  if(hasSuppliers) {
     if(count > 1) writer_d.write(", ");
     count++;
     writer_d.write("omnipresent_suppliers");

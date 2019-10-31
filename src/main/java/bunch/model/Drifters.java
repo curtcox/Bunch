@@ -16,7 +16,7 @@ public final class Drifters {
 public final static int NODE_NOT_CONNECTED=-1;
 
 protected Graph graph_d;
-  Vector edges = new Vector();
+  Vector<Edge> edges = new Vector();
   int clusters[] = null;
   Node[] nodeList = null;
   int nodes = -1;
@@ -145,12 +145,9 @@ hasEdgeBetween(int i, int j)
 /**
  * This method finds the best home for a given drifter
  *
- * @param The index in the array of the drifter
+ * @param d index in the array of the drifter
  */
-private
-void
-findDrifterHomes(int d)
-{
+private void findDrifterHomes(int d) {
   int [] density = new int[nodes];
   Node n = nodeList[d];
   int homeCluster = n.cluster;
@@ -192,10 +189,7 @@ findDrifterHomes(int d)
 /**
  * This method moves a node between a source and desitnation cluster
  */
-private
-void
-moveNode(int node, int srcCluster, int destCluster)
-{
+private void moveNode(int node, int srcCluster, int destCluster) {
    clusters[node] = destCluster;
    nodeList[node].cluster = destCluster;
    graph_d.setNodes(nodeList);
@@ -206,16 +200,11 @@ moveNode(int node, int srcCluster, int destCluster)
 /**
  * This method determines the maximum connected cluster for a given node
  */
-private
-int
-getMaxConnectedCluster(int d, int []density)
-{
+private int getMaxConnectedCluster(int d, int []density) {
    int maxConn = NODE_NOT_CONNECTED;
    int maxConnCluster = NODE_NOT_CONNECTED;
-   for (int i=0; i < density.length; i++)
-   {
-      if (density[i] > 0)
-      {
+   for (int i=0; i < density.length; i++) {
+      if (density[i] > 0) {
          if (density[i] > maxConn) {
             maxConn = density[i];
             maxConnCluster = i;
@@ -229,19 +218,15 @@ getMaxConnectedCluster(int d, int []density)
 /**
  * This method is a debugging routine
  */
-private
-void
-dumpFreqArray(int d, int []density)
-{
-  for (int i=0; i < density.length; i++)
-  {
-    if (density[i] > 0)
-    {
+private void dumpFreqArray(int d, int []density) {
+  for (int i=0; i < density.length; i++) {
+    if (density[i] > 0) {
       String src = nodeList[d].getName();
       System.err.println(src + " has " + density[i] + " connection(s) to cluster "+i);
     }
   }
 }
-};
+
+}
 
 

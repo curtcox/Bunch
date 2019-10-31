@@ -28,7 +28,6 @@ final class BunchEngine {
   GraphOutput graphOutput_d;
   Graph initialGraph_d = new Graph(0);
   BunchPreferences preferences_d;
-  StatsManager stats = bunch.stats.StatsManager.getInstance();
   Configuration configuration_d;
   ProgressCallbackInterface cbInterfaceObj;
   int callbackFrequency;
@@ -45,6 +44,8 @@ final class BunchEngine {
   String MQCalcMdgFileName;
   String MQCalcSilFileName;
   Double MQCalcValue;
+
+  final StatsManager stats = bunch.stats.StatsManager.getInstance();
 
   BunchEngine() {}
 

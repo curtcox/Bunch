@@ -14,8 +14,8 @@ import java.io.*;
  *
  * @see Feature
  */
-public class Configuration implements java.io.Serializable
-{
+public class Configuration implements java.io.Serializable {
+
 Feature[] preFeatures_d;
 Feature[] features_d;
 Feature[] postFeatures_d;
@@ -28,10 +28,7 @@ public BufferedWriter writer_d = null;
 /**
  * Class constructor.
  */
-public
-Configuration()
-{
-}
+public Configuration() { }
 
 /**
  * Initializes this configuration object based on the characteristics of
@@ -39,23 +36,20 @@ Configuration()
  *
  * @param g the graph used to generate a default configuration
  */
-public void init(Graph g) {
-}
+public void init(Graph g) { }
 
 /**
  * This method is used to create a log file.  The name is hard coded for now
  * as this feature is mainly for debugging.
  */
-public void createLogFile() throws Exception
-{
+public void createLogFile() throws Exception {
 	writer_d = new BufferedWriter(new FileWriter("c:\\bunch.log"));
 }
 
 /**
  * This method closes the log file.
  */
-public void closeLogFile() throws Exception
-{
+public void closeLogFile() throws Exception {
 	writer_d.close();
 }
 
@@ -65,9 +59,7 @@ public void closeLogFile() throws Exception
  * @param n the number of iterations
  * @see #getNumOfIterations()
  */
-public
-void
-setNumOfIterations(int n)
+public void setNumOfIterations(int n)
 {
   numIterations_d = n;
 }
@@ -78,9 +70,7 @@ setNumOfIterations(int n)
  * @return the number of iterations
  * @see #setNumOfIterations(int)
  */
-public
-int
-getNumOfIterations()
+public int getNumOfIterations()
 {
   return numIterations_d;
 }
@@ -92,9 +82,7 @@ getNumOfIterations()
  * @param p the population's size
  * @see #getPopulationSize()
  */
-public
-void
-setPopulationSize(int p)
+public void setPopulationSize(int p)
 {
   popSize_d = p;
 }
@@ -105,9 +93,7 @@ setPopulationSize(int p)
  * @return population size
  * @see #setPopulationSize(int)
  */
-public
-int
-getPopulationSize()
+public int getPopulationSize()
 {
   return popSize_d;
 }
@@ -118,9 +104,7 @@ getPopulationSize()
  * @return the array of precondition features
  * @see #setPreConditionFeatures(Feature[])
  */
-public
-Feature[]
-getPreConditionFeatures()
+public Feature[] getPreConditionFeatures()
 {
   return preFeatures_d;
 }
@@ -131,9 +115,7 @@ getPreConditionFeatures()
  * @param p the array of precondition features
  * @see #getPreConditionFeatures()
  */
-public
-void
-setPreConditionFeatures(Feature[] p)
+public void setPreConditionFeatures(Feature[] p)
 {
   preFeatures_d=p;
 }
@@ -145,9 +127,7 @@ setPreConditionFeatures(Feature[] p)
  * @return the array of features
  * @see #setFeatures(Feature[])
  */
-public
-Feature[]
-getFeatures()
+public Feature[] getFeatures()
 {
   return features_d;
 }
@@ -159,9 +139,7 @@ getFeatures()
  * @param f the array of features
  * @see #getFeatures()
  */
-public
-void
-setFeatures(Feature[] f)
+public void setFeatures(Feature[] f)
 {
   features_d=f;
 }
@@ -172,9 +150,7 @@ setFeatures(Feature[] f)
  * @return the array of postcondition features
  * @see #setPostConditionFeatures(Feature[])
  */
-public
-Feature[]
-getPostConditionFeatures()
+public Feature[] getPostConditionFeatures()
 {
   return postFeatures_d;
 }
@@ -185,9 +161,7 @@ getPostConditionFeatures()
  * @param p the array of postcondition features
  * @see #getPostConditionFeatures()
  */
-public
-void
-setPostConditionFeatures(Feature[] p)
+public void setPostConditionFeatures(Feature[] p)
 {
   postFeatures_d=p;
 }

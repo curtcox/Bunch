@@ -16,7 +16,7 @@ import java.beans.Beans;
  */
 public class GenericFactory implements java.io.Serializable {
 
-protected Hashtable methodTable_d;
+protected Hashtable<String,String> methodTable_d;
 public static final long serialVersionUID = 100L;
 
 /**

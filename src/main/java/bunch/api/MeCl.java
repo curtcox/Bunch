@@ -1,13 +1,11 @@
 package bunch.api;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 final class MeCl {
   BunchGraph A;
   BunchGraph B;
-  HashMap edgeA;
+  Map<String,Integer> edgeA;
   long  meclValue;
 
   public MeCl(BunchGraph g1, BunchGraph g2) {
@@ -81,8 +79,7 @@ final class MeCl {
     while(i.hasNext()) {
       BunchEdge be = (BunchEdge)i.next();
       String key = be.getSrcNode().getName() + be.getDestNode().getName();
-      Integer weight = new Integer(be.getWeight());
-      edgeA.put(key,weight);
+      edgeA.put(key,be.getWeight());
     }
   }
 
@@ -91,12 +88,12 @@ final class MeCl {
     String key2 = n2+n1;
     int    total = 0;
 
-    Integer forward = (Integer)edgeA.get(key1);
+    Integer forward = edgeA.get(key1);
     if(forward != null){
       total += forward.intValue();
     }
 
-    Integer reverse = (Integer)edgeA.get(key2);
+    Integer reverse = edgeA.get(key2);
     if(reverse != null) {
       total += reverse.intValue();
     }
@@ -123,9 +120,8 @@ final class MeCl {
 
         //Now add the current node to the sub cluster
         //hash map for the current cluster in a
-        ArrayList members = (ArrayList)subClustersA.get(bnInBClusterName);
-        if(members == null)
-        {
+        List members = (ArrayList)subClustersA.get(bnInBClusterName);
+        if(members == null) {
           members = new ArrayList();
           subClustersA.put(bnInBClusterName,members);
         }

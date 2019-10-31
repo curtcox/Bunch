@@ -2,7 +2,8 @@ package bunch.model;
 
 final class Edge {
 
-    public Node from_d, to_d;
+    public final Node from_d;
+    public final Node to_d;
 
     public Edge(Node from, Node to) {
         from_d = from;

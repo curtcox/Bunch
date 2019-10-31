@@ -6,9 +6,9 @@ public final class BunchCluster {
 
   int clusterID = -1;
   String clusterName = "";
-  ArrayList clusterNodes;
-  ArrayList overlapNodes;
-  Hashtable nodeHT;
+  List<BunchNode> clusterNodes;
+  List<BunchNode> overlapNodes;
+  Map<String,BunchNode> nodeHT;
 
   public BunchCluster(int id, String name, ArrayList nodes) {
     clusterID = id;
@@ -64,8 +64,7 @@ public final class BunchCluster {
   public String getName()
   { return clusterName; }
 
-  public boolean containsNode(BunchNode bn)
-  {
+  public boolean containsNode(BunchNode bn) {
     return containsNode(bn.getName());
   }
 
@@ -76,13 +75,13 @@ public final class BunchCluster {
     return nodeHT.containsKey(nodeName);
   }
 
-  private Hashtable constructNodeHT() {
-    Hashtable h = new Hashtable();
+  private Map<String,BunchNode> constructNodeHT() {
+    Map<String,BunchNode> h = new Hashtable();
     h.clear();
 
     if(clusterNodes != null) {
       for(int i = 0; i < clusterNodes.size(); i++) {
-        BunchNode bn = (BunchNode)clusterNodes.get(i);
+        BunchNode bn = clusterNodes.get(i);
         String key = bn.getName();
         h.put(key,bn);
       }

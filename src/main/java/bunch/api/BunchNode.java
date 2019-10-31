@@ -4,16 +4,15 @@ import java.util.*;
 
 public final class BunchNode {
 
-  static public final int NOT_A_MEMBER_OF_A_CLUSTER = -1;
-
   String nodeName;
   int    nodeIndex;
   int    nodeCluster;
-  BunchCluster memberCluster = null;
+  BunchCluster memberCluster;
   boolean isNodeCluster;
-  ArrayList   deps = null;
-  ArrayList   backDeps = null;
+  List<BunchEdge>   deps;
+  List<BunchEdge>   backDeps;
   HashMap     clusterMemberships;
+  static public final int NOT_A_MEMBER_OF_A_CLUSTER = -1;
 
   public BunchNode(String name, int index, int cluster,  boolean isCluster) {
     nodeName = name;
@@ -34,10 +33,11 @@ public final class BunchNode {
   public boolean isAMemberOfCluster(BunchCluster bc)
   { return isAMemberOfCluster(bc.getName()); }
 
-  public int memberOfHowManyClusters()
-  { return clusterMemberships.size(); }
-  public void setDeps(ArrayList deps, ArrayList backDeps)
-  {
+  public int memberOfHowManyClusters() {
+    return clusterMemberships.size();
+  }
+
+  public void setDeps(List<BunchEdge> deps, List<BunchEdge> backDeps) {
     this.deps = deps;
     this.backDeps = backDeps;
   }
@@ -51,11 +51,9 @@ public final class BunchNode {
   public void resetCluster(int newClustNumber)
   { nodeCluster = newClustNumber; }
 
-  public Collection getDeps()
-  { return deps;  }
+  public List<BunchEdge> getDeps() { return deps;  }
 
-  public Collection getBackDeps()
-  { return backDeps;  }
+  public List<BunchEdge> getBackDeps() { return backDeps;  }
 
   public boolean isCluster()
   { return isNodeCluster; }
