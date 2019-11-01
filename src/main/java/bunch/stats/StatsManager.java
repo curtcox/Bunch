@@ -1,35 +1,8 @@
-/****
- *
- *	$Log: StatsManager.java,v $
- *	Revision 1.1.1.1  2002/02/03 18:30:06  bsmitc
- *	CVS Import
- *
- *	Revision 1.3  2000/08/13 18:40:33  bsmitc
- *	Added support for SA framework and dumping the output to a log file
- *
- *	Revision 1.2  2000/08/11 15:04:36  bsmitc
- *	Added support for producing optimal output on the clustering progress
- *	dialog window
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
-
-/**
- * Title:        Bunch Version 1.2 Base<p>
- * Description:  Your description<p>
- * Copyright:    Copyright (c) 1999<p>
- * Company:      <p>
- * @author Brian Mitchell
- * @version
- */
 package bunch.stats;
 
 import java.io.*;
 
-public class StatsManager {
+public final class StatsManager {
 
     public static String logFileNm = "BunchStats.log";
     long mqCalculations = 0;

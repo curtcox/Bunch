@@ -4,7 +4,6 @@ import bunch.api.GaSelection;
 import bunch.model.Configuration;
 import bunch.model.Graph;
 import bunch.clustering.GAClusteringMethod;
-import bunch.ui.GAClusteringConfigurationDialog;
 
 /**
  * A subclass of Configuration with specific parameters used by the Genetic
@@ -12,7 +11,6 @@ import bunch.ui.GAClusteringConfigurationDialog;
  *
  * @author Brian Mitchell
  *
- * @see GAClusteringConfigurationDialog
  * @see GAClusteringMethod
  */
 public class GAConfiguration

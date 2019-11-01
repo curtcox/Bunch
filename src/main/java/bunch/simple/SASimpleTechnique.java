@@ -1,7 +1,5 @@
 package bunch.simple;
 
-import bunch.ui.SASimpleTechniqueDialog;
-
 import java.util.*;
 
 public class SASimpleTechnique extends SATechnique {
@@ -58,38 +56,6 @@ public class SASimpleTechnique extends SATechnique {
 
   public String getConfigDialogName()
   { return "bunch.ui.SASimpleTechniqueDialog"; }
-
-  public boolean configureUsingDialog(java.awt.Frame parent)
-  {
-    boolean rc = false;
-
-    SASimpleTechniqueDialog dlg = null;
-
-    try {
-      dlg = (SASimpleTechniqueDialog)java.beans.Beans.instantiate(null, getConfigDialogName());
-      dlg.setModal(true);
-      dlg.setTitle("Simulated Annealing Simple Technique Conifugration");
-      dlg.setConfiguration(this.getConfig());
-      //dlg.jbInit();
-      //dlg.pack();
-      //dlg.setSize(450, 350);
-    }
-    catch (Exception ex) {
-      ex.printStackTrace();
-      return false;
-    }
-
-
-    java.awt.Dimension dlgSize = dlg.getPreferredSize();
-    java.awt.Dimension frmSize = parent.getSize();
-    java.awt.Point loc = parent.getLocation();
-    dlg.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
-
-    dlg.setSATechnique(this);
-    dlg.setVisible(true);
-
-    return true;
-  }
 
   public boolean configure()
   {
