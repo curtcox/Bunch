@@ -338,7 +338,7 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
         }
       }
     }
-    return ((double)accum/(double)trials);
+    return (accum /(double)trials);
   }
 
   private void runClustering(String mdgFileName, boolean removeSpecialNodes) throws Exception {

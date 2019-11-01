@@ -216,7 +216,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
     Integer tmpAssoc;
     for(int z = 0; z < deps.length; z++) {
-      tmpAssoc = (Integer)normal.get(deps[z]);
+      tmpAssoc = normal.get(deps[z]);
       if (tmpAssoc == null) {
         deps[z] = -1;
         depsRemoveCount++;
@@ -226,7 +226,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     }
 
     for(int z = 0; z < beDeps.length; z++) {
-      tmpAssoc = (Integer)normal.get(beDeps[z]);
+      tmpAssoc = normal.get(beDeps[z]);
       if (tmpAssoc == null) {
         beDeps[z] = -1;
         beDeptsRemoveCount++;

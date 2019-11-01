@@ -546,11 +546,9 @@ public class BunchPassingAPITest {
         if(inputX.size() != inputY.size()) return -1.0;
 
         for(int i = 0; i < inputX.size(); i++) {
-            Double dxi = (Double)inputX.get(i);
-            double xi = dxi;
+            double xi = (Double)inputX.get(i);
             double xi2 = xi * xi;
-            Double Dyi = (Double)inputY.get(i);
-            double yi = Dyi;
+            double yi = (Double)inputY.get(i);
             double xy = xi*yi;
 
             Sxi2 += xi2;

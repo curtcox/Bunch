@@ -61,7 +61,7 @@ public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG) {
             currentNode.dWeights.put(dep, w);
             //System.out.println("Adding weight " + w);
         } else {
-            Integer wExisting = (Integer) currentNode.dWeights.get(dep);
+            Integer wExisting = currentNode.dWeights.get(dep);
             Integer wtemp = w + wExisting;
             currentNode.dWeights.put(dep, wtemp);
         }
@@ -70,7 +70,7 @@ public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG) {
             targetNode.backEdges.put(src, src);
             targetNode.beWeights.put(src, w);
         } else {
-            Integer wExisting = (Integer) targetNode.beWeights.get(src);
+            Integer wExisting = targetNode.beWeights.get(src);
             Integer wtemp = w + wExisting;
             targetNode.beWeights.put(src, wtemp);
         }

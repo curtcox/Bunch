@@ -70,7 +70,7 @@ public final class PrecisionRecallCalculator {
 
     //remove all the tree information
     for (int i =0; i<m_v_tested_modules_names.size();i++) {
-      String S_module_name = m_v_tested_modules_names.get(i).toString();
+      String S_module_name = m_v_tested_modules_names.get(i);
       Vector v_module_content = new Vector(m_v_tested_modules_content.get(i));
       found = false;
       for (int j=0;j<v_module_content.size() && !found;j++)

@@ -237,7 +237,7 @@ private String mode = "NAHC";
         }
       }
     }
-    return ((double)accum/(double)trials);
+    return (accum /(double)trials);
   }
 
   private void runClustering(String mdgFileName, boolean removeSpecialNodes) throws Exception {

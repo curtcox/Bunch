@@ -109,7 +109,7 @@ public Graph parse() {
         continue;
       }
 
-      currentNode = (ParserNode)nodes.get(nod);
+      currentNode = nodes.get(nod);
 
       //Node is not known yet, add it to the list
       if (currentNode == null) {
@@ -130,7 +130,7 @@ public Graph parse() {
             w = Integer.valueOf(st.nextToken());
 
         //See if the target node is known, if not add it to the list
-        targetNode = (ParserNode)nodes.get(target);
+        targetNode = nodes.get(target);
         if (targetNode == null) {
           targetNode = new ParserNode(target);
           nodes.put(target,targetNode);
