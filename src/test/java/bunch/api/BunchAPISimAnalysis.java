@@ -4,12 +4,10 @@ import org.junit.Test;
 
 import java.util.*;
 import java.io.*;
-import java.sql.*;
 
 public final class BunchAPISimAnalysis {
 
   private final String testID = "CIAT1";
-  private PreparedStatement writeRecord = null;
 
   private double pr1 = 0;
   private double es1 = 0;
@@ -26,23 +24,20 @@ public final class BunchAPISimAnalysis {
   }
 
 
-  public void randomHack(String baseFName, int count, int mcount) {
+  public void randomHack(String baseFName, int count, int mcount) throws IOException {
     Random r = new Random(System.currentTimeMillis());
 
-    for(int i = 0; i < count; i++)
-    {
+    for(int i = 0; i < count; i++) {
       int base = 30+ r.nextInt(10);
       Hashtable h = new Hashtable();
       h.clear();
 
-      for(int j = 0; j < base; j++)
-      {
+      for(int j = 0; j < base; j++) {
         String id = "SS_"+j;
         h.put(id,new Vector());
       }
 
-      for(int j = 0; j < mcount; j++)
-      {
+      for(int j = 0; j < mcount; j++) {
         int ssID = r.nextInt(base);
         String mName = "M"+j;
         String ssStrID = "SS_" + ssID;
@@ -55,10 +50,8 @@ public final class BunchAPISimAnalysis {
     }
   }
 
-  private void dumpRandomOutput(String baseFName, int id, Hashtable h) {
+  private void dumpRandomOutput(String baseFName, int id, Hashtable h) throws IOException {
     String outFileName = baseFName+id+".bunch";
-    try
-    {
       BufferedWriter writer = new BufferedWriter(new FileWriter(outFileName));
       Enumeration e = h.keys();
       while (e.hasMoreElements())
@@ -81,18 +74,11 @@ public final class BunchAPISimAnalysis {
       }
 
       writer.close();
-    }
-    catch(Exception ex)
-    {
-      ex.printStackTrace();
-    }
   }
 
 
-  public void genHackMDG(String baseFName, int howMany) {
+  public void genHackMDG(String baseFName, int howMany) throws IOException {
     Random r = new Random(System.currentTimeMillis());
-    try
-    {
       BufferedWriter writer = new BufferedWriter(new FileWriter(baseFName));
 
       for(long i = 0; i < (10*howMany); i++)
@@ -105,29 +91,14 @@ public final class BunchAPISimAnalysis {
         writer.write(M1+" "+M2+"\n");
       }
 
-      //for(int i = 0; i < howMany-1; i++)
-      //{
-      //  String M1 = "M"+i;
-      //  String M2 = "M"+(i+1);
-      //  writer.write(M1+" "+M2+"\n");
-      //}
-
       writer.close();
-    }
-    catch(Exception ex)
-    {
-      ex.printStackTrace();
-    }
   }
 
-  private void doTest()
-  {
+  @Test
+  public void doTest() {
     BunchGraph[] bgList = new BunchGraph[25];
 
-    //setDB();
-
-    for(int i = 0; i < 25; i++)
-    {
+    for(int i = 0; i < 25; i++) {
       Integer idx = i;
       String fn = "e:\\hack\\hack" + idx.toString() + ".bunch";
       bgList[i] = BunchGraphUtils.constructFromSil("e:\\hack\\hack",fn);
@@ -167,12 +138,10 @@ public final class BunchAPISimAnalysis {
     System.out.println("AVG(MC_NOS) = "+(mc1 / (double) total));
   }
 
-  private void doPrecisionRecall(String fn, BunchGraph[] bgList)
-  {
+  private void doPrecisionRecall(String fn, BunchGraph[] bgList) {
     int sz = bgList.length;
     for(int i = 0; i < sz; i++)
-      for(int j = i+1; j < sz; j++)
-      {
+      for(int j = i+1; j < sz; j++) {
         BunchGraph bg1 = bgList[i];
         BunchGraph bg2 = bgList[j];
         Hashtable ht1 = BunchGraphUtils.calcPR(bg1,bg2);
@@ -189,8 +158,7 @@ public final class BunchAPISimAnalysis {
       }
   }
 
-  private void doEdgeSim(String fn, BunchGraph[] bgList)
-  {
+  private void doEdgeSim(String fn, BunchGraph[] bgList) {
     int sz = bgList.length;
     for(int i = 0; i < sz; i++)
       for(int j = i+1; j < sz; j++)
@@ -212,12 +180,10 @@ public final class BunchAPISimAnalysis {
       }
   }
 
-  private void doMecl(String fn, BunchGraph[] bgList)
-  {
+  private void doMecl(String fn, BunchGraph[] bgList) {
     int sz = bgList.length;
     for(int i = 0; i < sz; i++)
-      for(int j = i+1; j < sz; j++)
-      {
+      for(int j = i+1; j < sz; j++) {
         BunchGraph bg1 = bgList[i];
         BunchGraph bg2 = bgList[j];
 
@@ -247,8 +213,7 @@ public final class BunchAPISimAnalysis {
         Double  meclValue = Math.max(d1,d2);
 
         System.out.print(fn+"("+i+","+j+") = ");
-        if(meclValue != null)
-        {
+        if(meclValue != null) {
           double dTmp = meclValue * 100.0;
           mc1 += dTmp;
           System.out.println((int)dTmp);
@@ -258,68 +223,5 @@ public final class BunchAPISimAnalysis {
       }
   }
 
-  public void setDB() {
-      try
-    {
-      Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-
-      Connection con = DriverManager.getConnection("jdbc:odbc:MyInventory");
-
-      String stmt = "insert into ClustResults values ( ? , ? , ? , ?)";
-      writeRecord = con.prepareStatement(stmt);
-
-      String delStmt = "delete from ClustResults where TESTID = \'" + testID + "\'";
-      Statement s = con.createStatement();
-      s.executeUpdate(delStmt);
-
-      //Connection con = DriverManager.getConnection("jdbc:odbc:MyInventory");
-      //Statement s = con.createStatement();
-
-      //ResultSet rs = s.executeQuery("select * from items");
-      //while(rs.next())
-      //  System.out.println("Title = " + rs.getString("Title")+","+rs.getString("Type")+","+rs.getString("DateObtained"));
-    }
-    catch(Exception e)
-    {
-      e.printStackTrace();
-    }
-  }
-
-  public void buildCmpDB(BunchGraph bg1, BunchGraph bg2)
-  {
-  }
-
-  public void echoCmpGraph(int idx, BunchGraph bg)
-  {
-    ArrayList bnList = new ArrayList(bg.getNodes());
-    int maxSize = bnList.size();
-
-    for(int i = 0; i < maxSize; i++)
-    {
-      BunchNode n1 = (BunchNode)bnList.get(i);
-      for(int j = i; j < maxSize; j++)
-      {
-        int result;
-
-        BunchNode n2 = (BunchNode)bnList.get(j);
-        if(n1.getCluster() == n2.getCluster())
-          result = 1;
-        else
-          result = 0;
-
-        try
-        {
-          writeRecord.setString(1,testID);
-          writeRecord.setString(2,n1.getName());
-          writeRecord.setString(3,n2.getName());
-          writeRecord.setInt(4,result);
-
-          writeRecord.executeUpdate();
-        }catch(Exception e)
-        { e.printStackTrace();  }
-
-      }
-    }
-  }
 
 }
