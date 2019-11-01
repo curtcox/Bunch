@@ -1,16 +1,12 @@
 package bunch.ui;
 
 import bunch.*;
-import bunch.api.Algorithm;
 import bunch.api.OutputFormat;
 import bunch.calculator.ObjectiveFunctionCalculator;
-import bunch.server.BunchSvrMsg;
 import bunch.clustering.*;
 import bunch.event.BunchEvent;
 import bunch.model.*;
 import bunch.parser.Parser;
-import bunch.serverio.Callback;
-import bunch.serverio.CallbackImpl;
 import bunch.stats.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -154,7 +150,6 @@ JLabel centralLabel_d = new JLabel();
 
   Vector serverVector;
   Vector activeServerVector;
-  CallbackImpl svrCallback;
   BunchEvent bevent = null;
   JLabel jLabel8 = new JLabel();
   JTextField UOWSzEF = new JTextField();
@@ -418,7 +413,7 @@ private void jbInit() throws IOException, ClassNotFoundException {
   includeDistSvrsPB.addActionListener(new java.awt.event.ActionListener() {
 
   public void actionPerformed(ActionEvent e) {
-      includeDistSvrsPB_actionPerformed(e);
+
     }
   });
 
@@ -1066,18 +1061,6 @@ public boolean getAdaptiveEnableFlag() {
 }
 
 /**
- * Returns the callback proxy object for the Bunch Server.  This object can
- * be used to "callback" the bunch server.  It is used in respose to distributed
- * events.
- *
- * @returns The object instance of the distributed server callback
- */
-public CallbackImpl getSvrCallback() {
-  throw new UnsupportedOperationException();
-//   return svrCallback;
-}
-
-/**
  * Called when the "Run" Button has been pressed. This will execute the
  * action selected in the list of actions that appears to the left of
  * the button
@@ -1131,110 +1114,8 @@ void runActionButton_d_actionPerformed(ActionEvent e) {
   graphOutput_d.setBasicName(fileBasicName_d);
   configureOptions();
 
-  if(distClustEnableCB.isSelected()) {
-    runDistributedClustering(method);
-  } else {
     runLocalClustering();
-  }
 }
-
-  void runDistributedClustering(String method) {
-      /**
-       * Get the distributed options
-       */
-      bunch.loadbalancer.Manager lbManager = new bunch.loadbalancer.Manager();
-      bunch.server.DistribInit diMsg = new bunch.server.DistribInit();
-      diMsg.theGraph = initialGraph_d;
-      diMsg.clusteringTechnique = method;
-      diMsg.objFunction = (String)ClusteringAlgEF.getSelectedItem();
-      diMsg.config = configuration_d;
-      diMsg.bp = preferences_d;
-
-      lbManager.baseUOWSz = this.getUOWSz();
-      lbManager.useAdaptiveAlg = this.getAdaptiveEnableFlag();
-
-      /**
-       * Process the server vector for each server.  Initialize each server
-       */
-      if(activeServerVector!= null)
-        for (int i = 0; i < activeServerVector.size(); i++) {
-          Binding b = (Binding)activeServerVector.elementAt(i);
-          diMsg.svrID = lbManager.createNewServer();
-          diMsg.svrName = b.getName();
-          diMsg.adaptiveEnabled = getAdaptiveEnableFlag();
-          byte[] so = bunch.util.BunchUtilities.toByteArray(diMsg);
-          if (so != null) {
-            BunchSvrMsg bsm = (BunchSvrMsg)b.getObject();
-            try{
-              boolean rc = bsm.invokeMessage("Init",so);
-            }catch(Exception ex)
-            {
-              JOptionPane.showMessageDialog(this,
-                      ex.toString(), "Error Initializing Server: " + b.getName(),
-                      JOptionPane.ERROR_MESSAGE);
-            }
-          }
-        }
-
-      /**
-       * Get ready to do the distributed clustering
-       */
-      try {
-        bevent = new BunchEvent();
-
-        DistributedHCClusteringMethod dcm = new DistributedHCClusteringMethod();
-
-        dcm.setEventObject(bevent);
-        dcm.setActiveServerVector(activeServerVector);
-
-        lbManager.baseUOWSz = this.getUOWSz();
-        lbManager.useAdaptiveAlg = this.getAdaptiveEnableFlag();
-        svrCallback.bevent = bevent;
-        svrCallback.lbManager = lbManager;
-
-        /**
-         * For now, only NAHC is supported in the distributed version
-         * of Bunch.  Set its configuration parameters to the default
-         * values. These can be overriden by the user on the GUI.
-         */
-        NAHCConfiguration hcc = (NAHCConfiguration)dcm.getConfiguration();
-
-        hcc.setNumOfIterations(1);
-        hcc.setThreshold(1.0);
-        hcc.setRandomizePct(100);
-        hcc.setMinPctToConsider(0);
-
-        ((GenericDistribHillClimbingClusteringMethod)dcm).setConfiguration(configuration_d);
-
-        /**
-         * Initialize the distributed clustering engine
-         */
-        dcm.initialize();
-        dcm.setGraph(initialGraph_d.cloneGraph());
-
-        /**
-         * Display the distributed clustering dialog box which will be used
-         * to manage the distributed clustering process
-         */
-        DistribClusteringProgressDlg dlg = null;
-        dlg = new DistribClusteringProgressDlg(this, "Distributed Clustering " + initialGraph_d.getNumberOfNodes() + " nodes...", true,dcm);
-
-        Dimension dlgSize = dlg.getPreferredSize();
-        Dimension frmSize = getSize();
-        Point loc = getLocation();
-        dlg.setLocation((frmSize.width - dlgSize.width) / 2 + loc.x, (frmSize.height - dlgSize.height) / 2 + loc.y);
-        dlg.setVisible(true);
-      }
-
-      /**
-       * Catch and notify the user of a distributed clustering error.
-       */
-      catch(Exception ex) {
-        JOptionPane.showMessageDialog(this,
-                ex.toString(), "Error Doing Distributed Clustering: " + ex.toString(),
-                JOptionPane.ERROR_MESSAGE);
-      }
-  }
 
   /**
    * We are using the standard, non distributed clustering engine
@@ -2146,98 +2027,6 @@ void queryNS_actionPerformed(ActionEvent e) {
 //        msg, "Naming Server Exception",
 //        JOptionPane.ERROR_MESSAGE);
 //  }
-}
-
-/**
- * Create the callback object for the distributed client.
- */
-private void CreateCallbackObj() {
-  try
-  {
-    svrCallback = new CallbackImpl();
-  }
-  catch(Exception excpt)
-  {
-    String msg = excpt.toString()+"\n\n\n\n";
-
-    JOptionPane.showMessageDialog(this,
-        msg, "Error Creating Callback Object",
-        JOptionPane.ERROR_MESSAGE);
-  }
-}
-
-/**
- * This method is a utility to report an exception to the user
- */
-public void ReportException(String title, Exception excpt) {
-  throw new UnsupportedOperationException();
-//         String msg = excpt.toString()+"\n\n\n\n";
-//
-//         JOptionPane.showMessageDialog(this,
-//              msg, title,
-//              JOptionPane.ERROR_MESSAGE);
-}
-
-/**
- * This method registers the distributed serves with the Bunch client.
- */
-void includeDistSvrsPB_actionPerformed(ActionEvent e) {
-  CreateCallbackObj();
-  int [] idx = serverList.getSelectedIndices();
-
-  DefaultListModel svrLM = (DefaultListModel)serverList.getModel();
-
-  /**
-   * Reset the active server vector
-   */
-  if(activeServerVector != null)
-    activeServerVector.removeAllElements();
-  else
-    activeServerVector = new Vector();
-
-  /**
-   * Deactivate all servers, this is useful if there are already servers
-   * activated from previous distributed clustering runs
-   */
-  deactivateAllServers();
-
-  /**
-   * Activate the servers specified by the user.
-   */
-  for(int i = 0; i < idx.length; i++)
-  {
-    String  lbMsg = (String)svrLM.elementAt(idx[i]);
-    lbMsg = "SELECTED--> " + lbMsg;
-    svrLM.setElementAt(lbMsg,idx[i]);
-    Binding b = (Binding)serverVector.elementAt(idx[i]);
-    activeServerVector.addElement(b);
-    BunchSvrMsg bsm = (BunchSvrMsg)b.getObject();
-
-    /**
-     * Try to activate the selected server, handle the exception if the
-     * activation attempt fails.
-     */
-    try{
-      bsm.registerCallback((Callback)svrCallback);
-    }catch (Exception excpt)
-    { ReportException("Error Registering Callback",excpt); }
-  }
-
-  /**
-   * Now that ther servers are activated, enable the deactivate button.
-   */
-  if(activeServerVector.size()>0)
-    deactivatePB.setEnabled(true);
-  else
-    deactivatePB.setEnabled(false);
-
-  serverList.clearSelection();
-
-  /**
-   * Setup the initial unit of work for the servers.
-   */
-  Integer uowSz = new Integer(UOWSzEF.getText());
-  svrCallback.baseUOWSz = uowSz.intValue();
 }
 
 /**

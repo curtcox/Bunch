@@ -44,26 +44,8 @@ public static void main(String[] args) throws Exception {
     if (args.length > 0) {
       redirectStandardErr(args[0]);
     }
-  setLookAndFeel();
-
-  if (args.length == 1) {
-    if (serverModeSpecified(args[0])) {
-      startInServerMode(args);
-    } else {
-      System.out.println("Bad argument, for BunchServer use -s or -server");
-    }
-  } else
+    setLookAndFeel();
     new Bunch().start();
-  }
-
-  private static boolean serverModeSpecified(String a) {
-    return (a.equalsIgnoreCase("-s")) || (a.equalsIgnoreCase("-server"));
-  }
-
-  private static void startInServerMode(String[] args) {
-    bunch.server.BunchServer theServer = new bunch.server.BunchServer();
-    theServer.setStartupParms(args,true);
-    theServer.start();
   }
 
   private static void setLookAndFeel() throws UnsupportedLookAndFeelException {
