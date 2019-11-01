@@ -337,8 +337,8 @@ public class BunchPassingAPITest {
             var cList = api.getClusters();
             for(int zz = 0; zz< cList.size(); zz++) {
                 println("LEVEL = "+zz);
-                Cluster c = (Cluster)cList.get(zz);
-                ArrayList alc = c.getClusteringDetails();
+                Cluster c = cList.get(zz);
+                List alc = c.getClusteringDetails();
 
                 long depth = c.getDepth();
                 double baseMQ = c.getBaseObjFnValue();
@@ -490,7 +490,7 @@ public class BunchPassingAPITest {
         }
     }
 
-    private Hashtable calcVelocityAccel(ArrayList input) {
+    private Hashtable calcVelocityAccel(List input) {
         Hashtable h = new Hashtable();
         ArrayList ax = new ArrayList();
 
@@ -534,9 +534,9 @@ public class BunchPassingAPITest {
         return h;
     }
 
-    private double calcSlope(ArrayList inputX, ArrayList inputY) {
-        double n = (double)inputX.size();
-        double SSxx = 0.0;
+    private double calcSlope(List inputX, List inputY) {
+        double n = inputX.size();
+        double SSxx;
         double SSxy = 0.0;
 
         double Sxi2 = 0.0;

@@ -63,7 +63,7 @@ public final class BunchGraph {
   }
 
   private Map<String,BunchNode> constructNodeHT() {
-    Map<String,BunchNode> h = new HashMap();
+    Map<String,BunchNode> h = new HashMap<>();
     h.clear();
     for (BunchNode theNode : nodeList) {
       String key = theNode.getName();
@@ -78,7 +78,7 @@ public final class BunchGraph {
     java.io.BufferedWriter out = new BufferedWriter(outF);
 
     for (BunchCluster bc : clusterList) {
-      List<BunchNode> clusterNodes = new ArrayList(bc.getClusterNodes());
+      List<BunchNode> clusterNodes = new ArrayList<>(bc.getClusterNodes());
       if (clusterNodes.size() == 0)
         continue;
       out.write("SS(" + bc.getName() + ")=");
@@ -89,7 +89,7 @@ public final class BunchGraph {
           out.write(", ");
       }
       if ((includeOverlapNodes) && (bc.getOverlapNodes() != null)) {
-        List<BunchNode> overlapNodes = new ArrayList(bc.getOverlapNodes());
+        List<BunchNode> overlapNodes = new ArrayList<>(bc.getOverlapNodes());
         if (overlapNodes.size() > 0)
           out.write(", ");
 
@@ -106,12 +106,12 @@ public final class BunchGraph {
   }
 
   private List<Node> getChildrenList(Node n) {
-    List<Node> a = new ArrayList();
+    List<Node> a = new ArrayList<>();
     if (!n.isCluster()) {
       a.add(n);
       return a;
     }
-    Stack<Node> s = new Stack();
+    Stack<Node> s = new Stack<>();
     s.push(n);
     while(!s.isEmpty()) {
       Node c = s.pop();
@@ -132,7 +132,7 @@ public final class BunchGraph {
 
     includesIsomorphicUpdates = true;
     Iterator<BunchNode> nodeI = getNodes().iterator();
-    List<BunchCluster> theClusters = new ArrayList(getClusters());
+    List<BunchCluster> theClusters = new ArrayList<>(getClusters());
     int adjustCount = 0;
     int nodeAdjustCount = 0;
     int totalCount = getNodes().size();
@@ -198,9 +198,9 @@ public final class BunchGraph {
   public boolean construct(Graph gBase) {
     Graph g = gBase.getDetailedGraph();
 
-    nodeList = new ArrayList();
-    edgeList = new ArrayList();
-    clusterList = new ArrayList();
+    nodeList = new ArrayList<>();
+    edgeList = new ArrayList<>();
+    clusterList = new ArrayList<>();
 
     Node [] graphNodes = g.getNodes();
     int  [] clustVector = g.getClusters();
@@ -232,7 +232,7 @@ public final class BunchGraph {
       List<BunchEdge> backList = null;
 
       if (deps != null)
-        forwardList = new ArrayList();
+        forwardList = new ArrayList<>();
 
       for(int j = 0; j < deps.length; j++) {
         int edgeWeight = weights[j];
@@ -244,7 +244,7 @@ public final class BunchGraph {
         forwardList.add(be);
       }
       if (backDeps != null)
-        backList = new ArrayList();
+        backList = new ArrayList<>();
 
       for(int j = 0; j < backDeps.length; j++) {
         int edgeWeight = backWeights[j];
@@ -276,7 +276,7 @@ public final class BunchGraph {
       String cname = nodeArray[i].getName();
       if (!nodeArray[i].isCluster) continue;
       Node [] members = nodeArray[i].children;
-      ArrayList memberList = new ArrayList();
+      List<BunchNode> memberList = new ArrayList<>();
 
       for (Node aMember : members) {
         List<Node> childrenList = getChildrenList(aMember);
@@ -319,7 +319,7 @@ public final class BunchGraph {
       println("Cluster ID:   " + bn.getCluster());
 
       if (bn.getDeps() != null) {
-        fdeps = new ArrayList(bn.getDeps());
+        fdeps = new ArrayList<>(bn.getDeps());
         for (BunchEdge be : fdeps) {
           String depName = be.getDestNode().getName();
           int weight = be.getWeight();
@@ -328,7 +328,7 @@ public final class BunchGraph {
       }
 
       if (bn.getBackDeps() != null) {
-        bdeps = new ArrayList(bn.getBackDeps());
+        bdeps = new ArrayList<>(bn.getBackDeps());
         for (BunchEdge be : bdeps) {
           String depName = be.getSrcNode().getName();
           int weight = be.getWeight();
@@ -340,13 +340,13 @@ public final class BunchGraph {
 
     //Now view as clusters
     println("Cluster Breakdown\n");
-    List<BunchCluster> clusts = new ArrayList(this.getClusters());
+    List<BunchCluster> clusts = new ArrayList<>(this.getClusters());
     for (BunchCluster bc : clusts) {
       println("Cluster id:   " + bc.getID());
       println("Custer name:  " + bc.getName());
       println("Cluster size: " + bc.getSize());
 
-      List<BunchNode> members = new ArrayList(bc.getClusterNodes());
+      List<BunchNode> members = new ArrayList<>(bc.getClusterNodes());
       for (BunchNode bn : members) {
         println("   --> " + bn.getName() + "   (" + bn.getCluster() + ")");
       }

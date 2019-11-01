@@ -10,37 +10,17 @@ public final class PrecisionRecallCalculator {
 
   private Double S_precision;
   private Double S_recall;
-  private Vector m_v_expert_modules_names;
-  private Vector m_v_expert_modules_content;
-  private Vector m_v_tested_modules_names;
-  private Vector m_v_tested_modules_content;
+  private Vector<String> m_v_expert_modules_names = new Vector<>();
+  private Vector<Vector> m_v_expert_modules_content = new Vector<>();
+  private Vector<String> m_v_tested_modules_names = new Vector<>();
+  private Vector<Vector> m_v_tested_modules_content = new Vector<>();
 
   public PrecisionRecallCalculator(String expertFileName, String testFileName) {
     m_S_filename1= expertFileName;
     m_S_filename2= testFileName;
-    m_v_expert_modules_names = new Vector();
-    m_v_expert_modules_content = new Vector();
-    m_v_tested_modules_names = new Vector();
-    m_v_tested_modules_content = new Vector();
     ReadBunch();
     compare();
   }
-
-  /********
-  public static void main(String args[])
-  {
-    System.out.println("Start...");
-    if (args.length<2)
-      System.exit(1);
-
-    PaRCalc_main pr = new PaRCalc_main(args[0], args[1]);
-
-    pr.ReadBunch();
-    pr.compare();
-
-  }
-
-  ***********/
 
   public Double get_precision() {
     return S_precision;
@@ -56,29 +36,23 @@ public final class PrecisionRecallCalculator {
     S_precision = cp.get_precision();
     S_recall = cp.get_recall();
 
-    //System.out.println("P: "+S_precision+"\nR: "+S_recall);
   }
 
   private void ReadBunch() {
-    Hashtable ht1 = new Hashtable();
     GBunchRW bunch1= new GBunchRW(m_S_filename1);
 
-    ht1 = bunch1.read();
+    bunch1.read();
 
     m_v_expert_modules_names = bunch1.getModuleNames();
     m_v_expert_modules_content = bunch1.getModulesContent();
 
     //remove all the tree information
-    boolean found = false;
-    for (int i =0; i<m_v_expert_modules_names.size();i++)
-    {
-      String S_module_name = m_v_expert_modules_names.get(i).toString();
-      Vector v_module_content = new Vector((Vector)m_v_expert_modules_content.get(i));
+    boolean found;
+    for (int i =0; i<m_v_expert_modules_names.size();i++) {
+      Vector v_module_content = new Vector(m_v_expert_modules_content.get(i));
       found = false;
-      for (int j=0;j<v_module_content.size() && !found;j++)
-      {
-        if (m_v_expert_modules_names.contains(v_module_content.get(j)))
-        {
+      for (int j=0;j<v_module_content.size() && !found;j++) {
+        if (m_v_expert_modules_names.contains(v_module_content.get(j))) {
           m_v_expert_modules_names.remove(i);
           m_v_expert_modules_content.remove(i);
           i--;
@@ -87,23 +61,18 @@ public final class PrecisionRecallCalculator {
       }
     }
 
-    //System.out.println(m_v_expert_modules_names);
-    //System.out.println(m_v_expert_modules_content);
-
     //read the tested clusters
-    Hashtable ht2 = new Hashtable();
     GBunchRW bunch2= new GBunchRW(m_S_filename2);
 
-    ht2 = bunch2.read();
+    bunch2.read();
 
     m_v_tested_modules_names = bunch2.getModuleNames();
     m_v_tested_modules_content = bunch2.getModulesContent();
 
     //remove all the tree information
-    for (int i =0; i<m_v_tested_modules_names.size();i++)
-    {
+    for (int i =0; i<m_v_tested_modules_names.size();i++) {
       String S_module_name = m_v_tested_modules_names.get(i).toString();
-      Vector v_module_content = new Vector((Vector)m_v_tested_modules_content.get(i));
+      Vector v_module_content = new Vector(m_v_tested_modules_content.get(i));
       found = false;
       for (int j=0;j<v_module_content.size() && !found;j++)
       {
@@ -117,15 +86,9 @@ public final class PrecisionRecallCalculator {
       }
     }
 
-    //System.out.println(m_v_tested_modules_names);
-    //System.out.println(m_v_tested_modules_content);
-
   }
 
 }
-
-
-
 
 
 final class Compare {
@@ -141,15 +104,13 @@ final class Compare {
     return m_d_recall;
   }
 
-  public Compare(Vector orig, Vector newname, Vector newnumber)
-  {
+  public Compare(Vector orig, Vector newname, Vector newnumber) {
     // used to get the index of the original vars
     Hashtable m_ht_vars_orig = new Hashtable();
     // used to get the index of the new vars
     Hashtable m_ht_vars_new = new Hashtable();
-    m_v_original_distance = new Vector(orig);
-    m_v_new_distance_name = new Vector(newname);
-    Vector m_v_new_distance_number = new Vector(newnumber);
+    m_v_original_distance = new Vector<>(orig);
+    m_v_new_distance_name = new Vector<>(newname);
     m_d_recall =0.0;
     m_d_precision=0.0;
   }

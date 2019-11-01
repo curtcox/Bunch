@@ -17,7 +17,7 @@ public final class BunchCluster {
     nodeHT = null;
     //inform member nodes that they are a primary member of this cluster
     for (BunchNode node : nodes) {
-      BunchNode bn = (BunchNode) node;
+      BunchNode bn = node;
       bn.setMemberCluster(this);
     }
   }
@@ -27,10 +27,10 @@ public final class BunchCluster {
     return clusterNodes.size();
   }
 
-  public Collection getClusterNodes()
+  public Collection<BunchNode> getClusterNodes()
   { return clusterNodes;  }
 
-  public Collection getOverlapNodes()
+  public Collection<BunchNode> getOverlapNodes()
   { return overlapNodes;  }
 
   public int getOverlapNodeCount() {
@@ -48,25 +48,11 @@ public final class BunchCluster {
     nodeHT = null;
   }
 
-  public void addNode(BunchNode bn) {
-    bn.setMemberCluster(this);
-    clusterNodes.add(bn);
-  }
-
-  public void removeNode(BunchNode bn) {
-    bn.setMemberCluster(null);
-    clusterNodes.remove(bn);
-  }
-
   public int getID()
   { return clusterID; }
 
   public String getName()
   { return clusterName; }
-
-  public boolean containsNode(BunchNode bn) {
-    return containsNode(bn.getName());
-  }
 
   public boolean containsNode(String nodeName) {
     if(nodeHT == null)

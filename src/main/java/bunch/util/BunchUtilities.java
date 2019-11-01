@@ -1,10 +1,7 @@
 package bunch.util;
 
-import java.io.Serializable;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 import java.util.*;
 
@@ -15,144 +12,41 @@ public final class BunchUtilities {
 
 private final static double defaultPrecision = 0.0001;
 
-/**
- *		Deserialize an object from a byte array
- */
-public static Object fromByteArray(byte[] byteArray) {
-   if (byteArray == null || byteArray.length == 0) {
-  	   return null;
-   }
-
-	try {
-			  ByteArrayInputStream bai = new ByteArrayInputStream(byteArray);
-			  ObjectInputStream oi = new ObjectInputStream(bai);
-
-			  return oi.readObject();
-	}
-	catch (Exception e) {
-		e.printStackTrace();
-		return null;
-	}
-}
-
-/**
- *    Serialize an object into a byte array
- */
-public static byte[] toByteArray(Serializable obj) {
-	if (obj == null) {
-  	return null;
-  }
-
-	try {
-			  ByteArrayOutputStream bao = new ByteArrayOutputStream();
-			  ObjectOutputStream oo = new ObjectOutputStream(bao);
-
-			  oo.writeObject(obj);
-			  oo.flush();
-
-			  return bao.toByteArray();
-	}
-	catch (Exception e) {
-	    throw new RuntimeException(e);
-	}
-}
-
-public static String DelimitString(String input, int rowWidth) {
-   System.out.println(input);
-   StringBuilder sb = new StringBuilder(input);
-   int totalLen = input.length();
-   String out = "";
-   int pos = 0;
-
-   while(pos < totalLen)
-   {
-      int getSize = Math.min(rowWidth,(totalLen-pos));
-      int newOffset = pos+getSize;
-      while(newOffset < totalLen)
-      {
-         char c = sb.charAt(newOffset);
-         if((c == ' ') || (c == '\t') || (c == '\n') || (c == '\r'))
-            break;
-         else
-            newOffset++;
-      }
-
-      out += sb.substring(pos,newOffset) + "\n";
-      pos+=newOffset+1;
-   }
-
-   return out;
-}
-
-
-public static boolean compareEqual(double a, double b) {
-  int ia = (int)(a/defaultPrecision);
-  int ib = (int)(b/defaultPrecision);
-
-  return (ia == ib);
-}
-
-public static boolean compareGreater(double a, double b)
-{
+public static boolean compareGreater(double a, double b) {
   int ia = (int)(a/defaultPrecision);
   int ib = (int)(b/defaultPrecision);
 
   return (ia > ib);
 }
 
-public static boolean compareGreaterEqual(double a, double b)
-{
+public static boolean compareGreaterEqual(double a, double b) {
   int ia = (int)(a/defaultPrecision);
   int ib = (int)(b/defaultPrecision);
 
   return (ia >= ib);
 }
 
-public static String getLocalHostName()
-{
-  try
-  {
-    String sname = java.net.InetAddress.getLocalHost().getHostName();
-
-    //may be a short name or a fully qualified name...only want the host
-    //name part
-
-    java.util.StringTokenizer st = new java.util.StringTokenizer(sname,".");
-
-    //only interested in the first token as the host name
-
-
-      return st.nextToken();
-
-  }
-  catch(Exception ex)
-  {
-    return "bSvrLocal";
-  }
-}
-
-public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
-{
-  ArrayList al = new ArrayList(bunchMDG.getMDGEdges());
-  Hashtable nodes = new Hashtable();
+public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG) {
+  var al = new ArrayList<>(bunchMDG.getMDGEdges());
+  Hashtable<String,ParserNode> nodes = new Hashtable<>();
 
     for (Object o : al) {
         bunch.api.BunchMDGDependency bmd = (bunch.api.BunchMDGDependency) o;
 
-        ParserNode currentNode = null;
-        ParserNode targetNode = null;
+        ParserNode currentNode;
+        ParserNode targetNode;
 
         if (bmd.getSrcNode().equals(bmd.getDestNode()))
             continue;
 
-        currentNode = (ParserNode) nodes.get(bmd.getSrcNode());
+        currentNode = nodes.get(bmd.getSrcNode());
         //Node is not known yet, add it to the list
         if (currentNode == null) {
             currentNode = new ParserNode(bmd.getSrcNode());
             nodes.put(bmd.getSrcNode(), currentNode);
         }
 
-        targetNode = (ParserNode) nodes.get(bmd.getDestNode());
+        targetNode = nodes.get(bmd.getDestNode());
         //Node is not known yet, add it to the list
         if (targetNode == null) {
             targetNode = new ParserNode(bmd.getDestNode());
@@ -191,7 +85,7 @@ public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
 
   //now deal with Bunch Format -- Generate bunch graph object
   int sz = nodes.size();
-  Hashtable nameTable = new Hashtable();
+  Hashtable<String,Integer> nameTable = new Hashtable<>();
 
   //build temporary name to ID mapping table
   Object [] oa = nodes.keySet().toArray();
@@ -212,7 +106,7 @@ public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
     nodeList[i]  = n;
     ParserNode p = (ParserNode)nl[i];
     n.setName(p.name);
-    Integer nid = (Integer)nameTable.get(p.name);
+    Integer nid = nameTable.get(p.name);
     n.nodeID = nid;
     n.dependencies = ht2ArrayFromKey(nameTable,p.dependencies);
     n.weights = ht2ArrayValFromKey(p.dWeights);

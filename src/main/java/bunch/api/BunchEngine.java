@@ -196,7 +196,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
                 +centrals.length+libraries.length)];
   int j=0;
 
-  Hashtable normal = new Hashtable();
+  Hashtable<Integer,Integer> normal = new Hashtable<>();
   //build new node list without omnipresent modules
   for (Node node : originalList) {
     if (node.getType() == Node.NORMAL) {
@@ -283,17 +283,11 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
   private Map getDefaultSpecialNodes(String graphName, double threshold) {
     try {
-      Hashtable h = new Hashtable();
-      Hashtable centrals = new Hashtable();
-      Hashtable clients = new Hashtable();
-      Hashtable suppliers = new Hashtable();
-      Hashtable libraries = new Hashtable();
-
-      //=====================================================
-      //Construct the graph
-      //=====================================================
-      BunchPreferences prefs =
-        (BunchPreferences)(Beans.instantiate(null, "bunch.BunchPreferences"));
+      Hashtable<Key,Collection<String>> h = new Hashtable<>();
+      Hashtable<String,String> centrals = new Hashtable<>();
+      Hashtable<String,String> clients = new Hashtable<>();
+      Hashtable<String,String> suppliers = new Hashtable<>();
+      Hashtable<String,String> libraries = new Hashtable<>();
 
       String parserClass = "dependency";
       if(graphName.endsWith(".gxl") || graphName.endsWith(".GXL"))
@@ -307,7 +301,6 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
       //find libraries
       for (Node node1 : nodeList) {
-        String nname = node1.getName();
         if ((node1.getDependencies() == null || node1.getDependencies().length == 0)
                 && !clients.containsKey(node1.getName())
                 && !suppliers.containsKey(node1.getName())
@@ -364,7 +357,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       }
 
       //looking for central nodes (nodes that are clients and suppliers
-      ArrayList clientsAL = new ArrayList(clients.values());
+      List<String> clientsAL = new ArrayList<>(clients.values());
 
       for (Object o : clientsAL) {
         String client = (String) o;
@@ -392,9 +385,9 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     }
   }
 
-  private Hashtable getSpecialModulesFromProperties() {
-    Hashtable h = new Hashtable();
-    ArrayList emptyList = new ArrayList();
+  private Hashtable<Key,Collection<String>> getSpecialModulesFromProperties() {
+    Hashtable<Key,Collection<String>> h = new Hashtable<>();
+    List<String> emptyList = new ArrayList<>();
     boolean   containsSpecial = false;
 
     emptyList.clear();
@@ -431,7 +424,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   }
 
   private void initClustering() throws IOException, ClassNotFoundException {
-    clusterList = new ArrayList();
+    clusterList = new ArrayList<>();
     loadPreferences();
     constructGraph();
     handleUserDirectedClustering();
@@ -441,22 +434,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     setUpCalculator();
     setupClusteringMethod();
     StatsManager.getInstance();
-    initCallback();
-    initTimer();
     setGraphOutputDriver();
-  }
-
-  private void initTimer() {
-    //see if there is a timeout requested
-    Integer toTime = bunchArgs.TIMEOUT_TIME;
-  }
-
-  private void initCallback() {
-    //see if a callback class is setup, if so save a reference to the class
-    Integer iTmp = bunchArgs.callbackObjectFrequency;
-    int callbackFrequency;
-    if(iTmp != null)
-      callbackFrequency = iTmp;
   }
 
   private void setIsClusterTree() {
@@ -773,9 +751,9 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       results.MEDIAN_LEVEL_GRAPH = getMedianLevelNumber();
 
       //now handle errors & warnings
-    results.ERROR_HASHTABLE = new Hashtable();
+    results.ERROR_HASHTABLE = new Hashtable<>();
 
-      Map warningHT = new Hashtable();
+      Map<Key,Integer> warningHT = new Hashtable<>();
       if (reflexiveEdgeCount > 0) {
         warningHT.put(REFLEXIVE_EDGE_COUNT,reflexiveEdgeCount);
       }
@@ -784,7 +762,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       Map []resultClusters = new Hashtable[clusterList.size()];
 
       for(int i = 0; i < clusterList.size(); i++) {
-        Hashtable lvlHT = new Hashtable();
+        Hashtable<Key,Number> lvlHT = new Hashtable<>();
         lvlHT.clear();
 
         Cluster c = clusterList.get(i);

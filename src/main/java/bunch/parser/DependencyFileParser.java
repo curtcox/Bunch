@@ -72,8 +72,8 @@ public boolean hasReflexiveEdges()
  */
 public Graph parse() {
   reflexiveEdges = 0;
-  Hashtable nodes = new Hashtable();
-  Graph retGraph = null;
+  Hashtable<String,ParserNode> nodes = new Hashtable<>();
+  Graph retGraph;
 
   try {
     //read all the information from the file

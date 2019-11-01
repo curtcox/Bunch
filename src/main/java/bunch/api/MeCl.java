@@ -11,7 +11,7 @@ final class MeCl {
   public MeCl(BunchGraph g1, BunchGraph g2) {
     A = g1;
     B = g2;
-    edgeA = new HashMap();
+    edgeA = new HashMap<>();
     edgeA.clear();
     meclValue = 0;
   }
@@ -49,10 +49,10 @@ final class MeCl {
     return tally;
   }
 
-  private long mergeSubCluster(HashMap Ccollected, String key, ArrayList value) {
+  private long mergeSubCluster(HashMap<String,List> Ccollected, String key, List<String> value) {
     long tally = 0;
 
-    ArrayList currentSubCluster = (ArrayList)Ccollected.get(key);
+    List currentSubCluster = Ccollected.get(key);
     if(currentSubCluster == null) {
       Ccollected.put(key,value);
       return 0;
@@ -98,10 +98,10 @@ final class MeCl {
   }
 
   private HashMap determineSubClusters() {
-    HashMap Ca = new HashMap();
+    HashMap<String,Map> Ca = new HashMap<>();
 
     for (BunchCluster bunchCluster : A.getClusters()) {
-      HashMap subClustersA = new HashMap();
+      HashMap<String,List> subClustersA = new HashMap<>();
       BunchCluster Ai = bunchCluster;
       for (Object o : Ai.getClusterNodes()) {
         BunchNode bnInA = (BunchNode) o;
@@ -114,7 +114,7 @@ final class MeCl {
 
         //Now add the current node to the sub cluster
         //hash map for the current cluster in a
-        List members = (ArrayList) subClustersA.get(bnInBClusterName);
+        List members = subClustersA.get(bnInBClusterName);
         if (members == null) {
           members = new ArrayList();
           subClustersA.put(bnInBClusterName, members);

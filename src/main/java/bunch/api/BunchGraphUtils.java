@@ -52,7 +52,7 @@ public final class BunchGraphUtils {
 
 
   public static Hashtable calcPR(BunchGraph expert, BunchGraph cluster) {
-    Hashtable results = new Hashtable();
+    Hashtable<String,Double> results = new Hashtable<>();
     results.clear();
     BunchGraphPR prUtil = new BunchGraphPR(expert,cluster);
     boolean rc = prUtil.run();
@@ -74,7 +74,7 @@ public final class BunchGraphUtils {
   }
 
   public static Hashtable   getMeClMeasurement(BunchGraph g1, BunchGraph g2) {
-    Hashtable h = new Hashtable();
+    Hashtable<String,Number> h = new Hashtable<>();
     MeCl dist = new MeCl(g1,g2);
     long ret = dist.run();
     h.put(MECL_VALUE, ret);
@@ -87,10 +87,8 @@ public final class BunchGraphUtils {
   public static long calcSimEdges(BunchGraph g1, BunchGraph g2) {
     long matches = 0;
     long total = 0;
-    HashMap g1Lookup = new HashMap();
-    HashMap g2Lookup = new HashMap();
-    g1Lookup.clear();
-    g2Lookup.clear();
+    HashMap<String,BunchEdge> g1Lookup = new HashMap<>();
+    HashMap<String,BunchEdge> g2Lookup = new HashMap<>();
 
     Iterator load = g1.getEdges().iterator();
     while(load.hasNext()) {
@@ -110,7 +108,7 @@ public final class BunchGraphUtils {
       total++;
       BunchEdge be1 = bunchEdge;
       String key = (be1.getSrcNode().getName() + be1.getDestNode().getName());
-      BunchEdge be2 = (BunchEdge) g2Lookup.get(key);
+      BunchEdge be2 = g2Lookup.get(key);
 
       boolean be1InSame;
       //Investigate be1 to see if in same cluster
@@ -142,21 +140,19 @@ public final class BunchGraphUtils {
   public static double calcEdgeSimiliarities(BunchGraph g1, BunchGraph g2) {
     long matches = 0;
     long total = 0;
-    HashMap g1Lookup = new HashMap();
-    HashMap g2Lookup = new HashMap();
-    g1Lookup.clear();
-    g2Lookup.clear();
+    HashMap<String,BunchEdge> g1Lookup = new HashMap<>();
+    HashMap<String,BunchEdge> g2Lookup = new HashMap<>();
 
-    Iterator load = g1.getEdges().iterator();
+    var load = g1.getEdges().iterator();
     while(load.hasNext()) {
-      BunchEdge be = (BunchEdge)load.next();
+      BunchEdge be = load.next();
       String    key = (be.getSrcNode().getName() + be.getDestNode().getName());
       g1Lookup.put(key,be);
     }
 
     load = g2.getEdges().iterator();
     while(load.hasNext()) {
-      BunchEdge be = (BunchEdge)load.next();
+      BunchEdge be = load.next();
       String    key = (be.getSrcNode().getName() + be.getDestNode().getName());
       g2Lookup.put(key,be);
     }
@@ -165,10 +161,9 @@ public final class BunchGraphUtils {
       total++;
       BunchEdge be1 = bunchEdge;
       String key = (be1.getSrcNode().getName() + be1.getDestNode().getName());
-      BunchEdge be2 = (BunchEdge) g2Lookup.get(key);
+      BunchEdge be2 = g2Lookup.get(key);
 
       boolean be1InSame;
-      boolean be2InSame;
       //Investigate be1 to see if in same cluster
       be1InSame = (be1.getSrcNode().getCluster() == be1.getDestNode().getCluster());
       if (be1InSame) {

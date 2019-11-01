@@ -10,14 +10,14 @@ public final class BunchNode {
   private final boolean isNodeCluster;
   private List<BunchEdge>   deps;
   private List<BunchEdge>   backDeps;
-  private final HashMap     clusterMemberships;
+  private final HashMap<String,BunchCluster>     clusterMemberships;
   static public final int NOT_A_MEMBER_OF_A_CLUSTER = -1;
 
   public BunchNode(String name, int index, int cluster,  boolean isCluster) {
     nodeName = name;
     nodeCluster = cluster;
     isNodeCluster = isCluster;
-    clusterMemberships = new HashMap();
+    clusterMemberships = new HashMap<>();
   }
 
   public void subscribeToCluster(BunchCluster bc) {

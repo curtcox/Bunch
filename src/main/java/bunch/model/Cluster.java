@@ -2,6 +2,7 @@ package bunch.model;
 
 import java.util.Hashtable;
 import java.util.ArrayList;
+import java.util.List;
 
 import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.stats.*;
@@ -54,7 +55,7 @@ import bunch.stats.*;
 
   private boolean isDirty = true;
   private long     depth = 0;
-  private ArrayList cDetails = null;
+  private List<Double> cDetails;
   //-----------------------------------------------------
 
   private ObjectiveFunctionCalculator calculator = null;
@@ -67,7 +68,7 @@ import bunch.stats.*;
     lastMv[0]=lastMv[1]=lastMv[2] = -1;
     depth = 0;
     if(stats.getCollectClusteringDetails())
-      cDetails = new ArrayList();
+      cDetails = new ArrayList<>();
   }
 
   /**
@@ -80,7 +81,7 @@ import bunch.stats.*;
       setClusterVector(cv);
       initCalculator();
       if(stats.getCollectClusteringDetails())
-        cDetails = new ArrayList();
+        cDetails = new ArrayList<>();
 
       baseObjFnValue = getObjFnValue();
       baseNumClusters = getNumClusters();
@@ -93,7 +94,7 @@ import bunch.stats.*;
   public long getNumMQEvaluations()
   { return numMQEvaluations; }
 
-  public ArrayList getClusteringDetails()
+  public List getClusteringDetails()
   { return cDetails; }
   /**
    * Returns the current depth of the cluster.  The depth is the number of times
@@ -345,7 +346,7 @@ import bunch.stats.*;
       baseCluster = c.baseCluster;
 
       if(c.cDetails != null)
-        cDetails = (ArrayList)c.cDetails.clone();
+        cDetails = new ArrayList<>(c.cDetails);
 
       converged = c.converged;
       validMove = c.validMove;
@@ -482,9 +483,8 @@ import bunch.stats.*;
    * @returns An array containing the names (actuall ID's) of the clusters in
    *          the partition of the MDG.
    */
-  public int[] getClusterNames()
-  {
-     Hashtable usedClusts = new Hashtable();
+  public int[] getClusterNames() {
+     Hashtable<Integer,Integer> usedClusts = new Hashtable<>();
 
      int[] clusts = new int[clusterVector.length];
      int name;
@@ -499,8 +499,7 @@ import bunch.stats.*;
        name = clusterVector[i];
        Integer iNm = name;
 
-       if(!usedClusts.containsKey(iNm))
-       {
+       if(!usedClusts.containsKey(iNm)) {
            clusts[numClusts] = name;
            numClusts++;
            usedClusts.put(iNm,iNm);

@@ -48,7 +48,7 @@ public Graph parse() {
   int linecount = 0;
   Node[] nodes = graph_d.getNodes();
   int[] clusters = graph_d.getClusters();
-  Vector clusterNames = new Vector();
+  Vector<String> clusterNames = new Vector<>();
 
   try {
       while (true) {

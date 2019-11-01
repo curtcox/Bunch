@@ -41,7 +41,7 @@ private void writeHeader() throws IOException {
  * This method handles dumping the special modules - omnipresent & libraries
  */
 private void writeSpecialModules(Node[] originalNodes) throws IOException {
-  ArrayList deadList = new ArrayList();
+  List<Node> deadList = new ArrayList<>();
   deadList.clear();
 
   if (originalNodes != null) {
@@ -260,7 +260,7 @@ private void generateClusters(Graph cLvlG) throws IOException {
  * in the cluster
  */
 private void genChildrenFromOneLevel(Graph cLvlG) throws IOException {
-  Graph nextLvlG = null;
+  Graph nextLvlG;
 
     if((cLvlG.getClusterNames().length <= 1)&&(cLvlG.getPreviousLevelGraph()!=null)) {
     cLvlG = cLvlG.getPreviousLevelGraph();
@@ -312,7 +312,7 @@ private String findStrongestNode(Node n) {
 
   Vector nodeV = new Vector();
 
-    LinkedList l = new LinkedList();
+    LinkedList<Node> l = new LinkedList<>();
   l.clear();
   nodeV.clear();
 
@@ -320,7 +320,7 @@ private String findStrongestNode(Node n) {
   l.addLast(n);
 
     while (!l.isEmpty()) {
-    Node curr = (Node)l.removeFirst();
+    Node curr = l.removeFirst();
 
         if (curr.isCluster()) {
       Node[] children = curr.children;
@@ -396,13 +396,12 @@ private String findStrongestNode(Vector v) {
  * with the children of the node.  They may be nested so we will need to recurse
  */
 private void echoNestedChildren(Node n, Vector v) {
-    Stack s = new Stack();
+    Stack<Node> s = new Stack<>();
   boolean firstNode = true;
 
     s.push(n);
-  while(!s.isEmpty())
-  {
-    Node tmpNode = (Node)s.pop();
+  while(!s.isEmpty()) {
+    Node tmpNode = s.pop();
 
       if(tmpNode.children==null)
       continue;
@@ -411,8 +410,7 @@ private void echoNestedChildren(Node n, Vector v) {
       Node childNode = tmpNode.children[i];
       if(childNode.isCluster())
         s.push(childNode);
-      else
-      {
+      else {
         v.addElement(childNode); //writer_d.write(childNode.getName());
       }
     }
