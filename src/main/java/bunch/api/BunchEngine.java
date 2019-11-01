@@ -32,7 +32,6 @@ final class BunchEngine {
   private long totalTime=0;
   private Cluster baseCluster;
   private List<Cluster> clusterList;
-  private javax.swing.Timer timeoutTimer;
   private int reflexiveEdgeCount = 0;
 
   private Double precision;
@@ -450,8 +449,6 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   private void initTimer() {
     //see if there is a timeout requested
     Integer toTime = bunchArgs.TIMEOUT_TIME;
-    if(toTime != null)
-      timeoutTimer = new javax.swing.Timer(toTime,new TimeoutTimer());
   }
 
   private void initCallback() {
@@ -833,26 +830,11 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     throw new IllegalArgumentException();
   }
 
-    private void executeClusteringEngine() {
-      long startTime = System.currentTimeMillis();
-
-        if(timeoutTimer != null)
-          timeoutTimer.start();
-
-        clusteringMethod_d.run();
-      long endTime = System.currentTimeMillis();
-        totalTime += (endTime - startTime);
-
-        if(timeoutTimer != null)
-          timeoutTimer.stop();
-
-      }
-
-//********************
-// For handling timeouts
-//
-static class TimeoutTimer implements java.awt.event.ActionListener {
-    public void actionPerformed(java.awt.event.ActionEvent e) { }
-}
+  private void executeClusteringEngine() {
+    long startTime = System.currentTimeMillis();
+    clusteringMethod_d.run();
+    long endTime = System.currentTimeMillis();
+    totalTime += (endTime - startTime);
+  }
 
 }
