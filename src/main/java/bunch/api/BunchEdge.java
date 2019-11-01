@@ -1,6 +1,6 @@
 package bunch.api;
 
-public final class BunchEdge {
+final class BunchEdge {
 
   private final int weight;
   private final BunchNode srcNode;

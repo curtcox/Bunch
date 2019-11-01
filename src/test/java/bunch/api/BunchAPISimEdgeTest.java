@@ -5,22 +5,22 @@ import java.util.*;
 import static bunch.api.Algorithm.HILL_CLIMBING;
 import static bunch.api.OutputFormat.TEXT;
 
-public final class BunchAPISimEdgeTest {
+final class BunchAPISimEdgeTest {
 
-long totalNodes;
-long totalAdjustments;
-ArrayList bunchGraphs = null;
+private long totalNodes;
+private long totalAdjustments;
+private ArrayList bunchGraphs = null;
 
-int [] esfreq = new int[11];
-int [] esIfreq = new int [11];
-int [] prfreq = new int[11];
-int [] prIfreq = new int [11];
-int [] meclFreq = new int [11];
-int [] meclIFreq = new int[11];
+private final int [] esfreq = new int[11];
+private final int [] esIfreq = new int [11];
+private final int [] prfreq = new int[11];
+private final int [] prIfreq = new int [11];
+private final int [] meclFreq = new int [11];
+private final int [] meclIFreq = new int[11];
 
-String mode = "NAHC";
+private String mode = "NAHC";
 
-  public BunchAPISimEdgeTest() throws Exception {
+  private BunchAPISimEdgeTest() throws Exception {
     String graphName = "d:\\linux\\linux"; //"e:\\expir\\grappa"; //"e:\\linux\\linux"; //"e:\\expir\\compiler";
     mode = "NAHC";
 
@@ -30,13 +30,12 @@ String mode = "NAHC";
     runTest(graphName, true);
   }
 
-  public void runTest(String graphName, boolean removeSpecial) throws Exception {
+  private void runTest(String graphName, boolean removeSpecial) throws Exception {
     totalNodes = totalAdjustments = 0;
     bunchGraphs = new ArrayList();
-    boolean removeSpecialModules = removeSpecial;
 
     for(int i = 0; i < 10; i++) {
-      this.runClustering(graphName, removeSpecialModules);
+      this.runClustering(graphName, removeSpecial);
       //this.runClustering("e:\\linux\\linux");
     }
     double avgValue = expirPR(prfreq);
@@ -49,7 +48,7 @@ String mode = "NAHC";
     double avgIsomorphicCount = expirIsomorphicCount();
 
     //writeHeader();
-    if(removeSpecial == false)
+    if(!removeSpecial)
     {
       dumpFreqArray("PR (BASELINE)  ", prfreq,avgValue,avgIsomorphicCount);
       dumpFreqArray("MECL(BASELINE) ", meclFreq,avgMeclValue,avgIsomorphicCount);
@@ -85,11 +84,11 @@ String mode = "NAHC";
 
   private void dumpFreqArray(String lbl, int []a, double avgValue, double avgIso)
   {
-    StringBuffer sb = new StringBuffer("      ");
+    StringBuilder sb = new StringBuilder("      ");
     System.out.print(lbl+" [");
     for(int i = 0; i < a.length; i++)
     {
-      Integer count = new Integer(a[i]);
+      Integer count = a[i];
       String scnt = count.toString();
       StringBuffer sbItem = new StringBuffer(sb.toString());
       sbItem.replace((sbItem.length()-scnt.length()-1),sbItem.length()-1,scnt);
@@ -102,15 +101,14 @@ String mode = "NAHC";
     int avg = (int)(avgValue*100.0);
     if(avg < 100)
       avg++;
-    Integer avgI = new Integer(avg);
-    String scnt = avgI.toString();
+    int avgI = avg;
+    String scnt = Integer.toString(avgI);
     StringBuffer sbItem = new StringBuffer(sb.toString());
     sbItem.replace((sbItem.length()-scnt.length()-1),sbItem.length()-1,scnt);
     System.out.print(sbItem);
 
-    int avgIsoI = (int)(avgIso);
-    avgI = new Integer(avgIsoI);
-    scnt = avgI.toString();
+    avgI = (int)(avgIso);
+    scnt = Integer.toString(avgI);
     sbItem = new StringBuffer(sb.toString());
     sbItem.replace((sbItem.length()-scnt.length()-1),sbItem.length()-1,scnt);
     System.out.println("   "+sbItem);
@@ -118,9 +116,8 @@ String mode = "NAHC";
 
 
   private double expirIsomorphicPR() {
-    for(int i = 0; i < bunchGraphs.size(); i++)
-    {
-      BunchGraph g = (BunchGraph)bunchGraphs.get(i);
+    for (Object bunchGraph : bunchGraphs) {
+      BunchGraph g = (BunchGraph) bunchGraph;
       g.determineIsomorphic();
     }
     return expirPR(prIfreq);
@@ -128,10 +125,9 @@ String mode = "NAHC";
 
   private double expirIsomorphicCount() {
     int accum = 0;
-    for(int i = 0; i < bunchGraphs.size(); i++)
-    {
-      BunchGraph g = (BunchGraph)bunchGraphs.get(i);
-      accum+=g.getTotalOverlapNodes();
+    for (Object bunchGraph : bunchGraphs) {
+      BunchGraph g = (BunchGraph) bunchGraph;
+      accum += g.getTotalOverlapNodes();
     }
     return ((double)accum/(double)bunchGraphs.size());
   }
@@ -161,30 +157,18 @@ String mode = "NAHC";
       for(int j = i; j < bunchGraphs.size(); j++) {
         BunchGraph g2 = (BunchGraph)bunchGraphs.get(j);
 
-        Double prValue = new Double(BunchGraphUtils.calcEdgeSimiliarities(g1,g2));
-
-        /***************
-         * This block of code is for Precision/Recall Analysis
-
-        Hashtable results = BunchGraphUtils.calcPR(g1,g2);
-        Double prValue = (Double)results.get("AVERAGE");
-        String prsValue = "null";
-        if(prsValue != null)
-          prsValue = prValue.toString();
-        else
-          prValue = new Double(0.0);
-        */
+        Double prValue = BunchGraphUtils.calcEdgeSimiliarities(g1, g2);
 
         //System.out.println("AVG_PR(graph "+i+", graph"+j+") = "+prsValue);
         if (i != j) {
           trials++;
-          int idx = this.findIndex(prValue.doubleValue());
+          int idx = this.findIndex(prValue);
           distArray[idx]++;
-          accum+=prValue.doubleValue();
+          accum+= prValue;
         }
       }
     }
-    return ((double)accum/(double)trials);
+    return (accum /(double)trials);
   }
 
   private double expirPR(int []distArray) {
@@ -205,19 +189,19 @@ String mode = "NAHC";
         if(prsValue != null)
           prsValue = prValue.toString();
         else
-          prValue = new Double(0.0);
+          prValue = 0.0;
 
 
         //System.out.println("AVG_PR(graph "+i+", graph"+j+") = "+prsValue);
         if (i != j) {
           trials++;
-          int idx = this.findIndex(prValue.doubleValue());
+          int idx = this.findIndex(prValue);
           distArray[idx]++;
-          accum+=prValue.doubleValue();
+          accum+= prValue;
         }
       }
     }
-    return ((double)accum/(double)trials);
+    return (accum /(double)trials);
   }
 
   private double expirMecl(int []distArray) {
@@ -239,26 +223,24 @@ String mode = "NAHC";
 
         Double meclValue1 = (Double)meClValue1.get(BunchGraphUtils.MECL_QUALITY_METRIC);
         Double meclValue2 = (Double)meClValue2.get(BunchGraphUtils.MECL_QUALITY_METRIC);
-        double d1 = meclValue1.doubleValue();
-        double d2 = meclValue2.doubleValue();
+        double d1 = meclValue1;
+        double d2 = meclValue2;
 
-        double d = Math.max(d1,d2);
-
-        Double  meclValue = new Double(d);
+        Double  meclValue = Math.max(d1,d2);
 
         if (i != j)
         {
           trials++;
-          int idx = this.findIndex(meclValue.doubleValue());
+          int idx = this.findIndex(meclValue);
           distArray[idx]++;
-          accum+=meclValue.doubleValue();
+          accum+= meclValue;
         }
       }
     }
     return ((double)accum/(double)trials);
   }
 
-  void runClustering(String mdgFileName, boolean removeSpecialNodes) throws Exception {
+  private void runClustering(String mdgFileName, boolean removeSpecialNodes) throws Exception {
       BunchAPI api = new BunchAPI();
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = mdgFileName;
@@ -285,7 +267,7 @@ String mode = "NAHC";
       //is often interesting however the parameter can be in the range
       //of 0 < level < BunchAPI.TOTAL_CLUSTER_LEVELS
       //===============================================================
-      BunchGraph bg = api.getPartitionedGraph(iMedLvl.intValue());
+      BunchGraph bg = api.getPartitionedGraph(iMedLvl);
       //printBunchGraph(bg);
       //findIsomorphic(bg);
 
@@ -330,20 +312,20 @@ String mode = "NAHC";
           //    homeCluster.getName() +" is isomorphic to cluster "+ bc.getName());
         }
       }
-      if(nodeIsomorphic == true) nodeAdjustCount++;
+      if(nodeIsomorphic) nodeAdjustCount++;
     }
     System.out.println("Adjustments = Nodes: "+nodeAdjustCount+" --> "+adjustCount+"/"+totalCount);
     totalNodes+=totalCount;
     totalAdjustments+=nodeAdjustCount; //adjustCount;
   }
 
-  public void printConnectVector(BunchNode bn, int[] cv)
+  private void printConnectVector(BunchNode bn, int[] cv)
   {
     String status = "OK:";
     String nodeName = bn.getName();
     int    nodeCluster = bn.getCluster();
     int    homeStrength = cv[nodeCluster];
-    String cvStr = "";
+    StringBuilder cvStr = new StringBuilder();
     for(int i = 0; i < cv.length; i++)
     {
       String modifier = "";
@@ -364,14 +346,14 @@ String mode = "NAHC";
           modifier = "=";
         }
       }
-      Integer idx = new Integer(i);
-      Integer clustStrength = new Integer(cv[i]);
-      cvStr += "("+modifier+clustStrength.toString()+")";
+      Integer idx = i;
+      int clustStrength = cv[i];
+      cvStr.append("(").append(modifier).append(clustStrength).append(")");
     }
     //System.out.println(status+" "+nodeName+" Cluster: "+nodeCluster+":  "+cvStr);
   }
 
-  public int[] howConnected(BunchGraph bg, BunchNode bn)
+  private int[] howConnected(BunchGraph bg, BunchNode bn)
   {
     int howManyClusters = bg.getClusters().size();
     int [] connectVector = new int[howManyClusters];
@@ -429,11 +411,9 @@ String mode = "NAHC";
     //PRINT THE NODES AND THIER ASSOCIATED
     //EDGES
     //======================================
-    Iterator nodeI = nodeList.iterator();
 
-    while(nodeI.hasNext())
-    {
-      BunchNode bn = (BunchNode)nodeI.next();
+    for (Object o : nodeList) {
+      BunchNode bn = (BunchNode) o;
       Iterator fdeps = null;
       Iterator bdeps = null;
 
@@ -441,28 +421,24 @@ String mode = "NAHC";
       System.out.println("Cluster ID:   " + bn.getCluster());
 
       //PRINT THE CONNECTIONS TO OTHER NODES
-      if (bn.getDeps() != null)
-      {
+      if (bn.getDeps() != null) {
         fdeps = bn.getDeps().iterator();
-        while(fdeps.hasNext())
-        {
-          BunchEdge be = (BunchEdge)fdeps.next();
+        while (fdeps.hasNext()) {
+          BunchEdge be = (BunchEdge) fdeps.next();
           String depName = be.getDestNode().getName();
           int weight = be.getWeight();
-          System.out.println("   ===> " + depName+" ("+weight+")");
+          System.out.println("   ===> " + depName + " (" + weight + ")");
         }
       }
 
       //PRINT THE CONNECTIONS FROM OTHER NODES
-      if (bn.getBackDeps() != null)
-      {
+      if (bn.getBackDeps() != null) {
         bdeps = bn.getBackDeps().iterator();
-        while(bdeps.hasNext())
-        {
-          BunchEdge be = (BunchEdge)bdeps.next();
+        while (bdeps.hasNext()) {
+          BunchEdge be = (BunchEdge) bdeps.next();
           String depName = be.getSrcNode().getName();
           int weight = be.getWeight();
-          System.out.println("   <=== " + depName+" ("+weight+")");
+          System.out.println("   <=== " + depName + " (" + weight + ")");
         }
       }
       System.out.println();
@@ -473,19 +449,13 @@ String mode = "NAHC";
     //CLUSTERS
     //======================================
     System.out.println("Cluster Breakdown\n");
-    Iterator clusts = bg.getClusters().iterator();
-    while(clusts.hasNext())
-    {
-      BunchCluster bc = (BunchCluster)clusts.next();
+    for (BunchCluster bc : bg.getClusters()) {
       System.out.println("Cluster id:   " + bc.getID());
       System.out.println("Custer name:  " + bc.getName());
-      System.out.println("Cluster size: " +bc.getSize());
+      System.out.println("Cluster size: " + bc.getSize());
 
-      Iterator members = bc.getClusterNodes().iterator();
-      while(members.hasNext())
-      {
-        BunchNode bn = (BunchNode)members.next();
-        System.out.println("   --> " + bn.getName() + "   ("+bn.getCluster()+")");
+      for (BunchNode bn : bc.getClusterNodes()) {
+        System.out.println("   --> " + bn.getName() + "   (" + bn.getCluster() + ")");
       }
       System.out.println();
     }

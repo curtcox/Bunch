@@ -58,7 +58,7 @@ public void setNestedLevels(boolean b)
  * This method determines if the output driver should write nested levels
  */
 boolean getWriteNestedLevels()
-{ return writeNestedLevels; }
+{ return !writeNestedLevels; }
 
 /**
  * Sets the partitioned graph to be printed to the stream

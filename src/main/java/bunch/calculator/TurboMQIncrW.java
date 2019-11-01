@@ -52,7 +52,7 @@ public double calculate(Cluster c) {
 
   //return calcAll(c);
 
-  if(!c.isMoveValid()) {
+  if(c.isMoveValid()) {
     //if(clusters_x == null)
       clusters_x = c.getClusterNames();
     return calcAll(c);
@@ -325,7 +325,7 @@ public double calculateIntradependenciesValue(int[] c, int numCluster) {
 /**
  * Calculates the interdependencies (interconnectivity) between to given clusters
  */
-public double calculateInterdependenciesValue(int[] c1, int[] c2, int nc1, int nc2) {
+public void calculateInterdependenciesValue(int[] c1, int[] c2, int nc1, int nc2) {
   double interdep=0.0;
   for (int i=1; i<=c1[0]; ++i) {
     int[] ca = nodes_x[c1[i]].dependencies;
@@ -357,7 +357,6 @@ public double calculateInterdependenciesValue(int[] c1, int[] c2, int nc1, int n
     }
   }
   interdep = ((interdep)/(2.0 * ((double)(c1[0])) * ((double)(c2[0]))));
-  return interdep;
 }
 }
 

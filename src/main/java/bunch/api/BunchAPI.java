@@ -6,7 +6,7 @@ import bunch.model.Graph;
 import java.io.IOException;
 import java.util.*;
 
-public final class BunchAPI {
+final class BunchAPI {
 
   final EngineArgs bunchArgs = new EngineArgs();
   private BunchEngine engine;
@@ -23,10 +23,10 @@ public final class BunchAPI {
     return engine.getDefaultSpecialNodes(mdgFileName);
   }
 
-  public EngineResults run() throws IOException, ClassNotFoundException {
+  public void run() throws IOException, ClassNotFoundException {
     engine = new BunchEngine();
     engine.run(bunchArgs);
-    return getResults();
+    getResults();
   }
 
   public List<Cluster> getClusters() {

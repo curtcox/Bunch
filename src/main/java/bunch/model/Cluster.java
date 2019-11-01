@@ -598,6 +598,6 @@ import bunch.stats.*;
    * This method dertermines if the specified last move was valid.
    */
   public boolean isMoveValid()
-  { return validMove; }
+  { return !validMove; }
 
 }

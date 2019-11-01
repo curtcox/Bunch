@@ -148,7 +148,7 @@ private void writeSpecialModules(Node[] originalNodes) throws IOException {
 }
 
 
-private void writeClosing() throws IOException {
+private void writeClosing() {
     //writer_d.close();
 }
 
@@ -541,7 +541,7 @@ private void generateOutput(Graph g) throws IOException {
    if((on != null) &&(on.length != nodeList.length))
       checkForSpecialModules(gBase.getOriginalNodes());
 
-   if(!getWriteNestedLevels())
+   if(getWriteNestedLevels())
       genChildrenFromOneLevel(g);
    else
      generateClusters(g);

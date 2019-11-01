@@ -1,7 +1,5 @@
 package bunch.api;
 
-import java.util.Iterator;
-
 final class BunchGraphPR {
   private final BunchGraph expertG;
   private final BunchGraph clusterG;

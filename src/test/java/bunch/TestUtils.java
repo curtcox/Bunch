@@ -8,11 +8,11 @@ public class TestUtils {
         assertGreaterThan(value,min);
     }
 
-    public static void assertLessThan(long value,long goal) {
+    private static void assertLessThan(long value, long goal) {
         assertTrue("Expected value " + value + " is not < " + goal,value < goal);
     }
 
-    public static void assertGreaterThan(long value,long goal) {
+    private static void assertGreaterThan(long value, long goal) {
         assertTrue("Expected value " + value + " is not > " + goal,value > goal);
     }
 

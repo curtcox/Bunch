@@ -9,7 +9,7 @@ import bunch.parser.ClusterFileParser;
 import bunch.parser.DependencyFileParser;
 import bunch.parser.Parser;
 
-public final class BunchGraphUtils {
+final class BunchGraphUtils {
 
   public static final String MECL_VALUE = "MeclValue";
   public static final String MECL_QUALITY_METRIC = "MeclQualityMetric";
@@ -106,13 +106,12 @@ public final class BunchGraphUtils {
 
     for (BunchEdge bunchEdge : g1.getEdges()) {
       total++;
-      BunchEdge be1 = bunchEdge;
-      String key = (be1.getSrcNode().getName() + be1.getDestNode().getName());
+        String key = (bunchEdge.getSrcNode().getName() + bunchEdge.getDestNode().getName());
       BunchEdge be2 = g2Lookup.get(key);
 
       boolean be1InSame;
       //Investigate be1 to see if in same cluster
-      be1InSame = (be1.getSrcNode().getCluster() == be1.getDestNode().getCluster());
+      be1InSame = (bunchEdge.getSrcNode().getCluster() == bunchEdge.getDestNode().getCluster());
       if (be1InSame) {
         BunchNode n1 = be2.getSrcNode();
         BunchNode n2 = be2.getDestNode();
@@ -159,13 +158,12 @@ public final class BunchGraphUtils {
 
     for (BunchEdge bunchEdge : g1.getEdges()) {
       total++;
-      BunchEdge be1 = bunchEdge;
-      String key = (be1.getSrcNode().getName() + be1.getDestNode().getName());
+        String key = (bunchEdge.getSrcNode().getName() + bunchEdge.getDestNode().getName());
       BunchEdge be2 = g2Lookup.get(key);
 
       boolean be1InSame;
       //Investigate be1 to see if in same cluster
-      be1InSame = (be1.getSrcNode().getCluster() == be1.getDestNode().getCluster());
+      be1InSame = (bunchEdge.getSrcNode().getCluster() == bunchEdge.getDestNode().getCluster());
       if (be1InSame) {
         BunchNode n1 = be2.getSrcNode();
         BunchNode n2 = be2.getDestNode();

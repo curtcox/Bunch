@@ -108,11 +108,11 @@ public double calculateIntradependenciesValue(int[] c, int numCluster) {
   double exitEdges=0.0;
   int k=0;
   
-  String cstr = "";
+  StringBuilder cstr = new StringBuilder();
   for(int i = 1; i<=c[0];++i)
   {
       if (nodes_x[c[i]].cluster == numCluster)
-        cstr += nodes_x[c[i]].getName() + " ";
+        cstr.append(nodes_x[c[i]].getName()).append(" ");
   }
   //System.out.print(cstr);
   
@@ -190,7 +190,7 @@ public double calculateIntradependenciesValue(int[] c, int numCluster) {
 /**
  * Calculates the interdependencies (interconnectivity) between to given clusters
  */
-public double calculateInterdependenciesValue(int[] c1, int[] c2, int nc1, int nc2) {
+public void calculateInterdependenciesValue(int[] c1, int[] c2, int nc1, int nc2) {
   double interdep=0.0;
   for (int i=1; i<=c1[0]; ++i) {
     int[] ca = nodes_x[c1[i]].dependencies;
@@ -222,6 +222,5 @@ public double calculateInterdependenciesValue(int[] c1, int[] c2, int nc1, int n
     }
   }
   interdep = ((interdep)/(2.0 * ((double)(c1[0])) * ((double)(c2[0]))));
-  return interdep;
 }
 }

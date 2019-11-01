@@ -100,8 +100,9 @@ public Long getUniqueID()
 public boolean isCluster()
 { return this.isCluster; }
 
-public int getCluster()
-{ return cluster; }
+public void getCluster()
+{
+}
 
 public void setCluster(int c)
 { cluster = c; }
@@ -163,12 +164,12 @@ public Node(String name, int[] deps) {
  * @return a string with the node's information
  */
 public String toString() {
-    String str = "";
-    str += "\n"+name_d + " = ";
+    StringBuilder str = new StringBuilder();
+    str.append("\n").append(name_d).append(" = ");
     for (int dependency : dependencies) {
-        str += dependency + " / ";
+        str.append(dependency).append(" / ");
     }
-    return str;
+    return str.toString();
 }
 
 /**

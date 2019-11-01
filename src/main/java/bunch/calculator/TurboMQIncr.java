@@ -64,7 +64,7 @@ public double calculate(Cluster c) {
 
   //return calcAll(c);
 
-  if(!c.isMoveValid()) {
+  if(c.isMoveValid()) {
     if(clusters_x == null)
       clusters_x = c.getClusterNames();
     return calcAll(c);

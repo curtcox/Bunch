@@ -129,7 +129,7 @@ public void run() {
  * Method that must be defined by subclasses. This method is called once
  * per each iteration of the main "for" loop in the #run() method.
  */
-public abstract boolean nextGeneration();
+protected abstract boolean nextGeneration();
 
 /**
  * Define the threshold that determines when no further improvement can be

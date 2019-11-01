@@ -17,8 +17,7 @@ public final class BunchCluster {
     nodeHT = null;
     //inform member nodes that they are a primary member of this cluster
     for (BunchNode node : nodes) {
-      BunchNode bn = node;
-      bn.setMemberCluster(this);
+        node.setMemberCluster(this);
     }
   }
 

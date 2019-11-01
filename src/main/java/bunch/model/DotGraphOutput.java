@@ -1,10 +1,5 @@
 package bunch.model;
 
-import bunch.model.Graph;
-import bunch.model.GraphOutput;
-import bunch.model.NextLevelGraph;
-import bunch.model.Node;
-
 import java.io.*;
 import java.util.*;
 
@@ -552,7 +547,7 @@ private void generateOutput(Graph g) throws IOException {
     if((on != null) &&(on.length != nodeList.length))
     writeSpecialModules(gBase.getOriginalNodes());
 
-    if(!getWriteNestedLevels())
+    if(getWriteNestedLevels())
     genChildrenFromOneLevel(g);
   else
     generateClusters(g);

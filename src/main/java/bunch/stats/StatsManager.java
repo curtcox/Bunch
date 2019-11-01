@@ -30,8 +30,7 @@ public final class StatsManager {
 
     public boolean getCollectClusteringDetails()
     {
-        boolean collectClusteringDetails = false;
-        return collectClusteringDetails;  }
+        return false;  }
 
     public long getMQCalculations()
     { return mqCalculations;  }

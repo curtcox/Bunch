@@ -8,23 +8,18 @@ import java.sql.*;
 
 public final class BunchAPISimAnalysis {
 
-  final String testID = "CIAT1";
-  Connection con = null;
-  PreparedStatement writeRecord = null;
+  private final String testID = "CIAT1";
+  private PreparedStatement writeRecord = null;
 
-  double pr = 0;
-  double pr1 = 0;
-  double es = 0;
-  double es1 = 0;
-  double mc = 0;
-  double mc1 = 0;
-  int total = 0;
+  private double pr1 = 0;
+  private double es1 = 0;
+  private double mc1 = 0;
 
   @Test
   public void doTest25() {
 
     //doTest("d:\\linux\\linux","d:\\linux\\linux",10);
-    doTest("e:\\hack\\hack","e:\\hack\\hack",25);
+    doTest();
     //this.genHackMDG("e:\\hack\\hack",1000);
     //System.out.println("HACK");
     //randomHack("e:\\hack\\hack",25,1000);
@@ -60,7 +55,7 @@ public final class BunchAPISimAnalysis {
     }
   }
 
-  public void dumpRandomOutput(String baseFName, int id, Hashtable h) {
+  private void dumpRandomOutput(String baseFName, int id, Hashtable h) {
     String outFileName = baseFName+id+".bunch";
     try
     {
@@ -95,11 +90,10 @@ public final class BunchAPISimAnalysis {
 
 
   public void genHackMDG(String baseFName, int howMany) {
-    String outFileName = baseFName;
     Random r = new Random(System.currentTimeMillis());
     try
     {
-      BufferedWriter writer = new BufferedWriter(new FileWriter(outFileName));
+      BufferedWriter writer = new BufferedWriter(new FileWriter(baseFName));
 
       for(long i = 0; i < (10*howMany); i++)
       {
@@ -126,38 +120,38 @@ public final class BunchAPISimAnalysis {
     }
   }
 
-  public void doTest(String mdgFileName, String baseFileName, int howMany)
+  private void doTest()
   {
-    BunchGraph  bgList[] = new BunchGraph[howMany];
+    BunchGraph[] bgList = new BunchGraph[25];
 
     //setDB();
 
-    for(int i = 0; i < howMany; i++)
+    for(int i = 0; i < 25; i++)
     {
       Integer idx = i;
-      String fn = baseFileName + idx.toString() + ".bunch";
-      bgList[i] = BunchGraphUtils.constructFromSil(mdgFileName,fn);
+      String fn = "e:\\hack\\hack" + idx.toString() + ".bunch";
+      bgList[i] = BunchGraphUtils.constructFromSil("e:\\hack\\hack",fn);
     }
 
     doPrecisionRecall("PR",bgList);
-    pr = pr1;
+    double pr = pr1;
     doEdgeSim("ES",bgList);
-    es = es1;
+    double es = es1;
     doMecl("MECL",bgList);
-    mc = mc1;
+    double mc = mc1;
 
     pr1 = es1 = mc1 = 0;
     //now setup the isomorphic
-    for(int i = 0; i < howMany; i++)
+    for(int i = 0; i < 25; i++)
       bgList[i].determineIsomorphic();
 
     doPrecisionRecall("PRNOI",bgList);
     doEdgeSim("ESNOI",bgList);
     doMecl("MECLNOI",bgList);
 
-    total = 0;
-    for(int i = 0; i < howMany; i++)
-      for(int j = i+1; j < howMany; j++)
+    int total = 0;
+    for(int i = 0; i < 25; i++)
+      for(int j = i+1; j < 25; j++)
         total++;
 
 
@@ -165,15 +159,15 @@ public final class BunchAPISimAnalysis {
     int numNodes = bgList[0].getNodes().size();
 
     System.out.println("Node Count = " + numNodes);
-    System.out.println("AVG(PR) = "+(pr / (double)total ));
-    System.out.println("AVG(ES) = "+(es / (double)total ));
-    System.out.println("AVG(MC) = "+(mc / (double)total ));
-    System.out.println("AVG(PR_NOS) = "+(pr1 / (double)total ));
-    System.out.println("AVG(ES_NOS) = "+(es1 / (double)total ));
-    System.out.println("AVG(MC_NOS) = "+(mc1 / (double)total ));
+    System.out.println("AVG(PR) = "+(pr / (double) total));
+    System.out.println("AVG(ES) = "+(es / (double) total));
+    System.out.println("AVG(MC) = "+(mc / (double) total));
+    System.out.println("AVG(PR_NOS) = "+(pr1 / (double) total));
+    System.out.println("AVG(ES_NOS) = "+(es1 / (double) total));
+    System.out.println("AVG(MC_NOS) = "+(mc1 / (double) total));
   }
 
-  public void doPrecisionRecall(String fn, BunchGraph [] bgList)
+  private void doPrecisionRecall(String fn, BunchGraph[] bgList)
   {
     int sz = bgList.length;
     for(int i = 0; i < sz; i++)
@@ -186,7 +180,7 @@ public final class BunchAPISimAnalysis {
         System.out.print(fn+"("+i+","+j+") = ");
         if(prValue != null)
         {
-          double dTmp = prValue.doubleValue() * 100.0;
+          double dTmp = prValue * 100.0;
           pr1 += dTmp;
           System.out.println((int)dTmp);
         }
@@ -195,7 +189,7 @@ public final class BunchAPISimAnalysis {
       }
   }
 
-  public void doEdgeSim(String fn, BunchGraph [] bgList)
+  private void doEdgeSim(String fn, BunchGraph[] bgList)
   {
     int sz = bgList.length;
     for(int i = 0; i < sz; i++)
@@ -204,12 +198,12 @@ public final class BunchAPISimAnalysis {
         BunchGraph bg1 = bgList[i];
         BunchGraph bg2 = bgList[j];
 
-        Double esValue = new Double(BunchGraphUtils.calcEdgeSimiliarities(bg1,bg2));
+        Double esValue = BunchGraphUtils.calcEdgeSimiliarities(bg1, bg2);
 
         System.out.print(fn+"("+i+","+j+") = ");
         if(esValue != null)
         {
-          double dTmp = esValue.doubleValue() * 100.0;
+          double dTmp = esValue * 100.0;
           es1 += dTmp;
           System.out.println((int)dTmp);
         }
@@ -218,7 +212,7 @@ public final class BunchAPISimAnalysis {
       }
   }
 
-  public void doMecl(String fn, BunchGraph [] bgList)
+  private void doMecl(String fn, BunchGraph[] bgList)
   {
     int sz = bgList.length;
     for(int i = 0; i < sz; i++)
@@ -235,8 +229,8 @@ public final class BunchAPISimAnalysis {
 
         Double meclValue1 = (Double)meClValue1.get(BunchGraphUtils.MECL_QUALITY_METRIC);
         Double meclValue2 = (Double)meClValue2.get(BunchGraphUtils.MECL_QUALITY_METRIC);
-        double d1 = meclValue1.doubleValue();
-        double d2 = meclValue2.doubleValue();
+        double d1 = meclValue1;
+        double d2 = meclValue2;
 
 
         long simEdges = BunchGraphUtils.calcSimEdges(bg1,bg2);
@@ -249,20 +243,13 @@ public final class BunchAPISimAnalysis {
 
         if(diffEdges != (mc1+mc2))
           System.out.println("EDGESIM = "+diffEdges+"   MC="+(mc1+mc2));
-        //double es = esValue.doubleValue();
-        //if(es != ((d1+d2)/2.0))
-        //  System.out.println("Values are not equal: " + es +" != "+((d1+d2)/2.0));
-        //else
-        //  System.out.println("Values are equal");
 
-        double d = Math.max(d1,d2);
-
-        Double  meclValue = new Double(d);
+        Double  meclValue = Math.max(d1,d2);
 
         System.out.print(fn+"("+i+","+j+") = ");
         if(meclValue != null)
         {
-          double dTmp = meclValue.doubleValue() * 100.0;
+          double dTmp = meclValue * 100.0;
           mc1 += dTmp;
           System.out.println((int)dTmp);
         }
@@ -276,7 +263,7 @@ public final class BunchAPISimAnalysis {
     {
       Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 
-      con = DriverManager.getConnection("jdbc:odbc:MyInventory");
+      Connection con = DriverManager.getConnection("jdbc:odbc:MyInventory");
 
       String stmt = "insert into ClustResults values ( ? , ? , ? , ?)";
       writeRecord = con.prepareStatement(stmt);

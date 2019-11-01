@@ -100,26 +100,25 @@ static final class NodeInfo {
     NodeInfo [] nl = cnameht.values().toArray(new NodeInfo[0]);
     for (NodeInfo nodeInfo : nl) {
       Node n = new Node();
-      NodeInfo ni = nodeInfo;
-      newNL[ni.id] = n;
-      n.setName(ni.name);
-      n.nodeID = ni.id;
+        newNL[nodeInfo.id] = n;
+      n.setName(nodeInfo.name);
+      n.nodeID = nodeInfo.id;
       n.setIsCluster(true);
       n.nodeLevel = nodeLevel;
-      n.children = new Node[ni.childNodes.size()];
-      int numForwardDep = ni.dependencies.size();
-      int numBackDep = ni.backEdges.size();
+      n.children = new Node[nodeInfo.childNodes.size()];
+      int numForwardDep = nodeInfo.dependencies.size();
+      int numBackDep = nodeInfo.backEdges.size();
       n.dependencies = new int[numForwardDep];
       n.weights = new int[numForwardDep];
       n.backEdges = new int[numBackDep];
       n.beWeights = new int[numBackDep];
 
       int j = 0;
-      for (Enumeration e = ni.childNodes.elements(); e.hasMoreElements(); )
+      for (Enumeration e = nodeInfo.childNodes.elements(); e.hasMoreElements(); )
         n.children[j++] = (Node) e.nextElement();
 
-      updateEdgeArrays(ni.dependencies, n.dependencies, ni.dWeights, n.weights);
-      updateEdgeArrays(ni.backEdges, n.backEdges, ni.beWeights, n.beWeights);
+      updateEdgeArrays(nodeInfo.dependencies, n.dependencies, nodeInfo.dWeights, n.weights);
+      updateEdgeArrays(nodeInfo.backEdges, n.backEdges, nodeInfo.beWeights, n.beWeights);
 
       //Uncomment the following line for debug
       //dumpNode(n);

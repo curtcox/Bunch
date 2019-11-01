@@ -60,8 +60,8 @@ public boolean nextGeneration() {
   try
   {
     String outLine ="";
-    String sCluster = "";
-    String sAligned = "";
+    StringBuilder sCluster = new StringBuilder();
+    StringBuilder sAligned = new StringBuilder();
 
     for (int i = 0; i < currentPopulation_d.size(); i++)
       sequence[i] = 0;
@@ -71,8 +71,8 @@ public boolean nextGeneration() {
 	if (configuration_d.runBatch_d)
 	{
           int exp = configuration_d.expNumber_d;
-          sCluster = "";
-          sAligned = "";
+          sCluster = new StringBuilder();
+          sAligned = new StringBuilder();
           int []n = currentPopulation_d.getCluster(i).getClusterVector();
 
           int[] c = new int[n.length];
@@ -84,8 +84,8 @@ public boolean nextGeneration() {
 
           for (int zz = 0; zz < n.length; zz++)
           {
-            sCluster += n[zz] + "|";
-            sAligned += c[zz] + "|";
+            sCluster.append(n[zz]).append("|");
+            sAligned.append(c[zz]).append("|");
           }
           sequence[i]++;
           outLine = exp+","+i + "," + sequence[i] + "," + currentPopulation_d.getCluster(i).getObjFnValue()+","+ sCluster+","+sAligned;
@@ -103,8 +103,8 @@ public boolean nextGeneration() {
           if (configuration_d.runBatch_d)
           {
             int exp = configuration_d.expNumber_d;
-	    sCluster = "";
-            sAligned = "";
+	    sCluster = new StringBuilder();
+            sAligned = new StringBuilder();
 	    int []n = currentPopulation_d.getCluster(i).getClusterVector();
 
             int[] c = new int[n.length];
@@ -116,8 +116,8 @@ public boolean nextGeneration() {
 
 	    for (int zz = 0; zz < n.length; zz++)
             {
-	      sAligned += c[zz] + "|";
-              sCluster += n[zz] + "|";
+	      sAligned.append(c[zz]).append("|");
+              sCluster.append(n[zz]).append("|");
             }
 	    sequence[i]++;
 	    outLine = exp+","+i + "," + sequence[i] + "," + currentPopulation_d.getCluster(i).getObjFnValue()+","+ sCluster+","+sAligned;

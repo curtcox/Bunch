@@ -118,10 +118,10 @@ public class BunchPassingAPITest {
         var results = api.getResults();
         println("Results:");
 
-        Long rt = results.RUNTIME;
-        Long evals = results.MQEVALUATIONS;
-        Integer levels = results.TOTAL_CLUSTER_LEVELS;
-        Long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
+        long rt = results.RUNTIME;
+        long evals = results.MQEVALUATIONS;
+        int levels = results.TOTAL_CLUSTER_LEVELS;
+        long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
 
         println("Runtime = " + rt + " ms.");
         println("Total MQ Evaluations = " + evals);
@@ -134,8 +134,8 @@ public class BunchPassingAPITest {
         if (bg != null)
             bg.printGraph();
 
-        Integer iLvls = new Integer(levels);
-        for(int i = 0; i < iLvls.intValue(); i++) {
+        Integer iLvls = levels;
+        for(int i = 0; i < iLvls; i++) {
             println(" ************* LEVEL "+i+" ******************");
             BunchGraph bgLvl = api.getPartitionedGraph(i);
             bgLvl.printGraph();
@@ -178,10 +178,10 @@ public class BunchPassingAPITest {
         var results = api.getResults();
         println("Results:");
 
-        Long rt = results.RUNTIME;
-        Long evals = results.MQEVALUATIONS;
-        Integer levels = results.TOTAL_CLUSTER_LEVELS;
-        Long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
+        long rt = results.RUNTIME;
+        long evals = results.MQEVALUATIONS;
+        int levels = results.TOTAL_CLUSTER_LEVELS;
+        long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
 
         println("Runtime = " + rt + " ms.");
         println("Total MQ Evaluations = " + evals);
@@ -194,8 +194,8 @@ public class BunchPassingAPITest {
         if (bg != null)
           bg.printGraph();
 
-        Integer iLvls = new Integer(levels);
-        for(int i = 0; i < iLvls.intValue(); i++) {
+        Integer iLvls = levels;
+        for(int i = 0; i < iLvls; i++) {
           println(" ************* LEVEL "+i+" ******************");
           BunchGraph bgLvl = api.getPartitionedGraph(i);
           bgLvl.printGraph();
@@ -460,11 +460,11 @@ public class BunchPassingAPITest {
         var results = api.getResults();
         println("Results:");
 
-        Long rt = results.RUNTIME;
-        Long evals = results.MQEVALUATIONS;
+        long rt = results.RUNTIME;
+        long evals = results.MQEVALUATIONS;
         Integer levels = results.TOTAL_CLUSTER_LEVELS;
-        Long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
-        Integer medLvl = results.MEDIAN_LEVEL_GRAPH;
+        long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
+        int medLvl = results.MEDIAN_LEVEL_GRAPH;
 
         println("Runtime = " + rt + " ms.");
         println("Total MQ Evaluations = " + evals);
@@ -481,8 +481,7 @@ public class BunchPassingAPITest {
         if (bg != null)
             bg.printGraph();
 
-        Integer iLvls = new Integer(levels);
-        for(int i = 0; i < iLvls.intValue(); i++) {
+        for(int i = 0; i < levels; i++) {
             println(" ************* LEVEL "+i+" ******************");
             BunchGraph bgLvl = api.getPartitionedGraph(i);
             bgLvl.printGraph();
@@ -499,7 +498,7 @@ public class BunchPassingAPITest {
 
         //Build x values, simple index for now
         for(int i = 0; i < input.size(); i++)
-            ax.add(new Double((double)i));
+            ax.add((double) i);
 
         //get the regression for the velocity
         double v = calcSlope(ax,input);
@@ -514,23 +513,23 @@ public class BunchPassingAPITest {
             Double y2 = (Double)input.get(i);
             Double x1 = (Double)ax.get(i-1);
             Double x2 = (Double)ax.get(i);
-            deltaX = x2.doubleValue()-x1.doubleValue();
-            deltaY = y2.doubleValue()-y1.doubleValue();
+            deltaX = x2 - x1;
+            deltaY = y2 - y1;
             //for x measure slope;
             double slope = deltaY / deltaX;
 
             //for y measure use the midpoint
-            double xmid = (x2.doubleValue()-x1.doubleValue()) / 2.0;
-            axv.add(new Double(xmid));
-            ayv.add(new Double(slope));
+            double xmid = (x2 - x1) / 2.0;
+            axv.add(xmid);
+            ayv.add(slope);
         }
 
         //now do acceleration
         double accel = calcSlope(axv,ayv);
 
         h.clear();
-        h.put("V",new Double(v));
-        h.put("A",new Double(accel));
+        h.put("V", v);
+        h.put("A", accel);
         return h;
     }
 
@@ -548,10 +547,10 @@ public class BunchPassingAPITest {
 
         for(int i = 0; i < inputX.size(); i++) {
             Double dxi = (Double)inputX.get(i);
-            double xi = dxi.doubleValue();
+            double xi = dxi;
             double xi2 = xi * xi;
             Double Dyi = (Double)inputY.get(i);
-            double yi = Dyi.doubleValue();
+            double yi = Dyi;
             double xy = xi*yi;
 
             Sxi2 += xi2;
@@ -563,9 +562,7 @@ public class BunchPassingAPITest {
         SSxx = Sxi2 - (Sxi/n);
         SSxy = Sxy - ((Sxi * Syi)/n);
 
-        double slope = SSxy/SSxx;
-
-        return slope;
+        return SSxy/SSxx;
     }
 
 }

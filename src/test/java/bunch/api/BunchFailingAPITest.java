@@ -16,11 +16,11 @@ public class BunchFailingAPITest {
 
     private List<BunchGraph> bunchGraphs;
 
-    private int [] prfreq = new int[11];
-    private int [] prIfreq = new int [11];
+    private final int [] prfreq = new int[11];
+    private final int [] prIfreq = new int [11];
 
-static Hashtable collectFinalGraphs(String mdgFileName, String baseFileDirectory, int howMany) {
-    BunchGraph  bgList[] = new BunchGraph[howMany];
+private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileDirectory, int howMany) {
+    BunchGraph[] bgList = new BunchGraph[howMany];
     String baseOutputFileName = mdgFileName;
 
     if((baseFileDirectory != null) && (!baseFileDirectory.equals(""))) {
@@ -46,7 +46,7 @@ static Hashtable collectFinalGraphs(String mdgFileName, String baseFileDirectory
     //Now process the data
     for(int i = 0; i < howMany; i++)
     {
-      Integer idx = new Integer(i);
+      Integer idx = i;
       String fn = baseOutputFileName + idx.toString() + ".bunch";
       bgList[i] = BunchGraphUtils.constructFromSil(mdgFileName,fn);
     }
@@ -61,7 +61,7 @@ static Hashtable collectFinalGraphs(String mdgFileName, String baseFileDirectory
     return h;
   }
 
-  static Hashtable processFinalResults(Hashtable in) {
+  private static Hashtable processFinalResults(Hashtable in) {
     BunchGraph [] bgList = (BunchGraph [])in.get("results");
     BunchGraph bgRef = (BunchGraph)in.get("reference");
 
@@ -71,34 +71,32 @@ static Hashtable collectFinalGraphs(String mdgFileName, String baseFileDirectory
 
     if((bgList == null)||(bgRef == null)) return null;
 
-    for(int i = 0; i < bgList.length; i++) {
-      BunchGraph bg = bgList[i];
+      for (BunchGraph bg : bgList) {
+          double esValue = BunchGraphUtils.calcEdgeSimiliarities(bg, bgRef);
+          println("ES:" + esValue);
+          esAccum += esValue;
+          if (esValue < esMin) esMin = esValue;
+          if (esValue > esMax) esMax = esValue;
 
-      double esValue = BunchGraphUtils.calcEdgeSimiliarities(bg,bgRef);
-println("ES:"+esValue);
-      esAccum +=esValue;
-      if(esValue < esMin) esMin = esValue;
-      if(esValue > esMax) esMax = esValue;
+          Hashtable h1 = BunchGraphUtils.calcPR(bg, bgRef);
+          Double prValue = (Double) h1.get("AVERAGE");
+          prAccum += prValue;
+          println("PR:" + prValue);
+          if (prValue < prMin) prMin = prValue;
+          if (prValue > prMax) prMax = prValue;
 
-      Hashtable h1 = BunchGraphUtils.calcPR(bg,bgRef);
-      Double prValue = (Double)h1.get("AVERAGE");
-      prAccum += prValue.doubleValue();
-println("PR:"+prValue.doubleValue());
-      if(prValue.doubleValue() < prMin) prMin = prValue.doubleValue();
-      if(prValue.doubleValue() > prMax) prMax = prValue.doubleValue();
-
-      Hashtable meClValue1 = BunchGraphUtils.getMeClMeasurement(bg,bgRef);
-      Hashtable meClValue2 = BunchGraphUtils.getMeClMeasurement(bgRef,bg);
-      Double meclValue1 = (Double)meClValue1.get(BunchGraphUtils.MECL_QUALITY_METRIC);
-      Double meclValue2 = (Double)meClValue2.get(BunchGraphUtils.MECL_QUALITY_METRIC);
-      double d1 = meclValue1.doubleValue();
-      double d2 = meclValue2.doubleValue();
-      double meclValue = Math.max(d1,d2);
-      meclAccum += meclValue;
-println("ML:"+meclValue);
-      if(meclValue < meclMin) meclMin = meclValue;
-      if(meclValue > meclMax) meclMax = meclValue;
-    }
+          Hashtable meClValue1 = BunchGraphUtils.getMeClMeasurement(bg, bgRef);
+          Hashtable meClValue2 = BunchGraphUtils.getMeClMeasurement(bgRef, bg);
+          Double meclValue1 = (Double) meClValue1.get(BunchGraphUtils.MECL_QUALITY_METRIC);
+          Double meclValue2 = (Double) meClValue2.get(BunchGraphUtils.MECL_QUALITY_METRIC);
+          double d1 = meclValue1;
+          double d2 = meclValue2;
+          double meclValue = Math.max(d1, d2);
+          meclAccum += meclValue;
+          println("ML:" + meclValue);
+          if (meclValue < meclMin) meclMin = meclValue;
+          if (meclValue > meclMax) meclMax = meclValue;
+      }
 
     double denom = (double)bgList.length;
     double mecl = meclAccum / denom;
@@ -107,17 +105,17 @@ println("ML:"+meclValue);
 
     Hashtable h = new Hashtable();
 
-    h.put("mecl",new Double(mecl));
-    h.put("pr",new Double(pr));
-    h.put("es",new Double(es));
+    h.put("mecl", mecl);
+    h.put("pr", pr);
+    h.put("es", es);
 
-    h.put("meclMin",new Double(meclMin));
-    h.put("prMin",new Double(prMin));
-    h.put("esMin",new Double(esMin));
+    h.put("meclMin", meclMin);
+    h.put("prMin", prMin);
+    h.put("esMin", esMin);
 
-    h.put("meclMax",new Double(meclMax));
-    h.put("prMax",new Double(prMax));
-    h.put("esMax",new Double(esMax));
+    h.put("meclMax", meclMax);
+    h.put("prMax", prMax);
+    h.put("esMax", esMax);
 
     println("==============STATS RESULTS=================");
     println("Mecl = " + meclMin +", "+mecl+", "+meclMax);
@@ -143,11 +141,9 @@ println("ML:"+meclValue);
     if(c == null)
       println("====>null");
     else {
-      Iterator i = c.iterator();
-      while(i.hasNext())
-      {
-        println("====>"+i.next());
-      }
+        for (Object o : c) {
+            println("====>" + o);
+        }
     }
 
     println();
@@ -184,11 +180,11 @@ println("ML:"+meclValue);
 
   }
 
-  public void printResutls(EngineResults results) {
-      Long rt = results.RUNTIME;
-      Long evals = results.MQEVALUATIONS;
+  private void printResutls(EngineResults results) {
+      long rt = results.RUNTIME;
+      long evals = results.MQEVALUATIONS;
       Integer levels = results.TOTAL_CLUSTER_LEVELS;
-      Long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
+      long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
 
       println("Runtime = " + rt + " ms.");
       println("Total MQ Evaluations = " + evals);
@@ -222,10 +218,9 @@ println("ML:"+meclValue);
 
   private void runTest(String graphName, boolean removeSpecial) throws Exception {
     bunchGraphs = new ArrayList();
-    boolean removeSpecialModules = removeSpecial;
 
-    for(int i = 0; i < 2; i++) {
-      this.runClustering(graphName, removeSpecialModules);
+      for(int i = 0; i < 2; i++) {
+      this.runClustering(graphName, removeSpecial);
     }
     double avgValue = expirPR(prfreq);
     double avgIsomorphicValue = expirIsomorphicPR();
@@ -233,7 +228,7 @@ println("ML:"+meclValue);
     double avgIsomorphicCount = expirIsomorphicCount();
 
     //writeHeader();
-    if(removeSpecial == false) {
+    if(!removeSpecial) {
       dumpFreqArray("BASELINE       ", prfreq,avgValue,avgIsomorphicCount);
       dumpFreqArray("NO ISOMORPHIC  ",prIfreq,avgIsomorphicValue,avgIsomorphicCount);
     } else {
@@ -256,10 +251,10 @@ println("ML:"+meclValue);
   }
 
   private void dumpFreqArray(String lbl, int []a, double avgValue, double avgIso) {
-    StringBuffer sb = new StringBuffer("      ");
+    StringBuilder sb = new StringBuilder("      ");
     print(lbl+" [");
     for(int i = 0; i < a.length; i++) {
-      Integer count = new Integer(a[i]);
+      Integer count = a[i];
       String scnt = count.toString();
       StringBuffer sbItem = new StringBuffer(sb.toString());
       sbItem.replace((sbItem.length()-scnt.length()-1),sbItem.length()-1,scnt);
@@ -272,14 +267,13 @@ println("ML:"+meclValue);
     int avg = (int)(avgValue*100.0);
     if(avg < 100)
       avg++;
-    Integer avgI = new Integer(avg);
+    Integer avgI = avg;
     String scnt = avgI.toString();
     StringBuffer sbItem = new StringBuffer(sb.toString());
     sbItem.replace((sbItem.length()-scnt.length()-1),sbItem.length()-1,scnt);
     print(sbItem);
 
-    int avgIsoI = (int)(avgIso);
-    avgI = new Integer(avgIsoI);
+      avgI = (int)(avgIso);
     scnt = avgI.toString();
     sbItem = new StringBuffer(sb.toString());
     sbItem.replace((sbItem.length()-scnt.length()-1),sbItem.length()-1,scnt);
@@ -287,20 +281,17 @@ println("ML:"+meclValue);
   }
 
   private double expirIsomorphicPR() {
-    for(int i = 0; i < bunchGraphs.size(); i++) {
-      BunchGraph g = (BunchGraph)bunchGraphs.get(i);
-      g.determineIsomorphic();
-    }
+      for (BunchGraph g : bunchGraphs) {
+          g.determineIsomorphic();
+      }
     return expirPR(prIfreq);
   }
 
   private double expirIsomorphicCount() {
     int accum = 0;
-    for(int i = 0; i < bunchGraphs.size(); i++)
-    {
-      BunchGraph g = (BunchGraph)bunchGraphs.get(i);
-      accum+=g.getTotalOverlapNodes();
-    }
+      for (BunchGraph g : bunchGraphs) {
+          accum += g.getTotalOverlapNodes();
+      }
     return ((double)accum/(double)bunchGraphs.size());
   }
 
@@ -325,37 +316,25 @@ println("ML:"+meclValue);
 
     clearDistArray(distArray);
     for(int i = 0; i < bunchGraphs.size(); i++) {
-      BunchGraph g1 = (BunchGraph)bunchGraphs.get(i);
-      for(int j = i; j < bunchGraphs.size(); j++)
-      {
-        BunchGraph g2 = (BunchGraph)bunchGraphs.get(j);
+      BunchGraph g1 = bunchGraphs.get(i);
+      for(int j = i; j < bunchGraphs.size(); j++) {
+        BunchGraph g2 = bunchGraphs.get(j);
 
-        Double prValue = new Double(BunchGraphUtils.calcEdgeSimiliarities(g1,g2));
+        Double prValue = BunchGraphUtils.calcEdgeSimiliarities(g1, g2);
 
         Hashtable meClValue = BunchGraphUtils.getMeClMeasurement(g1,g2);
 
 
         println("The distance is:  " + meClValue.get(BunchGraphUtils.MECL_VALUE) +
                     "   quality = "+meClValue.get(BunchGraphUtils.MECL_QUALITY_METRIC));
-        /***************
-         * This block of code is for Precision/Recall Analysis
 
-        Hashtable results = BunchGraphUtils.calcPR(g1,g2);
-        Double prValue = (Double)results.get("AVERAGE");
-        String prsValue = "null";
-        if(prsValue != null)
-          prsValue = prValue.toString();
-        else
-          prValue = new Double(0.0);
-        */
-
-        //println("AVG_PR(graph "+i+", graph"+j+") = "+prsValue);
+          //println("AVG_PR(graph "+i+", graph"+j+") = "+prsValue);
         if (i != j)
         {
           trials++;
-          int idx = this.findIndex(prValue.doubleValue());
+          int idx = this.findIndex(prValue);
           distArray[idx]++;
-          accum+=prValue.doubleValue();
+          accum+= prValue;
         }
       }
     }
@@ -384,7 +363,7 @@ println("ML:"+meclValue);
       //is often interesting however the parameter can be in the range
       //of 0 < level < BunchAPI.TOTAL_CLUSTER_LEVELS
       //===============================================================
-      BunchGraph bg = api.getPartitionedGraph(iMedLvl.intValue());
+      BunchGraph bg = api.getPartitionedGraph(iMedLvl);
       //printBunchGraph(bg);
       //findIsomorphic(bg);
 
@@ -417,10 +396,10 @@ println("ML:"+meclValue);
       var results = api.getResults();
       println("Results:");
 
-      Long rt = results.RUNTIME;
-      Long evals = results.MQEVALUATIONS;
+      long rt = results.RUNTIME;
+      long evals = results.MQEVALUATIONS;
       Integer levels = results.TOTAL_CLUSTER_LEVELS;
-      Long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
+      long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
 
       println("Runtime = " + rt + " ms.");
       println("Total MQ Evaluations = " + evals);

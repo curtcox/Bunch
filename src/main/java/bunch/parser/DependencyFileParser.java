@@ -182,8 +182,7 @@ public Graph parse() {
       nodeList[i]  = n;
       ParserNode p = (ParserNode)nl[i];
       n.setName(p.name);
-      Integer nid = (Integer)nameTable.get(p.name);
-      n.nodeID = nid;
+      n.nodeID = (Integer)nameTable.get(p.name);
       n.dependencies = ht2ArrayFromKey(nameTable,p.dependencies);
       n.weights = ht2ArrayValFromKey(p.dWeights);
       n.backEdges = ht2ArrayFromKey(nameTable,p.backEdges);

@@ -102,8 +102,7 @@ final class MeCl {
 
     for (BunchCluster bunchCluster : A.getClusters()) {
       HashMap<String,List> subClustersA = new HashMap<>();
-      BunchCluster Ai = bunchCluster;
-      for (Object o : Ai.getClusterNodes()) {
+        for (Object o : bunchCluster.getClusterNodes()) {
         BunchNode bnInA = (BunchNode) o;
         String nodeName = bnInA.getName();
 
@@ -114,16 +113,12 @@ final class MeCl {
 
         //Now add the current node to the sub cluster
         //hash map for the current cluster in a
-        List members = subClustersA.get(bnInBClusterName);
-        if (members == null) {
-          members = new ArrayList();
-          subClustersA.put(bnInBClusterName, members);
-        }
-        members.add(bnInA);
+          List members = subClustersA.computeIfAbsent(bnInBClusterName, k -> new ArrayList());
+          members.add(bnInA);
         //Now find the appropriate
       }
 
-      Ca.put(Ai.getName(), subClustersA);
+      Ca.put(bunchCluster.getName(), subClustersA);
     }
     return Ca;
   }

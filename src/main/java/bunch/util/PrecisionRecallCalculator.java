@@ -10,7 +10,6 @@ public final class PrecisionRecallCalculator {
 
   private Double S_precision;
   private Double S_recall;
-  private Vector<String> m_v_expert_modules_names = new Vector<>();
   private Vector<Vector> m_v_expert_modules_content = new Vector<>();
   private Vector<String> m_v_tested_modules_names = new Vector<>();
   private Vector<Vector> m_v_tested_modules_content = new Vector<>();
@@ -43,12 +42,12 @@ public final class PrecisionRecallCalculator {
 
     bunch1.read();
 
-    m_v_expert_modules_names = bunch1.getModuleNames();
+    Vector<String> m_v_expert_modules_names = bunch1.getModuleNames();
     m_v_expert_modules_content = bunch1.getModulesContent();
 
     //remove all the tree information
     boolean found;
-    for (int i =0; i<m_v_expert_modules_names.size();i++) {
+    for (int i = 0; i< m_v_expert_modules_names.size(); i++) {
       Vector v_module_content = new Vector(m_v_expert_modules_content.get(i));
       found = false;
       for (int j=0;j<v_module_content.size() && !found;j++) {
@@ -221,7 +220,7 @@ final class GBunchRW {
     m_S_filename = filename;
   }
 
-  public Hashtable read()
+  public void read()
   {
     int i_start_location_of_SS =0;
     int i_end_location_of_SS =0;
@@ -264,7 +263,7 @@ final class GBunchRW {
       System.out.println("Opps: "+e);
     }
 
-    return (Hashtable)m_ht_bunchread.clone();
+    m_ht_bunchread.clone();
   }
 
   public void write(Hashtable ht) {
