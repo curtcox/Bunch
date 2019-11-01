@@ -9,7 +9,7 @@ final class BunchAPISimEdgeTest {
 
 private long totalNodes;
 private long totalAdjustments;
-private ArrayList bunchGraphs = null;
+private List<BunchGraph> bunchGraphs = null;
 
 private final int [] esfreq = new int[11];
 private final int [] esIfreq = new int [11];
@@ -32,7 +32,7 @@ private String mode = "NAHC";
 
   private void runTest(String graphName, boolean removeSpecial) throws Exception {
     totalNodes = totalAdjustments = 0;
-    bunchGraphs = new ArrayList();
+    bunchGraphs = new ArrayList<>();
 
     for(int i = 0; i < 10; i++) {
       this.runClustering(graphName, removeSpecial);
@@ -48,17 +48,14 @@ private String mode = "NAHC";
     double avgIsomorphicCount = expirIsomorphicCount();
 
     //writeHeader();
-    if(!removeSpecial)
-    {
+    if(!removeSpecial) {
       dumpFreqArray("PR (BASELINE)  ", prfreq,avgValue,avgIsomorphicCount);
       dumpFreqArray("MECL(BASELINE) ", meclFreq,avgMeclValue,avgIsomorphicCount);
       dumpFreqArray("ES(BASELINE)   ", esfreq,avgESValue,avgIsomorphicCount);
       dumpFreqArray("PR (NO ISO)    ", prIfreq,avgIsomorphicValue,avgIsomorphicCount);
       dumpFreqArray("MECL(NO ISO)   ", meclIFreq,avgMeclIValue,avgIsomorphicCount);
       dumpFreqArray("ES(NO ISO)     ", esIfreq,avgESIValue,avgIsomorphicCount);
-    }
-    else
-    {
+    } else {
       dumpFreqArray("PR (NO SPEC)   ", prfreq,avgValue, avgIsomorphicCount);
       dumpFreqArray("MECL(NO SPEC)  ", meclFreq,avgMeclValue,avgIsomorphicCount);
       dumpFreqArray("ES(NO SPEC)    ", esfreq,avgESValue,avgIsomorphicCount);
@@ -75,19 +72,16 @@ private String mode = "NAHC";
     //System.out.println("***** ("+pct+") Total Nodes: "+totalNodes+"  Total Adjustments: "+totalAdjustments);
   }
 
-  private void writeHeader()
-  {
+  private void writeHeader() {
     System.out.println("                 |-------------------------------- F R E Q U E N C Y --------------------------------|");
     System.out.println("                   0-9   10-19   20-29   30-39   40-49   50-59   60-69   70-79   80-89   90-99     100     AVG  AVG-ISO");
     System.out.println("                 =====   =====   =====   =====   =====   =====   =====   =====   =====   =====   =====    ====  =======");
   }
 
-  private void dumpFreqArray(String lbl, int []a, double avgValue, double avgIso)
-  {
+  private void dumpFreqArray(String lbl, int []a, double avgValue, double avgIso) {
     StringBuilder sb = new StringBuilder("      ");
     System.out.print(lbl+" [");
-    for(int i = 0; i < a.length; i++)
-    {
+    for(int i = 0; i < a.length; i++) {
       Integer count = a[i];
       String scnt = count.toString();
       StringBuffer sbItem = new StringBuffer(sb.toString());
@@ -283,7 +277,7 @@ private String mode = "NAHC";
   public void findIsomorphic(BunchGraph bg)
   {
     Iterator nodeI = bg.getNodes().iterator();
-    ArrayList theClusters = new ArrayList(bg.getClusters());
+    List<BunchCluster> theClusters = new ArrayList<>(bg.getClusters());
     int adjustCount = 0;
     int nodeAdjustCount = 0;
     int totalCount = bg.getNodes().size();
@@ -297,14 +291,14 @@ private String mode = "NAHC";
 
       int currClust = bn.getCluster();
       int currStrength = cv[currClust];
-      BunchCluster homeCluster = (BunchCluster)theClusters.get(currClust);
+      BunchCluster homeCluster = theClusters.get(currClust);
       for(int i = 0; i < cv.length; i++)
       {
         if(i == currClust) continue;
         int connectStrength = cv[i];
         if(connectStrength == currStrength)
         {
-          BunchCluster bc = (BunchCluster)theClusters.get(i);
+          BunchCluster bc = theClusters.get(i);
           bc.addOverlapNode(bn);
           adjustCount++;
           nodeIsomorphic = true;
@@ -319,28 +313,23 @@ private String mode = "NAHC";
     totalAdjustments+=nodeAdjustCount; //adjustCount;
   }
 
-  private void printConnectVector(BunchNode bn, int[] cv)
-  {
+  private void printConnectVector(BunchNode bn, int[] cv) {
     String status = "OK:";
     String nodeName = bn.getName();
     int    nodeCluster = bn.getCluster();
     int    homeStrength = cv[nodeCluster];
     StringBuilder cvStr = new StringBuilder();
-    for(int i = 0; i < cv.length; i++)
-    {
+    for(int i = 0; i < cv.length; i++) {
       String modifier = "";
       int cstr = cv[i];
       if(i == nodeCluster) modifier = "*";
-      if(i != nodeCluster)
-      {
-        if(cstr > homeStrength)
-        {
+      if(i != nodeCluster) {
+        if(cstr > homeStrength) {
           modifier = ">";
           status = "BAD:";
         }
         if(cstr < homeStrength) modifier = "<";
-        if(cstr == homeStrength)
-        {
+        if(cstr == homeStrength) {
           if(!status.equals("BAD:"))
             status = "ISOMORPHIC:";
           modifier = "=";
@@ -353,8 +342,7 @@ private String mode = "NAHC";
     //System.out.println(status+" "+nodeName+" Cluster: "+nodeCluster+":  "+cvStr);
   }
 
-  private int[] howConnected(BunchGraph bg, BunchNode bn)
-  {
+  private int[] howConnected(BunchGraph bg, BunchNode bn) {
     int howManyClusters = bg.getClusters().size();
     int [] connectVector = new int[howManyClusters];
     Iterator fdeps = null;
@@ -363,11 +351,9 @@ private String mode = "NAHC";
     for(int i=0; i<connectVector.length;i++)
       connectVector[i] = 0;
 
-    if (bn.getDeps() != null)
-    {
+    if (bn.getDeps() != null) {
       fdeps = bn.getDeps().iterator();
-      while(fdeps.hasNext())
-      {
+      while(fdeps.hasNext()) {
         BunchEdge be = (BunchEdge)fdeps.next();
         BunchNode target = be.getDestNode();
         int targetCluster = target.getCluster();
@@ -376,11 +362,9 @@ private String mode = "NAHC";
     }
 
 
-    if (bn.getBackDeps() != null)
-    {
+    if (bn.getBackDeps() != null) {
       bdeps = bn.getBackDeps().iterator();
-      while(bdeps.hasNext())
-      {
+      while(bdeps.hasNext()) {
         BunchEdge be = (BunchEdge)bdeps.next();
         BunchNode target = be.getSrcNode();
         int targetCluster = target.getCluster();
@@ -391,11 +375,10 @@ private String mode = "NAHC";
     return connectVector;
   }
 
-  public void printBunchGraph(BunchGraph bg)
-  {
-    Collection nodeList = bg.getNodes();
-    Collection edgeList = bg.getEdges();
-    Collection clusterList = bg.getClusters();
+  public void printBunchGraph(BunchGraph bg) {
+    Collection<BunchNode> nodeList = bg.getNodes();
+    Collection<BunchEdge> edgeList = bg.getEdges();
+    Collection<BunchCluster> clusterList = bg.getClusters();
 
     //======================================
     //PRINT THE GRAPH LEVEL INFORMATION
@@ -412,8 +395,8 @@ private String mode = "NAHC";
     //EDGES
     //======================================
 
-    for (Object o : nodeList) {
-      BunchNode bn = (BunchNode) o;
+    for (var o : nodeList) {
+      BunchNode bn = o;
       Iterator fdeps = null;
       Iterator bdeps = null;
 

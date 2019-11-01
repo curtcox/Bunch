@@ -360,8 +360,7 @@ public class BunchPassingAPITest {
                         double mqInterval = end-start;
                         double improvement = 0.0;
                         double steps = 0.0;
-                        for(int zzz = 1; zzz < alc.size()-1; zzz++)
-                        {
+                        for(int zzz = 1; zzz < alc.size()-1; zzz++) {
                             double ds = Double.parseDouble(alc.get(zzz).toString());
                             double dsLast = Double.parseDouble(alc.get(zzz-1).toString());
                             improvement += (ds - dsLast);
@@ -373,7 +372,7 @@ public class BunchPassingAPITest {
                         println();
                     }
 
-                    Hashtable h = this.calcVelocityAccel(alc);
+                    Hashtable<String,Double> h = this.calcVelocityAccel(alc);
                     if(h != null) {
                         println("***** V = "+h.get("V"));
                         println("***** A = "+h.get("A"));
@@ -475,8 +474,6 @@ public class BunchPassingAPITest {
         BunchGraph gg = api.getPartitionedGraph(Integer.parseInt("0"/*medLvl*/));
         println("MQ Value = "+gg.getMQValue());
 
-        Map[] resultLevels = results.RESULT_CLUSTER_OBJS;
-
         BunchGraph bg = api.getPartitionedGraph();
         if (bg != null)
             bg.printGraph();
@@ -489,9 +486,9 @@ public class BunchPassingAPITest {
         }
     }
 
-    private Hashtable calcVelocityAccel(List input) {
-        Hashtable h = new Hashtable();
-        ArrayList ax = new ArrayList();
+    private Hashtable<String,Double> calcVelocityAccel(List<Double> input) {
+        Hashtable<String,Double> h = new Hashtable<>();
+        List<Double> ax = new ArrayList<>();
 
         //Need at least 3 values to do this
         if(input.size() < 3) return null;
@@ -504,15 +501,15 @@ public class BunchPassingAPITest {
         double v = calcSlope(ax,input);
 
         //now setup for the acceleration, determine the average velocity intervals
-        ArrayList axv = new ArrayList();
-        ArrayList ayv = new ArrayList();
+        List<Double> axv = new ArrayList<>();
+        List<Double> ayv = new ArrayList<>();
         for(int i = 1; i < input.size(); i++) {
             double deltaX;
             double deltaY;
-            Double y1 = (Double)input.get(i-1);
-            Double y2 = (Double)input.get(i);
-            Double x1 = (Double)ax.get(i-1);
-            Double x2 = (Double)ax.get(i);
+            Double y1 = input.get(i-1);
+            Double y2 = input.get(i);
+            Double x1 = ax.get(i-1);
+            Double x2 = ax.get(i);
             deltaX = x2 - x1;
             deltaY = y2 - y1;
             //for x measure slope;

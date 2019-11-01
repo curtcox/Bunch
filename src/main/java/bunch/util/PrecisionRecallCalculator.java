@@ -91,8 +91,8 @@ public final class PrecisionRecallCalculator {
 
 
 final class Compare {
-  private final Vector m_v_original_distance;
-  private final Vector m_v_new_distance_name;
+  private final Vector<Vector> m_v_original_distance;
+  private final Vector<Vector> m_v_new_distance_name;
   private double m_d_recall, m_d_precision;
 
   public double get_precision() {
@@ -103,7 +103,7 @@ final class Compare {
     return m_d_recall;
   }
 
-  public Compare(Vector orig, Vector newname, Vector newnumber) {
+  public Compare(Vector<Vector> orig, Vector<Vector> newname, Vector<String> newnumber) {
     // used to get the index of the original vars
     Hashtable m_ht_vars_orig = new Hashtable();
     // used to get the index of the new vars
@@ -212,26 +212,24 @@ final class Compare {
 }
 
 final class GBunchRW {
-  private final Hashtable m_ht_bunchread;
+  private final Hashtable<String,Vector> m_ht_bunchread;
   private final String m_S_filename;
 
   public GBunchRW(String filename) {
-    m_ht_bunchread = new Hashtable(); //the main hashtable that will be returned
+    m_ht_bunchread = new Hashtable<>(); //the main hashtable that will be returned
     m_S_filename = filename;
   }
 
-  public void read()
-  {
+  public void read() {
     int i_start_location_of_SS =0;
     int i_end_location_of_SS =0;
     String S_module_name = "";
-    Vector v_module_value = new Vector();
+    Vector v_module_value;
 
     try {
       BufferedReader br = new BufferedReader(new FileReader(m_S_filename));
       while (true) {
         v_module_value = new Vector();
-        S_module_name = "";
 
         String line = br.readLine();
 
@@ -260,25 +258,24 @@ final class GBunchRW {
       }
 
     } catch (java.io.IOException e) {
-      System.out.println("Opps: "+e);
+      throw new RuntimeException(e);
     }
 
     m_ht_bunchread.clone();
   }
 
-  public void write(Hashtable ht) {
+  public void write(Hashtable<Object,Vector> ht) {
     try {
       FileWriter fos = new FileWriter(m_S_filename);
 
       fos.write("//Created automatically using GBunchRW...\n");
-    Enumeration keys = ht.keys();
+    var keys = ht.keys();
     while (keys.hasMoreElements()) {
       String S_temp = keys.nextElement().toString();
-      Vector v_temp = new Vector((Vector)ht.get(S_temp));
+      Vector v_temp = new Vector(ht.get(S_temp));
 
       fos.write("SS("+S_temp+")= ");  //write the name of every module
-      for (int i=0;i<v_temp.size()-1;i++)
-      {
+      for (int i=0;i<v_temp.size()-1;i++) {
         fos.write(v_temp.get(i)+", ");
       }
       fos.write(v_temp.get(v_temp.size()-1).toString()+"\n"); //write the last var
@@ -286,29 +283,29 @@ final class GBunchRW {
 
       fos.close();
     } catch (java.io.IOException e) {
-      System.out.println("Opps: "+e);
+      throw new RuntimeException(e);
     }
 
   }//end of method
 
-  public Vector getModuleNames() {
-    Vector v_temp = new Vector();
-    Enumeration keys = m_ht_bunchread.keys();
+  public Vector<String> getModuleNames() {
+    Vector<String> v_temp = new Vector<>();
+    var keys = m_ht_bunchread.keys();
     while (keys.hasMoreElements()) {
-      String S_temp = keys.nextElement().toString();
+      String S_temp = keys.nextElement();
       v_temp.add(S_temp);
     }
 
     return (Vector)v_temp.clone();
   }
 
-  public Vector getModulesContent() {
-    Vector v_modules = new Vector();
+  public Vector<List> getModulesContent() {
+    Vector<List> v_modules = new Vector<>();
 
-    Enumeration keys = m_ht_bunchread.keys();
+    var keys = m_ht_bunchread.keys();
     while (keys.hasMoreElements()) {
-      String S_temp = keys.nextElement().toString();
-      Vector v_temp = new Vector((Vector)m_ht_bunchread.get(S_temp));
+      String S_temp = keys.nextElement();
+      Vector v_temp = new Vector(m_ht_bunchread.get(S_temp));
       v_modules.add(v_temp);
     }
     return (Vector)v_modules.clone();

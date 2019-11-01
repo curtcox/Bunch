@@ -35,14 +35,14 @@ final class MeCl {
 
   private long collectSubClusters(HashMap Ca) {
     long tally=0;
-    HashMap Ccollected = new HashMap();
+    HashMap<String,List> Ccollected = new HashMap<>();
     Ccollected.clear();
 
-    for (Object item : Ca.values()) {
-      HashMap Ci = (HashMap) item;
-      for (Object o : Ci.keySet()) {
-        String key = (String) o;
-        ArrayList value = (ArrayList) Ci.get(key);
+    for (var item : Ca.values()) {
+      HashMap<String,List> Ci = (HashMap) item;
+      for (var o : Ci.keySet()) {
+        String key = o;
+        var value = Ci.get(key);
         tally += mergeSubCluster(Ccollected, key, value);
       }
     }

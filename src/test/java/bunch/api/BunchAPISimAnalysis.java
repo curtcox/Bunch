@@ -15,33 +15,38 @@ public final class BunchAPISimAnalysis {
 
   @Test
   public void doTest25() {
-
-    //doTest("d:\\linux\\linux","d:\\linux\\linux",10);
     doTest();
-    //this.genHackMDG("e:\\hack\\hack",1000);
-    //System.out.println("HACK");
-    //randomHack("e:\\hack\\hack",25,1000);
+  }
+
+  @Test
+  public void genHackMDG() throws IOException {
+    genHackMDG("e:\\hack\\hack",1000);
+  }
+
+  @Test
+  public void randomHack() throws IOException {
+    randomHack("e:\\hack\\hack",25,1000);
   }
 
 
-  public void randomHack(String baseFName, int count, int mcount) throws IOException {
+  private void randomHack(String baseFName, int count, int mcount) throws IOException {
     Random r = new Random(System.currentTimeMillis());
 
     for(int i = 0; i < count; i++) {
       int base = 30+ r.nextInt(10);
-      Hashtable h = new Hashtable();
+      Hashtable<String,Vector<String>> h = new Hashtable<>();
       h.clear();
 
       for(int j = 0; j < base; j++) {
         String id = "SS_"+j;
-        h.put(id,new Vector());
+        h.put(id, new Vector<>());
       }
 
       for(int j = 0; j < mcount; j++) {
         int ssID = r.nextInt(base);
         String mName = "M"+j;
         String ssStrID = "SS_" + ssID;
-        Vector v = (Vector)h.get(ssStrID);
+        Vector<String> v = h.get(ssStrID);
         if(v == null) System.out.println("A BUG...");
         v.add(mName);
       }
@@ -54,16 +59,14 @@ public final class BunchAPISimAnalysis {
     String outFileName = baseFName+id+".bunch";
       BufferedWriter writer = new BufferedWriter(new FileWriter(outFileName));
       Enumeration e = h.keys();
-      while (e.hasMoreElements())
-      {
+      while (e.hasMoreElements()) {
         String ssKey = (String)e.nextElement();
         Vector v = (Vector)h.get(ssKey);
         if(v.size() == 0)
           continue;
 
         writer.write("SS("+ssKey+")=");
-        for(int j = 0; j < v.size(); j++)
-        {
+        for(int j = 0; j < v.size(); j++) {
           String mname = (String)v.elementAt(j);
           writer.write(mname);
           if(j < (v.size()-1))
@@ -77,7 +80,7 @@ public final class BunchAPISimAnalysis {
   }
 
 
-  public void genHackMDG(String baseFName, int howMany) throws IOException {
+  private void genHackMDG(String baseFName, int howMany) throws IOException {
     Random r = new Random(System.currentTimeMillis());
       BufferedWriter writer = new BufferedWriter(new FileWriter(baseFName));
 

@@ -21,13 +21,13 @@ public class DependencyFileParser extends Parser {
  * Inner class used by the parsing process to store the graph
  * information temporarily before converting it into a Graph
  */
-static class ParserNode
-{
+static class ParserNode {
+
 final String name;
-final Hashtable dependencies;
-final Hashtable backEdges;
-final Hashtable dWeights;
-final Hashtable beWeights;
+final Hashtable<String,String> dependencies = new Hashtable<>();
+final Hashtable<String,String> backEdges = new Hashtable<>();
+final Hashtable<String,Integer> dWeights = new Hashtable<>();
+final Hashtable<String,Integer> beWeights = new Hashtable<>();
 public int[] arrayDependencies;
 public int[] arrayWeights;
 
@@ -36,11 +36,8 @@ public int[] arrayWeights;
  */
 ParserNode(String n) {
   name = n;
-  dependencies = new Hashtable();
-  dWeights = new Hashtable();
-  backEdges = new Hashtable();
-  beWeights = new Hashtable();
 }
+
 }
 
 /**
@@ -88,7 +85,7 @@ public Graph parse() {
       }
 
       //Parse the current line
-      StringTokenizer st = new StringTokenizer(line, delims_d);
+      var st = new StringTokenizer(line, delims_d);
       if (!st.hasMoreTokens()) {
         continue;
       }
@@ -143,7 +140,7 @@ public Graph parse() {
           currentNode.dWeights.put(target,w);
           //System.out.println("Adding weight " + w);
         } else {
-          Integer wExisting = (Integer)currentNode.dWeights.get(target);
+          Integer wExisting = currentNode.dWeights.get(target);
           Integer wtemp = w + wExisting;
           currentNode.dWeights.put(target,wtemp);
         }
@@ -152,7 +149,7 @@ public Graph parse() {
           targetNode.backEdges.put(nod,nod);
           targetNode.beWeights.put(nod,w);
         } else {
-          Integer wExisting = (Integer)targetNode.beWeights.get(nod);
+          Integer wExisting = targetNode.beWeights.get(nod);
           Integer wtemp = w + wExisting;
           targetNode.beWeights.put(nod,wtemp);
         }
@@ -161,12 +158,12 @@ public Graph parse() {
 
     //now deal with Bunch Format -- Generate bunch graph object
     int sz = nodes.size();
-    Hashtable nameTable = new Hashtable();
+    Hashtable<String,Integer> nameTable = new Hashtable<>();
 
     //build temporary name to ID mapping table
-    Object [] oa = nodes.keySet().toArray();
+    var oa = nodes.keySet().toArray(new String[0]);
     for (int i = 0; i < oa.length; i++) {
-      String n = (String)oa[i];
+      String n = oa[i];
       nameTable.put(n, i);
     }
 

@@ -26,16 +26,8 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
     if((baseFileDirectory != null) && (!baseFileDirectory.equals(""))) {
       File f = null;
       String baseFileName = "";
-      try{
-        f = new File(mdgFileName);
-        baseFileName = f.getName();
-        //println(baseFileName);
-      }
-      catch(Exception e)
-      {
-        e.printStackTrace();
-      }
-
+      f = new File(mdgFileName);
+      baseFileName = f.getName();
       String pathSep = File.separator;
       if(!baseFileDirectory.endsWith(pathSep))
         baseFileDirectory += pathSep;
@@ -44,8 +36,7 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
     }
 
     //Now process the data
-    for(int i = 0; i < howMany; i++)
-    {
+    for(int i = 0; i < howMany; i++) {
       Integer idx = i;
       String fn = baseOutputFileName + idx.toString() + ".bunch";
       bgList[i] = BunchGraphUtils.constructFromSil(mdgFileName,fn);
@@ -54,7 +45,7 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
     String referenceFile = baseFileDirectory + "temp.bunch";
     BunchGraph bgRef = BunchGraphUtils.constructFromSil(mdgFileName,referenceFile);
 
-    Hashtable h = new Hashtable();
+    Hashtable<String,Object> h = new Hashtable<>();
     h.put("reference",bgRef);
     h.put("results",bgList);
 
@@ -103,7 +94,7 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
     double pr = prAccum / denom;
     double es = esAccum / denom;
 
-    Hashtable h = new Hashtable();
+    Hashtable<String,Double> h = new Hashtable<>();
 
     h.put("mecl", mecl);
     h.put("pr", pr);
@@ -217,7 +208,7 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
   }
 
   private void runTest(String graphName, boolean removeSpecial) throws Exception {
-    bunchGraphs = new ArrayList();
+    bunchGraphs = new ArrayList<>();
 
       for(int i = 0; i < 2; i++) {
       this.runClustering(graphName, removeSpecial);

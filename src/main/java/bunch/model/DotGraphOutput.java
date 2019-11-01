@@ -178,23 +178,21 @@ private void writeClosing() throws IOException {
  * cluster associated with the node.
  */
 private void genCluster(Node n, long baseID) throws IOException {
-  Stack st = new Stack();
-  Hashtable ht = new Hashtable();
+  Stack<Node> st = new Stack<>();
+  Hashtable<Long,Long> ht = new Hashtable<>();
 
     st.push(n);
 
     while(!st.empty()) {
-    Node tmp = (Node)st.peek();
+    Node tmp = st.peek();
     if(tmp.isCluster()) {
       String strongestNode = findStrongestNode(tmp);
-      String hkey = "SS_"+tmp.name_d;
 
-        if(ht.containsKey(tmp.getUniqueID())) {
+      if(ht.containsKey(tmp.getUniqueID())) {
         writer_d.write("}\n\n");
         ht.remove(tmp.getUniqueID());
         st.pop();
-      } else
-      {
+      } else {
         ht.put(tmp.getUniqueID(),tmp.getUniqueID());
 
           String cName = "(SS-L"+tmp.nodeLevel+"):"+strongestNode;
@@ -208,8 +206,7 @@ private void genCluster(Node n, long baseID) throws IOException {
           for(int j = 0; j < tmp.children.length;j++)
           st.push(tmp.children[j]);
       }
-    } else
-    {
+    } else {
       writer_d.write("\""+tmp.getName()+"\"[label=\""+tmp.getName()+"\",shape=ellipse,color=lightblue,fontcolor=black,style=filled];\n");
       st.pop();
     }
@@ -265,7 +262,7 @@ private void genChildrenFromOneLevel(Graph cLvlG) throws IOException {
   nextLvlG = nextLvl.genNextLevelGraph(cLvlG);
 
   Node[]         nodeList = nextLvlG.getNodes();
-  Vector         cVect    = new Vector();
+  Vector<Vector>         cVect    = new Vector<>();
   int            Lvl      = cLvlG.getGraphLevel();
 
   cVect.removeAllElements();
@@ -281,7 +278,7 @@ private void genChildrenFromOneLevel(Graph cLvlG) throws IOException {
     findStrongestNode(tmp);
 
     //Create a vector for the new cluster
-    Vector newCluster = new Vector();
+    Vector<String> newCluster = new Vector<>();
     newCluster.removeAllElements();
     cVect.addElement(newCluster);
 
@@ -321,8 +318,7 @@ private String findStrongestNode(Node n) {
       Node[] children = curr.children;
       if((children != null) && (children.length>0))
         for (Node child : children) l.addLast(child);
-    } else
-    {
+    } else {
       nodeV.add(curr);
     }
   }
@@ -343,14 +339,12 @@ private String findStrongestNode(Vector v) {
   int maxEdgeWeight = 0;
   int maxEdgeCount = 0;
   Node domEdgeNode = null;
-  Node domWeightNode = null;
 
-    if (v == null) return "EmptyCluster";
+  if (v == null) return "EmptyCluster";
 
     for(int i = 0; i < v.size();i++) {
     Node n = (Node)v.elementAt(i);
-    String name = n.getName();
-    int edgeWeights=0;
+      int edgeWeights=0;
     int depCount = 0;
     int beCount = 0;
 
@@ -379,7 +373,6 @@ private String findStrongestNode(Vector v) {
     if(edgeWeights >= maxEdgeWeight)
     {
       maxEdgeWeight = edgeWeights;
-      domWeightNode = n;
     }
   }
 
@@ -392,9 +385,8 @@ private String findStrongestNode(Vector v) {
  */
 private void echoNestedChildren(Node n, Vector v) {
     Stack<Node> s = new Stack<>();
-  boolean firstNode = true;
 
-    s.push(n);
+  s.push(n);
   while(!s.isEmpty()) {
     Node tmpNode = s.pop();
 

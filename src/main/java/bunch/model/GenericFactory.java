@@ -27,14 +27,8 @@ public static final long serialVersionUID = 100L;
  */
 private String factoryType_d;
 
-/**
- * GenericFactory constructor, initializes the internal storage to
- * 10 (given that factories are usually used for a small number of
- * objects).
- */
-protected GenericFactory()
-{
-  methodTable_d = new Hashtable(10);
+protected GenericFactory() {
+  methodTable_d = new Hashtable<>();
 }
 
 /**
