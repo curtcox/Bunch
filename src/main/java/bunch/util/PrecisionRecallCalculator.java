@@ -10,9 +10,9 @@ public final class PrecisionRecallCalculator {
 
   private Double S_precision;
   private Double S_recall;
-  private Vector<Vector> m_v_expert_modules_content = new Vector<>();
+  private Vector<List> m_v_expert_modules_content = new Vector<>();
   private Vector<String> m_v_tested_modules_names = new Vector<>();
-  private Vector<Vector> m_v_tested_modules_content = new Vector<>();
+  private Vector<List> m_v_tested_modules_content = new Vector<>();
 
   public PrecisionRecallCalculator(String expertFileName, String testFileName) {
     m_S_filename1= expertFileName;
@@ -91,8 +91,8 @@ public final class PrecisionRecallCalculator {
 
 
 final class Compare {
-  private final Vector<Vector> m_v_original_distance;
-  private final Vector<Vector> m_v_new_distance_name;
+  private final Vector<List> m_v_original_distance;
+  private final Vector<List> m_v_new_distance_name;
   private double m_d_recall, m_d_precision;
 
   public double get_precision() {
@@ -103,7 +103,7 @@ final class Compare {
     return m_d_recall;
   }
 
-  public Compare(Vector<Vector> orig, Vector<Vector> newname, Vector<String> newnumber) {
+  public Compare(Vector<List> orig, Vector<List> newname, Vector<String> newnumber) {
     // used to get the index of the original vars
     Hashtable m_ht_vars_orig = new Hashtable();
     // used to get the index of the new vars
@@ -272,7 +272,7 @@ final class GBunchRW {
     var keys = ht.keys();
     while (keys.hasMoreElements()) {
       String S_temp = keys.nextElement().toString();
-      Vector v_temp = new Vector(ht.get(S_temp));
+      Vector v_temp = new Vector<>(ht.get(S_temp));
 
       fos.write("SS("+S_temp+")= ");  //write the name of every module
       for (int i=0;i<v_temp.size()-1;i++) {
