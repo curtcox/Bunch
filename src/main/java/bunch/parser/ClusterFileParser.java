@@ -2,7 +2,6 @@ package bunch.parser;
 
 import bunch.model.Graph;
 import bunch.model.Node;
-import bunch.parser.Parser;
 
 import java.util.*;
 
@@ -12,12 +11,11 @@ import java.util.*;
  *
  * @see Parser
  *
- * @see http://serg.mcs.drexel.edu
- *
  * @author Brian Mitchell
  */
 public class ClusterFileParser extends Parser {
-Graph graph_d;
+
+    Graph graph_d;
 
 public ClusterFileParser() { }
 
@@ -27,9 +25,7 @@ public ClusterFileParser() { }
  *
  * @param obj An instance of a Graph object.
  */
-public
-void
-setObject(Object obj)
+public void setObject(Object obj)
 {
   graph_d = (Graph)obj;
 }
@@ -39,9 +35,7 @@ setObject(Object obj)
  *
  * @returns The updated graph after processing the SIL file.
  */
-public
-Object
-getObject()
+public Graph getObject()
 {
   return graph_d;
 }
@@ -50,10 +44,7 @@ getObject()
  * This is the parse method that reads the input file, sets up the clusters
  * and updates the graph accordingly.
  */
-public
-Object
-parse()
-{
+public Graph parse() {
   int linecount = 0;
   Node[] nodes = graph_d.getNodes();
   int[] clusters = graph_d.getClusters();
@@ -109,13 +100,12 @@ parse()
     }
     }
     catch (Exception e) {
-        e.printStackTrace();
+        throw new RuntimeException(e);
     }
     return graph_d;
 }
 
-public boolean areAllNodesInCluster()
-{
+public boolean areAllNodesInCluster() {
     int[] clusters = graph_d.getClusters();
     
     //the cluster vector is initialized to -1 for all nodes
@@ -128,8 +118,7 @@ public boolean areAllNodesInCluster()
     return true;
 }
 
-public ArrayList getNodesNotAssignedToClusters()
-{
+public List<String> getNodesNotAssignedToClusters() {
     int[] clusters = graph_d.getClusters();
     ArrayList<String> nodeList = new ArrayList();
     Node[] nodes = graph_d.getNodes();

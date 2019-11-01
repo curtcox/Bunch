@@ -35,9 +35,7 @@ public int[] arrayWeights;
 /**
  * Data structure to keep track of the node and its dependencies
  */
-public
-ParserNode(String n)
-{
+public ParserNode(String n) {
   name = n;
   dependencies = new Hashtable();
   dWeights = new Hashtable();
@@ -49,8 +47,7 @@ ParserNode(String n)
 /**
  * Class constructor
  */
-public
-DependencyFileParser()
+public DependencyFileParser()
 {
   reflexiveEdges = 0;
 }
@@ -74,18 +71,14 @@ public boolean hasReflexiveEdges()
 /**
  * The method of the class where all work is done.
  */
-public
-Object
-parse()
-{
+public Graph parse() {
   reflexiveEdges = 0;
   Hashtable nodes = new Hashtable();
   Graph retGraph = null;
 
   try {
     //read all the information from the file
-    while (true)
-    {
+    while (true) {
       //Read the next line
       String line = reader_d.readLine();
       if (line == null) {
@@ -121,8 +114,7 @@ parse()
       currentNode = (ParserNode)nodes.get(nod);
 
       //Node is not known yet, add it to the list
-      if (currentNode == null)
-      {
+      if (currentNode == null) {
         currentNode = new ParserNode(nod);
         nodes.put(nod,currentNode);
       }
@@ -132,8 +124,7 @@ parse()
       Integer w = new Integer(1);
 
       //Make sure a target node exists
-      if (target != null)
-      {
+      if (target != null) {
         String dep = target;
 
         //Now if there are more tokens the weight is the next expected
@@ -143,34 +134,27 @@ parse()
 
         //See if the target node is known, if not add it to the list
         targetNode = (ParserNode)nodes.get(dep);
-        if (targetNode == null)
-        {
+        if (targetNode == null) {
           targetNode = new ParserNode(dep);
           nodes.put(dep,targetNode);
         }
 
         //Add source to target, and target to source if they don't already
         //exist as forward and backward dependencies
-        if (!currentNode.dependencies.containsKey(dep))
-        {
+        if (!currentNode.dependencies.containsKey(dep)) {
           currentNode.dependencies.put (dep,dep);
           currentNode.dWeights.put(dep,w);
           //System.out.println("Adding weight " + w);
-        }
-        else
-        {
+        } else {
           Integer wExisting = (Integer)currentNode.dWeights.get(dep);
           Integer wtemp = new Integer(w.intValue() + wExisting.intValue());
           currentNode.dWeights.put(dep,wtemp);
         }
 
-        if (!targetNode.backEdges.containsKey(nod))
-        {
+        if (!targetNode.backEdges.containsKey(nod)) {
           targetNode.backEdges.put(nod,nod);
           targetNode.beWeights.put(nod,w);
-        }
-        else
-        {
+        } else {
           Integer wExisting = (Integer)targetNode.beWeights.get(nod);
           Integer wtemp = new Integer(w.intValue() + wExisting.intValue());
           targetNode.beWeights.put(nod,wtemp);
@@ -184,8 +168,7 @@ parse()
 
     //build temporary name to ID mapping table
     Object [] oa = nodes.keySet().toArray();
-    for (int i = 0; i < oa.length; i++)
-    {
+    for (int i = 0; i < oa.length; i++) {
       String n = (String)oa[i];
       nameTable.put(n,new Integer(i));
     }
@@ -197,8 +180,7 @@ parse()
 
     //now setup the datastructure
     Object [] nl = nodes.values().toArray();
-    for(int i = 0; i < nl.length; i++)
-    {
+    for(int i = 0; i < nl.length; i++) {
       Node       n = new Node();
       nodeList[i]  = n;
       ParserNode p = (ParserNode)nl[i];
@@ -212,7 +194,7 @@ parse()
     }
   }
   catch (java.io.IOException e) {
-    e.printStackTrace();
+    throw new RuntimeException(e);
   }
 
   //dumpGraph(nodes);
@@ -223,8 +205,7 @@ parse()
  * Helper routine that given a hashtable of values and a key returns an
  * object array of values
  */
-private int[] ht2ArrayFromKey(Hashtable key, Hashtable values)
-{
+private int[] ht2ArrayFromKey(Hashtable key, Hashtable values) {
     int [] retArray = new int[values.size()];
 
     try{
@@ -236,11 +217,8 @@ private int[] ht2ArrayFromKey(Hashtable key, Hashtable values)
         retArray[i] = val.intValue();
       }
       return retArray;
-    }
-    catch(Exception e)
-    {
-      e.printStackTrace();
-      return null;
+    } catch(Exception e) {
+      throw new RuntimeException(e);
     }
 }
 
@@ -261,11 +239,8 @@ private int[] ht2ArrayValFromKey(Hashtable key, Hashtable values)
         retArray[i] = value.intValue();
       }
       return retArray;
-    }
-    catch(Exception e)
-    {
-      e.printStackTrace();
-      return null;
+    } catch(Exception e) {
+      throw new RuntimeException(e);
     }
 }
 
@@ -281,14 +256,12 @@ public void dumpGraph(Hashtable h)
     System.out.print(n.name+": ");
     Hashtable dep = n.dependencies;
     Object [] oa1 = dep.keySet().toArray();
-    for(int j = 0; j < oa1.length; j++)
-    {
+    for(int j = 0; j < oa1.length; j++) {
       ParserNode n1 = (ParserNode)oa1[j];
       System.out.print(n1.name+" ");
     }
     oa1 = n.backEdges.keySet().toArray();
-    for(int j = 0; j < oa1.length; j++)
-    {
+    for(int j = 0; j < oa1.length; j++) {
       ParserNode n1 = (ParserNode)oa1[j];
       System.out.print("be("+n1.name+") ");
     }

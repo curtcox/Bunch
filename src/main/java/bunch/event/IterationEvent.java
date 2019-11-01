@@ -20,8 +20,7 @@ int iteration_d, overallIteration_d, expNum;
  * This is a specific event type...nothing special is needed for processing
  * but we will call the parent class
  */
-public
-IterationEvent(Object source)
+public IterationEvent(Object source)
 {
   super(source);
 }
@@ -29,9 +28,7 @@ IterationEvent(Object source)
 /**
  * Sets the current iteration number
  */
-public
-void
-setIteration(int num)
+public void setIteration(int num)
 {
   iteration_d = num;
 }
@@ -39,9 +36,7 @@ setIteration(int num)
 /**
  * Sets the current experiment number
  */
-public
-void
-setExpNum(int num)
+public void setExpNum(int num)
 {
    expNum = num;
 }
@@ -49,9 +44,7 @@ setExpNum(int num)
 /**
  * Gets the specific experiment number
  */
-public
-int
-getExpNum()
+public int getExpNum()
 {
    return expNum;
 }
@@ -59,9 +52,7 @@ getExpNum()
 /**
  * Gets the current iteration number
  */
-public
-int
-getIteration()
+public int getIteration()
 {
   return iteration_d;
 }
@@ -69,9 +60,7 @@ getIteration()
 /**
  * Sets the overall iteration progress
  */
-public
-void
-setOverallIteration(int num)
+public void setOverallIteration(int num)
 {
   overallIteration_d = num;
 }
@@ -79,9 +68,7 @@ setOverallIteration(int num)
 /**
  * Gets the overall iteration process
  */
-public
-int
-getOverallIteration()
+public int getOverallIteration()
 {
   return overallIteration_d;
 }
