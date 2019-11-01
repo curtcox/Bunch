@@ -26,11 +26,9 @@ final class BunchGraphPR {
     combinationsConsidered = 0;
     matchingCombinations = 0;
 
-    Iterator clusterList = g1.getClusters().iterator();
-    while(clusterList.hasNext()) {
-      BunchCluster bc = (BunchCluster)clusterList.next();
-      processCluster(bc,g2);
-    }
+      for (BunchCluster bc : g1.getClusters()) {
+          processCluster(bc, g2);
+      }
 
     result = (double)matchingCombinations/(double)combinationsConsidered;
 

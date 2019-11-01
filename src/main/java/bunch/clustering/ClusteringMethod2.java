@@ -61,7 +61,7 @@ public void setGraph(Graph g)
  *
  * @return the graph
  */
-public Graph getGraph()
+Graph getGraph()
 {
   return graph_d;
 }
@@ -129,7 +129,7 @@ public double getElapsedTime()
  * @param l the elapsed time
  * @see #getElapsedTime()
  */
-public void setElapsedTime(double l)
+void setElapsedTime(double l)
 {
   elapsedTime_d = l;
 }
@@ -163,7 +163,7 @@ public IterationListener getIterationListener()
 /**
  * Fires an Iteration event to this clustering method's iteration listener
  */
-public void fireIterationEvent(IterationEvent e) {
+void fireIterationEvent(IterationEvent e) {
    if (listener_d != null) {
       listener_d.newIteration(e);
    }
@@ -191,7 +191,7 @@ public abstract int getMaxIterations();
  * #getConfigurationDialogName().
  *
  * @return if the method can be configured of not
- * @see #setConfigurable(boolean)
+ * @see ClusteringMethod#setConfigurable()
  * @see #getConfigurationDialogName()
  */
 public boolean isConfigurable()
@@ -202,11 +202,10 @@ public boolean isConfigurable()
 /**
  * Defines if this clustering method is configurable by an "options" dialog.
  *
- * @param isC true if the method is configurable, false otherwise
  */
-public void setConfigurable(boolean isC)
+void setConfigurable()
 {
-  isConfigurable_d = isC;
+  isConfigurable_d = true;
 }
 
 /**

@@ -72,21 +72,7 @@ public double calculate(Cluster c) {
   else
     return calcIncr(c,c.getLmEncoding());
 
-/*******
-  muE = c.getMuEdgeVector();
-  epE = c.getEpsilonEdgeVector();
-  int []lastMv = c.getLmEncoding();
-
-  if((lastMv[0] == -1)||(lastMv[1] == -1) || (lastMv[2] == -1))
-    return calcAll(c);
-
-  if ((muE == null) || (epE == null))
-      return calcAll(c);
-
-  return calcIncr(c,lastMv);
-****/
-
-  //calculate();
+//calculate();
   //return graph_d.getObjectiveFunctionValue();
 }
 

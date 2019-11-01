@@ -6,11 +6,8 @@ public final class StatsManager {
     private long mqCalculations = 0;
     private long calcAllCalcs=0;
     private long calcIncrCalcs=0;
-    private long exhaustiveTotal = -1;
     private long exhaustiveFinished = 0;
     private long simulatedAnnealingOverrides = 0;
-
-    private final boolean collectClusteringDetails = false;
 
     //make this a singleton
     private StatsManager() { }
@@ -32,7 +29,9 @@ public final class StatsManager {
     { singletonObj = null;  }
 
     public boolean getCollectClusteringDetails()
-    { return collectClusteringDetails;  }
+    {
+        boolean collectClusteringDetails = false;
+        return collectClusteringDetails;  }
 
     public long getMQCalculations()
     { return mqCalculations;  }
@@ -53,7 +52,8 @@ public final class StatsManager {
     }
 
     public void setExhaustiveTotal(int t)
-    { exhaustiveTotal = t; }
+    {
+    }
 
     public void incrExhaustiveFinished()
     { exhaustiveFinished++; }

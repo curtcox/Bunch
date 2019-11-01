@@ -122,18 +122,6 @@ public final class PrecisionRecallCalculator {
 
   }
 
-  /*********
-  public PaRCalc_main(String filename1, String filename2)
-  {
-    m_S_filename1= new String(filename1);
-    m_S_filename2= new String(filename2);
-    m_v_expert_modules_names = new Vector();
-    m_v_expert_modules_content = new Vector();
-    m_v_tested_modules_names = new Vector();
-    m_v_tested_modules_content = new Vector();
-
-  }
-  **********/
 }
 
 

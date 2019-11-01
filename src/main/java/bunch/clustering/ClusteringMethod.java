@@ -176,7 +176,7 @@ public abstract Cluster getBestCluster();
  * #getConfigurationDialogName().
  *
  * @return if the method can be configured of not
- * @see #setConfigurable(boolean)
+ * @see #setConfigurable()
  * @see #getConfigurationDialogName()
  */
 public boolean isConfigurable() {
@@ -186,12 +186,11 @@ public boolean isConfigurable() {
 /**
  * Defines if this clustering method is configurable by an "options" dialog.
  *
- * @param isC true if the method is configurable, false otherwise
  * @see #getConfigurationDialogName()
  */
-void setConfigurable(boolean isC)
+void setConfigurable()
 {
-  isConfigurable_d = isC;
+  isConfigurable_d = true;
 }
 
 /**

@@ -29,9 +29,6 @@ final class BunchEngine {
   private Graph initialGraph_d = new Graph(0);
   private BunchPreferences preferences_d;
   private Configuration configuration_d;
-  private int callbackFrequency;
-  private long startTime;
-  private long endTime;
   private long totalTime=0;
   private Cluster baseCluster;
   private List<Cluster> clusterList;
@@ -40,8 +37,6 @@ final class BunchEngine {
 
   private Double precision;
   private Double recall;
-  private String MQCalcMdgFileName;
-  private String MQCalcSilFileName;
   private Double MQCalcValue;
 
   private final StatsManager stats = bunch.stats.StatsManager.getInstance();
@@ -227,7 +222,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
         deps[z] = -1;
         depsRemoveCount++;
       } else {
-        deps[z] = tmpAssoc.intValue();
+        deps[z] = tmpAssoc;
       }
     }
 
@@ -237,7 +232,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
         beDeps[z] = -1;
         beDeptsRemoveCount++;
       } else {
-        beDeps[z] = tmpAssoc.intValue();
+        beDeps[z] = tmpAssoc;
       }
     }
 
@@ -456,14 +451,15 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     //see if there is a timeout requested
     Integer toTime = bunchArgs.TIMEOUT_TIME;
     if(toTime != null)
-      timeoutTimer = new javax.swing.Timer(toTime.intValue(),new TimeoutTimer());
+      timeoutTimer = new javax.swing.Timer(toTime,new TimeoutTimer());
   }
 
   private void initCallback() {
     //see if a callback class is setup, if so save a reference to the class
     Integer iTmp = bunchArgs.callbackObjectFrequency;
+    int callbackFrequency;
     if(iTmp != null)
-      callbackFrequency = iTmp.intValue();
+      callbackFrequency = iTmp;
   }
 
   private void setIsClusterTree() {
@@ -496,15 +492,15 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     NAHCConfiguration c = (NAHCConfiguration)configuration_d;
 
     if(popSz != null)
-      c.setPopulationSize(popSz.intValue());
+      c.setPopulationSize(popSz);
 
     if(HCPct != null) {
-      c.setMinPctToConsider(HCPct.intValue());
+      c.setMinPctToConsider(HCPct);
 
       if(rndPct != null)
-        c.setRandomizePct(rndPct.intValue());
+        c.setRandomizePct(rndPct);
       else {
-        int pctTmp = 100-HCPct.intValue();
+        int pctTmp = 100- HCPct;
         c.setRandomizePct(pctTmp);
       }
     }
@@ -526,12 +522,12 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     NAHCConfiguration c = (NAHCConfiguration)configuration_d;
     if(bunchArgs.algHcRndPct != null) {
       Integer randomize = bunchArgs.algHcRndPct;
-      c.setRandomizePct(randomize.intValue());
+      c.setRandomizePct(randomize);
     }
 
     if(bunchArgs.algHcHcPct != null) {
       Integer hcThreshold = bunchArgs.algHcHcPct;
-      c.setMinPctToConsider(hcThreshold.intValue());
+      c.setMinPctToConsider(hcThreshold);
     }
   }
 
@@ -539,7 +535,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     Integer popSz = bunchArgs.ALG_SAHC_POPULATION_SZ;
 
     if(popSz != null)
-      configuration_d.setPopulationSize(popSz.intValue());
+      configuration_d.setPopulationSize(popSz);
   }
 
   private void loadGaConfig() {
@@ -665,7 +661,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     return clusteringMethod_d.getBestGraph().cloneGraph();
   }
 
-  private boolean runClustering() throws IOException, ClassNotFoundException {
+  private void runClustering() throws IOException, ClassNotFoundException {
     initClustering();
 
     executeClusteringEngine();//clusteringMethod_d,bunchArgs);
@@ -703,19 +699,17 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       graphOutput_d.write();
     }
 
-    return true;
   }
 
-  private boolean runMQCalc() {
-    MQCalcMdgFileName = bunchArgs.MQCALC_MDG_FILE;
-    MQCalcSilFileName = bunchArgs.MQCALC_SIL_FILE;
+  private void runMQCalc() {
+    String MQCalcMdgFileName = bunchArgs.MQCALC_MDG_FILE;
+    String MQCalcSilFileName = bunchArgs.MQCALC_SIL_FILE;
     var MQCalcClass = bunchArgs.mqCalculatorClass;
 
-    MQCalcValue = bunch.util.MQCalculator.CalcMQ(MQCalcMdgFileName,MQCalcSilFileName,MQCalcClass);
-    return true;
+    MQCalcValue = bunch.util.MQCalculator.CalcMQ(MQCalcMdgFileName, MQCalcSilFileName,MQCalcClass);
   }
 
-  private boolean runPRCalc() {
+  private void runPRCalc() {
     String clusterF = bunchArgs.PR_CLUSTER_FILE;
     String expertF = bunchArgs.PR_EXPERT_FILE;
 
@@ -725,7 +719,6 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     precision = calc.get_precision();
     recall = calc.get_recall();
 
-    return true;
   }
 
   private int getMedianLevelNumber() {
@@ -841,14 +834,14 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   }
 
     private void executeClusteringEngine() {
-        startTime = System.currentTimeMillis();
+      long startTime = System.currentTimeMillis();
 
         if(timeoutTimer != null)
           timeoutTimer.start();
 
         clusteringMethod_d.run();
-        endTime = System.currentTimeMillis();
-        totalTime += (endTime-startTime);
+      long endTime = System.currentTimeMillis();
+        totalTime += (endTime - startTime);
 
         if(timeoutTimer != null)
           timeoutTimer.stop();

@@ -72,40 +72,24 @@ public void calculate() {
   double intra=0.0;
   double inter=0.0;
 
-  /**
-   * The key to this functioniality is the clusterMatrix_d.  This variable is
-   * a matrix that is used to indicate dependencies between clusters.
-   *
-   * The actual ID for cluster "i" is at clusterMatrix_d[i][0].  This relates
-   * to the cluster ID in the graph object.
-   */
-  if (clusterMatrix_d.length != numberOfNodes_d)
+    if (clusterMatrix_d.length != numberOfNodes_d)
     clusterMatrix_d = null;
   if (clusterMatrix_d == null)
     clusterMatrix_d = new int[numberOfNodes_d][numberOfNodes_d+1];
 
-  /**
-   * Initialization
-   */
-  for (int i=0; i<numberOfNodes_d; ++i) {
+    for (int i=0; i<numberOfNodes_d; ++i) {
     clusterMatrix_d[i][0] = 0;
     nodes_x[i].cluster = -1;
   }
 
-  /**
-   * Define the inter-cluster dependencies
-   */
-  int pos=0;
+    int pos=0;
   for (int i=0; i<numberOfNodes_d; ++i) {
     int numCluster = clusters_x[i];
     clusterMatrix_d[numCluster][(++clusterMatrix_d[numCluster][0])] = i;
     nodes_x[i].cluster = numCluster;
   }
 
-  /**
-   * Use helper methods to accumulate the inter- and intra dependencies
-   */
-  for (int i=0; i<clusterMatrix_d.length; ++i) {
+    for (int i=0; i<clusterMatrix_d.length; ++i) {
     if (clusterMatrix_d[i][0] > 0) {
       int[] clust = clusterMatrix_d[i];
       intra += calculateIntradependenciesValue(clust, i);
@@ -118,10 +102,7 @@ public void calculate() {
     }
   }
 
-  /**
-   * Calculate MQ and save the value in the graph object.
-   */
-  if (k==0) {
+    if (k==0) {
     intra = 0;
     inter = 0;
   }

@@ -51,10 +51,7 @@ public Graph parse() {
   Vector clusterNames = new Vector();
 
   try {
-    /**
-     * For each line...
-     */
-    while (true) {
+      while (true) {
       String line = reader_d.readLine();
       if (line == null) {
         break;
@@ -63,27 +60,18 @@ public Graph parse() {
         continue;
       }
 
-      /**
-       * parse the selected line.  See if the first token is a comment
-       */
-      StringTokenizer tok = new StringTokenizer(line, ", =");
+          StringTokenizer tok = new StringTokenizer(line, ", =");
       String first = tok.nextToken();
       if (first.charAt(0) == '/' && first.charAt(1) == '/') { //then its a comment, ignore
         continue;
       }
 
-      /**
-       * The next token is the cluster name
-       */
-      StringTokenizer tok2 = new StringTokenizer(first, "()");
+          StringTokenizer tok2 = new StringTokenizer(first, "()");
       tok2.nextToken();
       String cname = tok2.nextToken();
       clusterNames.addElement(cname);
 
-      /**
-       * The remaining tokens hold the nodes in the clusters.
-       */
-      while (tok.hasMoreTokens()) {
+          while (tok.hasMoreTokens()) {
         String next = tok.nextToken();
         if (next.charAt(0) == '/' && next.charAt(1) == '/') { //then its a comment, ignore
           --linecount; //to make sure the numbers are correct;

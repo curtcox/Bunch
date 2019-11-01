@@ -1,20 +1,3 @@
-/****
- *
- *	$Log: GAMethod.java,v $
- *	Revision 3.0  2002/02/03 18:41:49  bsmitc
- *	Retag starting at 3.0
- *	
- *	Revision 1.1.1.1  2002/02/03 18:30:03  bsmitc
- *	CVS Import
- *	
- *	Revision 3.0  2000/07/26 22:46:09  bsmitc
- *	*** empty log message ***
- *
- *	Revision 1.1.1.1  2000/07/26 22:43:34  bsmitc
- *	Imported CVS Sources
- *
- *
- */
 package bunch.ga;
 
 import bunch.model.Graph;
@@ -189,13 +172,12 @@ shakePopulation()
  * be used by the bunch.clustering.GAClusteringMethod.run() method to initialize the
  * internal generation counter for the GA.
  *
- * @param i the initial counter value
  * @see #getInitCounter()
  */
 void
-setInitCounter(int i)
+setInitCounter()
 {
-  initCounter_d = i;
+  initCounter_d = 0;
 }
 
 /**

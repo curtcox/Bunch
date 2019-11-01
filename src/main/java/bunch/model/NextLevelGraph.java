@@ -77,7 +77,7 @@ static final class NodeInfo {
           niSrc.dWeights.put(dest, w);
         } else {
           Integer edgeW = niSrc.dWeights.get(dest);
-          w = w.intValue() + edgeW.intValue();
+          w = w + edgeW;
           niSrc.dWeights.put(dest, w);
         }
 
@@ -86,7 +86,7 @@ static final class NodeInfo {
           niDest.beWeights.put(src, w);
         } else {
           Integer edgeW = niDest.beWeights.get(src);
-          w = w.intValue() + edgeW.intValue();
+          w = w + edgeW;
           niDest.beWeights.put(src, w);
         }
       }
@@ -156,8 +156,8 @@ static final class NodeInfo {
     for(int i = 0; i < eo.length; i++) {
       Integer Ikey = eo[i];
       Integer Iweight = weightH.get(Ikey);
-      int edgeTo = Ikey.intValue();
-      int edgeWeight = Iweight.intValue();
+      int edgeTo = Ikey;
+      int edgeWeight = Iweight;
       edge[i]=edgeTo;
       weight[i]=edgeWeight;
     }

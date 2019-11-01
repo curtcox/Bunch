@@ -144,7 +144,7 @@ public Graph parse() {
           //System.out.println("Adding weight " + w);
         } else {
           Integer wExisting = (Integer)currentNode.dWeights.get(target);
-          Integer wtemp = w.intValue() + wExisting.intValue();
+          Integer wtemp = w + wExisting;
           currentNode.dWeights.put(target,wtemp);
         }
 
@@ -153,7 +153,7 @@ public Graph parse() {
           targetNode.beWeights.put(nod,w);
         } else {
           Integer wExisting = (Integer)targetNode.beWeights.get(nod);
-          Integer wtemp = w.intValue() + wExisting.intValue();
+          Integer wtemp = w + wExisting;
           targetNode.beWeights.put(nod,wtemp);
         }
       }
@@ -183,7 +183,7 @@ public Graph parse() {
       ParserNode p = (ParserNode)nl[i];
       n.setName(p.name);
       Integer nid = (Integer)nameTable.get(p.name);
-      n.nodeID = nid.intValue();
+      n.nodeID = nid;
       n.dependencies = ht2ArrayFromKey(nameTable,p.dependencies);
       n.weights = ht2ArrayValFromKey(p.dWeights);
       n.backEdges = ht2ArrayFromKey(nameTable,p.backEdges);
@@ -211,7 +211,7 @@ private int[] ht2ArrayFromKey(Hashtable key, Hashtable values) {
       {
         String s = (String)oa[i];
         Integer val = (Integer)key.get(s);
-        retArray[i] = val.intValue();
+        retArray[i] = val;
       }
       return retArray;
     } catch(Exception e) {
@@ -233,7 +233,7 @@ private int[] ht2ArrayValFromKey(Hashtable values)
       {
         String s = (String)oa[i];
         Integer value = (Integer)values.get(s);
-        retArray[i] = value.intValue();
+        retArray[i] = value;
       }
       return retArray;
     } catch(Exception e) {

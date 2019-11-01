@@ -18,16 +18,15 @@ import java.io.*;
  * @see SteepestAscentHillClimbingClusteringMethod
  */
 public abstract class GenericHillClimbingClusteringMethod extends GenericClusteringMethod2 {
-private HillClimbingConfiguration config_d;
 
-/**
+  /**
  * This method indicates that the default behavior of a generic hill-climbing
  * clustering algorithm is configurable.  This is used to indicate if there
  * is a UI available
  */
 GenericHillClimbingClusteringMethod()
 {
-  setConfigurable(true);
+  setConfigurable();
 }
 
 /**
@@ -36,7 +35,7 @@ GenericHillClimbingClusteringMethod()
  * to implement thier own init() if necessary, but call thier parent.
  */
 public void init() {
-  config_d = (HillClimbingConfiguration)getConfiguration();
+  HillClimbingConfiguration config_d = (HillClimbingConfiguration) getConfiguration();
   this.setNumOfExperiments(config_d.getNumOfIterations());
   this.setThreshold(config_d.getThreshold());
   this.setPopSize(config_d.getPopulationSize());
@@ -52,9 +51,6 @@ public boolean nextGeneration() {
   long [] sequence = new long[currentPopulation_d.size()];
   BufferedWriter writer_d;
 
-  /**
-   * Batch mode configuration dump to stdout
-   */
   if (configuration_d.runBatch_d)
   {
     System.out.println("Run Batch = " + configuration_d.runBatch_d);

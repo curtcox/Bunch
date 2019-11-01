@@ -5,7 +5,6 @@ import java.util.*;
 public final class BunchNode {
 
   private final String nodeName;
-  private final int    nodeIndex;
   private int    nodeCluster;
   private BunchCluster memberCluster;
   private final boolean isNodeCluster;
@@ -16,7 +15,6 @@ public final class BunchNode {
 
   public BunchNode(String name, int index, int cluster,  boolean isCluster) {
     nodeName = name;
-    nodeIndex = index;
     nodeCluster = cluster;
     isNodeCluster = isCluster;
     clusterMemberships = new HashMap();

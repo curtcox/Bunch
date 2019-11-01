@@ -24,8 +24,7 @@ import java.util.Random;
  */
 public class GAClusteringMethod extends GenericClusteringMethod {
 
-private GAConfiguration config_d;
-private GAMethod method_d;
+  private GAMethod method_d;
 private Feature[] preFeatures_d;
 private Feature[] features_d;
 private Feature[] postFeatures_d;
@@ -34,7 +33,7 @@ private Feature[] postFeatures_d;
  * Class constructor.
  */
 public GAClusteringMethod() {
-  setConfigurable(true);
+  setConfigurable();
   setThreshold(1.0);
 }
 
@@ -53,7 +52,7 @@ public int getMaxIterations()
 public void init() {
   setPopSize(getConfiguration().getPopulationSize());
   setNumOfExperiments(getConfiguration().getNumOfIterations());
-  config_d = (GAConfiguration)getConfiguration();
+  GAConfiguration config_d = (GAConfiguration) getConfiguration();
   method_d = config_d.getMethod();
 
   Graph graph = getGraph().cloneGraph();
@@ -95,7 +94,7 @@ public void init() {
 /**
  * Redefinition of the setBestGraph method
  */
-public void setBestGraph(Graph g) {
+void setBestGraph(Graph g) {
   if (method_d != null)
     method_d.setBestGraph(g);
 }

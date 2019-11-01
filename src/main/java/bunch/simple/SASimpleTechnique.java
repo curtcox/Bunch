@@ -42,8 +42,8 @@ public class SASimpleTechnique extends SATechnique {
       return false;
     }
 
-    initTemp = dTemp.doubleValue();
-    alpha = dAlpha.doubleValue();
+    initTemp = dTemp;
+    alpha = dAlpha;
     currTemp = initTemp;
 
     configuredTemp = initTemp;

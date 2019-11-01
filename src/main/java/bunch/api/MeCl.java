@@ -38,14 +38,12 @@ final class MeCl {
     HashMap Ccollected = new HashMap();
     Ccollected.clear();
 
-    Iterator i = Ca.values().iterator();
-    while(i.hasNext()) {
-      HashMap Ci = (HashMap)i.next();
-      Iterator j = Ci.keySet().iterator();
-      while(j.hasNext()) {
-        String key = (String)j.next();
-        ArrayList value = (ArrayList)Ci.get(key);
-        tally+=mergeSubCluster(Ccollected,key,value);
+    for (Object item : Ca.values()) {
+      HashMap Ci = (HashMap) item;
+      for (Object o : Ci.keySet()) {
+        String key = (String) o;
+        ArrayList value = (ArrayList) Ci.get(key);
+        tally += mergeSubCluster(Ccollected, key, value);
       }
     }
     return tally;
@@ -74,12 +72,10 @@ final class MeCl {
   }
 
   private void constructEdgeSet() {
-    Iterator i = A.getEdges().iterator();
 
-    while(i.hasNext()) {
-      BunchEdge be = (BunchEdge)i.next();
+    for (BunchEdge be : A.getEdges()) {
       String key = be.getSrcNode().getName() + be.getDestNode().getName();
-      edgeA.put(key,be.getWeight());
+      edgeA.put(key, be.getWeight());
     }
   }
 
@@ -90,12 +86,12 @@ final class MeCl {
 
     Integer forward = edgeA.get(key1);
     if(forward != null){
-      total += forward.intValue();
+      total += forward;
     }
 
     Integer reverse = edgeA.get(key2);
     if(reverse != null) {
-      total += reverse.intValue();
+      total += reverse;
     }
 
     return total;
@@ -104,32 +100,30 @@ final class MeCl {
   private HashMap determineSubClusters() {
     HashMap Ca = new HashMap();
 
-    Iterator i = A.getClusters().iterator();
-    while(i.hasNext()) {
+    for (BunchCluster bunchCluster : A.getClusters()) {
       HashMap subClustersA = new HashMap();
-      BunchCluster Ai = (BunchCluster)i.next();
-      Iterator j = Ai.getClusterNodes().iterator();
-      while(j.hasNext()) {
-        BunchNode bnInA = (BunchNode)j.next();
+      BunchCluster Ai = bunchCluster;
+      for (Object o : Ai.getClusterNodes()) {
+        BunchNode bnInA = (BunchNode) o;
         String nodeName = bnInA.getName();
 
         //Now find this node in the B graph
         BunchNode bnInB = B.findNode(nodeName);
-        String    bnInBClusterName = bnInB.getMemberCluster().getName();
+        String bnInBClusterName = bnInB.getMemberCluster().getName();
         //---------------------------
 
         //Now add the current node to the sub cluster
         //hash map for the current cluster in a
-        List members = (ArrayList)subClustersA.get(bnInBClusterName);
-        if(members == null) {
+        List members = (ArrayList) subClustersA.get(bnInBClusterName);
+        if (members == null) {
           members = new ArrayList();
-          subClustersA.put(bnInBClusterName,members);
+          subClustersA.put(bnInBClusterName, members);
         }
         members.add(bnInA);
         //Now find the appropriate
       }
 
-      Ca.put(Ai.getName(),subClustersA);
+      Ca.put(Ai.getName(), subClustersA);
     }
     return Ca;
   }

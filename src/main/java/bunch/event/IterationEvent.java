@@ -14,8 +14,6 @@ import java.util.*;
 public final class IterationEvent
   extends EventObject
 {
-private int iteration_d;
-    private int overallIteration_d;
     int expNum;
 
 /**
@@ -32,7 +30,6 @@ public IterationEvent(Object source)
  */
 public void setIteration(int num)
 {
-  iteration_d = num;
 }
 
 /**
@@ -40,7 +37,6 @@ public void setIteration(int num)
  */
 public void setOverallIteration(int num)
 {
-  overallIteration_d = num;
 }
 
 }

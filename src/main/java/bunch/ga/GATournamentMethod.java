@@ -9,15 +9,14 @@ import bunch.model.Graph;
  * @author Brian Mitchell
  */
 public class GATournamentMethod extends GAMethod {
-private int[] tempArray_d;
 
-public GATournamentMethod() { }
+  public GATournamentMethod() { }
 
 public void init() {
   setIncrementCounter(1);
-  setInitCounter(0);
+  setInitCounter();
   setMaxCounter(currentPopulation_d.length);
-  tempArray_d = new int[currentPopulation_d[0].getClusters().length];
+  int[] tempArray_d = new int[currentPopulation_d[0].getClusters().length];
 }
 
 /**

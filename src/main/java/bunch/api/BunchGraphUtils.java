@@ -106,33 +106,30 @@ public final class BunchGraphUtils {
       g2Lookup.put(key,be);
     }
 
-    Iterator iG1 = g1.getEdges().iterator();
-    while(iG1.hasNext()) {
+    for (BunchEdge bunchEdge : g1.getEdges()) {
       total++;
-      BunchEdge be1 = (BunchEdge)iG1.next();
-      String    key = (be1.getSrcNode().getName() + be1.getDestNode().getName());
-      BunchEdge be2 = (BunchEdge)g2Lookup.get(key);
+      BunchEdge be1 = bunchEdge;
+      String key = (be1.getSrcNode().getName() + be1.getDestNode().getName());
+      BunchEdge be2 = (BunchEdge) g2Lookup.get(key);
 
       boolean be1InSame;
       //Investigate be1 to see if in same cluster
       be1InSame = (be1.getSrcNode().getCluster() == be1.getDestNode().getCluster());
-      if(be1InSame) {
+      if (be1InSame) {
         BunchNode n1 = be2.getSrcNode();
         BunchNode n2 = be2.getDestNode();
-        if((n2.isAMemberOfCluster(n1.getMemberCluster())) ||
-           (n1.isAMemberOfCluster(n2.getMemberCluster())))
+        if ((n2.isAMemberOfCluster(n1.getMemberCluster())) ||
+                (n1.isAMemberOfCluster(n2.getMemberCluster())))
           matches++;
       } else {
         BunchNode n1 = be2.getSrcNode();
         BunchNode n2 = be2.getDestNode();
-        if((n2.isAMemberOfCluster(n1.getMemberCluster())) ||
-           (n1.isAMemberOfCluster(n2.getMemberCluster())))
-        {
-          if((n2.memberOfHowManyClusters() > 1) ||
-             (n1.memberOfHowManyClusters() > 1))
+        if ((n2.isAMemberOfCluster(n1.getMemberCluster())) ||
+                (n1.isAMemberOfCluster(n2.getMemberCluster()))) {
+          if ((n2.memberOfHowManyClusters() > 1) ||
+                  (n1.memberOfHowManyClusters() > 1))
             matches++;
-        }
-        else
+        } else
           matches++;
       }
 
@@ -164,34 +161,31 @@ public final class BunchGraphUtils {
       g2Lookup.put(key,be);
     }
 
-    Iterator iG1 = g1.getEdges().iterator();
-    while(iG1.hasNext()) {
+    for (BunchEdge bunchEdge : g1.getEdges()) {
       total++;
-      BunchEdge be1 = (BunchEdge)iG1.next();
-      String    key = (be1.getSrcNode().getName() + be1.getDestNode().getName());
-      BunchEdge be2 = (BunchEdge)g2Lookup.get(key);
+      BunchEdge be1 = bunchEdge;
+      String key = (be1.getSrcNode().getName() + be1.getDestNode().getName());
+      BunchEdge be2 = (BunchEdge) g2Lookup.get(key);
 
       boolean be1InSame;
       boolean be2InSame;
       //Investigate be1 to see if in same cluster
       be1InSame = (be1.getSrcNode().getCluster() == be1.getDestNode().getCluster());
-      if(be1InSame) {
+      if (be1InSame) {
         BunchNode n1 = be2.getSrcNode();
         BunchNode n2 = be2.getDestNode();
-        if((n2.isAMemberOfCluster(n1.getMemberCluster())) ||
-           (n1.isAMemberOfCluster(n2.getMemberCluster())))
+        if ((n2.isAMemberOfCluster(n1.getMemberCluster())) ||
+                (n1.isAMemberOfCluster(n2.getMemberCluster())))
           matches++;
       } else {
         BunchNode n1 = be2.getSrcNode();
         BunchNode n2 = be2.getDestNode();
-        if((n2.isAMemberOfCluster(n1.getMemberCluster())) ||
-           (n1.isAMemberOfCluster(n2.getMemberCluster())))
-        {
-          if((n2.memberOfHowManyClusters() > 1) ||
-             (n1.memberOfHowManyClusters() > 1))
+        if ((n2.isAMemberOfCluster(n1.getMemberCluster())) ||
+                (n1.isAMemberOfCluster(n2.getMemberCluster()))) {
+          if ((n2.memberOfHowManyClusters() > 1) ||
+                  (n1.memberOfHowManyClusters() > 1))
             matches++;
-        }
-        else
+        } else
           matches++;
       }
     }

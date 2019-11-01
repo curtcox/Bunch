@@ -11,15 +11,15 @@ import bunch.model.Graph;
 public class GARouletteWheelMethod extends GAMethod {
 
 private int[] tempArray_d;
-private int shakeUpCount_d;
-public GARouletteWheelMethod() { }
+
+  public GARouletteWheelMethod() { }
 
 public void init() {
   setIncrementCounter(2);
-  setInitCounter(0);
+  setInitCounter();
   setMaxCounter(currentPopulation_d.length-1);
   tempArray_d = new int[currentPopulation_d[0].getClusters().length];
-  shakeUpCount_d = -1500;
+  int shakeUpCount_d = -1500;
 }
 
 /**

@@ -30,8 +30,7 @@ import bunch.stats.*;
   private boolean converged = false;
   private boolean validMove = false;
 
-  private int [] clusterNames = null;
-  int [] clustersUsed = null;
+    int [] clustersUsed = null;
   boolean clusterNamesDirty = true;
   private int numClustNames = -1;
   private boolean clusterNamesChanged = false;
@@ -184,10 +183,7 @@ import bunch.stats.*;
     if (graph == null)
       return;
 
-    /**
-     * Get the calculator from the factory.
-     */
-    calculator = Graph.objectiveFunctionCalculatorFactory_sd.getSelectedCalculator();
+      calculator = Graph.objectiveFunctionCalculatorFactory_sd.getSelectedCalculator();
     if (calculator == null)
       return;
 
@@ -211,10 +207,6 @@ import bunch.stats.*;
    */
   public void setClusterVector(int [] cv)
   {
-      /**
-       * Initialize with the cluster vector, and reset all of the
-       * tracking statistics associated with the previous cluster vector
-       */
       this.invalidateLastMove();
       isDirty = true;
       clusterVector = new int[cv.length];
@@ -500,10 +492,7 @@ import bunch.stats.*;
      boolean hasDoubleLocks = graph.hasDoubleLocks();
      boolean [] locks = graph.getLocks();
 
-     /**
-      * Dont count the locked clusters (the ones with special modules)
-      */
-     for (int i=0; i<clusterVector.length; ++i) {
+      for (int i=0; i<clusterVector.length; ++i) {
        if (hasDoubleLocks)
          if(locks[i]) continue;
 
@@ -521,9 +510,8 @@ import bunch.stats.*;
      System.arraycopy(clusts, 0, tmp, 0, numClusts);
 
      numClustNames = numClusts;
-     clusterNames = tmp;
 
-     this.clusterNamesChanged = false;
+      this.clusterNamesChanged = false;
      return tmp;
   }
 
@@ -583,15 +571,11 @@ import bunch.stats.*;
    * @param origCluster   The ID of the cluster for the node prior to the move
    * @param newCluster    The ID of the cluster for the node after the move
    *
-   * @returns True if the relocation was OK, false if not.
    */
-  private boolean move(int node, int origCluster, int newCluster) {
-      /**
-       * Panic check.  The node is not in its expected cluster.
-       */
+  private void move(int node, int origCluster, int newCluster) {
       if(clusterVector[node] != origCluster) {
         System.out.println("This is bad");
-        return false;
+        return;
       }
 
       //save the last move information for quick rollback
@@ -609,7 +593,6 @@ import bunch.stats.*;
       validMove = false;
       isDirty = false;
 
-      return true;
   }
 
   /**
