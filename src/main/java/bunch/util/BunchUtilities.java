@@ -13,7 +13,7 @@ import bunch.model.Node;
 
 public final class BunchUtilities {
 
-public final static double defaultPrecision = 0.0001;
+private final static double defaultPrecision = 0.0001;
 
 /**
  *		Deserialize an object from a byte array
@@ -59,7 +59,7 @@ public static byte[] toByteArray(Serializable obj) {
 
 public static String DelimitString(String input, int rowWidth) {
    System.out.println(input);
-   StringBuffer sb = new StringBuffer(input);
+   StringBuilder sb = new StringBuilder(input);
    int totalLen = input.length();
    String out = "";
    int pos = 0;
@@ -122,9 +122,7 @@ public static String getLocalHostName()
     //only interested in the first token as the host name
 
 
-    String hname = st.nextToken();
-
-    return hname;
+      return st.nextToken();
 
   }
   catch(Exception ex)
@@ -138,61 +136,64 @@ public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
   ArrayList al = new ArrayList(bunchMDG.getMDGEdges());
   Hashtable nodes = new Hashtable();
 
-  for(int i = 0; i < al.size(); i++) {
-    bunch.api.BunchMDGDependency bmd = (bunch.api.BunchMDGDependency)al.get(i);
-
-    ParserNode currentNode = null;
-    ParserNode targetNode = null;
-
     /**
      * Ignore reflexive edges
      */
-    if (bmd.getSrcNode().equals(bmd.getDestNode()))
-      continue;
+    for (Object o : al) {
+        bunch.api.BunchMDGDependency bmd = (bunch.api.BunchMDGDependency) o;
 
-    currentNode = (ParserNode)nodes.get(bmd.getSrcNode());
-    //Node is not known yet, add it to the list
-    if (currentNode == null) {
-        currentNode = new ParserNode(bmd.getSrcNode());
-        nodes.put(bmd.getSrcNode(),currentNode);
+        ParserNode currentNode = null;
+        ParserNode targetNode = null;
+
+        /**
+         * Ignore reflexive edges
+         */
+        if (bmd.getSrcNode().equals(bmd.getDestNode()))
+            continue;
+
+        currentNode = (ParserNode) nodes.get(bmd.getSrcNode());
+        //Node is not known yet, add it to the list
+        if (currentNode == null) {
+            currentNode = new ParserNode(bmd.getSrcNode());
+            nodes.put(bmd.getSrcNode(), currentNode);
+        }
+
+        targetNode = (ParserNode) nodes.get(bmd.getDestNode());
+        //Node is not known yet, add it to the list
+        if (targetNode == null) {
+            targetNode = new ParserNode(bmd.getDestNode());
+            nodes.put(bmd.getDestNode(), targetNode);
+        }
+
+        String src = bmd.getSrcNode();
+        String dep = bmd.getDestNode();
+        Integer w = bmd.getEdgeW();  //The edge weight
+
+        //Add source to target, and target to source if they don't already
+        //exist as forward and backward dependencies
+        if (!currentNode.dependencies.containsKey(dep)) {
+            currentNode.dependencies.put(dep, dep);
+            currentNode.dWeights.put(dep, w);
+            //System.out.println("Adding weight " + w);
+        } else {
+            Integer wExisting = (Integer) currentNode.dWeights.get(dep);
+            Integer wtemp = w.intValue() + wExisting.intValue();
+            currentNode.dWeights.put(dep, wtemp);
+        }
+
+        if (!targetNode.backEdges.containsKey(src)) {
+            targetNode.backEdges.put(src, src);
+            targetNode.beWeights.put(src, w);
+        } else {
+            Integer wExisting = (Integer) targetNode.beWeights.get(src);
+            Integer wtemp = w.intValue() + wExisting.intValue();
+            targetNode.beWeights.put(src, wtemp);
+        }
+
+        //----------------
+        //DataStructure updated for edge now
+        //----------------
     }
-
-    targetNode = (ParserNode)nodes.get(bmd.getDestNode());
-    //Node is not known yet, add it to the list
-    if (targetNode == null) {
-        targetNode = new ParserNode(bmd.getDestNode());
-        nodes.put(bmd.getDestNode(),targetNode);
-    }
-
-    String src = bmd.getSrcNode();
-    String dep = bmd.getDestNode();
-    Integer w = new Integer(bmd.getEdgeW());  //The edge weight
-
-    //Add source to target, and target to source if they don't already
-    //exist as forward and backward dependencies
-    if (!currentNode.dependencies.containsKey(dep)) {
-      currentNode.dependencies.put (dep,dep);
-      currentNode.dWeights.put(dep,w);
-      //System.out.println("Adding weight " + w);
-    } else {
-      Integer wExisting = (Integer)currentNode.dWeights.get(dep);
-      Integer wtemp = new Integer(w.intValue() + wExisting.intValue());
-      currentNode.dWeights.put(dep,wtemp);
-    }
-
-    if (!targetNode.backEdges.containsKey(src)) {
-      targetNode.backEdges.put(src,src);
-      targetNode.beWeights.put(src,w);
-    } else {
-      Integer wExisting = (Integer)targetNode.beWeights.get(src);
-      Integer wtemp = new Integer(w.intValue() + wExisting.intValue());
-      targetNode.beWeights.put(src,wtemp);
-    }
-
-    //----------------
-    //DataStructure updated for edge now
-    //----------------
-  }
 
   //now deal with Bunch Format -- Generate bunch graph object
   int sz = nodes.size();
@@ -202,7 +203,7 @@ public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
   Object [] oa = nodes.keySet().toArray();
   for (int i = 0; i < oa.length; i++) {
     String n = (String)oa[i];
-    nameTable.put(n,new Integer(i));
+    nameTable.put(n, i);
   }
 
   //now build the graph
@@ -220,9 +221,9 @@ public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG)
     Integer nid = (Integer)nameTable.get(p.name);
     n.nodeID = nid.intValue();
     n.dependencies = ht2ArrayFromKey(nameTable,p.dependencies);
-    n.weights = ht2ArrayValFromKey(nameTable,p.dWeights);
+    n.weights = ht2ArrayValFromKey(p.dWeights);
     n.backEdges = ht2ArrayFromKey(nameTable,p.backEdges);
-    n.beWeights = ht2ArrayValFromKey(nameTable,p.beWeights);
+    n.beWeights = ht2ArrayValFromKey(p.beWeights);
   }
 
   return retGraph;
@@ -252,7 +253,7 @@ private static int[] ht2ArrayFromKey(Hashtable key, Hashtable values) {
  * Since this is a hashtable of hashtables we want to return
  * the contents of the inner hashtable in an integer array format.
  */
-private static int[] ht2ArrayValFromKey(Hashtable key, Hashtable values) {
+private static int[] ht2ArrayValFromKey(Hashtable values) {
     int [] retArray = new int[values.size()];
 
     try{

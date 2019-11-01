@@ -10,7 +10,7 @@ import bunch.model.Graph;
  * @author Brian Mitchell
  */
 public class HillClimbingConfiguration extends Configuration {
-double threshold_d=0.1;
+private double threshold_d=0.1;
 
 /**
  * Parameterless class constructor.

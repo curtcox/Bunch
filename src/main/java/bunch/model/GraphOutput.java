@@ -14,25 +14,27 @@ import java.io.*;
  */
 public abstract class GraphOutput {
 
-public final static int OUTPUT_TOP_ONLY = 1;
-public final static int OUTPUT_MEDIAN_ONLY = 2;
-public final static int OUTPUT_ALL_LEVELS = 3;
-public final static int OUTPUT_DETAILED_LEVEL_ONLY = 4;
+final static int OUTPUT_TOP_ONLY = 1;
+final static int OUTPUT_MEDIAN_ONLY = 2;
+final static int OUTPUT_ALL_LEVELS = 3;
+final static int OUTPUT_DETAILED_LEVEL_ONLY = 4;
 
-protected Graph graph_d;
-protected BufferedWriter writer_d;
-protected String fileName_d, currentName_d, basicName_d;
-protected boolean writeNestedLevels = false;
+Graph graph_d;
+BufferedWriter writer_d;
+private String fileName_d;
+    private String currentName_d;
+    private String basicName_d;
+private boolean writeNestedLevels = false;
 protected boolean agglomWriteAllLevels = false;
-protected int outputTechnique = OUTPUT_MEDIAN_ONLY;
+private int outputTechnique = OUTPUT_MEDIAN_ONLY;
 
 
-protected int baseID = 0;
+int baseID = 0;
 
 /**
  * Class constructor
  */
-public GraphOutput() { }
+GraphOutput() { }
 
 /**
  * Determines the output technique
@@ -43,7 +45,7 @@ public void setOutputTechnique(int t)
 /**
  * This method is meant to be subclassed to determine the type of output driver
  */
-public int getOutputTechnique()
+int getOutputTechnique()
 { return outputTechnique; }
 
 /**
@@ -53,20 +55,11 @@ public void setNestedLevels(boolean b)
 { writeNestedLevels = b;  }
 
 /**
- * Setup if we want to write all nested levels in agglomerative mode
- */
-public void setAgglomWriteAllLevels(boolean b)
-{ agglomWriteAllLevels = b;  }
-
-
-/**
  * This method determines if the output driver should write nested levels
  */
-public boolean getWriteNestedLevels()
+boolean getWriteNestedLevels()
 { return writeNestedLevels; }
 
-public boolean getAgglomWriteAllLevels()
-{ return agglomWriteAllLevels; }
 /**
  * Sets the partitioned graph to be printed to the stream
  *
@@ -139,7 +132,7 @@ public void setCurrentName(String n)
  * @return the output file's current name
  * @see #setCurrentName(java.lang.String)
  */
-public String getCurrentName()
+String getCurrentName()
 {
   return currentName_d;
 }
@@ -165,7 +158,7 @@ public void setBasicName(String bn)
  * @return the output file's basic name
  * @see #setBasicName(java.lang.String)
  */
-public String getBasicName()
+String getBasicName()
 {
   return basicName_d;
 }

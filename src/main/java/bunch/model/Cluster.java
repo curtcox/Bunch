@@ -16,50 +16,50 @@ import bunch.stats.*;
  /**
   * Constants
   */
-  public static final double CLUSTER_OBJ_FN_VAL_NOT_DEFINED = -999.0;
+  private static final double CLUSTER_OBJ_FN_VAL_NOT_DEFINED = -999.0;
 
   /**
    * Member variables
    */
-  int [] clusterVector;
-  int [] epsilonEdges;
-  int [] muEdges;
-  int [] lastMv = new int[3];
-  double objFnValue=CLUSTER_OBJ_FN_VAL_NOT_DEFINED;
-  Graph graph;
-  boolean converged = false;
-  boolean validMove = false;
+  private int [] clusterVector;
+  private int [] epsilonEdges;
+  private int [] muEdges;
+  private int [] lastMv = new int[3];
+  private double objFnValue=CLUSTER_OBJ_FN_VAL_NOT_DEFINED;
+  private Graph graph;
+  private boolean converged = false;
+  private boolean validMove = false;
 
-  int [] clusterNames = null;
+  private int [] clusterNames = null;
   int [] clustersUsed = null;
   boolean clusterNamesDirty = true;
-  int numClustNames = -1;
-  boolean clusterNamesChanged = false;
-  double baseObjFnValue = CLUSTER_OBJ_FN_VAL_NOT_DEFINED;
-  long   numMQEvaluations = 0;
-  int    baseNumClusters = 0;
-  Cluster baseCluster = null;
+  private int numClustNames = -1;
+  private boolean clusterNamesChanged = false;
+  private double baseObjFnValue = CLUSTER_OBJ_FN_VAL_NOT_DEFINED;
+  private long   numMQEvaluations = 0;
+  private int    baseNumClusters = 0;
+  private Cluster baseCluster = null;
 
   //---------------------------------------------------
   //the following properties
   //track the last "move" so that it can be rolled back
   //without a lot of calculation overhead
-  int lastMoveNode = -1;
-  int lastMoveOrigCluster = -1;
-  int lastMoveNewCluster = -1;
-  double lastMoveObjectiveFnValue = 0.0;
+  private int lastMoveNode = -1;
+  private int lastMoveOrigCluster = -1;
+  private int lastMoveNewCluster = -1;
+  private double lastMoveObjectiveFnValue = 0.0;
 
-  int pushNode = -1;
-  int pushCluster = -1;
-  double pushObjectiveFnValue = 0.0;
+  private int pushNode = -1;
+  private int pushCluster = -1;
+  private double pushObjectiveFnValue = 0.0;
 
-  boolean isDirty = true;
-  long     depth = 0;
-  ArrayList cDetails = null;
+  private boolean isDirty = true;
+  private long     depth = 0;
+  private ArrayList cDetails = null;
   //-----------------------------------------------------
 
-  ObjectiveFunctionCalculator calculator = null;
-  StatsManager stats = StatsManager.getInstance();
+  private ObjectiveFunctionCalculator calculator = null;
+  private final StatsManager stats = StatsManager.getInstance();
 
   /**
    * This method is the constructor and it initializes the move stack.
@@ -88,14 +88,6 @@ import bunch.stats.*;
       baseCluster = cloneCluster();
   }
 
-  public Cluster getBaseCluster()
-  {
-    return baseCluster;
-  }
-
-  public int getBaseNumClusters()
-  { return baseNumClusters; }
-
   public double getBaseObjFnValue()
   { return baseObjFnValue;  }
 
@@ -119,7 +111,7 @@ import bunch.stats.*;
     depth++;
 
     if((cDetails != null) && (stats.getCollectClusteringDetails()))
-      cDetails.add(new Double(this.objFnValue));
+      cDetails.add(this.objFnValue);
   }
 
   /**
@@ -176,15 +168,6 @@ import bunch.stats.*;
   }
 
   /**
-   * This method sets the array of epsilon (inter) edges for the current
-   * partition of the MDG.
-   */
-  public void setEpsillonEdgeVector(int [] ev)
-  {
-    epsilonEdges = ev;
-  }
-
-  /**
    * This method gets the mu (intra) edges for the current partition of the
    * MDG.
    */
@@ -194,31 +177,21 @@ import bunch.stats.*;
   }
 
   /**
-   * This method sets the mu (intra) edges for the current partition of the
-   * MDG.
-   */
-  public void setMuEdgeVector(int [] ev)
-  {
-    muEdges = ev;
-  }
-
-  /**
    * This method performs initialization on the Objective Function calculator.
    */
-  private boolean initCalculator()
+  private void initCalculator()
   {
     if (graph == null)
-      return false;
+      return;
 
     /**
      * Get the calculator from the factory.
      */
     calculator = Graph.objectiveFunctionCalculatorFactory_sd.getSelectedCalculator();
     if (calculator == null)
-      return false;
+      return;
 
     calculator.init(graph);
-    return true;
   }
 
   /**
@@ -227,18 +200,9 @@ import bunch.stats.*;
    *
    * @returns The object instance of the objective function calculator.
    */
-  public ObjectiveFunctionCalculator getCalculator()
+  private ObjectiveFunctionCalculator getCalculator()
   {   return calculator;  }
 
-
-  /**
-   * This method indicates if the cluster "is dirty".  If it is the objective
-   * function value might be out-of-sync with the cluster vector.
-   *
-   * @returns True if the cluster is dirty, false otherwise
-   */
-  public boolean isDirty()
-  { return this.isDirty;  }
 
   /**
    * This method sets the cluster vector for the cluster object.
@@ -281,7 +245,7 @@ import bunch.stats.*;
   /**
    * This method updates the objective function value.
    */
-  public void setObjFnValue(double o)
+  private void setObjFnValue(double o)
   {
       objFnValue = o;
   }
@@ -303,24 +267,12 @@ import bunch.stats.*;
   }
 
   /**
-   * This method is used to "force" the entire recalculation of the objective
-   * function for the current partition of the MDG.
-   */
-  public void force()
-  {
-    isDirty = true;
-    validMove = false;
-    calcObjFn();
-  }
-
-  /**
    * This method calculates the objective function value using the objective
    * function factory.  If the current cluster is not dirty, the previously
    * cached value is returned.  If the cluster is dirty then the MQ
    * function is called.
    */
-  public double calcObjFn()
-  {
+  public double calcObjFn() {
       stats.incrMQCalculations();
       numMQEvaluations++;
 
@@ -328,16 +280,14 @@ import bunch.stats.*;
          return CLUSTER_OBJ_FN_VAL_NOT_DEFINED;
 
 
-      if (isDirty == false)
+      if (!isDirty)
         return objFnValue;
 
       if (calculator == null)
           initCalculator();
 
-      if (validMove == false)
+      if (!validMove)
           invalidateLastMove();
-
-      int [] cltemp = graph.getClusters();
 
       double objfn = calculator.calculate(this);
 
@@ -348,16 +298,6 @@ import bunch.stats.*;
       return objfn;
   }
 
-  /**
-   * This method is used to copy a new cluster vector into the current
-   * cluster vector
-   *
-   * @param cv The cluster vector that will overwrite the previous one.
-   */
-  private void copy(int [] cv)
-  {
-      this.setClusterVector(cv);
-  }
 
   /**
    * This method is used to determine if the cluster has converged.
@@ -387,54 +327,16 @@ import bunch.stats.*;
   {   return graph;  }
 
   /**
-   * This method is used to determine if another cluster is equal to the
-   * current cluser.  Equality is defined by this method to agree on 4
-   * decimal places.  We need this to ensure that floating point round off
-   * errors dont impact the comparisons.
-   *
-   * @returns True if equal, false if not.
-   */
-  public boolean isEqualTo(Cluster c)
-  {
-    double otherMQ = c.getObjFnValue();
-
-    int iMQ = (int)(objFnValue*10000.0);
-    int iMQ2 = (int)(otherMQ*10000.0);
-
-    return (iMQ == iMQ2);
-  }
-
-  /**
-   * This method is used to determine if another cluster is grater then the
-   * current cluser.  Greater than, like equals is defined by this method
-   * to agree on 4 decimal places.  We need this to ensure that floating
-   * point round off errors dont impact the comparisons.
-   *
-   * @returns True if equal, false if not.
-   */
-  public boolean isGreaterThan(Cluster c)
-  {
-    double otherMQ = c.getObjFnValue();
-
-    int iMQ = (int)(objFnValue*10000.0);
-    int iMQ2 = (int)(otherMQ*10000.0);
-
-    return (iMQ > iMQ2);
-  }
-
-  /**
    * This method allows the state of the current cluster instance to be
    * copied from another cluster instance.
    *
    * @param c The other cluster for which the current clusters state will
    *          be modeled.
    */
-  private void setFromCluster(Cluster c)
-  {
+  private void setFromCluster(Cluster c) {
       if(c.getClusterVector()==null)
         clusterVector = null;
-      else
-      {
+      else {
         clusterVector = new int[c.getClusterVector().length];
         System.arraycopy(c.getClusterVector(),0,clusterVector,0,clusterVector.length);
       }
@@ -456,12 +358,9 @@ import bunch.stats.*;
       converged = c.converged;
       validMove = c.validMove;
 
-      if((c.epsilonEdges == null)||(c.muEdges==null))
-      {
+      if((c.epsilonEdges == null)||(c.muEdges==null)) {
         epsilonEdges = muEdges = null;
-      }
-      else
-      {
+      } else {
         epsilonEdges = new int[c.epsilonEdges.length];
         muEdges = new int[c.muEdges.length];
         System.arraycopy(c.epsilonEdges,0,this.epsilonEdges,0,this.epsilonEdges.length);
@@ -489,8 +388,7 @@ import bunch.stats.*;
    *
    * @returns The cloned cluster of the current cluster object.
    */
-  public Cluster cloneCluster()
-  {
+  public Cluster cloneCluster() {
       Cluster c = new Cluster();
       c.setFromCluster(this);
       return c;
@@ -512,8 +410,7 @@ import bunch.stats.*;
    * This method returns the number of clusters for the current partition of the
    * MDG
    */
-  public int getNumClusters()
-  {
+  public int getNumClusters() {
     if (numClustNames == -1) return 0;
     else return numClustNames;
   }
@@ -538,19 +435,16 @@ import bunch.stats.*;
    *
    * @returns A cluser ID not already in use by another cluster.
    */
-  public int findNewClusterID()
-  {
+  private int findNewClusterID() {
     int [] clusterNames = getClusterNames();
     int [] tmpVector = new int[clusterVector.length];
     for(int i = 0; i < clusterVector.length; i++)
       tmpVector[i] = i;
 
-    for(int i = 0; i < clusterNames.length; i++)
-      tmpVector[clusterNames[i]] = -1;
+      for (int clusterName : clusterNames) tmpVector[clusterName] = -1;
 
     int newClusterID = -1;
-    for(int i = 0; i < clusterVector.length; i++)
-    {
+    for(int i = 0; i < clusterVector.length; i++) {
       if(tmpVector[i] != -1) {
         newClusterID = i;
         break;
@@ -573,27 +467,11 @@ import bunch.stats.*;
   }
 
   /**
-   * This method moves a node from its current cluster to a new cluster.
-   * The node and cluster are represented by thier associated identifier.
-   *
-   * @param nodeID        The ID of the node to be moved
-   * @param newClusterID  The ID of the cluster to which the node is moved
-   */
-  public boolean moveNodeToNewCluster(int nodeID, int newClusterID)
-  {
-    this.clusterNamesChanged = true;
-    return this.relocate(nodeID,newClusterID);
-  }
-
-  /**
    * This method deletes a cluster from the current partition.
    *
-   * @param newClusterID  The ID of the cluster to delete
    */
-  public boolean removeNewCluster(int newClusterID)
-  {
+  public void removeNewCluster() {
     this.clusterNamesChanged = true;
-    return true;
   }
 
   /**
@@ -630,9 +508,9 @@ import bunch.stats.*;
          if(locks[i]) continue;
 
        name = clusterVector[i];
-       Integer iNm = new Integer(name);
+       Integer iNm = name;
 
-       if(usedClusts.containsKey(iNm)==false)
+       if(!usedClusts.containsKey(iNm))
        {
            clusts[numClusts] = name;
            numClusts++;
@@ -688,15 +566,14 @@ import bunch.stats.*;
    * @param node      The ID of the node to be moved
    * @param cluster   The ID of the cluster for the moved node
    *
-   * @returns True if the relocation was OK, false if not.
    */
-  public boolean relocate(int node, int cluster)
+  public void relocate(int node, int cluster)
   {
     int currentCluster = clusterVector[node];
-    if(currentCluster != cluster)
-      return move(node,currentCluster,cluster);
+    if(currentCluster != cluster) {
+        move(node, currentCluster, cluster);
+    }
 
-    return true;
   }
 
   /**
@@ -708,13 +585,11 @@ import bunch.stats.*;
    *
    * @returns True if the relocation was OK, false if not.
    */
-  public boolean move(int node, int origCluster, int newCluster)
-  {
+  private boolean move(int node, int origCluster, int newCluster) {
       /**
        * Panic check.  The node is not in its expected cluster.
        */
-      if(clusterVector[node] != origCluster)
-      {
+      if(clusterVector[node] != origCluster) {
         System.out.println("This is bad");
         return false;
       }

@@ -4,14 +4,14 @@ import java.util.*;
 
 public final class BunchNode {
 
-  String nodeName;
-  int    nodeIndex;
-  int    nodeCluster;
-  BunchCluster memberCluster;
-  boolean isNodeCluster;
-  List<BunchEdge>   deps;
-  List<BunchEdge>   backDeps;
-  HashMap     clusterMemberships;
+  private final String nodeName;
+  private final int    nodeIndex;
+  private int    nodeCluster;
+  private BunchCluster memberCluster;
+  private final boolean isNodeCluster;
+  private List<BunchEdge>   deps;
+  private List<BunchEdge>   backDeps;
+  private final HashMap     clusterMemberships;
   static public final int NOT_A_MEMBER_OF_A_CLUSTER = -1;
 
   public BunchNode(String name, int index, int cluster,  boolean isCluster) {

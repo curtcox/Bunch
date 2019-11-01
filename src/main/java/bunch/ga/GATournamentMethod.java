@@ -9,7 +9,7 @@ import bunch.model.Graph;
  * @author Brian Mitchell
  */
 public class GATournamentMethod extends GAMethod {
-protected int[] tempArray_d;
+private int[] tempArray_d;
 
 public GATournamentMethod() { }
 
@@ -59,7 +59,7 @@ public void selectReproduceCrossAndMutate(int pos) {
 /**
  * Mutate the selected individual
  */
-public void mutate(int[] c, int pos)
+private void mutate(int[] c, int pos)
 {
     c[pos] = (int)(randomGenerator_d.nextFloat() * (c.length-1));
 }
@@ -67,7 +67,7 @@ public void mutate(int[] c, int pos)
 /**
  * Perform crossover of c1c with c2c at the crossp position
  */
-public void cross(int[] c1c, int[] c2c, int crossp)
+private void cross(int[] c1c, int[] c2c, int crossp)
 {
   System.arraycopy(c2c, crossp, c1c, crossp, c1c.length-crossp);
 }

@@ -16,19 +16,19 @@ import java.io.*;
  */
 public class Configuration implements java.io.Serializable {
 
-Feature[] preFeatures_d;
-Feature[] features_d;
-Feature[] postFeatures_d;
-int numIterations_d;
-int popSize_d;
-public int expNumber_d = 0;
-public boolean runBatch_d = false;
-public BufferedWriter writer_d = null;
+private Feature[] preFeatures_d;
+private Feature[] features_d;
+private Feature[] postFeatures_d;
+private int numIterations_d;
+private int popSize_d;
+public final int expNumber_d = 0;
+public final boolean runBatch_d = false;
+public final BufferedWriter writer_d = null;
 
 /**
  * Class constructor.
  */
-public Configuration() { }
+protected Configuration() { }
 
 /**
  * Initializes this configuration object based on the characteristics of
@@ -37,21 +37,6 @@ public Configuration() { }
  * @param g the graph used to generate a default configuration
  */
 public void init(Graph g) { }
-
-/**
- * This method is used to create a log file.  The name is hard coded for now
- * as this feature is mainly for debugging.
- */
-public void createLogFile() throws Exception {
-	writer_d = new BufferedWriter(new FileWriter("c:\\bunch.log"));
-}
-
-/**
- * This method closes the log file.
- */
-public void closeLogFile() throws Exception {
-	writer_d.close();
-}
 
 /**
  * Sets the maximum number of iterations to be performed by the clustering method
@@ -102,7 +87,6 @@ public int getPopulationSize()
  * Obtains the array of pre-condition features for this configuration.
  *
  * @return the array of precondition features
- * @see #setPreConditionFeatures(Feature[])
  */
 public Feature[] getPreConditionFeatures()
 {
@@ -110,22 +94,10 @@ public Feature[] getPreConditionFeatures()
 }
 
 /**
- * Sets the array of pre-condition features for this configuration.
- *
- * @param p the array of precondition features
- * @see #getPreConditionFeatures()
- */
-public void setPreConditionFeatures(Feature[] p)
-{
-  preFeatures_d=p;
-}
-
-/**
  * Obtains the array of features that are executed along with the
  * clustering algorithm for this configuration.
  *
  * @return the array of features
- * @see #setFeatures(Feature[])
  */
 public Feature[] getFeatures()
 {
@@ -133,36 +105,13 @@ public Feature[] getFeatures()
 }
 
 /**
- * Sets the array of features that are executed along with the
- * clustering algorithm for this configuration.
- *
- * @param f the array of features
- * @see #getFeatures()
- */
-public void setFeatures(Feature[] f)
-{
-  features_d=f;
-}
-
-/**
  * Obtains the array of post-condition features for this configuration.
  *
  * @return the array of postcondition features
- * @see #setPostConditionFeatures(Feature[])
  */
 public Feature[] getPostConditionFeatures()
 {
   return postFeatures_d;
 }
 
-/**
- * Sets the array of post-condition features for this configuration.
- *
- * @param p the array of postcondition features
- * @see #getPostConditionFeatures()
- */
-public void setPostConditionFeatures(Feature[] p)
-{
-  postFeatures_d=p;
-}
 }

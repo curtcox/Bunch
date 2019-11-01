@@ -32,17 +32,23 @@ import java.util.Random;
  * @author  Brian Mitchell
  */
 public abstract class GAMethod {
-protected int initCounter_d=0, maxCounter_d=0, increment_d=1;
-protected Random randomGenerator_d;
-protected Graph[] currentPopulation_d, newPopulation_d;
-protected Graph bestGraph_d;
-protected double averageOFValue_d = 0.0, sumOFValue_d=0.0;
-protected double crossoverThreshold_d;
-protected float mutationThreshold_d, mutCounter_d=0;
-protected double[] fitnessArray_d;
-protected double maxOFValue_d=0.0, minOFValue_d=1.0;
+private int initCounter_d=0;
+  private int maxCounter_d=0;
+  private int increment_d=1;
+Random randomGenerator_d;
+Graph[] currentPopulation_d;
+  Graph[] newPopulation_d;
+private Graph bestGraph_d;
+private double averageOFValue_d = 0.0;
+  double sumOFValue_d=0.0;
+double crossoverThreshold_d;
+float mutationThreshold_d;
+  protected float mutCounter_d=0;
+double[] fitnessArray_d;
+double maxOFValue_d=0.0;
+  double minOFValue_d=1.0;
 
-public GAMethod() {}
+GAMethod() {}
 
 /**
  * Sets the random number generator for this method. This is important since
@@ -161,7 +167,6 @@ calcStatistics()
  * <P>(Note: not defined as an abstract method to allow subclasses to simply
  * ignore the method).
  */
-protected
 void
 processFitnessValues()
 {
@@ -187,7 +192,6 @@ shakePopulation()
  * @param i the initial counter value
  * @see #getInitCounter()
  */
-public
 void
 setInitCounter(int i)
 {
@@ -212,10 +216,8 @@ getInitCounter()
  * be used by the bunch.clustering.GAClusteringMethod.run() method as upper bound
  * for the GA's internal generation counter.
  *
- * @param i the maximum counter value
  * @see #getMaxCounter()
  */
-public
 void
 setMaxCounter(int m)
 {
@@ -256,7 +258,6 @@ getIncrementCounter()
  * @param i the counter increment value
  * @see #getIncrementCounter()
  */
-public
 void
 setIncrementCounter(int i)
 {
@@ -383,7 +384,7 @@ public
 double
 getMutationThreshold()
 {
-  return (double)mutationThreshold_d;
+  return mutationThreshold_d;
 }
 
 /**

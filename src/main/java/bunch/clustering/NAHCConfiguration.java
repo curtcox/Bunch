@@ -12,9 +12,9 @@ import bunch.simple.SATechnique;
  */
 public final class NAHCConfiguration extends HillClimbingConfiguration {
 
-  SATechnique saTechnique = null;
-  int         minPctToConsider = 0;
-  int         randomizePct = 0;
+  private SATechnique saTechnique = null;
+  private int         minPctToConsider = 0;
+  private int         randomizePct = 0;
 
   public NAHCConfiguration() {
   }

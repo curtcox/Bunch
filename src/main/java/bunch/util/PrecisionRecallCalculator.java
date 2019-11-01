@@ -2,18 +2,18 @@ package bunch.util;
 
 import java.util.*;
 import java.io.*;
-import java.text.*;
 
 public final class PrecisionRecallCalculator {
 
-  String m_S_filename1;
-  String m_S_filename2;
+  private final String m_S_filename1;
+  private final String m_S_filename2;
 
-  Double S_precision, S_recall;
-  Vector m_v_expert_modules_names;
-  Vector m_v_expert_modules_content;
-  Vector m_v_tested_modules_names;
-  Vector m_v_tested_modules_content;
+  private Double S_precision;
+  private Double S_recall;
+  private Vector m_v_expert_modules_names;
+  private Vector m_v_expert_modules_content;
+  private Vector m_v_tested_modules_names;
+  private Vector m_v_tested_modules_content;
 
   public PrecisionRecallCalculator(String expertFileName, String testFileName) {
     m_S_filename1= expertFileName;
@@ -50,7 +50,7 @@ public final class PrecisionRecallCalculator {
     return S_recall;
   }
 
-  public void compare() {
+  private void compare() {
     Compare cp = new Compare(m_v_expert_modules_content, m_v_tested_modules_content, m_v_tested_modules_names);
     cp.do_compare();
     S_precision = cp.get_precision();
@@ -59,7 +59,7 @@ public final class PrecisionRecallCalculator {
     //System.out.println("P: "+S_precision+"\nR: "+S_recall);
   }
 
-  public void ReadBunch() {
+  private void ReadBunch() {
     Hashtable ht1 = new Hashtable();
     GBunchRW bunch1= new GBunchRW(m_S_filename1);
 
@@ -72,7 +72,7 @@ public final class PrecisionRecallCalculator {
     boolean found = false;
     for (int i =0; i<m_v_expert_modules_names.size();i++)
     {
-      String S_module_name = new String(m_v_expert_modules_names.get(i).toString());
+      String S_module_name = m_v_expert_modules_names.get(i).toString();
       Vector v_module_content = new Vector((Vector)m_v_expert_modules_content.get(i));
       found = false;
       for (int j=0;j<v_module_content.size() && !found;j++)
@@ -102,7 +102,7 @@ public final class PrecisionRecallCalculator {
     //remove all the tree information
     for (int i =0; i<m_v_tested_modules_names.size();i++)
     {
-      String S_module_name = new String(m_v_tested_modules_names.get(i).toString());
+      String S_module_name = m_v_tested_modules_names.get(i).toString();
       Vector v_module_content = new Vector((Vector)m_v_tested_modules_content.get(i));
       found = false;
       for (int j=0;j<v_module_content.size() && !found;j++)
@@ -141,7 +141,8 @@ public final class PrecisionRecallCalculator {
 
 
 final class Compare {
-  private Vector m_v_original_distance, m_v_new_distance_name, m_v_new_distance_number;
+  private final Vector m_v_original_distance;
+  private final Vector m_v_new_distance_name;
   private double m_d_recall, m_d_precision;
 
   public double get_precision() {
@@ -160,7 +161,7 @@ final class Compare {
     Hashtable m_ht_vars_new = new Hashtable();
     m_v_original_distance = new Vector(orig);
     m_v_new_distance_name = new Vector(newname);
-    m_v_new_distance_number = new Vector(newnumber);
+    Vector m_v_new_distance_number = new Vector(newnumber);
     m_d_recall =0.0;
     m_d_precision=0.0;
   }
@@ -172,40 +173,35 @@ final class Compare {
 
     Vector v_temp;
     Vector v_new = new Vector();
-    for (int i=0; i<m_v_original_distance.size(); i++) {
-      v_temp = (Vector)m_v_original_distance.get(i);
+    for (Object value : m_v_original_distance) {
+      v_temp = (Vector) value;
       //System.out.println(v_temp.size());
-      pairs_total += v_temp.size() * (v_temp.size()-1) /2;
+      pairs_total += v_temp.size() * (v_temp.size() - 1) / 2;
       //System.out.println("Total number of pairs: "+pairs_total);
 
-      for (int j=0; j<v_temp.size()-1; j++) {
-        found1=false;
-        String s_var1 = new String(v_temp.get(j).toString());
-        for (int l=0; l<m_v_new_distance_name.size() && !found1;l++) //this will find the first variable in the new clusters
+      for (int j = 0; j < v_temp.size() - 1; j++) {
+        found1 = false;
+        String s_var1 = v_temp.get(j).toString();
+        for (int l = 0; l < m_v_new_distance_name.size() && !found1; l++) //this will find the first variable in the new clusters
         {
-          v_new = (Vector)m_v_new_distance_name.get(l);
-          if (v_new.indexOf(s_var1)>=0)
-          {
+          v_new = (Vector) m_v_new_distance_name.get(l);
+          if (v_new.indexOf(s_var1) >= 0) {
             //System.out.println("______________________________FOUND: "+s_var1+" __________________\n"+v_new);
             found1 = true;
           }
         }
         //System.out.println("Total: "+pairs_total);
-        if (!found1)
-        {
-          pairs_total-=(v_temp.size()-1-j);
+        if (!found1) {
+          pairs_total -= (v_temp.size() - 1 - j);
           //System.out.println("Total after not found: "+pairs_total+" removed: "+(v_temp.size()-1-j));
         }
-        if (found1)
-        {
+        if (found1) {
           //System.out.println("Latest New: "+v_new);
           //System.out.println("v1: "+s_var1);
-          for(int k=j+1; k<v_temp.size();k++)
-          {
-            String s_var2 = new String(v_temp.get(k).toString());
+          for (int k = j + 1; k < v_temp.size(); k++) {
+            String s_var2 = v_temp.get(k).toString();
             //System.out.println("v1: "+s_var1+" - v2: "+s_var2);
-            if(v_new.indexOf(s_var2)>=0)
-            {
+            if (v_new.indexOf(s_var2) >= 0) {
               pairs_found++;
               //System.out.println("Found a pair: "+s_var1+" "+s_var2);
             }
@@ -223,42 +219,35 @@ final class Compare {
     pairs_found = 0 ;
     pairs_total = 0;
 
-    for (int i=0; i<m_v_new_distance_name.size(); i++)
-    {
-      v_temp = (Vector)m_v_new_distance_name.get(i);
+    for (Object o : m_v_new_distance_name) {
+      v_temp = (Vector) o;
       //System.out.println(v_temp.size());
-      pairs_total += v_temp.size() * (v_temp.size()-1) /2;
+      pairs_total += v_temp.size() * (v_temp.size() - 1) / 2;
       //System.out.println("Total number of pairs: "+pairs_total);
 
-      for (int j=0; j<v_temp.size()-1; j++)
-      {
-        found1=false;
-        String s_var1 = new String(v_temp.get(j).toString());
-        for (int l=0; l<m_v_original_distance.size() && !found1;l++) //this will find the first variable in the new clusters
+      for (int j = 0; j < v_temp.size() - 1; j++) {
+        found1 = false;
+        String s_var1 = v_temp.get(j).toString();
+        for (int l = 0; l < m_v_original_distance.size() && !found1; l++) //this will find the first variable in the new clusters
         {
-          v_new = (Vector)m_v_original_distance.get(l);
-          if (v_new.indexOf(s_var1)>=0)
-          {
+          v_new = (Vector) m_v_original_distance.get(l);
+          if (v_new.indexOf(s_var1) >= 0) {
             //System.out.println("______________________________FOUND: "+s_var1+" __________________\n"+v_new);
             found1 = true;
           }
         }
         //System.out.println("Total: "+pairs_total);
-        if (!found1)
-        {
-          pairs_total-=(v_temp.size()-1-j);
+        if (!found1) {
+          pairs_total -= (v_temp.size() - 1 - j);
           //System.out.println("Total after not found: "+pairs_total+" removed: "+(v_temp.size()-1-j));
         }
-        if (found1)
-        {
+        if (found1) {
           //System.out.println("Latest New: "+v_new);
           //System.out.println("v1: "+s_var1);
-          for(int k=j+1; k<v_temp.size();k++)
-          {
-            String s_var2 = new String(v_temp.get(k).toString());
+          for (int k = j + 1; k < v_temp.size(); k++) {
+            String s_var2 = v_temp.get(k).toString();
             //System.out.println("v1: "+s_var1+" - v2: "+s_var2);
-            if(v_new.indexOf(s_var2)>=0)
-            {
+            if (v_new.indexOf(s_var2) >= 0) {
               pairs_found++;
               //System.out.println("Found a pair: "+s_var1+" "+s_var2);
             }
@@ -275,8 +264,8 @@ final class Compare {
 }
 
 final class GBunchRW {
-  private Hashtable m_ht_bunchread;
-  private String m_S_filename;
+  private final Hashtable m_ht_bunchread;
+  private final String m_S_filename;
 
   public GBunchRW(String filename) {
     m_ht_bunchread = new Hashtable(); //the main hashtable that will be returned
@@ -287,14 +276,14 @@ final class GBunchRW {
   {
     int i_start_location_of_SS =0;
     int i_end_location_of_SS =0;
-    String S_module_name = new String();
+    String S_module_name = "";
     Vector v_module_value = new Vector();
 
     try {
       BufferedReader br = new BufferedReader(new FileReader(m_S_filename));
       while (true) {
         v_module_value = new Vector();
-        S_module_name = new String();
+        S_module_name = "";
 
         String line = br.readLine();
 
@@ -336,7 +325,7 @@ final class GBunchRW {
       fos.write("//Created automatically using GBunchRW...\n");
     Enumeration keys = ht.keys();
     while (keys.hasMoreElements()) {
-      String S_temp = new String(keys.nextElement().toString());
+      String S_temp = keys.nextElement().toString();
       Vector v_temp = new Vector((Vector)ht.get(S_temp));
 
       fos.write("SS("+S_temp+")= ");  //write the name of every module

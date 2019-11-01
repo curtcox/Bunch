@@ -25,8 +25,7 @@ private Node[] originalNodes_d;
 private int[] clusters_d;
 private boolean[] locked_d;
 private boolean hasLocks_d = false;
-private boolean isMaximum_d=false;
-private int graphLevel_d = 0;
+    private int graphLevel_d = 0;
 private boolean isClusterTree_d = false;
 
 private Graph previousLevelGraph_d;
@@ -37,7 +36,7 @@ private transient double objectiveFunctionValue_d;
 
 private transient Random random_d;
 
-transient ObjectiveFunctionCalculator calculator_d;
+private transient ObjectiveFunctionCalculator calculator_d;
 
 public static ObjectiveFunctionCalculatorFactory objectiveFunctionCalculatorFactory_sd;
 
@@ -104,10 +103,6 @@ public void setObjectiveFunctionCalculator(ObjectiveFunctionCalculator calc) {
   calculator_d.init(this);
 }
 
-public ObjectiveFunctionCalculator getObjectiveFunctionCalculator() {
-  return calculator_d;
-}
-
 /**
  * clears a Graph by resetting all the cluster identifiers to -1 and
  * allocating new Node objects for each position in the node array.
@@ -119,23 +114,6 @@ public void clear() {
     locked_d[i] = false;
     setDoubleLocks(false);
   }
-}
-
-/**
- * Clear the nodes that are locked
- */
-public void resetNodeLocks() {
-  for (int i=0; i<nodes_d.length; ++i) {
-    nodes_d[i].resetNode();
-  }
-  setDoubleLocks(false);
-
-  boolean locks[] = this.getLocks();
-
-  for(int i = 0; i < locks.length; i++)
-    locks[i] = false;
-
-  setLocks(locks);
 }
 
 /**
@@ -284,40 +262,15 @@ public void setObjectiveFunctionValue(double objVal) {
   objectiveFunctionValue_d = objVal;
 }
 
-
-/**
- * Obtains the interdependencies value for this Graph, which must have been
- * previously calculated by calling calculateObjectiveFunctionValue().
- *
- * @return the interdependencies value
- * @see #getObjectiveFunctionValue()
- */
-public double getInterdependenciesValue() {
-  return interdependenciesValue_d;
-}
-
 /**
  * Sets the interdependencies value for this Graph. Mainly intended for
  * "internal" use by the class and the OF Calculator Object used by the
  * class.
  *
  * @return the interdependencies value
- * @see #getInterdependenciesValue()
  */
 public void setInterdependenciesValue(double inter) {
   interdependenciesValue_d = inter;
-}
-
-/**
- * Obtains the intradependencies value for this Graph, which must have been
- * previously calculated by calling calculateObjectiveFunctionValue().
- *
- * @return the intradependencies value
- * @see #calculateObjectiveFunctionValue()
- * @see #getObjectiveFunctionValue()
- */
-public double getIntradependenciesValue() {
-  return intradependenciesValue_d;
 }
 
 /**
@@ -326,7 +279,6 @@ public double getIntradependenciesValue() {
  * class.
  *
  * @return the intradependencies value
- * @see #getIntradependenciesValue()
  */
 public void setIntradependenciesValue(double intra) {
   intradependenciesValue_d = intra;
@@ -418,13 +370,13 @@ public int findFreeCluster(int[] c) {
   boolean change=true;
   while (change) {
     change = false;
-    for (int i=0; i<c.length; ++i) {
-      if (c[i] == n) {
-        n++;
-        change = true;
-        break;
+      for (int value : c) {
+          if (value == n) {
+              n++;
+              change = true;
+              break;
+          }
       }
-    }
   }
   return n;
 }
@@ -442,20 +394,20 @@ public int findFreeCluster(int[] c) {
  * @param c the array of "used" clusters
  * @return a cluster random number that is not yet in use
  */
-public int findFreeRandomCluster(int[] c) {
+private int findFreeRandomCluster(int[] c) {
   checkRandomOK();
   int n=(int)(random_d.nextFloat()*(clusters_d.length-1));
   int loops = 0;
   boolean change=true;
   while (change && (loops++ < (clusters_d.length*2))) {
     change = false;
-    for (int i=0; i<c.length; ++i) {
-      if (c[i] == n) {
-        n=(int)(random_d.nextFloat()*(clusters_d.length-1));
-        change = true;
-        break;
+      for (int value : c) {
+          if (value == n) {
+              n = (int) (random_d.nextFloat() * (clusters_d.length - 1));
+              change = true;
+              break;
+          }
       }
-    }
   }
   return n;
 }
@@ -558,32 +510,6 @@ public Graph cloneWithRandomClusters() {
 }
 
 /**
- * This method builds and returns a random cluster.  The cluster is encoded into
- * an integer array, where each index indicates the node.  Thus n[0] would have
- * the value of the cluster for node zero.
- */
-public int[] getRandomCluster() {
-   checkRandomOK();
-   int [] c = new int[nodes_d.length];
-
-    if (hasDoubleLocks()) {
-      for (int i=0; i<clusters_d.length; ++i) {
-        if (!locked_d[i]) {
-          c[i] = findFreeRandomCluster(getClusterNames());
-        }
-      }
-    } else {
-      for (int i=0; i<clusters_d.length; ++i) {
-        if (!locked_d[i]) {
-          c[i] = (int)(random_d.nextFloat()*(clusters_d.length-1));
-        }
-      }
-    }
-    return c;
-}
-
-
-/**
  * Generate a random cluster, taking into account special or ''locked'' clusters
  */
 public int[] genRandomClusterSize() {
@@ -604,88 +530,6 @@ public int[] genRandomClusterSize() {
     numNodes = nodeCount;
 
     int numClusters = ((int)(random_d.nextFloat()*(clusters_d.length-1)))+1;
-    int clustSize = numNodes/numClusters;
-    int remainder = numNodes%numClusters;
-
-    int currC = 0;
-    int currNode = 0;
-    while(currC < numClusters) {
-      int currCSize = 0;
-      while(currCSize < clustSize) {
-        if(!locked_d[currNode]) {
-          currCSize++;
-          c[currNode]=currC;
-        }
-        currNode++;
-      }
-      currC++;
-    }
-
-    //now handle the remainders
-    if(currNode < clusters_d.length) {
-      //init
-      int []clustStack = new int[numClusters];
-
-      for(int i = 0; i < clustStack.length;i++)
-        clustStack[i] = i;
-
-      //now randomize
-      for(int i = 0; i < clustStack.length;i++) {
-        int pos1 = (int)(random_d.nextFloat()*(clustStack.length-1));
-        int pos2 = (int)(random_d.nextFloat()*(clustStack.length-1));
-        int tmp = clustStack[pos1];
-        clustStack[pos1] = clustStack[pos2];
-        clustStack[pos2] = tmp;
-      }
-
-      //now assign the cluster numbers
-      int stackIdx = 0;
-      for(int i = currNode; i < clusters_d.length;i++) {
-        if(!locked_d[i])
-          c[i] = clustStack[stackIdx++];
-      }
-    }
-
-    //now randomize
-    for (int i=0; i<clusters_d.length; ++i) {
-      int pos1 = (int)(random_d.nextFloat()*(clusters_d.length-1));
-      int pos2 = (int)(random_d.nextFloat()*(clusters_d.length-1));
-
-      if ((!locked_d[pos1])&&(!locked_d[pos2])) {
-        int tmp = c[pos1];
-        c[pos1] = c[pos2];
-        c[pos2] = tmp;
-      }
-    }
-    return c;
-}
-
-
-/**
- * Generate a random cluster, taking into account special or ''locked'' clusters
- */
-public int[] genRandomClusterSizeWithLimits(int min, int max) {
-   int range = max-min;
-
-   if (range < 0) return null;
-
-   checkRandomOK();
-   int [] c = new int[nodes_d.length];
-   int [] existingClusters = getClusters();
-   int numNodes = clusters_d.length;
-
-    int nodeCount = 0;
-    for (int i=0; i<clusters_d.length; ++i) {
-      if (!locked_d[i]) {
-        c[i] = nodeCount;
-        nodeCount++;
-      }
-      else
-        c[i] = existingClusters[i];
-    }
-    numNodes = nodeCount;
-
-    int numClusters = ((int)((random_d.nextFloat()*(range-1)))+1+min);
     int clustSize = numNodes/numClusters;
     int remainder = numNodes%numClusters;
 
@@ -772,10 +616,10 @@ public int[] getClusterNames() {
     int[] clusts = new int[nodes_d.length];
     int name;
     int numClusts = 0;
-    for (int i=0; i<clusters_d.length; ++i) {
-        name = clusters_d[i];
-        int j=0;
-        for (j=0; j<numClusts; ++j) {
+    for (int value : clusters_d) {
+        name = value;
+        int j = 0;
+        for (j = 0; j < numClusts; ++j) {
             if (clusts[j] == name)
                 break;
         }
@@ -824,23 +668,11 @@ public int[] getUnlockedClusterNames() {
 }
 
 /**
- * Returns whether this graph is at a "Local Maximum" or not.
- * true if the current partition does not have a neighbor with
- * a better objective function value.
- *
- * @return true if the graph is a local maximum, false otherwise
- */
-public boolean isMaximum() {
-  return isMaximum_d;
-}
-
-/**
  * Sets whether this graph is at a "Maximum" or not.
  *
  * @param b, which should true if the graph is a local maximum, false otherwise
  */
 public void setMaximum(boolean b) {
-  isMaximum_d=b;
 }
 
 /**
@@ -905,7 +737,7 @@ public void setIsClusterTree(boolean b)
  * the graph object to the caller.
  */
 public Graph getMedianTree() {
-  if (isClusterTree() == false)
+  if (!isClusterTree())
     return this;
 
   int lvl = this.getGraphLevel();

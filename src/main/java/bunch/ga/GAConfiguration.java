@@ -16,10 +16,10 @@ import bunch.clustering.GAClusteringMethod;
 public class GAConfiguration
   extends Configuration
 {
-GAMethod method_d;
-double mutationThreshold_d;
-double crossoverThreshold_d;
-GAMethodFactory methodFactory_d;
+private GAMethod method_d;
+private double mutationThreshold_d;
+private double crossoverThreshold_d;
+private GAMethodFactory methodFactory_d;
 
 /**
  * Parameterless class constructor.
@@ -92,7 +92,7 @@ public GAMethod getMethod()
  * @param m the ga method to set to this configuration instance
  * @see #getMethod()
  */
-public void setMethod(GAMethod m)
+private void setMethod(GAMethod m)
 {
   method_d = m;
 }

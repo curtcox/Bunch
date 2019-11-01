@@ -2,7 +2,6 @@ package bunch.parser;
 
 import bunch.model.Graph;
 import bunch.model.Node;
-import bunch.parser.Parser;
 
 import java.util.*;
 
@@ -22,20 +21,20 @@ public class DependencyFileParser extends Parser {
  * Inner class used by the parsing process to store the graph
  * information temporarily before converting it into a Graph
  */
-class ParserNode
+static class ParserNode
 {
-public String name;
-public Hashtable dependencies;
-public Hashtable backEdges;
-public Hashtable dWeights;
-public Hashtable beWeights;
+final String name;
+final Hashtable dependencies;
+final Hashtable backEdges;
+final Hashtable dWeights;
+final Hashtable beWeights;
 public int[] arrayDependencies;
 public int[] arrayWeights;
 
 /**
  * Data structure to keep track of the node and its dependencies
  */
-public ParserNode(String n) {
+ParserNode(String n) {
   name = n;
   dependencies = new Hashtable();
   dWeights = new Hashtable();
@@ -105,8 +104,7 @@ public Graph parse() {
       if (st.hasMoreElements())
         target = st.nextToken();
 
-      if (nod.equals(target))
-      {
+      if (nod.equals(target)) {
         reflexiveEdges++;
         continue;
       }
@@ -121,34 +119,33 @@ public Graph parse() {
 
       //For now the default weight is 1, it will be overriden if a weight
       //is actually present in the input file...
-      Integer w = new Integer(1);
+      Integer w = 1;
 
       //Make sure a target node exists
       if (target != null) {
-        String dep = target;
 
         //Now if there are more tokens the weight is the next expected
         //token
         if (st.hasMoreElements())
-            w = new Integer(st.nextToken());
+            w = Integer.valueOf(st.nextToken());
 
         //See if the target node is known, if not add it to the list
-        targetNode = (ParserNode)nodes.get(dep);
+        targetNode = (ParserNode)nodes.get(target);
         if (targetNode == null) {
-          targetNode = new ParserNode(dep);
-          nodes.put(dep,targetNode);
+          targetNode = new ParserNode(target);
+          nodes.put(target,targetNode);
         }
 
         //Add source to target, and target to source if they don't already
         //exist as forward and backward dependencies
-        if (!currentNode.dependencies.containsKey(dep)) {
-          currentNode.dependencies.put (dep,dep);
-          currentNode.dWeights.put(dep,w);
+        if (!currentNode.dependencies.containsKey(target)) {
+          currentNode.dependencies.put (target, target);
+          currentNode.dWeights.put(target,w);
           //System.out.println("Adding weight " + w);
         } else {
-          Integer wExisting = (Integer)currentNode.dWeights.get(dep);
-          Integer wtemp = new Integer(w.intValue() + wExisting.intValue());
-          currentNode.dWeights.put(dep,wtemp);
+          Integer wExisting = (Integer)currentNode.dWeights.get(target);
+          Integer wtemp = w.intValue() + wExisting.intValue();
+          currentNode.dWeights.put(target,wtemp);
         }
 
         if (!targetNode.backEdges.containsKey(nod)) {
@@ -156,7 +153,7 @@ public Graph parse() {
           targetNode.beWeights.put(nod,w);
         } else {
           Integer wExisting = (Integer)targetNode.beWeights.get(nod);
-          Integer wtemp = new Integer(w.intValue() + wExisting.intValue());
+          Integer wtemp = w.intValue() + wExisting.intValue();
           targetNode.beWeights.put(nod,wtemp);
         }
       }
@@ -170,7 +167,7 @@ public Graph parse() {
     Object [] oa = nodes.keySet().toArray();
     for (int i = 0; i < oa.length; i++) {
       String n = (String)oa[i];
-      nameTable.put(n,new Integer(i));
+      nameTable.put(n, i);
     }
 
     //now build the graph
@@ -188,9 +185,9 @@ public Graph parse() {
       Integer nid = (Integer)nameTable.get(p.name);
       n.nodeID = nid.intValue();
       n.dependencies = ht2ArrayFromKey(nameTable,p.dependencies);
-      n.weights = ht2ArrayValFromKey(nameTable,p.dWeights);
+      n.weights = ht2ArrayValFromKey(p.dWeights);
       n.backEdges = ht2ArrayFromKey(nameTable,p.backEdges);
-      n.beWeights = ht2ArrayValFromKey(nameTable,p.beWeights);
+      n.beWeights = ht2ArrayValFromKey(p.beWeights);
     }
   }
   catch (java.io.IOException e) {
@@ -226,7 +223,7 @@ private int[] ht2ArrayFromKey(Hashtable key, Hashtable values) {
  * Since this is a hashtable of hashtables we want to return
  * the contents of the inner hashtable in an integer array format.
  */
-private int[] ht2ArrayValFromKey(Hashtable key, Hashtable values)
+private int[] ht2ArrayValFromKey(Hashtable values)
 {
     int [] retArray = new int[values.size()];
 
@@ -250,20 +247,19 @@ private int[] ht2ArrayValFromKey(Hashtable key, Hashtable values)
 public void dumpGraph(Hashtable h)
 {
   Object [] oa = h.keySet().toArray();
-  for(int i = 0; i < oa.length; i++)
-  {
-    ParserNode n = (ParserNode)oa[i];
-    System.out.print(n.name+": ");
+  for (Object item : oa) {
+    ParserNode n = (ParserNode) item;
+    System.out.print(n.name + ": ");
     Hashtable dep = n.dependencies;
-    Object [] oa1 = dep.keySet().toArray();
-    for(int j = 0; j < oa1.length; j++) {
-      ParserNode n1 = (ParserNode)oa1[j];
-      System.out.print(n1.name+" ");
+    Object[] oa1 = dep.keySet().toArray();
+    for (Object value : oa1) {
+      ParserNode n1 = (ParserNode) value;
+      System.out.print(n1.name + " ");
     }
     oa1 = n.backEdges.keySet().toArray();
-    for(int j = 0; j < oa1.length; j++) {
-      ParserNode n1 = (ParserNode)oa1[j];
-      System.out.print("be("+n1.name+") ");
+    for (Object o : oa1) {
+      ParserNode n1 = (ParserNode) o;
+      System.out.print("be(" + n1.name + ") ");
     }
     System.out.println();
   }

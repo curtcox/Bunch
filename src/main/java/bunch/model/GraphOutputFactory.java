@@ -8,7 +8,7 @@ import static bunch.api.OutputFormat.*;
  */
 public final class GraphOutputFactory {
 
-public GraphOutput defaultOption = new DotGraphOutput();
+private final GraphOutput defaultOption = new DotGraphOutput();
 
 /**
  * Obtains the graph output generator corresponding to name passed as parameter.

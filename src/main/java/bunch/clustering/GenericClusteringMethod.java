@@ -17,21 +17,21 @@ import bunch.event.IterationEvent;
  */
 public abstract class GenericClusteringMethod extends ClusteringMethod {
 
-public static int DEFAULT_NUM_EXPERIMENTS = 200;
-public static int DEFAULT_POP_SIZE = 25;
-public static double DEFAULT_THRESHOLD = 0.1;
+private static final int DEFAULT_NUM_EXPERIMENTS = 200;
+private static final int DEFAULT_POP_SIZE = 25;
+private static final double DEFAULT_THRESHOLD = 0.1;
 
-protected Graph[] currentPopulation_d;
-protected int popSize_d=DEFAULT_POP_SIZE;
+Graph[] currentPopulation_d;
+private int popSize_d=DEFAULT_POP_SIZE;
 
-protected int numExperiments_d=DEFAULT_NUM_EXPERIMENTS;
-protected double threshold_d=DEFAULT_THRESHOLD;
-protected double bestOFValue_d=0.0;
+private int numExperiments_d=DEFAULT_NUM_EXPERIMENTS;
+private double threshold_d=DEFAULT_THRESHOLD;
+private double bestOFValue_d=0.0;
 
 /**
  * Class constructor.
  */
-public GenericClusteringMethod() {
+GenericClusteringMethod() {
     setPopSize(DEFAULT_POP_SIZE);
     setThreshold(DEFAULT_THRESHOLD);
     setNumOfExperiments(DEFAULT_NUM_EXPERIMENTS);
@@ -40,7 +40,7 @@ public GenericClusteringMethod() {
 /**
  * Generic initialization
  */
-public void init() {
+void init() {
   Graph graph = getGraph().cloneGraph();
   graph.getRandom().setSeed(System.currentTimeMillis());
   if (getBestGraph() == null) {
@@ -74,7 +74,7 @@ public void init() {
   */
 }
 
-public void reInit() {
+private void reInit() {
 }
 
 
@@ -147,7 +147,7 @@ public void run() {
  * Method that must be defined by subclasses. This method is called once
  * per each iteration of the main "for" loop in the #run() method.
  */
-public abstract boolean nextGeneration();
+protected abstract boolean nextGeneration();
 
 /**
  * Define the threshold that determines when no further improvement can be
@@ -159,7 +159,7 @@ public abstract boolean nextGeneration();
  * @param t the threshold percentage expressed as a real value
  * @see #getThreshold()
  */
-public void setThreshold(double t)
+void setThreshold(double t)
 {
     threshold_d = t;
 }
@@ -171,7 +171,7 @@ public void setThreshold(double t)
  * @return the threshold percentage expressed as a real (double) value
  * @see #setThreshold(double)
  */
-public double getThreshold()
+private double getThreshold()
 {
     return threshold_d;
 }
@@ -196,7 +196,7 @@ public int getMaxIterations()
  * @param max the maximum number of experiments to run
  * @see #getNumOfExperiments()
  */
-public void setNumOfExperiments(int max)
+void setNumOfExperiments(int max)
 {
   numExperiments_d = max;
 }
@@ -208,7 +208,7 @@ public void setNumOfExperiments(int max)
  * @return the maximum number of experiments to run set for this clustering method
  * @see #setNumOfExperiments(int)
  */
-public int getNumOfExperiments()
+private int getNumOfExperiments()
 {
   return numExperiments_d;
 }
@@ -219,7 +219,7 @@ public int getNumOfExperiments()
  * @param psz the population size set for this clustering method
  * @see #getPopSize()
  */
-public void setPopSize(int psz)
+void setPopSize(int psz)
 {
   popSize_d = psz;
 }
@@ -230,7 +230,7 @@ public void setPopSize(int psz)
  * @return the population size set for this clustering method
  * @see #setPopSize(int)
  */
-public int getPopSize()
+int getPopSize()
 {
   return popSize_d;
 }
@@ -241,7 +241,7 @@ public int getPopSize()
  * @param v the best OF value
  * @see #getBestObjectiveFunctionValue()
  */
-public void setBestObjectiveFunctionValue(double v)
+private void setBestObjectiveFunctionValue(double v)
 {
   bestOFValue_d = v;
 }

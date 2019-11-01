@@ -51,7 +51,7 @@ public final class BunchAPI {
 
     BunchGraph bg = new BunchGraph();
     boolean rc = bg.construct(g);
-    if (rc == false) return null;
+    if (!rc) return null;
 
     return bg;
   }

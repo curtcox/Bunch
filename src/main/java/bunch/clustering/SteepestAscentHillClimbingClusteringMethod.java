@@ -8,12 +8,10 @@ public final class SteepestAscentHillClimbingClusteringMethod extends GenericHil
 
 public SteepestAscentHillClimbingClusteringMethod() { }
 
-protected Cluster getLocalMaxGraph(Cluster c) {
-    if (c == null) return null;
+protected void getLocalMaxGraph(Cluster c) {
+    if (c == null) return;
 
     Cluster maxC = c.cloneCluster();
-    //Cluster intermC = c.cloneCluster();
-    //totalWork = 0;
 
     double maxOF = maxC.getObjFnValue();
     double originalMax = maxOF;
@@ -23,52 +21,22 @@ protected Cluster getLocalMaxGraph(Cluster c) {
     int[] maxClust = maxC.getClusterVector();
     boolean[] locks = c.getLocks();
 
-    //System.out.println("Cluster names before = " + clustNames.length);
-
-    //Cluster maxC = c.cloneCluster();
-    //Cluster intermC = c.cloneCluster();
-
-    //double originalMax = maxC.getObjFnValue();
-    //double maxOF = originalMax;
-
-    //double maxOF = g.getObjectiveFunctionValue();
-    //double originalMax = maxOF;
-
-    //clustNames = c.getClusterNames();
-
-    //int[] clusters = g.getClusters();
-    //int[] maxClust = new int[clusters.length];
-    //boolean[] locks = g.getLocks();
-
-    //System.arraycopy(clusters, 0, maxClust, 0, clusters.length);
 
     for (int i=0; i<clusters.length; ++i) {
         int currClust = clusters[i];
-        //c.pushNode(i);
         int j=0;
         for (; j<clustNames.length; ++j) {
             if ((!locks[i]) && (clustNames[j] != currClust)) {
                 double t = c.getObjFnValue();
                 c.relocate(i,clustNames[j]);
-                //System.out.println("("+i+","+clustNames[j]+") before="+t+" after="+c.getObjFnValue()+" maxof="+maxOF);
-                //**c.move(i,clusters[i],clustNames[j]); //clusters[i] = clustNames[j];
-                //c.calcObjFn(); //.calculateObjectiveFunctionValue();
 
                 if (bunch.util.BunchUtilities.compareGreater(c.getObjFnValue(),maxOF)) {
-                //if (c.getObjFnValue() > maxOF) {
                     maxC.copyFromCluster(c);
-                    //System.arraycopy(clusters, 0, maxClust, 0, clusters.length);
                     maxOF = c.getObjFnValue(); //.getObjectiveFunctionValue();
                 }
-                //else
-                //{
-                //    c.move(i,clustNames[j],clusters[i]); //rollbackLastMove();
-                //}
             }
         }
         c.relocate(i,currClust);
-        //c.popNode();
-        //**c.move(i,clusters[i],currClust); //rollbackLastMove();   //clusters[i] = currClust;
     }
 
 //******************** THIS IS NEW EXPIREMENTAL CODE
@@ -98,28 +66,19 @@ protected Cluster getLocalMaxGraph(Cluster c) {
           }
           c.relocate(i,currClust);
         }
-      c.removeNewCluster(newClusterID);
+      c.removeNewCluster();
     }
 //*********************** END OF EXPIREMENTAL CODE
 
     if (bunch.util.BunchUtilities.compareGreater(maxOF,originalMax)) {
-    //if (maxOF > originalMax) {
         c.copyFromCluster(maxC);
         c.incrDepth();
-        //System.out.println("Did not converge - depth = "+c.getDepth());
-        //c.setClusterVector(maxClust);
-        //System.arraycopy(maxClust, 0, clusters, 0, clusters.length);
     }
     else {
       //we didn't find a better max partition then it's a maximum
       c.setConverged(true); //.setMaximum(true);
-      //System.out.println("Converged");
     }
-    //c.calcObjFn(); //.calculateObjectiveFunctionValue();
-    //System.out.println("MQ = "+c.getObjFnValue());
-    //System.out.println("Cluster names after = " + c.getClusterNames().length);
 
-    return c;
 }
 
 public Configuration getConfiguration() {

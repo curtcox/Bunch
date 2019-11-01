@@ -19,11 +19,10 @@ final class EngineArgs {
   public String algNahcSaClass;
   public Map algNahcSaConfig;
   public boolean AGGLOMERATIVE;
-  public ObjectiveFunctionCalculator mqCalculatorClass = new TurboMQIncrW();
+  public final ObjectiveFunctionCalculator mqCalculatorClass = new TurboMQIncrW();
   public String MQCALC_MDG_FILE;
   public String MQCALC_SIL_FILE;
   public Integer callbackObjectFrequency;
-  public ProgressCallbackInterface CALLBACK_OBJECT_REF;
   public Integer algHcRndPct;
   public Integer algHcHcPct;
   public Integer algNahcHcPct;

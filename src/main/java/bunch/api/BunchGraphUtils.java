@@ -5,7 +5,6 @@ import java.util.*;
 import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 import bunch.model.Graph;
-import bunch.model.Node;
 import bunch.parser.ClusterFileParser;
 import bunch.parser.DependencyFileParser;
 import bunch.parser.Parser;
@@ -21,42 +20,8 @@ public final class BunchGraphUtils {
       return constructFromSil(mdgFileName, sFileName,null);
   }
 
-  public static boolean isSilFileOK(String mdgFileName, String sFileName) {
-      new BunchGraph();
-
-      Parser p = new DependencyFileParser();
-      p.setInput(mdgFileName);
-      p.setDelims(" ,\t");
-
-      Graph g = (Graph)p.parse();
-
-      ClusterFileParser cfp = new ClusterFileParser();
-      cfp.setInput(sFileName);
-      cfp.setObject(g);
-      cfp.parse();
-      
-      return cfp.areAllNodesInCluster();
-  }
-  
-  public static ArrayList getMissingSilNodes(String mdgFileName, String sFileName) {
-      new BunchGraph();
-
-      Parser p = new DependencyFileParser();
-      p.setInput(mdgFileName);
-      p.setDelims(" ,\t");
-
-      Graph g = (Graph)p.parse();
-
-      ClusterFileParser cfp = new ClusterFileParser();
-      cfp.setInput(sFileName);
-      cfp.setObject(g);
-      cfp.parse();
-      
-      return cfp.getNodesNotAssignedToClusters();
-  }
-  
-  public static BunchGraph constructFromSil(String mdgFileName, String sFileName,
-                                            ObjectiveFunctionCalculator mqCalcClass)
+  private static BunchGraph constructFromSil(String mdgFileName, String sFileName,
+                                             ObjectiveFunctionCalculator mqCalcClass)
   {
       BunchGraph bg = new BunchGraph();
 
@@ -72,7 +37,7 @@ public final class BunchGraphUtils {
       cfp.parse();
 
       ObjectiveFunctionCalculatorFactory ocf = new ObjectiveFunctionCalculatorFactory();
-      g.setObjectiveFunctionCalculatorFactory(ocf);
+      Graph.setObjectiveFunctionCalculatorFactory(ocf);
 
       if(mqCalcClass == null) {
         g.setObjectiveFunctionCalculator(ocf.getDefaultMethod());
@@ -91,32 +56,31 @@ public final class BunchGraphUtils {
     results.clear();
     BunchGraphPR prUtil = new BunchGraphPR(expert,cluster);
     boolean rc = prUtil.run();
-    if(rc == false)
+    if(!rc)
       return null;
 
-    results.put("PRECISION", new Double(prUtil.getPrecision()));
-    results.put("RECALL", new Double(prUtil.getRecall()));
+    results.put("PRECISION", prUtil.getPrecision());
+    results.put("RECALL", prUtil.getRecall());
 
     double avgPR = (prUtil.getPrecision() + prUtil.getRecall())/(2.0);
 
-    results.put("AVERAGE", new Double(avgPR));
+    results.put("AVERAGE", avgPR);
     return results;
   }
 
   public static long   getMeClDistance(BunchGraph g1, BunchGraph g2) {
     MeCl dist = new MeCl(g1,g2);
-    long ret = dist.run();
-    return ret;
+    return dist.run();
   }
 
   public static Hashtable   getMeClMeasurement(BunchGraph g1, BunchGraph g2) {
     Hashtable h = new Hashtable();
     MeCl dist = new MeCl(g1,g2);
     long ret = dist.run();
-    h.put(MECL_VALUE, new Long(ret));
+    h.put(MECL_VALUE, ret);
 
     double quality = dist.getQualityMetric();
-    h.put(MECL_QUALITY_METRIC,new Double(quality));
+    h.put(MECL_QUALITY_METRIC, quality);
     return h;
   }
 
@@ -176,11 +140,6 @@ public final class BunchGraphUtils {
 
     if (total == 0) return 0;
     return matches;
-  }
-
-  public static double calcEdgeSim(BunchGraph g1, BunchGraph g2)
-  {
-    return calcEdgeSimiliarities(g1,g2);
   }
 
   public static double calcEdgeSimiliarities(BunchGraph g1, BunchGraph g2) {

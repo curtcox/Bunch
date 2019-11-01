@@ -9,15 +9,15 @@ import bunch.simple.SATechnique;
 import java.util.*;
 
 public class NextAscentHillClimbingClusteringMethod extends GenericHillClimbingClusteringMethod {
-private Random random_d;
+private final Random random_d;
 
 public NextAscentHillClimbingClusteringMethod()
 {
   random_d = new Random(System.currentTimeMillis());
 }
 
-protected Cluster getLocalMaxGraph(Cluster c) {
-    if (c == null) return null;
+protected void getLocalMaxGraph(Cluster c) {
+    if (c == null) return;
 
     boolean foundbetter;
 
@@ -62,7 +62,7 @@ protected Cluster getLocalMaxGraph(Cluster c) {
 
     //System.arraycopy(clustNames,0,rndClustNameOrdering,0,clustNames.length);
     //System.arraycopy(clusters,0,rndClustOrdering,0,clusters.length);
-    int rndFreq = (int)(dPct * (double)((double)rndClustOrdering.length/2.0));
+    int rndFreq = (int)(dPct * ((double)rndClustOrdering.length/2.0));
 
     //for (int i=0; i<(rndClustOrdering.length/2); ++i) {
     for (int i=0; i<rndFreq; ++i) {
@@ -73,7 +73,7 @@ protected Cluster getLocalMaxGraph(Cluster c) {
       rndClustOrdering[pos2] = tmp;
     }
 
-    rndFreq = (int)(dPct * (double)((double)rndClustNameOrdering.length/2.0));
+    rndFreq = (int)(dPct * ((double)rndClustNameOrdering.length/2.0));
     //for (int i=0; i<(rndClustNameOrdering.length/2); ++i) {
     for (int i=0; i<rndFreq; ++i) {
       int pos1 = (int)(random_d.nextFloat() * (rndClustNameOrdering.length-1));
@@ -112,8 +112,7 @@ protected Cluster getLocalMaxGraph(Cluster c) {
 
         int currNode  = rndClustOrdering[i];
         int currClust = clusters[currNode];//c.getCluster(currNode);
-        int tmpClust  = currClust;
-//System.out.println();
+        //System.out.println();
 //System.out.println("Current node = " + currNode + " current Cluster = " + currClust);
         int j=0;
         for (; j<clustNames.length; ++j) {
@@ -123,14 +122,14 @@ protected Cluster getLocalMaxGraph(Cluster c) {
                 if((foundbetter)&&(currClustersExamined>partitionsToExamine))
                 {
                     if(saAlg != null)
-                      saAlg.changeTemp(null);
+                      saAlg.changeTemp();
 
                   c.copyFromCluster(maxC);
                   c.incrDepth();
                   c.setConverged(false);
 
 //System.out.println("EARLY1: "+(double)currClustersExamined/(double)maxPartitionsToExamine+"%");
-                  return c;
+                  return;
                 }
 
 //System.out.println("Moving node : " + currNode+" to cluster " + rndClustNameOrdering[j]);
@@ -164,14 +163,14 @@ protected Cluster getLocalMaxGraph(Cluster c) {
                     {
 
                         if(saAlg != null)
-                          saAlg.changeTemp(null);
+                          saAlg.changeTemp();
 
                       c.copyFromCluster(maxC);
                       c.incrDepth();
                       c.setConverged(false);
 //System.out.println("EARLY2: "+(double)currClustersExamined/(double)maxPartitionsToExamine+"%");
 //System.out.println("EARLY2: "+(currClustersExamined/maxPartitionsToExamine)+"%");
-                      return c;
+                      return;
                     }
                     //else
                     //  c.relocate(currNode,currClust);
@@ -220,21 +219,21 @@ protected Cluster getLocalMaxGraph(Cluster c) {
                     c.incrDepth();
                     c.setConverged(false);
 //System.out.println("EARLY3");
-                    return c;
+                    return;
                 }
                 c.relocate(otherNode,otherNodeCluster);
             }
           }
           c.relocate(currNode,currClust);
         }
-      c.removeNewCluster(newClusterID);
+      c.removeNewCluster();
     }
 //*********************** END OF EXPIREMENTAL CODE
 
 
 
     if(saAlg != null)
-      saAlg.changeTemp(null);
+      saAlg.changeTemp();
 
     if (bunch.util.BunchUtilities.compareGreater(maxOF,originalMax))  {
         c.copyFromCluster(maxC);
@@ -248,7 +247,6 @@ protected Cluster getLocalMaxGraph(Cluster c) {
 //System.out.println("LATE");
 
 
-    return c;
 }
 
 protected Graph getLocalMaxGraph(Graph g)

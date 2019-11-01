@@ -11,7 +11,7 @@ public TSGraphOutput() { }
 
 public void write() {
   Vector edges = new Vector();
-  int clusters[] = graph_d.getClusters();
+  int[] clusters = graph_d.getClusters();
   Node[] nodeList = graph_d.getNodes();
   int nodes = nodeList.length;
 
@@ -53,20 +53,20 @@ public void write() {
     boolean hasCentrals = false;
 
     if (originalNodes != null && originalNodes.length != nodeList.length) {
-      for (int i=0; i<originalNodes.length; ++i) {
-        if (!hasSuppliers && originalNodes[i].getType() == Node.SUPPLIER) {
-          hasSuppliers = true;
+        for (Node originalNode : originalNodes) {
+            if (!hasSuppliers && originalNode.getType() == Node.SUPPLIER) {
+                hasSuppliers = true;
+            }
+            if (!hasClients && originalNode.getType() == Node.CLIENT) {
+                hasClients = true;
+            }
+            if (!hasCentrals && originalNode.getType() == Node.CENTRAL) {
+                hasCentrals = true;
+            }
+            if (!hasLibraries && originalNode.getType() == Node.LIBRARY) {
+                hasLibraries = true;
+            }
         }
-        if (!hasClients && originalNodes[i].getType() == Node.CLIENT) {
-          hasClients = true;
-        }
-        if (!hasCentrals && originalNodes[i].getType() == Node.CENTRAL) {
-          hasCentrals = true;
-        }
-        if (!hasLibraries && originalNodes[i].getType() == Node.LIBRARY) {
-          hasLibraries = true;
-        }
-      }
 		}
 
     //Writing navigation file: header
@@ -151,23 +151,23 @@ public void write() {
 				libsFile.write(" \n\n");
 				libsFile.write("// Nodes\n");
 
-        for (int i=0; i<originalNodes.length; ++i) {
-          if (originalNodes[i].getType() == Node.LIBRARY) {
-		 				libsFile.write("// Node\n");
-						libsFile.write("// name\n");
-						libsFile.write(originalNodes[i].getName()+"\n");
-						libsFile.write("// Editor Node\n");
-						libsFile.write(originalNodes[i].getName()+"\n");
-						libsFile.write("TSEShapeNodeView 4\n");
-						libsFile.write("0x0\n");
-						libsFile.write("0x4958E9\n");
-						libsFile.write("2\n");
-						libsFile.write("// width\n");
-						libsFile.write(originalNodes[i].getName().length()*10+"\n");
-						libsFile.write("// height\n");
-						libsFile.write("25\n");
+          for (Node originalNode : originalNodes) {
+              if (originalNode.getType() == Node.LIBRARY) {
+                  libsFile.write("// Node\n");
+                  libsFile.write("// name\n");
+                  libsFile.write(originalNode.getName() + "\n");
+                  libsFile.write("// Editor Node\n");
+                  libsFile.write(originalNode.getName() + "\n");
+                  libsFile.write("TSEShapeNodeView 4\n");
+                  libsFile.write("0x0\n");
+                  libsFile.write("0x4958E9\n");
+                  libsFile.write("2\n");
+                  libsFile.write("// width\n");
+                  libsFile.write(originalNode.getName().length() * 10 + "\n");
+                  libsFile.write("// height\n");
+                  libsFile.write("25\n");
+              }
           }
-        }
 				libsFile.close();
       }
 
@@ -207,23 +207,23 @@ public void write() {
 				supsFile.write(" \n\n");
 				supsFile.write("// Nodes\n");
 
-        for (int i=0; i<originalNodes.length; ++i) {
-          if (originalNodes[i].getType() == Node.SUPPLIER) {
-		 				supsFile.write("// Node\n");
-						supsFile.write("// name\n");
-						supsFile.write(originalNodes[i].getName()+"\n");
-						supsFile.write("// Editor Node\n");
-						supsFile.write(originalNodes[i].getName()+"\n");
-						supsFile.write("TSEShapeNodeView 4\n");
-						supsFile.write("0x0\n");
-						supsFile.write("0x4958E9\n");
-						supsFile.write("2\n");
-						supsFile.write("// width\n");
-						supsFile.write(originalNodes[i].getName().length()*10+"\n");
-						supsFile.write("// height\n");
-						supsFile.write("30\n");
+          for (Node originalNode : originalNodes) {
+              if (originalNode.getType() == Node.SUPPLIER) {
+                  supsFile.write("// Node\n");
+                  supsFile.write("// name\n");
+                  supsFile.write(originalNode.getName() + "\n");
+                  supsFile.write("// Editor Node\n");
+                  supsFile.write(originalNode.getName() + "\n");
+                  supsFile.write("TSEShapeNodeView 4\n");
+                  supsFile.write("0x0\n");
+                  supsFile.write("0x4958E9\n");
+                  supsFile.write("2\n");
+                  supsFile.write("// width\n");
+                  supsFile.write(originalNode.getName().length() * 10 + "\n");
+                  supsFile.write("// height\n");
+                  supsFile.write("30\n");
+              }
           }
-        }
 				supsFile.close();
       }
 
@@ -262,23 +262,23 @@ public void write() {
 				cliFile.write(" \n\n");
 				cliFile.write("// Nodes\n");
 
-        for (int i=0; i<originalNodes.length; ++i) {
-          if (originalNodes[i].getType() == Node.CLIENT) {
-		 				cliFile.write("// Node\n");
-						cliFile.write("// name\n");
-						cliFile.write(originalNodes[i].getName()+"\n");
-						cliFile.write("// Editor Node\n");
-						cliFile.write(originalNodes[i].getName()+"\n");
-						cliFile.write("TSEShapeNodeView 4\n");
-						cliFile.write("0x0\n");
-						cliFile.write("0x4958E9\n");
-						cliFile.write("2\n");
-						cliFile.write("// width\n");
-						cliFile.write(originalNodes[i].getName().length()*10+"\n");
-						cliFile.write("// height\n");
-						cliFile.write("30\n");
+          for (Node originalNode : originalNodes) {
+              if (originalNode.getType() == Node.CLIENT) {
+                  cliFile.write("// Node\n");
+                  cliFile.write("// name\n");
+                  cliFile.write(originalNode.getName() + "\n");
+                  cliFile.write("// Editor Node\n");
+                  cliFile.write(originalNode.getName() + "\n");
+                  cliFile.write("TSEShapeNodeView 4\n");
+                  cliFile.write("0x0\n");
+                  cliFile.write("0x4958E9\n");
+                  cliFile.write("2\n");
+                  cliFile.write("// width\n");
+                  cliFile.write(originalNode.getName().length() * 10 + "\n");
+                  cliFile.write("// height\n");
+                  cliFile.write("30\n");
+              }
           }
-        }
 				cliFile.close();
       }
 
@@ -319,23 +319,23 @@ public void write() {
 				cenFile.write(" \n\n");
 				cenFile.write("// Nodes\n");
 
-        for (int i=0; i<originalNodes.length; ++i) {
-          if (originalNodes[i].getType() == Node.CENTRAL) {
-		 				cenFile.write("// Node\n");
-						cenFile.write("// name\n");
-						cenFile.write(originalNodes[i].getName()+"\n");
-						cenFile.write("// Editor Node\n");
-						cenFile.write(originalNodes[i].getName()+"\n");
-						cenFile.write("TSEShapeNodeView 4\n");
-						cenFile.write("0x0\n");
-						cenFile.write("0x4958E9\n");
-						cenFile.write("2\n");
-						cenFile.write("// width\n");
-						cenFile.write(originalNodes[i].getName().length()*10+"\n");
-						cenFile.write("// height\n");
-						cenFile.write("30\n");
+          for (Node originalNode : originalNodes) {
+              if (originalNode.getType() == Node.CENTRAL) {
+                  cenFile.write("// Node\n");
+                  cenFile.write("// name\n");
+                  cenFile.write(originalNode.getName() + "\n");
+                  cenFile.write("// Editor Node\n");
+                  cenFile.write(originalNode.getName() + "\n");
+                  cenFile.write("TSEShapeNodeView 4\n");
+                  cenFile.write("0x0\n");
+                  cenFile.write("0x4958E9\n");
+                  cenFile.write("2\n");
+                  cenFile.write("// width\n");
+                  cenFile.write(originalNode.getName().length() * 10 + "\n");
+                  cenFile.write("// height\n");
+                  cenFile.write("30\n");
+              }
           }
-        }
 				cenFile.close();
       }
   	}
@@ -405,23 +405,23 @@ public void write() {
 				currentFile.write("\n\n");
 				currentFile.write("// Edges\n");
         int edgeCounter = 0;
-        for (int k=0; k<nodes; ++k) {
-          int[] l = nodeList[k].dependencies;
-          if (l != null) {
-             for (int j=0; j<l.length; ++j) {
-              if ((nodeList[k].cluster == clusterIndex) &&
-                  (clusterIndex == nodeList[l[j]].cluster)) {
-        				currentFile.write("// Edge\n");
-  			        currentFile.write("// name\n");
-	        			currentFile.write("Edge "+(edgeCounter++)+"\n");
-        				currentFile.write("// fromNodeName\n");
-        				currentFile.write(nodeList[k].getName()+"\n");
-        				currentFile.write("// toNodeName\n");
-				        currentFile.write(nodeList[l[j]].getName()+"\n");
-              }
-             }
-          }
-        }
+                for (Node node : nodeList) {
+                    int[] l = node.dependencies;
+                    if (l != null) {
+                        for (int value : l) {
+                            if ((node.cluster == clusterIndex) &&
+                                    (clusterIndex == nodeList[value].cluster)) {
+                                currentFile.write("// Edge\n");
+                                currentFile.write("// name\n");
+                                currentFile.write("Edge " + (edgeCounter++) + "\n");
+                                currentFile.write("// fromNodeName\n");
+                                currentFile.write(node.getName() + "\n");
+                                currentFile.write("// toNodeName\n");
+                                currentFile.write(nodeList[value].getName() + "\n");
+                            }
+                        }
+                    }
+                }
 
         clusterIndex++;
         currentFile.close();
@@ -434,31 +434,31 @@ public void write() {
   	clustersFile.write("\n\n");
 		clustersFile.write("// Edges\n");
     boolean equalEdge = false;
-    for (int k=0; k<nodes; ++k) {
-      int[] l = nodeList[k].dependencies;
-      if (l != null) {
-        for (int j=0; j<l.length; ++j) {
-          if (nodeList[k].cluster != nodeList[l[j]].cluster) {
-            Edge newEdge = new Edge(nodeList[k], nodeList[l[j]]);
-            for (int h=0; h<edges.size(); h++) {
-              equalEdge = ((Edge) edges.elementAt(h)).equalByCluster(newEdge);
-              if (equalEdge)
-                break;
-            }
-            if (!equalEdge) {
-    				  clustersFile.write("// Edge\n");
-              clustersFile.write("// name\n");
-	         	  clustersFile.write("Cluster Edge "+(edgeCounter++)+"\n");
-        	 	  clustersFile.write("// fromNodeName\n");
-        	 	  clustersFile.write("Cluster "+nodeList[k].cluster+"\n");
-        	 	  clustersFile.write("// toNodeName\n");
-				      clustersFile.write("Cluster "+nodeList[l[j]].cluster+"\n");
-              edges.addElement(newEdge);
-            }
+      for (Node node : nodeList) {
+          int[] l = node.dependencies;
+          if (l != null) {
+              for (int i : l) {
+                  if (node.cluster != nodeList[i].cluster) {
+                      Edge newEdge = new Edge(node, nodeList[i]);
+                      for (int h = 0; h < edges.size(); h++) {
+                          equalEdge = ((Edge) edges.elementAt(h)).equalByCluster(newEdge);
+                          if (equalEdge)
+                              break;
+                      }
+                      if (!equalEdge) {
+                          clustersFile.write("// Edge\n");
+                          clustersFile.write("// name\n");
+                          clustersFile.write("Cluster Edge " + (edgeCounter++) + "\n");
+                          clustersFile.write("// fromNodeName\n");
+                          clustersFile.write("Cluster " + node.cluster + "\n");
+                          clustersFile.write("// toNodeName\n");
+                          clustersFile.write("Cluster " + nodeList[i].cluster + "\n");
+                          edges.addElement(newEdge);
+                      }
+                  }
+              }
           }
-        }
       }
-    }
 
 		clustersFile.close();
 
@@ -488,7 +488,7 @@ public void write() {
 		writer_d.close();
   }
   catch (IOException e) {
-    e.printStackTrace();
+  	throw new RuntimeException(e);
   }
 }
 }

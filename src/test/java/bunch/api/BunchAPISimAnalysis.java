@@ -134,7 +134,7 @@ public final class BunchAPISimAnalysis {
 
     for(int i = 0; i < howMany; i++)
     {
-      Integer idx = new Integer(i);
+      Integer idx = i;
       String fn = baseFileName + idx.toString() + ".bunch";
       bgList[i] = BunchGraphUtils.constructFromSil(mdgFileName,fn);
     }

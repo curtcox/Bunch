@@ -11,10 +11,12 @@ import java.util.*;
  *
  * @see IterationListener
  */
-public class IterationEvent
+public final class IterationEvent
   extends EventObject
 {
-int iteration_d, overallIteration_d, expNum;
+private int iteration_d;
+    private int overallIteration_d;
+    int expNum;
 
 /**
  * This is a specific event type...nothing special is needed for processing
@@ -34,30 +36,6 @@ public void setIteration(int num)
 }
 
 /**
- * Sets the current experiment number
- */
-public void setExpNum(int num)
-{
-   expNum = num;
-}
-
-/**
- * Gets the specific experiment number
- */
-public int getExpNum()
-{
-   return expNum;
-}
-
-/**
- * Gets the current iteration number
- */
-public int getIteration()
-{
-  return iteration_d;
-}
-
-/**
  * Sets the overall iteration progress
  */
 public void setOverallIteration(int num)
@@ -65,11 +43,4 @@ public void setOverallIteration(int num)
   overallIteration_d = num;
 }
 
-/**
- * Gets the overall iteration process
- */
-public int getOverallIteration()
-{
-  return overallIteration_d;
-}
 }

@@ -18,14 +18,14 @@ import java.io.*;
  * @see SteepestAscentHillClimbingClusteringMethod
  */
 public abstract class GenericHillClimbingClusteringMethod extends GenericClusteringMethod2 {
-HillClimbingConfiguration config_d;
+private HillClimbingConfiguration config_d;
 
 /**
  * This method indicates that the default behavior of a generic hill-climbing
  * clustering algorithm is configurable.  This is used to indicate if there
  * is a UI available
  */
-public GenericHillClimbingClusteringMethod()
+GenericHillClimbingClusteringMethod()
 {
   setConfigurable(true);
 }
@@ -55,7 +55,7 @@ public boolean nextGeneration() {
   /**
    * Batch mode configuration dump to stdout
    */
-  if (configuration_d.runBatch_d == true)
+  if (configuration_d.runBatch_d)
   {
     System.out.println("Run Batch = " + configuration_d.runBatch_d);
     System.out.println("Exp Number = " + configuration_d.expNumber_d);
@@ -72,7 +72,7 @@ public boolean nextGeneration() {
 
     if (false)
       for (int i=0; i<currentPopulation_d.size(); ++i)
-	if (configuration_d.runBatch_d == true)
+	if (configuration_d.runBatch_d)
 	{
           int exp = configuration_d.expNumber_d;
           sCluster = "";
@@ -104,7 +104,7 @@ public boolean nextGeneration() {
       {
         if (!currentPopulation_d.getCluster(i).isMaximum())
         {
-          if (configuration_d.runBatch_d == true)
+          if (configuration_d.runBatch_d)
           {
             int exp = configuration_d.expNumber_d;
 	    sCluster = "";
@@ -160,12 +160,8 @@ private void realignClusters(int[] c) {
   for (int i = 0; i < c.length; i++)
     map[i] = -1;
 
-  for (int j = 0; j < c.length; j++)
-  {
-    int clus = c[j];
-
-    if (map[clus] == -1)
-    {
+  for (int clus : c) {
+    if (map[clus] == -1) {
       index++;
       map[clus] = index;
     }
@@ -182,7 +178,7 @@ private void realignClusters(int[] c) {
  * This is method that is redefined by the subclasses for each specific
  * hill-climbing algorithm, i.e., where the hill-climbing is actually performed
  */
-protected abstract Cluster getLocalMaxGraph(Cluster c);
+protected abstract void getLocalMaxGraph(Cluster c);
 
 /**
  * This method is used to "shake" or reinitialize clusters
@@ -222,7 +218,7 @@ public Configuration getConfiguration() {
   return configuration_d;
 }
 
-public void setConfiguration(HillClimbingConfiguration c)
+void setConfiguration(HillClimbingConfiguration c)
 {
    configuration_d = c;
 }

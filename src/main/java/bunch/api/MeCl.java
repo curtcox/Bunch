@@ -3,10 +3,10 @@ package bunch.api;
 import java.util.*;
 
 final class MeCl {
-  BunchGraph A;
-  BunchGraph B;
-  Map<String,Integer> edgeA;
-  long  meclValue;
+  private final BunchGraph A;
+  private final BunchGraph B;
+  private final Map<String,Integer> edgeA;
+  private long  meclValue;
 
   public MeCl(BunchGraph g1, BunchGraph g2) {
     A = g1;
@@ -60,12 +60,12 @@ final class MeCl {
       return 0;
     }
 
-    for(int i = 0; i < currentSubCluster.size(); i++) {
-      BunchNode bn1 = (BunchNode)currentSubCluster.get(i);
-      for(int j = 0; j < value.size(); j++) {
-        BunchNode bn2 = (BunchNode)value.get(j);
+    for (Object item : currentSubCluster) {
+      BunchNode bn1 = (BunchNode) item;
+      for (Object o : value) {
+        BunchNode bn2 = (BunchNode) o;
         if (!bn2.isAMemberOfCluster(bn1.getMemberCluster().getName())) {
-          tally += this.getConnectedWeight(bn1.getName(),bn2.getName());
+          tally += this.getConnectedWeight(bn1.getName(), bn2.getName());
         }
       }
     }
@@ -83,7 +83,7 @@ final class MeCl {
     }
   }
 
-  public int getConnectedWeight(String n1, String n2) {
+  private int getConnectedWeight(String n1, String n2) {
     String key1 = n1+n2;
     String key2 = n2+n1;
     int    total = 0;
@@ -101,7 +101,7 @@ final class MeCl {
     return total;
   }
 
-  public HashMap determineSubClusters() {
+  private HashMap determineSubClusters() {
     HashMap Ca = new HashMap();
 
     Iterator i = A.getClusters().iterator();

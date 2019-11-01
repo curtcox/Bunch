@@ -96,7 +96,7 @@ public void calculate() {
  * Calculates the intradependencies (intraconnectivity) value for the given cluster
  * of the graph.
  */
-public double calculateIntradependenciesValue(int[] c, int numCluster) {
+private double calculateIntradependenciesValue(int[] c, int numCluster) {
   double intradep=0.0;
   double intraEdges=0.0;
   double interEdges=0.0;

@@ -12,15 +12,15 @@ import java.io.*;
  * @see ParserFactory
  */
 public abstract class Parser {
-protected BufferedReader reader_d;
-protected String delims_d = " \t\r\n";
-protected String inputFileName;
+BufferedReader reader_d;
+String delims_d = " \t\r\n";
+private String inputFileName;
 
 
 /**
  * Empty parser constructor
  */
-public Parser() { }
+Parser() { }
 
 public void setDelims(String d)
 {

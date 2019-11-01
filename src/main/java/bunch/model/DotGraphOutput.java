@@ -27,7 +27,7 @@ public DotGraphOutput() { }
 /**
  * This method writes the header necessary to create the dot output file format
  */
-public void writeHeader() throws IOException {
+private void writeHeader() throws IOException {
     writer_d.write("/* ------------------------------------------------------------ */\n");
     writer_d.write("/* created with bunch v3 */\n");
     writer_d.write("/* Objective Function value = "+graph_d.getObjectiveFunctionValue()+"*/\n");
@@ -40,7 +40,7 @@ public void writeHeader() throws IOException {
 /**
  * This method handles dumping the special modules - omnipresent & libraries
  */
-public void writeSpecialModules(Node[] originalNodes) throws IOException {
+private void writeSpecialModules(Node[] originalNodes) throws IOException {
   ArrayList deadList = new ArrayList();
   deadList.clear();
 
@@ -54,17 +54,17 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException {
      * Do first scan to see if there are special modules.  Mark the flags
      * for each special module type
      */
-    for (int i=0; i<originalNodes.length; ++i) {
-      if (!hasSuppliers && originalNodes[i].getType() == Node.SUPPLIER) {
+    for (Node node : originalNodes) {
+      if (!hasSuppliers && node.getType() == Node.SUPPLIER) {
         hasSuppliers = true;
       }
-      if (!hasClients && originalNodes[i].getType() == Node.CLIENT) {
+      if (!hasClients && node.getType() == Node.CLIENT) {
         hasClients = true;
       }
-      if (!hasCentrals && originalNodes[i].getType() == Node.CENTRAL) {
+      if (!hasCentrals && node.getType() == Node.CENTRAL) {
         hasCentrals = true;
       }
-      if (!hasLibraries && originalNodes[i].getType() == Node.LIBRARY) {
+      if (!hasLibraries && node.getType() == Node.LIBRARY) {
         hasLibraries = true;
       }
     }
@@ -75,14 +75,14 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException {
       writer_d.write("label = \"libraries\";\n");
       writer_d.write("color = black;\n");
       writer_d.write("style = bold;\n\n");
-      for (int i=0; i<originalNodes.length; ++i) {
-        if (originalNodes[i].getType() == Node.LIBRARY) {
-          writer_d.write("\""+originalNodes[i].getName()+"\"[shape=diamond,color=lightgray,fontcolor=black,style=filled];\n");
+      for (Node originalNode : originalNodes) {
+        if (originalNode.getType() == Node.LIBRARY) {
+          writer_d.write("\"" + originalNode.getName() + "\"[shape=diamond,color=lightgray,fontcolor=black,style=filled];\n");
         }
-        if(originalNodes[i].getType() >= Node.DEAD)
-          if((originalNodes[i].getType()-Node.DEAD)==Node.LIBRARY) {
-            writer_d.write("\""+originalNodes[i].getName()+"\"[label=\""+originalNodes[i].getName()+"\",shape=box,color=lightblue,fontcolor=black,style=filled];\n");
-            deadList.add(originalNodes[i]);
+        if (originalNode.getType() >= Node.DEAD)
+          if ((originalNode.getType() - Node.DEAD) == Node.LIBRARY) {
+            writer_d.write("\"" + originalNode.getName() + "\"[label=\"" + originalNode.getName() + "\",shape=box,color=lightblue,fontcolor=black,style=filled];\n");
+            deadList.add(originalNode);
           }
       }
       writer_d.write("}\n");
@@ -94,14 +94,14 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException {
       writer_d.write("label = \"omnipresent suppliers\";\n");
       writer_d.write("color = black;\n");
       writer_d.write("style = bold;\n\n");
-      for (int i=0; i<originalNodes.length; ++i) {
-        if (originalNodes[i].getType() == Node.SUPPLIER) {
-          writer_d.write("\""+originalNodes[i].getName()+"\"[shape=diamond,color=lightgray,fontcolor=black,style=filled];\n");
+      for (Node originalNode : originalNodes) {
+        if (originalNode.getType() == Node.SUPPLIER) {
+          writer_d.write("\"" + originalNode.getName() + "\"[shape=diamond,color=lightgray,fontcolor=black,style=filled];\n");
         }
-        if(originalNodes[i].getType() >= Node.DEAD)
-          if((originalNodes[i].getType()-Node.DEAD)==Node.SUPPLIER) {
-            writer_d.write("\""+originalNodes[i].getName()+"\"[label=\""+originalNodes[i].getName()+"\",shape=box,color=lightblue,fontcolor=black,style=filled];\n");
-            deadList.add(originalNodes[i]);
+        if (originalNode.getType() >= Node.DEAD)
+          if ((originalNode.getType() - Node.DEAD) == Node.SUPPLIER) {
+            writer_d.write("\"" + originalNode.getName() + "\"[label=\"" + originalNode.getName() + "\",shape=box,color=lightblue,fontcolor=black,style=filled];\n");
+            deadList.add(originalNode);
           }
       }
       writer_d.write("}\n");
@@ -113,14 +113,14 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException {
       writer_d.write("label = \"omnipresent clients\";\n");
       writer_d.write("color = black;\n");
       writer_d.write("style = bold;\n\n");
-      for (int i=0; i<originalNodes.length; ++i) {
-        if (originalNodes[i].getType() == Node.CLIENT) {
-          writer_d.write("\""+originalNodes[i].getName()+"\"[shape=diamond,color=lightgray,fontcolor=black,style=filled];\n");
+      for (Node originalNode : originalNodes) {
+        if (originalNode.getType() == Node.CLIENT) {
+          writer_d.write("\"" + originalNode.getName() + "\"[shape=diamond,color=lightgray,fontcolor=black,style=filled];\n");
         }
-        if(originalNodes[i].getType() >= Node.DEAD)
-          if((originalNodes[i].getType()-Node.DEAD)==Node.CLIENT) {
-            writer_d.write("\""+originalNodes[i].getName()+"\"[label=\""+originalNodes[i].getName()+"\",shape=box,color=lightblue,fontcolor=black,style=filled];\n");
-            deadList.add(originalNodes[i]);
+        if (originalNode.getType() >= Node.DEAD)
+          if ((originalNode.getType() - Node.DEAD) == Node.CLIENT) {
+            writer_d.write("\"" + originalNode.getName() + "\"[label=\"" + originalNode.getName() + "\",shape=box,color=lightblue,fontcolor=black,style=filled];\n");
+            deadList.add(originalNode);
           }
       }
       writer_d.write("}\n");
@@ -132,14 +132,14 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException {
       writer_d.write("label = \"omnipresent clients/suppliers\";\n");
       writer_d.write("color = black;\n");
       writer_d.write("style = bold;\n\n");
-      for (int i=0; i<originalNodes.length; ++i) {
-        if (originalNodes[i].getType() == Node.CENTRAL) {
-          writer_d.write("\""+originalNodes[i].getName()+"\"[shape=diamond,color=lightgray,fontcolor=black,style=filled];\n");
+      for (Node originalNode : originalNodes) {
+        if (originalNode.getType() == Node.CENTRAL) {
+          writer_d.write("\"" + originalNode.getName() + "\"[shape=diamond,color=lightgray,fontcolor=black,style=filled];\n");
         }
-        if(originalNodes[i].getType() >= Node.DEAD)
-          if((originalNodes[i].getType()-Node.DEAD)==Node.CENTRAL) {
-            writer_d.write("\""+originalNodes[i].getName()+"\"[label=\""+originalNodes[i].getName()+"\",shape=box,color=lightblue,fontcolor=black,style=filled];\n");
-            deadList.add(originalNodes[i]);
+        if (originalNode.getType() >= Node.DEAD)
+          if ((originalNode.getType() - Node.DEAD) == Node.CENTRAL) {
+            writer_d.write("\"" + originalNode.getName() + "\"[label=\"" + originalNode.getName() + "\",shape=box,color=lightblue,fontcolor=black,style=filled];\n");
+            deadList.add(originalNode);
           }
       }
       writer_d.write("}\n");
@@ -148,9 +148,9 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException {
 
   if(deadList.size()>0) {
     writer_d.write("\n");
-    for(int z = 0; z < deadList.size(); z++) {
-      Node tmpN = (Node)deadList.get(z);
-      writeEdges(tmpN,originalNodes);
+    for (Object o : deadList) {
+      Node tmpN = (Node) o;
+      writeEdges(tmpN, originalNodes);
     }
     writer_d.write("\n");
   }
@@ -162,13 +162,13 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException {
  * is enclosed in quotes or there will be problems if the names contain
  * special characters
  */
-public void writeEdges(Node n, Node []origList) throws IOException {
+private void writeEdges(Node n, Node[] origList) throws IOException {
   String srcName = n.getName();
   int[] deps = n.getDependencies();
 
-  for(int i = 0; i < deps.length; i++) {
-    String tgtName = origList[deps[i]].getName();
-    writer_d.write("\""+srcName+"\" -> \""+ tgtName+"\" [color=blue,font=6];\n");
+  for (int dep : deps) {
+    String tgtName = origList[dep].getName();
+    writer_d.write("\"" + srcName + "\" -> \"" + tgtName + "\" [color=blue,font=6];\n");
   }
 }
 
@@ -177,7 +177,7 @@ public void writeEdges(Node n, Node []origList) throws IOException {
  * We need a closing bracket.  Its overkill to use a method, but it fits into
  * the overall framework.
  */
-public void writeClosing() throws IOException {
+private void writeClosing() throws IOException {
     writer_d.write("}\n");
     //writer_d.close();
 }
@@ -186,7 +186,7 @@ public void writeClosing() throws IOException {
  * Given a node object (which is a cluster), and an ID, generate the
  * cluster associated with the node.
  */
-public void genCluster(Node n, long baseID) throws IOException {
+private void genCluster(Node n, long baseID) throws IOException {
   Stack st = new Stack();
   Hashtable ht = new Hashtable();
 
@@ -254,7 +254,7 @@ public void genCluster(Node n, long baseID) throws IOException {
 /**
  * Given a graph, this method generates all of the clusters
  */
-public void generateClusters(Graph cLvlG) throws IOException {
+private void generateClusters(Graph cLvlG) throws IOException {
   Graph nextLvlG = null;
 
   /**
@@ -282,17 +282,27 @@ public void generateClusters(Graph cLvlG) throws IOException {
   /**
    * Each node in this graph is a cluster, so process them individually
    */
-  for(int i = 0; i<nodeList.length;i++)
-  {
+  /**
+   * First we check for illegial invariants, that is since we are expecting that
+   * these are clusters, they better have children at this point, or else...
+   */
+  /**
+   * Given the node, mark the strongest child in the cluster.  This will be used to
+   * name the cluster
+   */
+  /**
+   * Now generate the cluster, and update the id so that each cluster has a
+   * unique id
+   */
+  for (Node tmp : nodeList) {
     /**
      * First we check for illegial invariants, that is since we are expecting that
      * these are clusters, they better have children at this point, or else...
      */
-    Node tmp = nodeList[i];
-    if(tmp.children == null)
+    if (tmp.children == null)
       continue;
 
-    if(tmp.children.length==0)
+    if (tmp.children.length == 0)
       continue;
 
     /**
@@ -305,76 +315,17 @@ public void generateClusters(Graph cLvlG) throws IOException {
      * Now generate the cluster, and update the id so that each cluster has a
      * unique id
      */
-    genCluster(nodeList[i], base);
-    base+=1000;
+    genCluster(tmp, base);
+    base += 1000;
   }
 }
-
-/**
- * Given a graph, this method only generates a single level.  It will not
- * recurse down to deeper levels
- */
-public void genOneLevel(Graph cLvlG) throws IOException
-{
-  NextLevelGraph nextLvl = new NextLevelGraph();
-  Graph          nextLvlG = nextLvl.genNextLevelGraph(cLvlG);
-  long           baseID = 100000*cLvlG.getGraphLevel();
-
-  /**
-   * Get each of the nodes and process them
-   */
-  Node[]         nodeList = nextLvlG.getNodes();
-  for(int i = 0; i<nodeList.length;i++) {
-    /**
-     * At this point each node is a cluster, so grab the cluster from
-     * the node list
-     */
-    Node tmp = nodeList[i];
-    if(tmp.children == null)
-      continue;
-
-    //Write the Header for the cluster
-    long clustID = tmp.nodeID+(baseID++);
-    writer_d.write("subgraph cluster"+clustID+" {\n");
-    writer_d.write("label = \""+tmp.name_d+"\";\n");
-    writer_d.write("color = black;\n");
-    writer_d.write("style = bold;\n\n");
-
-    //Now generate its children
-    for(int j = 0; j < tmp.children.length;j++)
-        writer_d.write("\""+tmp.children[j].getName()+"\"[label=\""+tmp.children[j].getName()+"\",shape=ellipse,color=lightblue,fontcolor=black,style=filled];\n");
-
-    //Close cluster
-    writer_d.write("}\n\n");
-  }
-
-  /**
-   * Now prepare to write the dependencies, e.g., edges from the MDG
-   */
-  nodeList = cLvlG.getNodes();
-  for(int i = 0; i<nodeList.length;i++) {
-    Node tmp = nodeList[i];
-    if(tmp.children == null)
-      continue;
-
-    String srcName = tmp.getName();
-    int[] dep = tmp.getDependencies();
-    if (dep == null) continue;
-
-    for(int j = 0; j < dep.length;j++) {
-        String tgtName = nodeList[dep[j]].getName();
-        writer_d.write("\""+srcName+"\" -> \""+ tgtName+"\" [color=blue,font=6];\n");
-    }
-  }
-}
-
 
 /**
  * This method is used to generate a vector of vectors, with each high level
  * vector indicating a cluster, and its associated vector indicating the nodes
  * in the cluster
  */
-public void genChildrenFromOneLevel(Graph cLvlG) throws IOException {
+private void genChildrenFromOneLevel(Graph cLvlG) throws IOException {
   Graph nextLvlG = null;
 
   /**
@@ -403,17 +354,19 @@ public void genChildrenFromOneLevel(Graph cLvlG) throws IOException {
   /**
    * Now process the nodes at the current level, each is a cluster
    */
-  for(int i = 0; i<nodeList.length;i++) {
-    Node tmp = nodeList[i];
-
+  /**
+   * These are panic statements.  It should never be the case that the nodes
+   * at this point do not contain children
+   */
+  for (Node tmp : nodeList) {
     /**
      * These are panic statements.  It should never be the case that the nodes
      * at this point do not contain children
      */
-    if(tmp.children == null)
+    if (tmp.children == null)
       continue;
 
-    if(tmp.children.length==0)
+    if (tmp.children.length == 0)
       continue;
 
     //The strongest node is used to name the cluster
@@ -425,7 +378,7 @@ public void genChildrenFromOneLevel(Graph cLvlG) throws IOException {
     cVect.addElement(newCluster);
 
     //add the children to this cluster
-    echoNestedChildren(tmp,newCluster);
+    echoNestedChildren(tmp, newCluster);
   }
 
   /**
@@ -441,11 +394,11 @@ public void genChildrenFromOneLevel(Graph cLvlG) throws IOException {
  *
  * @return The name of the strongest member of the provided cluster
  */
-public String findStrongestNode(Node n) {
+private String findStrongestNode(Node n) {
   /**
    * Make sure that we have a cluster
    */
-  if (n.isCluster() == false)
+  if (!n.isCluster())
     return "";
 
   int lvl = n.nodeLevel;
@@ -479,8 +432,7 @@ public String findStrongestNode(Node n) {
     if (curr.isCluster()) {
       Node[] children = curr.children;
       if((children != null) && (children.length>0))
-        for(int j = 0; j < children.length; j++)
-          l.addLast(children[j]);
+        for (Node child : children) l.addLast(child);
     }
     /**
      * OK, its a real node, add it to the vector for examination.
@@ -510,7 +462,7 @@ public String findStrongestNode(Node n) {
  *
  * @returns The strongest node for a list of nodes provided on the interface
  */
-public String findStrongestNode(Vector v) {
+private String findStrongestNode(Vector v) {
   int maxEdgeWeight = 0;
   int maxEdgeCount = 0;
   Node domEdgeNode = null;
@@ -580,7 +532,7 @@ public String findStrongestNode(Vector v) {
  * Given a particular node, and a vector (by reference), populate the vector
  * with the children of the node.  They may be nested so we will need to recurse
  */
-public void echoNestedChildren(Node n, Vector v) throws IOException {
+private void echoNestedChildren(Node n, Vector v) {
   /**
    * Create a stack to manage the recursion
    */
@@ -622,7 +574,7 @@ public void echoNestedChildren(Node n, Vector v) throws IOException {
  * This method outputs the cluster passed via cVect, and the specified level
  * to the output stream
  */
-public void WriteOutputClusters(Vector cVect, int lvl) throws IOException {
+private void WriteOutputClusters(Vector cVect, int lvl) throws IOException {
   if(cVect==null) return;
 
   /**
@@ -739,7 +691,7 @@ public void write() {
 /**
  * This method writes the specified graph to the output stream
  */
-public void writeGraph(String fileName, Graph g) {
+private void writeGraph(String fileName, Graph g) {
   /**
    * Open the output stream and use the generateOutput() method to
    * actually generate the output
@@ -756,13 +708,13 @@ public void writeGraph(String fileName, Graph g) {
 /**
  * This is the method that we use to controll the graph generation
  */
-public void generateOutput(Graph g) throws IOException {
+private void generateOutput(Graph g) throws IOException {
   Graph gBase = g;
 
   while (gBase.getGraphLevel() != 0)
     gBase = gBase.getPreviousLevelGraph();
 
-  int clusters[] = gBase.getClusters();
+  int[] clusters = gBase.getClusters();
   Node[] nodeList = gBase.getNodes();
   int nodes = nodeList.length;
   int[][] clustMatrix = new int[nodes][nodes+1];
@@ -798,7 +750,7 @@ public void generateOutput(Graph g) throws IOException {
    * Now write the nested clusters, or the single level, depending on the
    * user selected option.
    */
-  if(getWriteNestedLevels() == false)
+  if(!getWriteNestedLevels())
     genChildrenFromOneLevel(g);
   else
     generateClusters(g);
@@ -817,7 +769,7 @@ public void generateOutput(Graph g) throws IOException {
 /**
  * This helper method generates the edges for the given graph.
  */
-public void genEdges(Graph g) throws IOException {
+private void genEdges(Graph g) throws IOException {
   Graph gBase = g;
 
   /**
@@ -829,7 +781,7 @@ public void genEdges(Graph g) throws IOException {
   /**
    * Do some initialization
    */
-  int clusters[] = gBase.getClusters();
+  int[] clusters = gBase.getClusters();
   Node[] nodeList = gBase.getNodes();
   int nodes = nodeList.length;
   int[][] clustMatrix = new int[nodes][nodes+1];
@@ -855,11 +807,11 @@ public void genEdges(Graph g) throws IOException {
    * pair of modules.  If so genenerate the dotty statement to
    * place this edge in the output file.
    */
-  for (int i=0; i<nodes; ++i) {
-    int[] l = nodeList[i].dependencies;
+  for (Node node : nodeList) {
+    int[] l = node.dependencies;
     if (l != null) {
-      for (int j=0; j<l.length; ++j) {
-        writer_d.write("\""+nodeList[i].getName()+"\" -> \""+ nodeList[l[j]].getName()+"\" [color=blue,font=6];\n");
+      for (int value : l) {
+        writer_d.write("\"" + node.getName() + "\" -> \"" + nodeList[value].getName() + "\" [color=blue,font=6];\n");
       }
     }
   }

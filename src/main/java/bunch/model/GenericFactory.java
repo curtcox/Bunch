@@ -16,7 +16,7 @@ import java.beans.Beans;
  */
 public class GenericFactory implements java.io.Serializable {
 
-protected Hashtable<String,String> methodTable_d;
+private final Hashtable<String,String> methodTable_d;
 public static final long serialVersionUID = 100L;
 
 /**
@@ -25,14 +25,14 @@ public static final long serialVersionUID = 100L;
  * #getItemInstance(String) method to obtain the FQN for
  * the default class for the particular factory in question
  */
-protected String factoryType_d;
+private String factoryType_d;
 
 /**
  * GenericFactory constructor, initializes the internal storage to
  * 10 (given that factories are usually used for a small number of
  * objects).
  */
-public GenericFactory()
+protected GenericFactory()
 {
   methodTable_d = new Hashtable(10);
 }
@@ -42,24 +42,12 @@ public GenericFactory()
  * of objects that will be stored in this factory
  *
  * @param name of the class
- * @see #getFactoryType()
  */
-public void setFactoryType(String name)
+protected void setFactoryType(String name)
 {
   factoryType_d = name;
 }
 
-/**
- * Obtains the type of factory of this class, normally the name of the class
- * of objects that will be stored in this factory
- *
- * @return the name of the class
- * @see #setFactoryType(java.lang.String)
- */
-public String getFactoryType()
-{
-  return factoryType_d;
-}
 
 /**
  * Add a new object to the factory with its corresponding key name.
@@ -68,43 +56,9 @@ public String getFactoryType()
  * @param className the name of the class that will be instanced to answer for
  * this object
  */
-public void addItem(String name, String className)
+protected void addItem(String name, String className)
 {
   methodTable_d.put(name, className);
-}
-
-/**
- * Obtains a list of the available objects of this factory.
- *
- * @return an enumeration (@see java.util.Enumeration) with all the available
- * keys
- */
-public Enumeration getAvailableItems()
-{
-  return methodTable_d.keys();
-}
-
-public String[] getItemList() {
-  String[] list = new String[methodTable_d.size()];
-  Enumeration e = methodTable_d.keys();
-  int i=0;
-  while (e.hasMoreElements()) {
-    list[i++] = (String)e.nextElement();
-  }
-  return list;
-}
-
-/**
- * Obtains the name of an item in the factory. The name obtained is usually a
- * fully-qualified class name, which can be later used to create an
- * instance of the object
- *
- * @param name the name of the object which FQN is to be retrieved
- * @return the item stored for the key received as parameter
- */
-public String getItemName(String name)
-{
-  return (String)methodTable_d.get(name);
 }
 
 /**
@@ -114,12 +68,12 @@ public String getItemName(String name)
  * @return an instance of the name that corresponds to the key passed
  * as parameter
  */
-public Object getItemInstance(String name) {
+protected Object getItemInstance(String name) {
   String cls;
   if (name.toLowerCase().equals("default")) {
     cls = "bunch.Default"+factoryType_d;
   } else {
-    cls = (String)methodTable_d.get(name);
+    cls = methodTable_d.get(name);
   }
 
   try {
@@ -132,7 +86,7 @@ public Object getItemInstance(String name) {
 /**
  * Get object instance using a class name as a key
  */
-public Object getItemInstanceFromClass(String cls) {
+private Object getItemInstanceFromClass(String cls) {
   try {
     return (Beans.instantiate(null, cls));
   } catch (Exception e) {

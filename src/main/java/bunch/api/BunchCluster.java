@@ -4,20 +4,20 @@ import java.util.*;
 
 public final class BunchCluster {
 
-  int clusterID = -1;
-  String clusterName = "";
-  List<BunchNode> clusterNodes;
-  List<BunchNode> overlapNodes;
-  Map<String,BunchNode> nodeHT;
+  private int clusterID = -1;
+  private String clusterName = "";
+  private final List<BunchNode> clusterNodes;
+  private List<BunchNode> overlapNodes;
+  private Map<String,BunchNode> nodeHT;
 
-  public BunchCluster(int id, String name, ArrayList nodes) {
+  public BunchCluster(int id, String name, List<BunchNode> nodes) {
     clusterID = id;
     clusterName = name;
     clusterNodes = nodes;
     nodeHT = null;
     //inform member nodes that they are a primary member of this cluster
-    for(int i = 0; i < nodes.size(); i++) {
-      BunchNode bn = (BunchNode)nodes.get(i);
+    for (BunchNode node : nodes) {
+      BunchNode bn = (BunchNode) node;
       bn.setMemberCluster(this);
     }
   }
@@ -42,7 +42,7 @@ public final class BunchCluster {
 
   public void addOverlapNode(BunchNode bn) {
     if (overlapNodes == null)
-      overlapNodes = new ArrayList();
+      overlapNodes = new ArrayList<>();
 
     overlapNodes.add(bn);
     nodeHT = null;
@@ -76,21 +76,19 @@ public final class BunchCluster {
   }
 
   private Map<String,BunchNode> constructNodeHT() {
-    Map<String,BunchNode> h = new Hashtable();
+    Map<String,BunchNode> h = new Hashtable<>();
     h.clear();
 
     if(clusterNodes != null) {
-      for(int i = 0; i < clusterNodes.size(); i++) {
-        BunchNode bn = clusterNodes.get(i);
+      for (BunchNode bn : clusterNodes) {
         String key = bn.getName();
-        h.put(key,bn);
+        h.put(key, bn);
       }
     }
     if(overlapNodes != null) {
-      for(int i = 0; i < overlapNodes.size(); i++) {
-        BunchNode bn = (BunchNode)overlapNodes.get(i);
+      for (BunchNode bn : overlapNodes) {
         String key = bn.getName();
-        h.put(key,bn);
+        h.put(key, bn);
       }
     }
     return h;

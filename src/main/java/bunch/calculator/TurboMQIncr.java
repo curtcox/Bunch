@@ -64,7 +64,7 @@ public double calculate(Cluster c) {
 
   //return calcAll(c);
 
-  if(c.isMoveValid() == false) {
+  if(!c.isMoveValid()) {
     if(clusters_x == null)
       clusters_x = c.getClusterNames();
     return calcAll(c);
@@ -96,23 +96,18 @@ private double calcAll(Cluster c) {
   muE = c.getMuEdgeVector();
   epE = c.getEpsilonEdgeVector();
 
-  for(int i = 0; i < nodes_x.length; i++)
-  {
-    Node n = nodes_x[i];
-
-    int [] fe = n.dependencies;
-    int [] feW = n.weights;
-    int [] be = n.backEdges;
-    int [] beW = n.beWeights;
-    int [] cv = c.getClusterVector();
+  for (Node n : nodes_x) {
+    int[] fe = n.dependencies;
+    int[] feW = n.weights;
+    int[] be = n.backEdges;
+    int[] beW = n.beWeights;
+    int[] cv = c.getClusterVector();
     int currentNode = n.nodeID;
     //String nodeName = n.name_d;
     int currentNodeCluster = cv[currentNode];
     n.cluster = cv[n.nodeID];
 
-    for(int j = 0; j < fe.length; j++)
-    {
-      int target = fe[j];
+    for (int target : fe) {
       int targetCluster = cv[target];
 
       if (targetCluster == currentNodeCluster)
@@ -122,14 +117,11 @@ private double calcAll(Cluster c) {
     }
   }
   double MQ = 0.0;
-  for(int k = 0; k < clusters_x.length; k++)
-  {
-    int currentCluster = clusters_x[k];
-    double dMuE = (double)muE[currentCluster];
-    double dEpE = (double)epE[currentCluster];
+  for (int currentCluster : clusters_x) {
+    double dMuE = muE[currentCluster];
+    double dEpE = epE[currentCluster];
 
-    if ((dMuE+dEpE)>0)
-    {
+    if ((dMuE + dEpE) > 0) {
       MQ += (dMuE / (dMuE + dEpE));
       //MQ += CFk;
     }
@@ -164,49 +156,38 @@ private double calcIncr(Cluster c, int[]lastMv) {
   int currentNodeCluster = cv[currentNode];
   n.cluster = cv[n.nodeID];
 
-  for(int j = 0; j < fe.length; j++)
-  {
-    int target = fe[j];
+  for (int target : fe) {
     int targetCluster = cv[target];  //cluster of edge
 
     Node x = nodes_x[target];
     String nname = x.getName();
     int nid = n.nodeID;
 
-    if(targetCluster == lmNewC)
-    {
-        muE[lmNewC]++;
-        epE[lmOrigC]--;
-    }else if(targetCluster == lmOrigC)
-    {
-        muE[lmOrigC]--;
-        epE[lmNewC]++;
-    }
-    else
-    {
-        epE[lmOrigC]--;
-        epE[lmNewC]++;
+    if (targetCluster == lmNewC) {
+      muE[lmNewC]++;
+      epE[lmOrigC]--;
+    } else if (targetCluster == lmOrigC) {
+      muE[lmOrigC]--;
+      epE[lmNewC]++;
+    } else {
+      epE[lmOrigC]--;
+      epE[lmNewC]++;
     }
   }
   //---- now the back edges
 
-  for(int j = 0; j < be.length; j++)
-  {
-    int target = be[j];
+  for (int target : be) {
     int targetCluster = cv[target];  //cluster of edge
 
-    if(targetCluster == lmNewC)
-    {
-        muE[lmNewC]++;
-        epE[lmNewC]--;
-    }else if(targetCluster == lmOrigC)
-    {
-        muE[lmOrigC]--;
-        epE[lmOrigC]++;
-    }else
-    {
-        //epE[lmOrigC]--;
-        //epE[lmNewC]++;
+    if (targetCluster == lmNewC) {
+      muE[lmNewC]++;
+      epE[lmNewC]--;
+    } else if (targetCluster == lmOrigC) {
+      muE[lmOrigC]--;
+      epE[lmOrigC]++;
+    } else {
+      //epE[lmOrigC]--;
+      //epE[lmNewC]++;
     }
   }
 
@@ -223,8 +204,8 @@ private double calcIncr(Cluster c, int[]lastMv) {
 }
 
 private double calcCFi(int c) {
-  double dMuE = (double)muE[c];
-  double dEpE = (double)epE[c];
+  double dMuE = muE[c];
+  double dEpE = epE[c];
 
   if ((dMuE+dEpE)>0)
       return (dMuE / (dMuE + dEpE));
@@ -279,7 +260,7 @@ public void calculate() {
  * Calculates the intradependencies (intraconnectivity) value for the given cluster
  * of the graph.
  */
-public double calculateIntradependenciesValue(int[] c, int numCluster) {
+private double calculateIntradependenciesValue(int[] c, int numCluster) {
   double intradep=0.0;
   double intraEdges=0.0;
   double interEdges=0.0;

@@ -16,7 +16,7 @@ import static bunch.api.Algorithm.*;
  */
 public final class ClusteringMethodFactory {
 
-final ClusteringMethod defaultMethod = new GeneralHillClimbingClusteringMethod();
+private final ClusteringMethod defaultMethod = new GeneralHillClimbingClusteringMethod();
 
 
 /**

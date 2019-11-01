@@ -4,13 +4,13 @@ import java.util.*;
 
 public final class BunchMDG {
 
-  final List<BunchMDGDependency> mdgEdges;
+  private final List<BunchMDGDependency> mdgEdges;
 
   public BunchMDG() {
     mdgEdges = new ArrayList<>();
   }
 
-  public boolean addMDGEdge(BunchMDGDependency d)
+  private boolean addMDGEdge(BunchMDGDependency d)
   {
     return mdgEdges.add(d);
   }

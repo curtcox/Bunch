@@ -10,8 +10,8 @@ import bunch.model.Graph;
  */
 public class GARouletteWheelMethod extends GAMethod {
 
-protected int[] tempArray_d;
-protected int shakeUpCount_d;
+private int[] tempArray_d;
+private int shakeUpCount_d;
 public GARouletteWheelMethod() { }
 
 public void init() {
@@ -84,8 +84,8 @@ processFitnessValues()
 {
   sumOFValue_d = 0.0;
   int nummax = 0;
-  for (int i=0; i<fitnessArray_d.length; ++i) {
-    if (fitnessArray_d[i] == maxOFValue_d) {
+  for (double v : fitnessArray_d) {
+    if (v == maxOFValue_d) {
       ++nummax;
     }
   }
@@ -125,8 +125,7 @@ processFitnessValues()
 /**
  * Scale the difference to range between 0 and 1
  */
-public
-double
+private double
 getScaledFitness(double fit)
 {
     double mult = 1.0;
@@ -143,8 +142,7 @@ getScaledFitness(double fit)
 /**
  * Determine a mutation position, if a mutation operation is needed
  */
-public
-void
+private void
 mutate(int[] c, int pos)
 {
     c[pos] = (int)(randomGenerator_d.nextFloat() * (c.length-1));
@@ -159,8 +157,7 @@ shakePopulation()
 /**
  * Crossover the population member c1c with c2c at the crossp position
  */
-public
-void
+private void
 cross(int[] c1c, int[] c2c, int crossp)
 {
   System.arraycopy(c1c, crossp, tempArray_d, crossp, c1c.length-crossp);

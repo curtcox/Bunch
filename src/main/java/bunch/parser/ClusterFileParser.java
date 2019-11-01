@@ -15,7 +15,7 @@ import java.util.*;
  */
 public class ClusterFileParser extends Parser {
 
-    Graph graph_d;
+    private Graph graph_d;
 
 public ClusterFileParser() { }
 
@@ -103,38 +103,6 @@ public Graph parse() {
         throw new RuntimeException(e);
     }
     return graph_d;
-}
-
-public boolean areAllNodesInCluster() {
-    int[] clusters = graph_d.getClusters();
-    
-    //the cluster vector is initialized to -1 for all nodes
-    //if a clusterid is -1 then something is wrong, as all nodes should be
-    //specified in a cluster
-    for (int i=0; i<clusters.length; ++i) {
-        if (clusters[i] == -1) 
-            return false;
-    }
-    return true;
-}
-
-public List<String> getNodesNotAssignedToClusters() {
-    int[] clusters = graph_d.getClusters();
-    ArrayList<String> nodeList = new ArrayList();
-    Node[] nodes = graph_d.getNodes();
-    
-    //the cluster vector is initialized to -1 for all nodes
-    //if a clusterid is -1 then something is wrong, as all nodes should be
-    //specified in a cluster
-    for (int i=0; i<clusters.length; ++i) {
-        if (clusters[i] == -1) 
-            nodeList.add(nodes[i].getName());
-    }
-    
-    if(nodeList.isEmpty())
-        return null;
-    else
-        return nodeList; 
 }
 
 }

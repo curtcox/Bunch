@@ -1,12 +1,11 @@
 package bunch.model;
 
 import java.util.Vector;
-import java.util.Enumeration;
 
 public final class Population {
 
-  Vector   pop = new Vector();
-  static   Graph g = null;
+  private final Vector   pop = new Vector();
+  private static   Graph g = null;
 
   public Population(Graph graph) {
       g = graph.cloneGraph();
@@ -48,8 +47,4 @@ public final class Population {
          return null;
   }
 
-  public Enumeration elements()
-  {
-      return pop.elements();
-  }
 }

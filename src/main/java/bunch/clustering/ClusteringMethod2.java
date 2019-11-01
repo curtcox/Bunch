@@ -29,13 +29,13 @@ public abstract class ClusteringMethod2 extends ClusteringMethod {
 private Graph graph_d;
 private Cluster bestCluster_d;
 private boolean isConfigurable_d=false;
-protected Configuration configuration_d;
-protected double elapsedTime_d=0.0;
+Configuration configuration_d;
+private double elapsedTime_d=0.0;
 
 /**
  * the class constructor
  */
-public ClusteringMethod2() { }
+ClusteringMethod2() { }
 
 /**
  * Initializes the clustering method.
@@ -60,7 +60,6 @@ public void setGraph(Graph g)
  * Obtains the graph to be partitioned by this clustering method
  *
  * @return the graph
- * @see setGraph( Graph )
  */
 public Graph getGraph()
 {
@@ -71,10 +70,9 @@ public Graph getGraph()
  * Sets the resultant of this clustering method (the best partitioned graph
  * found)
  *
- * @param g the (best) result partitioned cluster
  * @see #getBestGraph()
  */
-public void setBestCluster(Cluster c)
+void setBestCluster(Cluster c)
 {
   bestCluster_d = c;
 }
@@ -84,7 +82,6 @@ public void setBestCluster(Cluster c)
  * found).  The returned object is a cluster
  *
  * @return the (best) result graph
- * @see setResultGraph( Graph )
  */
 public Cluster getBestCluster()
 {
@@ -96,7 +93,6 @@ public Cluster getBestCluster()
  * found).  The returned object is a Graph.
  *
  * @return the (best) result graph
- * @see setResultGraph( Graph )
  */
 public Graph getBestGraph() {
    Cluster best = getBestCluster();
@@ -207,8 +203,6 @@ public boolean isConfigurable()
  * Defines if this clustering method is configurable by an "options" dialog.
  *
  * @param isC true if the method is configurable, false otherwise
- * @see #getConfigurable()
- * @see #getConfigurationDialogName()
  */
 public void setConfigurable(boolean isC)
 {

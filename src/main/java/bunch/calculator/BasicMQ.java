@@ -149,11 +149,11 @@ public double calculateIntradependenciesValue(int[] c, int numCluster) {
     k++;
     int[] c2 = node.dependencies;
     if (c2 != null) {
-      for (int j=0; j<c2.length; ++j) {
-        if (nodes_x[c2[j]].cluster == numCluster) {
-          ++intradep;
+        for (int value : c2) {
+            if (nodes_x[value].cluster == numCluster) {
+                ++intradep;
+            }
         }
-      }
     }
   }
   if (k==0)
@@ -171,22 +171,22 @@ public double calculateInterdependenciesValue(int[] c1, int[] c2, int nc1, int n
   for (int i=1; i<=c1[0]; ++i) {
     int[] ca = nodes_x[c1[i]].dependencies;
     if (ca != null) {
-      for (int j=0; j<ca.length; ++j) {
-        if (nodes_x[ca[j]].cluster == nc2) {
-          ++interdep;
+        for (int value : ca) {
+            if (nodes_x[value].cluster == nc2) {
+                ++interdep;
+            }
         }
-      }
     }
   }
 
   for (int i=1; i<=c2[0]; ++i) {
     int[] ca = nodes_x[c2[i]].dependencies;
     if (ca != null) {
-      for (int j=0; j<ca.length; ++j) {
-        if (nodes_x[ca[j]].cluster == nc1) {
-          ++interdep;
+        for (int value : ca) {
+            if (nodes_x[value].cluster == nc1) {
+                ++interdep;
+            }
         }
-      }
     }
   }
   interdep = ((interdep)/(2.0 * ((double)(c1[0])) * ((double)(c2[0]))));

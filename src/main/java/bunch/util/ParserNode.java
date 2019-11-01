@@ -7,11 +7,11 @@ import java.util.Hashtable;
  * information temporarily before converting it into a Graph
  */
 class ParserNode {
-public String name;
-public Hashtable dependencies;
-public Hashtable backEdges;
-public Hashtable dWeights;
-public Hashtable beWeights;
+public final String name;
+public final Hashtable dependencies;
+public final Hashtable backEdges;
+public final Hashtable dWeights;
+public final Hashtable beWeights;
 public int[] arrayDependencies;
 public int[] arrayWeights;
 

@@ -2,49 +2,41 @@ package bunch.model;
 
 import java.util.*;
 import java.io.*;
-import java.util.Vector;
 
 public final class TXTGraphOutput extends GraphOutput {
 
-boolean hasSuppliers = false;
-boolean hasClients = false;
-boolean hasCentrals = false;
-boolean hasLibraries = false;
+private boolean hasSuppliers = false;
+private boolean hasClients = false;
+private boolean hasCentrals = false;
+private boolean hasLibraries = false;
 
 public TXTGraphOutput() { }
 
-public void writeHeader(Graph gBase) throws IOException {
-    writer_d.write("// ------------------------------------------------------------ \n");
-    writer_d.write("// created with bunch v2 \n");
-    writer_d.write("// Objective Function value = "+gBase.getObjectiveFunctionValue()+"\n");
-    writer_d.write("// ------------------------------------------------------------ \n\n");
-}
-
-public void checkForSpecialModules(Node[] originalNodes) {
+private void checkForSpecialModules(Node[] originalNodes) {
     if (originalNodes != null) {
       hasSuppliers = false;
       hasClients = false;
       hasCentrals = false;
       hasLibraries = false;
 
-      for (int j=0; j<originalNodes.length; ++j) {
-        if (!hasSuppliers && originalNodes[j].getType() == Node.SUPPLIER) {
+      for (Node originalNode : originalNodes) {
+        if (!hasSuppliers && originalNode.getType() == Node.SUPPLIER) {
           hasSuppliers = true;
         }
-        if (!hasClients && originalNodes[j].getType() == Node.CLIENT) {
+        if (!hasClients && originalNode.getType() == Node.CLIENT) {
           hasClients = true;
         }
-        if (!hasCentrals && originalNodes[j].getType() == Node.CENTRAL) {
+        if (!hasCentrals && originalNode.getType() == Node.CENTRAL) {
           hasCentrals = true;
         }
-        if (!hasLibraries && originalNodes[j].getType() == Node.LIBRARY) {
+        if (!hasLibraries && originalNode.getType() == Node.LIBRARY) {
           hasLibraries = true;
         }
       }
     }
 }
 
-public void writeSpecialModules(Node[] originalNodes) throws IOException {
+private void writeSpecialModules(Node[] originalNodes) throws IOException {
     ArrayList deadList = new ArrayList();
     deadList.clear();
 
@@ -54,17 +46,17 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException {
       hasCentrals = false;
       hasLibraries = false;
 
-      for (int j=0; j<originalNodes.length; ++j) {
-        if (!hasSuppliers && originalNodes[j].getType() == Node.SUPPLIER) {
+      for (Node node : originalNodes) {
+        if (!hasSuppliers && node.getType() == Node.SUPPLIER) {
           hasSuppliers = true;
         }
-        if (!hasClients && originalNodes[j].getType() == Node.CLIENT) {
+        if (!hasClients && node.getType() == Node.CLIENT) {
           hasClients = true;
         }
-        if (!hasCentrals && originalNodes[j].getType() == Node.CENTRAL) {
+        if (!hasCentrals && node.getType() == Node.CENTRAL) {
           hasCentrals = true;
         }
-        if (!hasLibraries && originalNodes[j].getType() == Node.LIBRARY) {
+        if (!hasLibraries && node.getType() == Node.LIBRARY) {
           hasLibraries = true;
         }
       }
@@ -73,17 +65,17 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException {
       if (hasLibraries) {
         //create libraries cluster
         writer_d.write("SS(libraries) = ");
-        for (int i=0; i<originalNodes.length; ++i) {
-          if (originalNodes[i].getType() == Node.LIBRARY) {
-            if(count > 1) writer_d.write(", ");
-            writer_d.write(originalNodes[i].getName());
+        for (Node originalNode : originalNodes) {
+          if (originalNode.getType() == Node.LIBRARY) {
+            if (count > 1) writer_d.write(", ");
+            writer_d.write(originalNode.getName());
             count++;
           }
-          if(originalNodes[i].getType() >= Node.DEAD)
-            if((originalNodes[i].getType()-Node.DEAD)==Node.LIBRARY) {
-              if(count > 1) writer_d.write(", ");
-              writer_d.write(originalNodes[i].getName());
-              deadList.add(originalNodes[i]);
+          if (originalNode.getType() >= Node.DEAD)
+            if ((originalNode.getType() - Node.DEAD) == Node.LIBRARY) {
+              if (count > 1) writer_d.write(", ");
+              writer_d.write(originalNode.getName());
+              deadList.add(originalNode);
               count++;
             }
         }
@@ -94,17 +86,17 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException {
       if (hasSuppliers) {
         //create suppliers cluster
         writer_d.write("SS(omnipresent_suppliers) = ");
-        for (int i=0; i<originalNodes.length; ++i) {
-          if (originalNodes[i].getType() == Node.SUPPLIER) {
-            if(count > 1) writer_d.write(", ");
-            writer_d.write(originalNodes[i].getName());
+        for (Node originalNode : originalNodes) {
+          if (originalNode.getType() == Node.SUPPLIER) {
+            if (count > 1) writer_d.write(", ");
+            writer_d.write(originalNode.getName());
             count++;
           }
-          if(originalNodes[i].getType() >= Node.DEAD)
-            if((originalNodes[i].getType()-Node.DEAD)==Node.SUPPLIER) {
-              if(count > 1) writer_d.write(", ");
-              writer_d.write(originalNodes[i].getName());
-              deadList.add(originalNodes[i]);
+          if (originalNode.getType() >= Node.DEAD)
+            if ((originalNode.getType() - Node.DEAD) == Node.SUPPLIER) {
+              if (count > 1) writer_d.write(", ");
+              writer_d.write(originalNode.getName());
+              deadList.add(originalNode);
               count++;
             }
         }
@@ -115,17 +107,17 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException {
       if (hasClients) {
         //create suppliers cluster
         writer_d.write("SS(omnipresent_clients) = ");
-        for (int i=0; i<originalNodes.length; ++i) {
-          if (originalNodes[i].getType() == Node.CLIENT) {
-            if(count > 1) writer_d.write(", ");
-            writer_d.write(originalNodes[i].getName());
+        for (Node originalNode : originalNodes) {
+          if (originalNode.getType() == Node.CLIENT) {
+            if (count > 1) writer_d.write(", ");
+            writer_d.write(originalNode.getName());
             count++;
           }
-          if(originalNodes[i].getType() >= Node.DEAD)
-            if((originalNodes[i].getType()-Node.DEAD)==Node.CLIENT) {
-              if(count > 1) writer_d.write(", ");
-              writer_d.write(originalNodes[i].getName());
-              deadList.add(originalNodes[i]);
+          if (originalNode.getType() >= Node.DEAD)
+            if ((originalNode.getType() - Node.DEAD) == Node.CLIENT) {
+              if (count > 1) writer_d.write(", ");
+              writer_d.write(originalNode.getName());
+              deadList.add(originalNode);
               count++;
             }
         }
@@ -136,17 +128,17 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException {
       if (hasCentrals) {
         //create suppliers cluster
         writer_d.write("SS(omnipresent_centrals) = ");
-        for (int i=0; i<originalNodes.length; ++i) {
-          if (originalNodes[i].getType() == Node.CENTRAL) {
-            if(count > 1) writer_d.write(", ");
-            writer_d.write(originalNodes[i].getName());
+        for (Node originalNode : originalNodes) {
+          if (originalNode.getType() == Node.CENTRAL) {
+            if (count > 1) writer_d.write(", ");
+            writer_d.write(originalNode.getName());
             count++;
           }
-          if(originalNodes[i].getType() >= Node.DEAD)
-            if((originalNodes[i].getType()-Node.DEAD)==Node.CENTRAL) {
-              if(count > 1) writer_d.write(", ");
-              writer_d.write(originalNodes[i].getName());
-              deadList.add(originalNodes[i]);
+          if (originalNode.getType() >= Node.DEAD)
+            if ((originalNode.getType() - Node.DEAD) == Node.CENTRAL) {
+              if (count > 1) writer_d.write(", ");
+              writer_d.write(originalNode.getName());
+              deadList.add(originalNode);
               count++;
             }
         }
@@ -156,52 +148,8 @@ public void writeSpecialModules(Node[] originalNodes) throws IOException {
 }
 
 
-public void writeClosing() throws IOException {
+private void writeClosing() throws IOException {
     //writer_d.close();
-}
-
-public void genClusterOLD(Node n, long baseID) throws IOException {
-  Stack st = new Stack();
-  Hashtable ht = new Hashtable();
-
-  st.push(n);
-  while(!st.empty()) {
-      Node tmp = (Node)st.peek();
-      if(tmp.isCluster())
-      {
-        if(ht.containsKey(tmp.name_d))
-        {
-          writer_d.write("}\n\n");
-          ht.remove(tmp.name_d);
-          st.pop();
-        }
-        else
-        {
-            long clustID = tmp.nodeID+(baseID++);
-            writer_d.write("subgraph cluster"+clustID+" {\n");
-            writer_d.write("label = \""+tmp.name_d+"\";\n");
-            writer_d.write("color = black;\n");
-            writer_d.write("style = bold;\n\n");
-            for(int j = 0; j < tmp.children.length;j++)
-              st.push(tmp.children[j]);
-            ht.put(tmp.name_d,tmp.name_d);
-        }
-      }
-      else
-      {
-        writer_d.write("\""+tmp.getName()+"\"[shape=ellipse,color=lightblue,fontcolor=black,style=filled];\n");
-        st.pop();
-      }
-  }
-}
-
-public void generateClustersOLD(Node []na) throws IOException {
-  long base=1000;
-  for(int i = 0; i<na.length;i++)
-  {
-    genCluster(na[i], base);
-    base+=1000;
-  }
 }
 
 public void echoNestedChildrenOLD(Node n) throws IOException {
@@ -212,14 +160,12 @@ public void echoNestedChildrenOLD(Node n) throws IOException {
     Node tmpNode = (Node)s.pop();
     if(tmpNode.children==null)
       continue;
-    for(int i = 0; i < tmpNode.children.length; i++)
-    {
+    for(int i = 0; i < tmpNode.children.length; i++) {
       Node childNode = tmpNode.children[i];
       if(childNode.isCluster())
         s.push(childNode);
-      else
-      {
-        if(firstNode == false)
+      else {
+        if(!firstNode)
           writer_d.write(", ");
         else
           firstNode = false;    //dont write the comma on the first node
@@ -229,68 +175,8 @@ public void echoNestedChildrenOLD(Node n) throws IOException {
   }
 }
 
-public void genChildrenFromOneLevelOLD(Graph cLvlG) throws IOException {
-  NextLevelGraph nextLvl = new NextLevelGraph();
-  Graph          nextLvlG = nextLvl.genNextLevelGraph(cLvlG);
-  Node[]         nodeList = nextLvlG.getNodes();
-
-  for(int i = 0; i<nodeList.length;i++) {
-    Node tmp = nodeList[i];
-    if(tmp.children == null)
-      continue;
-
-    if(tmp.children.length==0)
-      continue;
-
-    //Write the Header
-    writer_d.write("SS("+tmp.getName()+") = ");
-
-    //for(int j = 0; j < tmp.children.length;j++)
-        echoNestedChildrenOLD(tmp);
-
-    //Close cluster
-    writer_d.write("\n");
-  }
-}
-
-public void genCluster(Node n, long baseID) throws IOException {
-  Stack st = new Stack();
-  Hashtable ht = new Hashtable();
-
-  st.push(n);
-  while(!st.empty()) {
-      Node tmp = (Node)st.peek();
-      if(tmp.isCluster()) {
-        if(ht.containsKey(tmp.name_d)) {
-          writer_d.write("}\n\n");
-          ht.remove(tmp.name_d);
-          st.pop();
-        }
-        else
-        {
-            String cName = findStrongestNode(tmp);
-            //cName = "(SS-L"+tmp.nodeLevel+"):"+cName;
-            cName = cName+".ssL"+tmp.nodeLevel;
-            long clustID = tmp.nodeID+(baseID++);
-            writer_d.write("subgraph cluster"+clustID+" {\n");
-            writer_d.write("label = \""+cName+"\";\n");
-            writer_d.write("color = black;\n");
-            writer_d.write("style = bold;\n\n");
-            for(int j = 0; j < tmp.children.length;j++)
-              st.push(tmp.children[j]);
-            ht.put(tmp.name_d,tmp.name_d);
-        }
-      }
-      else
-      {
-        writer_d.write("\""+tmp.getName()+"\"[shape=ellipse,color=lightblue,fontcolor=black,style=filled];\n");
-        st.pop();
-      }
-  }
-}
-
-public void generateClusters(Graph cLvlG) throws IOException {
-  Graph nextLvlG = null;
+private void generateClusters(Graph cLvlG) throws IOException {
+  Graph nextLvlG;
 
   if((cLvlG.getClusterNames().length <= 1)&&(cLvlG.getPreviousLevelGraph()!=null))
     cLvlG = cLvlG.getPreviousLevelGraph();
@@ -308,13 +194,11 @@ public void generateClusters(Graph cLvlG) throws IOException {
   long base=1000;
   writer_d.write("SS(ROOT) = ");
   int count = 1;
-  for(int i = 0; i<nodeList.length;i++)
-  {
-    Node tmp = nodeList[i];
-    if(tmp.children == null)
+  for (Node tmp : nodeList) {
+    if (tmp.children == null)
       continue;
 
-    if(tmp.children.length==0)
+    if (tmp.children.length == 0)
       continue;
 
     findStrongestNode(tmp);
@@ -360,8 +244,7 @@ public void generateClusters(Graph cLvlG) throws IOException {
   echoNestedTree(cVect);
 }
 
-public void echoNestedTree(Vector v) throws IOException
-{
+private void echoNestedTree(Vector v) throws IOException {
   LinkedList l = new LinkedList();
 
   for(int i = 0; i < v.size(); i++)
@@ -399,8 +282,7 @@ public void echoNestedTree(Vector v) throws IOException
   }
 }
 
-public void echoNestedChildren(Node n, Vector v) throws IOException
-{
+private void echoNestedChildren(Node n, Vector v) {
   Stack s = new Stack();
   boolean firstNode = true;
   s.push(n);
@@ -426,38 +308,27 @@ public void echoNestedChildren(Node n, Vector v) throws IOException
   }
 }
 
-public void genChildrenFromOneLevel(Graph cLvlG) throws IOException
-{
+private void genChildrenFromOneLevel(Graph cLvlG) throws IOException {
   Graph nextLvlG = null;
-//System.out.println("Cluster count = " + cLvlG.getClusterNames().length);
 
-  if((cLvlG.getClusterNames().length <= 1)&&(cLvlG.getPreviousLevelGraph()!=null))
-  {
+  if((cLvlG.getClusterNames().length <= 1)&&(cLvlG.getPreviousLevelGraph()!=null)) {
     cLvlG = cLvlG.getPreviousLevelGraph();
     fixupNodeList(cLvlG);
-//System.out.println("Cluster count 2= " + cLvlG.getClusterNames().length);
   }
 
-  //if(cLvlG.getClusterNames().length>1)
-  //{
     NextLevelGraph nextLvl = new NextLevelGraph();
     nextLvlG = nextLvl.genNextLevelGraph(cLvlG);
-  //}
-  //else
-  //  nextLvlG = cLvlG;
 
   Node[]         nodeList = nextLvlG.getNodes();
   Vector         cVect    = new Vector();
   int            Lvl      = cLvlG.getGraphLevel();
 
   cVect.removeAllElements();
-  for(int i = 0; i<nodeList.length;i++)
-  {
-    Node tmp = nodeList[i];
-    if(tmp.children == null)
+  for (Node tmp : nodeList) {
+    if (tmp.children == null)
       continue;
 
-    if(tmp.children.length==0)
+    if (tmp.children.length == 0)
       continue;
 
     findStrongestNode(tmp);
@@ -465,24 +336,14 @@ public void genChildrenFromOneLevel(Graph cLvlG) throws IOException
     Vector newCluster = new Vector();
     newCluster.removeAllElements();
     cVect.addElement(newCluster);
-    echoNestedChildren(tmp,newCluster);
-    //Write the Header
-    //writer_d.write("SS("+tmp.getName()+") = ");
-
-    //for(int j = 0; j < tmp.children.length;j++)
-    //    echoNestedChildren(tmp);
-
-    //Close cluster
-    //writer_d.write("\n");
+    echoNestedChildren(tmp, newCluster);
   }
-  WriteOutputClusters(cVect,Lvl);
+  WriteOutputClusters(cVect);
 }
 
-public String findStrongestNode(Node n)
-{
-  if (n.isCluster() == false)
-    return "";
-//System.out.println("Children count = " + n.children.length);
+private void findStrongestNode(Node n) {
+  if (!n.isCluster())
+    return;
   int lvl = n.nodeLevel;
   boolean lvlIncr = false;
 
@@ -495,19 +356,13 @@ public String findStrongestNode(Node n)
   //Seed the linked list
 
   l.addLast(n);
-  while (!l.isEmpty())
-  {
+  while (!l.isEmpty()) {
     Node curr = (Node)l.removeFirst();
-    if (curr.isCluster())
-    {
+    if (curr.isCluster()) {
       Node[] children = curr.children;
-//System.out.println("node "+curr.getName()+" " + children.length+" nodes");
       if((children != null) && (children.length>0))
-        for(int j = 0; j < children.length; j++)
-          l.addLast(children[j]);
-    }
-    else
-    {
+        for (Node child : children) l.addLast(child);
+    } else {
       nodeV.add(curr);
     }
   }
@@ -517,11 +372,9 @@ public String findStrongestNode(Node n)
   n.setName(ssName);
   //ssName = "(SS-L"+n.nodeLevel+"):"+ssName;
   ssName = ssName+".ssL"+n.nodeLevel;
-  return ssName;
 }
 
-public String findStrongestNode(Vector v)
-{
+private String findStrongestNode(Vector v) {
   int maxEdgeWeight = 0;
   int maxEdgeCount = 0;
   Node domEdgeNode = null;
@@ -546,8 +399,7 @@ public String findStrongestNode(Vector v)
 
     int edgeCount = depCount + beCount;
 
-    if(edgeCount >= maxEdgeCount)
-    {
+    if(edgeCount >= maxEdgeCount) {
       maxEdgeCount = edgeCount;
       domEdgeNode = n;
     }
@@ -566,30 +418,18 @@ public String findStrongestNode(Vector v)
       domWeightNode = n;
     }
   }
-  //Using edge counts now, but can switch to weights later
-//if(domEdgeNode == null)
-//  System.out.println("node is null");
-//if(domEdgeNode.getName()==null)
-//  System.out.println("name is null");
   return domEdgeNode.getName();
 }
 
-public void WriteOutputClusters(Vector cVect, int lvl) throws IOException
-{
+private void WriteOutputClusters(Vector cVect) throws IOException {
   if(cVect==null) return;
 
-  for(int i = 0; i < cVect.size(); i++)
-  {
+  for(int i = 0; i < cVect.size(); i++) {
     Vector cluster = (Vector)cVect.elementAt(i);
     String cName = findStrongestNode(cluster);
-    //if(lvl>0)
-    //  cName += "L"+lvl;
-
-    //cName+=".ss";
 
     writer_d.write("SS("+cName+".ss) = ");
-    for(int j = 0; j < cluster.size(); j++)
-    {
+    for(int j = 0; j < cluster.size(); j++) {
       Node n = (Node)cluster.elementAt(j);
       writer_d.write(n.getName());
       if(j<(cluster.size()-1))
@@ -600,24 +440,18 @@ public void WriteOutputClusters(Vector cVect, int lvl) throws IOException
   }
 }
 
-public void write()
-{
+public void write() {
   Graph gWriteGraph = graph_d;
-//System.out.println("Write Called");
   int technique = this.getOutputTechnique();
   String fileName = this.getCurrentName();
 
-  switch(technique)
-  {
-    case GraphOutput.OUTPUT_ALL_LEVELS:
-    {
+  switch(technique) {
+    case GraphOutput.OUTPUT_ALL_LEVELS: {
       Graph gLvl = graph_d;
 
-      while(gLvl.getGraphLevel() > 0)
-      {
+      while(gLvl.getGraphLevel() > 0) {
         fixupNodeList(gLvl);
-        if(gLvl.getClusterNames().length <= 1)
-        {
+        if(gLvl.getClusterNames().length <= 1) {
           gLvl = gLvl.getPreviousLevelGraph();
           continue;
         }
@@ -631,8 +465,7 @@ public void write()
 
       break;
     }
-    case GraphOutput.OUTPUT_MEDIAN_ONLY:
-    {
+    case GraphOutput.OUTPUT_MEDIAN_ONLY: {
       fileName += ".bunch";
 
       Graph g = graph_d;
@@ -641,14 +474,12 @@ public void write()
       writeGraph(fileName,g);
       break;
     }
-    case GraphOutput.OUTPUT_TOP_ONLY:
-    {
+    case GraphOutput.OUTPUT_TOP_ONLY: {
       fileName += ".bunch";
       writeGraph(fileName,graph_d);
       break;
     }
-    case GraphOutput.OUTPUT_DETAILED_LEVEL_ONLY:
-    {
+    case GraphOutput.OUTPUT_DETAILED_LEVEL_ONLY: {
       fileName += ".bunch";
       Graph tmpG = graph_d;
       while(tmpG.getGraphLevel() > 0)
@@ -659,21 +490,17 @@ public void write()
     }
   }
 }
-public void writeGraph(String fileName, Graph g)
-{
-  try
-  {
+private void writeGraph(String fileName, Graph g) {
+  try {
     writer_d = new BufferedWriter(new FileWriter(fileName));
     generateOutput(g);
     writer_d.close();
-  }
-  catch (IOException e) {
-    e.printStackTrace();
+  } catch (IOException e) {
+    throw new RuntimeException(e);
   }
 }
 
-public void fixupNodeList(Graph g)
-{
+private void fixupNodeList(Graph g) {
   //this is basically a hack, and an update to the Graph class should
   //be made to ensure that this happens there
   Node [] nodeList = g.getNodes();
@@ -683,32 +510,20 @@ public void fixupNodeList(Graph g)
 }
 
 
-public
-void
-generateOutput(Graph g) throws IOException
-{
+private void generateOutput(Graph g) throws IOException {
 
   Graph gBase = g;    //graph_d;
-  Graph gWriteGraph = g;  //graph_d;
 
   while (gBase.getGraphLevel() != 0)
     gBase = gBase.getPreviousLevelGraph();
 
-  int clusters[] = gBase.getClusters();
+  int[] clusters = gBase.getClusters();
   Node[] nodeList = gBase.getNodes();
   int nodes = nodeList.length;
   int[][] clustMatrix = new int[nodes][nodes+1];
 
   Vector edges = new Vector();
 
-  //int clusters[] = graph_d.getClusters();
-  //Node[] nodeList = graph_d.getNodes();
-  //int nodes = nodeList.length;
-  //int[][] clustersMatrix = new int[nodes][nodes+1];
-
-
-  //try {
-  // 	writer_d = new BufferedWriter(new FileWriter(getCurrentName()+".bunch"));
     for (int i=0; i<nodes; ++i) {
         clustMatrix[i][0] = 0;
         nodeList[i].cluster = -1;
@@ -721,84 +536,24 @@ generateOutput(Graph g) throws IOException
         nodeList[i].cluster = numCluster;
     }
 
-   //writeHeader(gBase);
-
-   //Node [] on = gBase.getOriginalNodes();
-   //if((on != null) &&(on.length != nodeList.length))
-   //   writeSpecialModules(gBase.getOriginalNodes());
-
-   //if (graph_d.isClusterTree())
-   // gWriteGraph = graph_d.getMedianTree();
 
    Node [] on = gBase.getOriginalNodes();
    if((on != null) &&(on.length != nodeList.length))
       checkForSpecialModules(gBase.getOriginalNodes());
 
-   if(getWriteNestedLevels() == false)
-      genChildrenFromOneLevel(gWriteGraph);
+   if(!getWriteNestedLevels())
+      genChildrenFromOneLevel(g);
    else
-     generateClusters(gWriteGraph);
+     generateClusters(g);
 
    on = gBase.getOriginalNodes();
    if((on != null) &&(on.length != nodeList.length))
       writeSpecialModules(gBase.getOriginalNodes());
 
-   //genChildrenFromOneLevel(gWriteGraph);
 
    writeClosing();
 
-   /***********
-    for (int i=0; i<nodes; ++i) {
-        clustersMatrix[i][0] = 0;
-        nodeList[i].cluster = -1;
-    }
-
-    int pos=0;
-    for (int i=0; i<nodes; ++i) {
-        int numCluster = clusters[i];
-        clustersMatrix[numCluster][(++clustersMatrix[numCluster][0])] = i;
-        nodeList[i].cluster = numCluster;
-    }
-
-
-    writeHeader();
-    Node [] on = gBase.getOriginalNodes();
-
-    if((on != null) &&(on.length != nodeList.length))
-      writeSpecialModules(gBase.getOriginalNodes());
-
-    NextLevelGraph nlg = new NextLevelGraph();
-    Graph upOne = nlg.genNextLevelGraph(graph_d);
-
-    //Writing navigation file: header
-    //writer_d.write("// ------------------------------------------------------------ \n");
-    //writer_d.write("// created with bunch v2 \n");
-    //writer_d.write("// Objective Function value = "+graph_d.getObjectiveFunctionValue()+"\n");
-    //writer_d.write("// ------------------------------------------------------------ \n\n");
-
-		int id = 0;
-    int clusterIndex = 1;
-		for (int i=0; i<nodes; ++i) {
-			if (clustersMatrix[i][0]>0) {
-				writer_d.write("SS("+clusterIndex+") = ");
-				for (int j=1; j<=clustersMatrix[i][0]; ++j) {
-					String name = nodeList[clustersMatrix[i][j]].getName();
-					nodeList[clustersMatrix[i][j]].cluster = clusterIndex;
-          if (j == (clustersMatrix[i][0]))
-						writer_d.write(name+"\n");
-					else
-						writer_d.write(name+", ");
-				}
-	      clusterIndex++;
-    	}
-    }
-
-		writer_d.close();
-************/
-  //} catch (IOException e) {
-  //  e.printStackTrace();
-  //}
 }
-};
+}
 
 

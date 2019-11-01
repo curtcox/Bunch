@@ -15,7 +15,7 @@ import static bunch.api.GaSelection.*;
  */
 public final class GAMethodFactory {
 
-  public GAMethod defaultMethod = new GATournamentMethod();
+  public final GAMethod defaultMethod = new GATournamentMethod();
 
   /**
  * Obtains the GA method corresponding to name passed as parameter.

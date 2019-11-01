@@ -4,30 +4,18 @@ import java.util.*;
 
 public abstract class SATechnique {
 
-  protected Map SAargs = new HashMap();
-  protected Random    rndNum = new Random();
-  protected bunch.stats.StatsManager stats = bunch.stats.StatsManager.getInstance();
+  private final Random    rndNum = new Random();
+  bunch.stats.StatsManager stats = bunch.stats.StatsManager.getInstance();
 
-  public SATechnique() {
+  SATechnique() {
     rndNum.setSeed(System.currentTimeMillis());
   }
 
   public abstract boolean init(Hashtable h);
 
-  public abstract String  getConfigDialogName();
-
   public abstract boolean configure();
 
-  public abstract boolean changeTemp(Map h);
-
-  public boolean configureUsingDialog(java.awt.Frame parent)
-  { return false; }
-
-  public boolean  accept()
-  { return false; }
-
-  public boolean  accept(Map args)
-  { return false; }
+  public abstract void changeTemp();
 
   public boolean accept(double dMQ)
   { return false; }
@@ -35,10 +23,11 @@ public abstract class SATechnique {
   public Hashtable getConfig()
   { return null;  }
 
-  public boolean setConfig(Map h)
-  { return false; }
+  public void setConfig()
+  {
+  }
 
-  public double   getNextRndNumber()
+  double   getNextRndNumber()
   {
     return rndNum.nextDouble();
   }
@@ -46,11 +35,5 @@ public abstract class SATechnique {
   public void reset()
   {}
 
-  public static String getDescription()
-  { return "";  }
 
-  public String getObjectDescription()
-  { return this.getDescription(); }
-
-  public abstract String getWellKnownName();
 }

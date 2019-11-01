@@ -22,34 +22,33 @@ import java.beans.*;
 
 final class BunchEngine {
 
-  EngineArgs bunchArgs = new EngineArgs();
-  EngineResults results = new EngineResults();
-  ClusteringMethod clusteringMethod_d;
-  GraphOutput graphOutput_d;
-  Graph initialGraph_d = new Graph(0);
-  BunchPreferences preferences_d;
-  Configuration configuration_d;
-  ProgressCallbackInterface cbInterfaceObj;
-  int callbackFrequency;
-  long startTime;
-  long endTime;
-  long totalTime=0;
-  Cluster baseCluster;
-  List<Cluster> clusterList;
-  javax.swing.Timer timeoutTimer;
-  int reflexiveEdgeCount = 0;
+  private EngineArgs bunchArgs = new EngineArgs();
+  private EngineResults results = new EngineResults();
+  private ClusteringMethod clusteringMethod_d;
+  private GraphOutput graphOutput_d;
+  private Graph initialGraph_d = new Graph(0);
+  private BunchPreferences preferences_d;
+  private Configuration configuration_d;
+  private int callbackFrequency;
+  private long startTime;
+  private long endTime;
+  private long totalTime=0;
+  private Cluster baseCluster;
+  private List<Cluster> clusterList;
+  private javax.swing.Timer timeoutTimer;
+  private int reflexiveEdgeCount = 0;
 
-  Double precision;
-  Double recall;
-  String MQCalcMdgFileName;
-  String MQCalcSilFileName;
-  Double MQCalcValue;
+  private Double precision;
+  private Double recall;
+  private String MQCalcMdgFileName;
+  private String MQCalcSilFileName;
+  private Double MQCalcValue;
 
-  final StatsManager stats = bunch.stats.StatsManager.getInstance();
+  private final StatsManager stats = bunch.stats.StatsManager.getInstance();
 
   BunchEngine() {}
 
-  String getFileDelims() {
+  private String getFileDelims() {
     String delims = "";
     String def_delims = bunchArgs.MDG_PARSER_DELIMS;
     if(def_delims != null)
@@ -67,7 +66,7 @@ final class BunchEngine {
  * This method sets the libraries, clients and suppliers defined in their
  * respective panes to the graph, just previous to processing.
  */
-public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
+private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   Object []suppliers = null; //new Object[0]; //null;
   Object []clients = null; //new Object[0]; //null;
   Object []centrals = null; //new Object[0]; //null;
@@ -86,40 +85,40 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   Node[] originalList = nodeList;
 
   //tag the nodes with their type (matching them by name from the lists)
-  for (int j=0; j<originalList.length; ++j) {
-    if(suppliers != null) {
-      for (int i=0; i<suppliers.length; ++i) {
-        String name = originalList[j].getName();
-        if (name.equals((String)suppliers[i])) {
-          originalList[j].setType(Node.SUPPLIER);
+  for (Node item : originalList) {
+    if (suppliers != null) {
+      for (Object supplier : suppliers) {
+        String name = item.getName();
+        if (name.equals(supplier)) {
+          item.setType(Node.SUPPLIER);
           break;
         }
       }
     }
-    if(clients != null) {
-      for (int i=0; i<clients.length; ++i) {
-        String name = originalList[j].getName();
-        if (name.equals((String)clients[i])) {
-          originalList[j].setType(Node.CLIENT);
+    if (clients != null) {
+      for (Object client : clients) {
+        String name = item.getName();
+        if (name.equals(client)) {
+          item.setType(Node.CLIENT);
           break;
         }
       }
     }
-    if(centrals != null) {
-      for (int i=0; i<centrals.length; ++i) {
-        String name = originalList[j].getName();
-        if (name.equals((String)centrals[i])) {
-          originalList[j].setType(Node.CENTRAL);
+    if (centrals != null) {
+      for (Object central : centrals) {
+        String name = item.getName();
+        if (name.equals(central)) {
+          item.setType(Node.CENTRAL);
           break;
         }
       }
     }
 
-    if(libraries != null) {
-      for (int i=0; i<libraries.length; ++i) {
-        String name = originalList[j].getName();
-        if (name.equals((String)libraries[i])) {
-          originalList[j].setType(Node.LIBRARY);
+    if (libraries != null) {
+      for (Object library : libraries) {
+        String name = item.getName();
+        if (name.equals(library)) {
+          item.setType(Node.LIBRARY);
           break;
         }
       }
@@ -128,64 +127,71 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
   int deadNodes = 0;
   //now consolidate nodes that only point to omnipresent, libs, and suppliers
-  for (int i=0; i<originalList.length; ++i) {
-    if (originalList[i].getType() == Node.NORMAL) {
+  for (Node value : originalList) {
+    if (value.getType() == Node.NORMAL) {
       boolean noNormalDeps = true;
-      int []tmpDeps = originalList[i].getDependencies();
-      int []tmpBeDeps = originalList[i].getBackEdges();
+      int[] tmpDeps = value.getDependencies();
+      int[] tmpBeDeps = value.getBackEdges();
       int client = 0;
       int supplier = 0;
       int central = 0;
       int library = 0;
-      for(int j = 0; j < tmpDeps.length; j++) {
-        if ((originalList[tmpDeps[j]].getType() == Node.NORMAL) ||
-            (originalList[tmpDeps[j]].getType() >= Node.DEAD)) {
+      for (int tmpDep : tmpDeps) {
+        if ((originalList[tmpDep].getType() == Node.NORMAL) ||
+                (originalList[tmpDep].getType() >= Node.DEAD)) {
           noNormalDeps = false;
           break;
         } else {
-          switch(originalList[tmpDeps[j]].getType()) {
+          switch (originalList[tmpDep].getType()) {
             case Node.CLIENT:
-              client++; break;
+              client++;
+              break;
             case Node.SUPPLIER:
-              supplier++; break;
+              supplier++;
+              break;
             case Node.CENTRAL:
-              central++; break;
+              central++;
+              break;
             case Node.LIBRARY:
-              library++;  break;
+              library++;
+              break;
           }
         }
       }
-      for(int j = 0; j < tmpBeDeps.length; j++) {
-        if ((originalList[tmpBeDeps[j]].getType() == Node.NORMAL) ||
-            (originalList[tmpBeDeps[j]].getType() >= Node.DEAD))
-        {
+      for (int tmpBeDep : tmpBeDeps) {
+        if ((originalList[tmpBeDep].getType() == Node.NORMAL) ||
+                (originalList[tmpBeDep].getType() >= Node.DEAD)) {
           noNormalDeps = false;
           break;
         } else {
-          switch(originalList[tmpBeDeps[j]].getType()) {
+          switch (originalList[tmpBeDep].getType()) {
             case Node.CLIENT:
-              client++; break;
+              client++;
+              break;
             case Node.SUPPLIER:
-              supplier++; break;
+              supplier++;
+              break;
             case Node.CENTRAL:
-              central++; break;
+              central++;
+              break;
             case Node.LIBRARY:
-              library++;  break;
+              library++;
+              break;
           }
         }
       }
-      if (noNormalDeps == true) {
+      if (noNormalDeps) {
         deadNodes++;
-        int n1 = Math.max(client,supplier);
-        int n2 = Math.max(central,library);
-        int max = Math.max(n1,n2);
+        int n1 = Math.max(client, supplier);
+        int n2 = Math.max(central, library);
+        int max = Math.max(n1, n2);
         int type = Node.CLIENT;
 
-        if(max == client)   type = Node.CLIENT;
-        if(max == supplier) type = Node.SUPPLIER;
-        if(max == central)  type = Node.CENTRAL;
-        if(max == library)  type = Node.LIBRARY;
-        originalList[i].setType(Node.DEAD+max);
+        if (max == client) type = Node.CLIENT;
+        if (max == supplier) type = Node.SUPPLIER;
+        if (max == central) type = Node.CENTRAL;
+        if (max == library) type = Node.LIBRARY;
+        value.setType(Node.DEAD + max);
       }
     }
   }
@@ -198,10 +204,10 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
   Hashtable normal = new Hashtable();
   //build new node list without omnipresent modules
-  for (int i=0; i<originalList.length; ++i) {
-    if (originalList[i].getType() == Node.NORMAL) {
-      normal.put(new Integer(originalList[i].getId()),new Integer(j));
-      nodeList[j++] = originalList[i].cloneNode();
+  for (Node node : originalList) {
+    if (node.getType() == Node.NORMAL) {
+      normal.put(node.getId(), j);
+      nodeList[j++] = node.cloneNode();
     }
   }
 
@@ -216,7 +222,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
     Integer tmpAssoc;
     for(int z = 0; z < deps.length; z++) {
-      tmpAssoc = (Integer)normal.get(new Integer(deps[z]));
+      tmpAssoc = (Integer)normal.get(deps[z]);
       if (tmpAssoc == null) {
         deps[z] = -1;
         depsRemoveCount++;
@@ -226,7 +232,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     }
 
     for(int z = 0; z < beDeps.length; z++) {
-      tmpAssoc = (Integer)normal.get(new Integer(beDeps[z]));
+      tmpAssoc = (Integer)normal.get(beDeps[z]);
       if (tmpAssoc == null) {
         beDeps[z] = -1;
         beDeptsRemoveCount++;
@@ -281,7 +287,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   public Map getDefaultSpecialNodes(String graphName)
   { return getDefaultSpecialNodes(graphName, 3.0);  }
 
-  public Map getDefaultSpecialNodes(String graphName, double threshold) {
+  private Map getDefaultSpecialNodes(String graphName, double threshold) {
     try {
       Hashtable h = new Hashtable();
       Hashtable centrals = new Hashtable();
@@ -306,30 +312,30 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       Node[] nodeList = g.getNodes();
 
       //find libraries
-      for (int i=0; i<nodeList.length; ++i) {
-        String nname = nodeList[i].getName();
-        if ((nodeList[i].getDependencies() == null|| nodeList[i].getDependencies().length==0)
-              && !clients.containsKey(nodeList[i].getName())
-              && !suppliers.containsKey(nodeList[i].getName())
-              && !centrals.containsKey(nodeList[i].getName())) {
-          libraries.put(nodeList[i].getName(), nodeList[i].getName());
+      for (Node node1 : nodeList) {
+        String nname = node1.getName();
+        if ((node1.getDependencies() == null || node1.getDependencies().length == 0)
+                && !clients.containsKey(node1.getName())
+                && !suppliers.containsKey(node1.getName())
+                && !centrals.containsKey(node1.getName())) {
+          libraries.put(node1.getName(), node1.getName());
         }
       }
 
       //find clients
       double avg = 0.0, sum = 0.0;
-      for (int i=0; i<nodeList.length; ++i) {
-        if (nodeList[i].getDependencies() != null) {
-          sum += nodeList[i].getDependencies().length;
+      for (Node element : nodeList) {
+        if (element.getDependencies() != null) {
+          sum += element.getDependencies().length;
         }
       }
       avg = sum/nodeList.length;
       avg = avg * threshold;
-      for (int i=0; i<nodeList.length; ++i) {
-        if (nodeList[i].getDependencies() != null
-            && nodeList[i].getDependencies().length > avg
-            && !libraries.containsKey(nodeList[i].getName())) {
-          clients.put(nodeList[i].getName(),nodeList[i].getName());
+      for (Node item : nodeList) {
+        if (item.getDependencies() != null
+                && item.getDependencies().length > avg
+                && !libraries.containsKey(item.getName())) {
+          clients.put(item.getName(), item.getName());
         }
       }
 
@@ -339,11 +345,11 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
       for (int j=0; j<nodeList.length; ++j) {
         int currval = 0;
-        for (int i=0; i<nodeList.length; ++i) {
-          int[] deps = nodeList[i].getDependencies();
+        for (Node node : nodeList) {
+          int[] deps = node.getDependencies();
           if (deps != null) {
-            for (int n=0; n<deps.length; ++n) {
-              if (deps[n] == j) {
+            for (int dep : deps) {
+              if (dep == j) {
                 currval++;
               }
             }
@@ -351,8 +357,8 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
         }
         inNum[j] = currval;
       }
-      for (int i=0; i<inNum.length; ++i) {
-        sum += inNum[i];
+      for (int value : inNum) {
+        sum += value;
       }
       avg = sum/nodeList.length;
       avg = avg * threshold;
@@ -366,10 +372,10 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       //looking for central nodes (nodes that are clients and suppliers
       ArrayList clientsAL = new ArrayList(clients.values());
 
-      for (int i=0; i<clientsAL.size(); ++i) {
-        String client = (String) clientsAL.get(i);
-        if(suppliers.containsKey(client))
-          centrals.put(client,client);
+      for (Object o : clientsAL) {
+        String client = (String) o;
+        if (suppliers.containsKey(client))
+          centrals.put(client, client);
       }
 
       Enumeration e = centrals.elements();
@@ -392,7 +398,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     }
   }
 
-  Hashtable getSpecialModulesFromProperties() {
+  private Hashtable getSpecialModulesFromProperties() {
     Hashtable h = new Hashtable();
     ArrayList emptyList = new ArrayList();
     boolean   containsSpecial = false;
@@ -424,13 +430,13 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     } else
       h.put(LIBRARY_MODULE,emptyList);
 
-    if(containsSpecial == true)
+    if(containsSpecial)
       return h;
     else
       return null;
   }
 
-  void initClustering() throws IOException, ClassNotFoundException {
+  private void initClustering() throws IOException, ClassNotFoundException {
     clusterList = new ArrayList();
     loadPreferences();
     constructGraph();
@@ -440,7 +446,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     setIsClusterTree();
     setUpCalculator();
     setupClusteringMethod();
-    stats.getInstance();
+    StatsManager.getInstance();
     initCallback();
     initTimer();
     setGraphOutputDriver();
@@ -455,7 +461,6 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
   private void initCallback() {
     //see if a callback class is setup, if so save a reference to the class
-    cbInterfaceObj = bunchArgs.CALLBACK_OBJECT_REF;
     Integer iTmp = bunchArgs.callbackObjectFrequency;
     if(iTmp != null)
       callbackFrequency = iTmp.intValue();
@@ -510,7 +515,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       if (saHandler != null) {
         Map saHandlerArgs = bunchArgs.algNahcSaConfig;
         if(saHandlerArgs != null) {
-          saHandler.setConfig(saHandlerArgs);
+          saHandler.setConfig();
         }
         c.setSATechnique(saHandler);
       }
@@ -563,14 +568,13 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     graphOutput_d = null;
     var outputMode = bunchArgs.OUTPUT_FORMAT;
     if (outputMode != null || !(outputMode==NULL)) {
-      var driver = outputMode;
 
-      if (driver != null) {
+      if (outputMode != null) {
         String outFileName = bunchArgs.OUTPUT_FILE;
         if (outFileName == null)
           outFileName = bunchArgs.MDG_INPUT_FILE_NAME;
 
-        graphOutput_d = preferences_d.getGraphOutputFactory().getOutput(driver);
+        graphOutput_d = preferences_d.getGraphOutputFactory().getOutput(outputMode);
 
         if (bunchArgs.OUTPUT_TREE) {
             graphOutput_d.setNestedLevels(true);
@@ -615,7 +619,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       cp.setInput(userSILFile);
       cp.setObject(initialGraph_d);
       cp.parse();
-      if(lock==true)
+      if(lock)
         initialGraph_d.setDoubleLocks(true);
 
       //=================================
@@ -661,7 +665,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     return clusteringMethod_d.getBestGraph().cloneGraph();
   }
 
-  boolean runClustering() throws IOException, ClassNotFoundException {
+  private boolean runClustering() throws IOException, ClassNotFoundException {
     initClustering();
 
     executeClusteringEngine();//clusteringMethod_d,bunchArgs);
@@ -702,17 +706,16 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     return true;
   }
 
-  boolean runMQCalc() {
+  private boolean runMQCalc() {
     MQCalcMdgFileName = bunchArgs.MQCALC_MDG_FILE;
     MQCalcSilFileName = bunchArgs.MQCALC_SIL_FILE;
     var MQCalcClass = bunchArgs.mqCalculatorClass;
 
-    double mqResult = bunch.util.MQCalculator.CalcMQ(MQCalcMdgFileName,MQCalcSilFileName,MQCalcClass);
-    MQCalcValue = mqResult;
+    MQCalcValue = bunch.util.MQCalculator.CalcMQ(MQCalcMdgFileName,MQCalcSilFileName,MQCalcClass);
     return true;
   }
 
-  boolean runPRCalc() {
+  private boolean runPRCalc() {
     String clusterF = bunchArgs.PR_CLUSTER_FILE;
     String expertF = bunchArgs.PR_EXPERT_FILE;
 
@@ -743,7 +746,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     throw new UnsupportedOperationException();
   }
 
-  public EngineResults getMQCalcResultsHT() {
+  private EngineResults getMQCalcResultsHT() {
     results = new EngineResults();
     if (MQCalcValue == null)
       return null;
@@ -752,7 +755,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     return results;
   }
 
-  public EngineResults getPRResultsHT() {
+  private EngineResults getPRResultsHT() {
     results = new EngineResults();
     if ((precision == null) || (recall == null))
       return null;
@@ -767,7 +770,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     return this.clusterList;
   }
 
-  public EngineResults getClusteringResultsHT() {
+  private EngineResults getClusteringResultsHT() {
       if (clusteringMethod_d == null) return null;
       if (baseCluster == null)        return null;
 
@@ -780,8 +783,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       results.MEDIAN_LEVEL_GRAPH = getMedianLevelNumber();
 
       //now handle errors & warnings
-      Map errorHT = new Hashtable();
-      results.ERROR_HASHTABLE = errorHT;
+    results.ERROR_HASHTABLE = new Hashtable();
 
       Map warningHT = new Hashtable();
       if (reflexiveEdgeCount > 0) {
@@ -804,7 +806,7 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       }
 
       results.RESULT_CLUSTER_OBJS = resultClusters;
-      stats.cleanup();
+      StatsManager.cleanup();
 
       Configuration cTmp = clusteringMethod_d.getConfiguration();
       if(cTmp instanceof NAHCConfiguration) {
@@ -816,15 +818,24 @@ public void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       return results;
   }
 
-  public boolean run(EngineArgs args) throws IOException, ClassNotFoundException {
+  public void run(EngineArgs args) throws IOException, ClassNotFoundException {
     bunchArgs = args;
 
     var runMode = bunchArgs.runMode;
-    if (runMode == null) return false;
+    if (runMode == null) return;
 
-    if (runMode == CLUSTER) return runClustering();
-    if (runMode == PR_CALC) return runPRCalc();
-    if (runMode == MQ_CALC) return runMQCalc();
+    if (runMode == CLUSTER) {
+      runClustering();
+      return;
+    }
+    if (runMode == PR_CALC) {
+      runPRCalc();
+      return;
+    }
+    if (runMode == MQ_CALC) {
+      runMQCalc();
+      return;
+    }
 
     throw new IllegalArgumentException();
   }

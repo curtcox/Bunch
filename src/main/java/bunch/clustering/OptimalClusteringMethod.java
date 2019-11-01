@@ -6,10 +6,10 @@ import bunch.event.IterationEvent;
 import bunch.stats.StatsManager;
 
 public final class OptimalClusteringMethod extends ClusteringMethod2 {
-boolean hasMorePartitions_d = false;
-int[] tmpClusters_d;
-int[] nClusters_d;
-int NC=0;
+private boolean hasMorePartitions_d = false;
+private int[] tmpClusters_d;
+private int[] nClusters_d;
+private int NC=0;
 
 public OptimalClusteringMethod() { }
 

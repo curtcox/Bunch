@@ -2,30 +2,27 @@ package bunch.model;
 
 final class Edge {
 
-    public final Node from_d;
-    public final Node to_d;
+    private final Node from_d;
+    private final Node to_d;
 
     public Edge(Node from, Node to) {
         from_d = from;
         to_d = to;
     }
 
-    public Node getFrom()
+    private Node getFrom()
     {
         return from_d;
     }
 
-    public Node getTo()
+    private Node getTo()
     {
         return to_d;
     }
 
     public boolean equalByCluster(Edge e) {
-        if (from_d.cluster == e.getFrom().cluster &&
-                to_d.cluster == e.getTo().cluster)
-            return true;
-        else
-            return false;
+        return from_d.cluster == e.getFrom().cluster &&
+                to_d.cluster == e.getTo().cluster;
     }
 
 }

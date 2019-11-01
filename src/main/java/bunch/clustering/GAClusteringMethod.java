@@ -24,11 +24,11 @@ import java.util.Random;
  */
 public class GAClusteringMethod extends GenericClusteringMethod {
 
-GAConfiguration config_d;
-GAMethod method_d;
-Feature[] preFeatures_d;
-Feature[] features_d;
-Feature[] postFeatures_d;
+private GAConfiguration config_d;
+private GAMethod method_d;
+private Feature[] preFeatures_d;
+private Feature[] features_d;
+private Feature[] postFeatures_d;
 
 /**
  * Class constructor.
@@ -133,8 +133,8 @@ public boolean nextGeneration() {
   int top = method_d.getMaxCounter();
 
   if (preFeatures_d != null) {
-    for (int i=0; i<preFeatures_d.length; ++i) {
-      preFeatures_d[i].apply(currentPopulation_d);
+    for (Feature feature : preFeatures_d) {
+      feature.apply(currentPopulation_d);
     }
   }
 
@@ -142,8 +142,8 @@ public boolean nextGeneration() {
     method_d.selectReproduceCrossAndMutate(n);
 
     if (features_d != null) {
-      for (int i=0; i<features_d.length; ++i) {
-        features_d[i].apply(method_d);
+      for (Feature feature : features_d) {
+        feature.apply(method_d);
       }
     }
 
@@ -157,8 +157,8 @@ public boolean nextGeneration() {
   currentPopulation_d = method_d.getCurrentPopulation();
 
   if (postFeatures_d != null) {
-    for (int i=0; i<postFeatures_d.length; ++i) {
-      postFeatures_d[i].apply(currentPopulation_d);
+    for (Feature feature : postFeatures_d) {
+      feature.apply(currentPopulation_d);
     }
   }
 

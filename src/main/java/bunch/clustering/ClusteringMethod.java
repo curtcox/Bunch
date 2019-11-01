@@ -24,13 +24,13 @@ private Graph graph_d;
 private Graph bestGraph_d;
 private Cluster bestCluster;
 private boolean isConfigurable_d=false;
-protected Configuration configuration_d;
-protected double elapsedTime_d=0.0;
+Configuration configuration_d;
+private double elapsedTime_d=0.0;
 
 /**
  * the class constructor
  */
-public ClusteringMethod() { }
+ClusteringMethod() { }
 
 /**
  * Initializes the clustering method.
@@ -56,7 +56,7 @@ public void setGraph(Graph g)
  *
  * @return the graph
  */
-public Graph getGraph()
+Graph getGraph()
 {
   return graph_d;
 }
@@ -68,7 +68,7 @@ public Graph getGraph()
  * @param g the (best) result graph
  * @see #getBestGraph()
  */
-public void setBestGraph(Graph g)
+void setBestGraph(Graph g)
 {
   bestGraph_d = g;
 }
@@ -112,7 +112,7 @@ public double getElapsedTime()
  * @param l the elapsed time
  * @see #getElapsedTime()
  */
-public void setElapsedTime(double l)
+void setElapsedTime(double l)
 {
   elapsedTime_d = l;
 }
@@ -146,7 +146,7 @@ public IterationListener getIterationListener()
 /**
  * Fires an Iteration event to this clustering method's iteration listener
  */
-public void fireIterationEvent(IterationEvent e) {
+void fireIterationEvent(IterationEvent e) {
    if (listener_d != null) {
       listener_d.newIteration(e);
    }
@@ -189,7 +189,7 @@ public boolean isConfigurable() {
  * @param isC true if the method is configurable, false otherwise
  * @see #getConfigurationDialogName()
  */
-public void setConfigurable(boolean isC)
+void setConfigurable(boolean isC)
 {
   isConfigurable_d = isC;
 }

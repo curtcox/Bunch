@@ -11,7 +11,7 @@ private static int[][] clusterMatrix_d;
 private Node[] nodes_x;
 private int[] clusters_x;
 private int numberOfNodes_d;
-private bunch.stats.StatsManager sm = bunch.stats.StatsManager.getInstance();
+private final bunch.stats.StatsManager sm = bunch.stats.StatsManager.getInstance();
 
 private int[] muE = null;
 private int[] epE = null;
@@ -52,7 +52,7 @@ public double calculate(Cluster c) {
 
   //return calcAll(c);
 
-  if(c.isMoveValid() == false) {
+  if(!c.isMoveValid()) {
     //if(clusters_x == null)
       clusters_x = c.getClusterNames();
     return calcAll(c);
@@ -87,46 +87,38 @@ private double calcAll(Cluster c) {
   muE = c.getMuEdgeVector();
   epE = c.getEpsilonEdgeVector();
 
-  for(int i = 0; i < nodes_x.length; i++)
-  {
-    Node n = nodes_x[i];
-
-    int [] fe = n.dependencies;
-    int [] feW = n.weights;
-    int [] be = n.backEdges;
-    int [] beW = n.beWeights;
-    int [] cv = c.getClusterVector();
+  for (Node n : nodes_x) {
+    int[] fe = n.dependencies;
+    int[] feW = n.weights;
+    int[] be = n.backEdges;
+    int[] beW = n.beWeights;
+    int[] cv = c.getClusterVector();
     int currentNode = n.nodeID;
     //String nodeName = n.name_d;
     int currentNodeCluster = cv[currentNode];
     n.cluster = cv[n.nodeID];
 
-    for(int j = 0; j < fe.length; j++)
-    {
+    for (int j = 0; j < fe.length; j++) {
       int target = fe[j];
       int weight = feW[j];
       int targetCluster = cv[target];
-      
+
       if (targetCluster == currentNodeCluster)
-        muE[currentNodeCluster]+= weight;
-      else
-      {
-        epE[currentNodeCluster]+=weight;
-        epE[targetCluster]+=weight;
+        muE[currentNodeCluster] += weight;
+      else {
+        epE[currentNodeCluster] += weight;
+        epE[targetCluster] += weight;
       }
     }
   }
 
   double MQ = 0.0;
-  for(int k = 0; k < clusters_x.length; k++)
-  {
-    int currentCluster = clusters_x[k];
-    double dMuE = (double)muE[currentCluster];
-    double dEpE = (double)epE[currentCluster];
+  for (int currentCluster : clusters_x) {
+    double dMuE = muE[currentCluster];
+    double dEpE = epE[currentCluster];
 
-    if ((dMuE+dEpE)>0)
-    {
-      MQ += ((2*dMuE) / ((2*dMuE) + dEpE));
+    if ((dMuE + dEpE) > 0) {
+      MQ += ((2 * dMuE) / ((2 * dMuE) + dEpE));
       //MQ += CFk;
     }
   }
@@ -225,8 +217,8 @@ private double calcIncr(Cluster c, int[]lastMv) {
 }
 
 private double calcCFi(int c) {
-  double dMuE = (double)muE[c];
-  double dEpE = (double)epE[c];
+  double dMuE = muE[c];
+  double dEpE = epE[c];
 
   if ((dMuE+dEpE)>0)
       return ((2*dMuE) / ((2*dMuE) + dEpE));

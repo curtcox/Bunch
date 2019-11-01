@@ -1,7 +1,5 @@
 package bunch.event;
 
-import bunch.event.IterationEvent;
-
 /**
  * This interface is used to constrain event types to broadcast
  * iteration events

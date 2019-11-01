@@ -3,12 +3,12 @@ package bunch.api;
 import java.util.Iterator;
 
 final class BunchGraphPR {
-  BunchGraph expertG;
-  BunchGraph clusterG;
-  double precision = 0.0;
-  double recall = 0.0;
-  long  combinationsConsidered = 0;
-  long  matchingCombinations = 0;
+  private final BunchGraph expertG;
+  private final BunchGraph clusterG;
+  private double precision = 0.0;
+  private double recall = 0.0;
+  private long  combinationsConsidered = 0;
+  private long  matchingCombinations = 0;
 
   public BunchGraphPR(BunchGraph expert, BunchGraph cluster) {
     expertG = expert;
@@ -37,7 +37,7 @@ final class BunchGraphPR {
     return result;
   }
 
-  private boolean processCluster(BunchCluster bc, BunchGraph bg) {
+  private void processCluster(BunchCluster bc, BunchGraph bg) {
     Object[] nodeO = bc.getClusterNodes().toArray();
     for(int i = 0; i < nodeO.length; i++) {
       BunchNode srcNode = (BunchNode)nodeO[i];
@@ -51,7 +51,6 @@ final class BunchGraphPR {
           matchingCombinations++;
       }
     }
-    return true;
   }
 
   public double getPrecision()

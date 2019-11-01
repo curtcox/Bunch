@@ -55,7 +55,7 @@ public final static int CLUSTER=5;
 
 public final static int DEAD = 128;
 
-public int type_d = NORMAL;
+private int type_d = NORMAL;
 
 private static long nodeCounter = 0;
 
@@ -83,7 +83,7 @@ public int cluster;
 
 private void assignUniqueID() {
   synchronized(this) {
-    uniqueID = new Long(++nodeCounter);
+    uniqueID = ++nodeCounter;
   }
 }
 
@@ -163,10 +163,10 @@ public Node(String name, int[] deps) {
  * @return a string with the node's information
  */
 public String toString() {
-    String str = new String();
+    String str = "";
     str += "\n"+name_d + " = ";
-    for (int i=0; i<dependencies.length; ++i) {
-        str += dependencies[i] + " / ";
+    for (int dependency : dependencies) {
+        str += dependency + " / ";
     }
     return str;
 }

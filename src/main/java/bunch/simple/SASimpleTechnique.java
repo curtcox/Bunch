@@ -4,26 +4,22 @@ import java.util.*;
 
 public class SASimpleTechnique extends SATechnique {
 
-  //SA Function = deltaMQ / T
-  //T(k+1) = T(k)*alpha;
+  private static final String SET_INITIAL_TEMP_KEY = "InitialTemp";
+  private static final String SET_ALPHA_KEY = "Alpha";
 
-  public static final String SET_INITIAL_TEMP_KEY = "InitialTemp";
-  public static final String SET_ALPHA_KEY = "Alpha";
-  public static final String SET_DELTA_MQ  = "DeltaMQ";
+  private double  configuredTemp = 1.0;
+  private double  configuredAlpha = 0.85;
 
-  double  configuredTemp = 1.0;
-  double  configuredAlpha = 0.85;
-
-  double  initTemp = 1.0;
-  double  alpha    = 0.85;
-  double  currTemp = initTemp;
-  boolean initialized = true;
+  private double  initTemp = 1.0;
+  private double  alpha    = 0.85;
+  private double  currTemp = initTemp;
+  private boolean initialized = true;
 
   public SASimpleTechnique() { }
 
   public Hashtable getConfig() {
-    Double Alpha = new Double(alpha);
-    Double Temp  = new Double(initTemp);
+    Double Alpha = alpha;
+    Double Temp  = initTemp;
     Hashtable h = new Hashtable();
     h.clear();
     h.put(SET_INITIAL_TEMP_KEY,Temp);
@@ -31,44 +27,16 @@ public class SASimpleTechnique extends SATechnique {
     return h;
   }
 
-  public boolean setConfig(Hashtable h) {
-    Double Alpha = (Double)h.get(SET_ALPHA_KEY);
-    Double Temp = (Double)h.get(SET_INITIAL_TEMP_KEY);
-
-    if((Alpha == null) || (Temp == null))
-    {
-      initialized = false;
-      System.out.println("setConfig() - Setting initialized to false");
-      return false;
-    }
-
-    alpha = Alpha.doubleValue();
-    initTemp = Temp.doubleValue();
-    currTemp = initTemp;
-
-    configuredTemp = initTemp;
-    configuredAlpha = alpha;
-
-    initialized=true;
-
-    return true;
-  }
-
-  public String getConfigDialogName()
-  { return "bunch.ui.SASimpleTechniqueDialog"; }
-
   public boolean configure()
   {
     return true;
   }
 
-  public boolean init(Hashtable h)
-  {
+  public boolean init(Hashtable h) {
     Double dTemp = (Double)h.get(SET_INITIAL_TEMP_KEY);
     Double dAlpha = (Double)h.get(SET_ALPHA_KEY);
 
-    if((dTemp == null) || (dAlpha == null))
-    {
+    if((dTemp == null) || (dAlpha == null)) {
       initialized = false;
       System.out.println("init() - Setting initialized to false");
       return false;
@@ -92,32 +60,14 @@ public class SASimpleTechnique extends SATechnique {
     currTemp = initTemp;
   }
 
-  public boolean changeTemp(Map args) {
-    if(initialized == false) return false;
+  public void changeTemp() {
+    if(!initialized) return;
 
-    //System.out.println("Changing Temp");
-    //T(k+1) = T(K) * alpha
     currTemp *= alpha;
-    return true;
-  }
-
-  public boolean  accept(Hashtable args) {
-    if (initialized == false) return false;
-
-    Double deltaMQ = (Double)args.get(SET_DELTA_MQ);
-    if(deltaMQ == null)
-      return false;
-
-    double  dMQ = deltaMQ.doubleValue();
-    return accept(dMQ);
   }
 
   public boolean  accept(double dMQ) {
-    if (initialized == false) return false;
-
-
-
-    //if(dMQ > 0) return false;
+    if (!initialized) return false;
 
     if (bunch.util.BunchUtilities.compareGreaterEqual(dMQ,0.0))
       return false;
@@ -129,25 +79,10 @@ public class SASimpleTechnique extends SATechnique {
 
     boolean acceptMove = (rndProb < prob);
 
-    //System.out.println("T="+currTemp+"  dMQ="+dMQ+"  prob="+prob+"  rndProp="+rndProb+" result="+(rndProb<prob));
-
     if(acceptMove)
       stats.incrSAOverrides();
 
     return acceptMove;
   }
-
-  public static String getDescription()
-  {
-    return "P(accept) = exp(deltaMQ/T);  T(k+1)=alpha*T(k)";
-  }
-
-  public String getObjectDescription()
-  {
-    return this.getDescription();
-  }
-
-  public String getWellKnownName()
-  { return "Simple Algorithm";  }
 
 }

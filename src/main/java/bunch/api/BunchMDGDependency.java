@@ -2,9 +2,9 @@ package bunch.api;
 
 public final class BunchMDGDependency {
 
-  final String srcNode;
-  final String destNode;
-  final int    edgeW;
+  private final String srcNode;
+  private final String destNode;
+  private final int    edgeW;
 
   public BunchMDGDependency(String s, String d, int w) {
     srcNode = s;

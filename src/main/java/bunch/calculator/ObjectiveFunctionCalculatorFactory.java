@@ -11,8 +11,8 @@ import bunch.model.GenericFactory;
  * @see GenericFactory
  */
 public final class ObjectiveFunctionCalculatorFactory extends GenericFactory {
-  ObjectiveFunctionCalculator currObjFnMethod = new TurboMQIncrW();
-  ObjectiveFunctionCalculator defaultMethod = new TurboMQIncrW();
+  private ObjectiveFunctionCalculator currObjFnMethod = new TurboMQIncrW();
+  private final ObjectiveFunctionCalculator defaultMethod = new TurboMQIncrW();
 
 /**
  * Class constructor, defines the objects that the factory will be able
