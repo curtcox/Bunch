@@ -2,6 +2,7 @@ package bunch.api;
 
 import bunch.model.Cluster;
 import bunch.simple.SASimpleTechnique;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.BufferedWriter;
@@ -12,13 +13,13 @@ import static bunch.api.Algorithm.*;
 import static bunch.api.Key.*;
 import static bunch.api.OutputFormat.*;
 import static bunch.api.RunMode.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static bunch.TestUtils.*;
 
 public class BunchPassingAPITest {
 
     private BunchMDG newBunchMDG() {
-        BunchMDG bmdg = new BunchMDG();
+        var bmdg = new BunchMDG();
         bmdg.addMDGEdge("50",  "105", 1);
         bmdg.addMDGEdge("170", "56",  7);
         bmdg.addMDGEdge("29",  "144", 4);
@@ -64,14 +65,22 @@ public class BunchPassingAPITest {
         return bmdg;
     }
 
+    private BunchMDG newBunchMDG2() {
+        var bmdg = new BunchMDG();
+        bmdg.addMDGEdge("m1","m2");
+        bmdg.addMDGEdge("m2","m1");
+        bmdg.addMDGEdge("m1","m3");
+        bmdg.addMDGEdge("m4","m5");
+        bmdg.addMDGEdge("m5","m4");
+        bmdg.addMDGEdge("m4","m3");
+        return bmdg;
+    }
+
     @Test
     public void Do_Without_File() throws Exception {
-
-        BunchAPI api = new BunchAPI();
-
-        var bmdg = newBunchMDG();
+        var api = new BunchAPI();
         var args = api.bunchArgs;
-        args.mdgGraphObject = bmdg;
+        args.mdgGraphObject = newBunchMDG();
 
         args.OUTPUT_FORMAT = NULL;
         args.AGGLOMERATIVE = true;
@@ -92,114 +101,54 @@ public class BunchPassingAPITest {
 
     @Test
     public void Do_With_File() throws Exception {
-
-        BunchAPI api = new BunchAPI();
+        var api = new BunchAPI();
         var bp = api.bunchArgs;
-
-        var bmdg = new BunchMDG();
         bp.MDG_INPUT_FILE_NAME = "e:\\SampleMDGs\\paul.mdg";
-
-        ////api.setAPIProperty(MDG_GRAPH_OBJECT,bmdg);
-        // bp.setProperty(MDG_INPUT_FILE_NAME,"e:\\expir\\rcs");
-        ////bp.setProperty(OUTPUT_FILE,"e:\\samplemdgs\\rcsBrian2");
-        //bp.setProperty(OMNIPRESENT_SUPPLIERS, "m4,m5");
-
         bp.CLUSTERING_ALG = HILL_CLIMBING;
         bp.OUTPUT_FORMAT = NULL;
-        ////bp.setProperty(MDG_OUTPUT_MODE, OUTPUT_DETAILED);
-
         bp.AGGLOMERATIVE = true;
-
-        //bp.setProperty(OUTPUT_FORMAT,NULL_OUTPUT_FORMAT);
         bp.PROGRESS_CALLBACK_CLASS = "bunch.api.BunchAPITestCallback";
         bp.PROGRESS_CALLBACK_FREQ = 5;
-        println("Running...");
-        api.run();
-        var results = api.getResults();
-        println("Results:");
+        var results = api.run();
+        assertNotNull(results);
+        assertBetween(results.RUNTIME, 1,30);
+        assertBetween(results.MQEVALUATIONS,0,10);
+        assertBetween(results.TOTAL_CLUSTER_LEVELS,0,10);
+        assertEquals(0,results.SA_NEIGHBORS_TAKEN);
 
-        long rt = results.RUNTIME;
-        long evals = results.MQEVALUATIONS;
+        var bg = api.getPartitionedGraph();
+        assertNotNull(bg);
         int levels = results.TOTAL_CLUSTER_LEVELS;
-        long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
-
-        println("Runtime = " + rt + " ms.");
-        println("Total MQ Evaluations = " + evals);
-        println("Total Levels = " + levels);
-        println("Simulated Annealing Moves Taken = " + saMovesTaken);
-        println();
-
-        var resultLevels = results.RESULT_CLUSTER_OBJS;
-        BunchGraph bg = api.getPartitionedGraph();
-        if (bg != null)
-            bg.printGraph();
-
-        Integer iLvls = levels;
-        for(int i = 0; i < iLvls; i++) {
-            println(" ************* LEVEL "+i+" ******************");
-            BunchGraph bgLvl = api.getPartitionedGraph(i);
-            bgLvl.printGraph();
-            println("\n\n");
+        for (int i = 0; i < levels; i++) {
+            assertNotNull(api.getPartitionedGraph(i));
         }
     }
 
     @Test
     public void Do_Without_File2() throws Exception {
+        var api = new BunchAPI();
+        var args = api.bunchArgs;
+        args.mdgGraphObject = newBunchMDG2();
 
-        BunchAPI api = new BunchAPI();
-        var bp = api.bunchArgs;
+        args.CLUSTERING_ALG = HILL_CLIMBING;
+        args.OUTPUT_FORMAT = NULL;
 
-        var bmdg = new BunchMDG();
+        args.AGGLOMERATIVE = true;
 
-        bmdg.addMDGEdge("m1","m2");
-        bmdg.addMDGEdge("m2","m1");
-        bmdg.addMDGEdge("m1","m3");
-        bmdg.addMDGEdge("m4","m5");
-        bmdg.addMDGEdge("m5","m4");
-        bmdg.addMDGEdge("m4","m3");
+        args.PROGRESS_CALLBACK_CLASS = "bunch.api.BunchAPITestCallback";
+        args.PROGRESS_CALLBACK_FREQ = 5;
+        var results = api.run();
+        assertNotNull(results);
+        assertBetween(results.RUNTIME, -1,10);
+        assertBetween(results.MQEVALUATIONS,0,100);
+        assertBetween(results.TOTAL_CLUSTER_LEVELS,0,10);
+        assertEquals(0,results.SA_NEIGHBORS_TAKEN);
 
-        //api.setAPIProperty(MDG_GRAPH_OBJECT,bmdg);
-        // bp.setProperty(MDG_INPUT_FILE_NAME,"e:\\expir\\rcs");
-        //bp.setProperty(OUTPUT_FILE,"e:\\samplemdgs\\rcsBrian2");
-        //bp.setProperty(OMNIPRESENT_SUPPLIERS, "m4,m5");
-
-        bp.CLUSTERING_ALG = HILL_CLIMBING;
-        bp.OUTPUT_FORMAT = NULL;
-        ////bp.setProperty(MDG_OUTPUT_MODE, OUTPUT_DETAILED);
-
-
-        bp.AGGLOMERATIVE = true;
-
-        //bp.setProperty(OUTPUT_FORMAT,NULL_OUTPUT_FORMAT);
-        bp.PROGRESS_CALLBACK_CLASS = "bunch.api.BunchAPITestCallback";
-        bp.PROGRESS_CALLBACK_FREQ = 5;
-        println("Running...");
-        api.run();
-        var results = api.getResults();
-        println("Results:");
-
-        long rt = results.RUNTIME;
-        long evals = results.MQEVALUATIONS;
+        var bg = api.getPartitionedGraph();
+        assertNotNull(bg);
         int levels = results.TOTAL_CLUSTER_LEVELS;
-        long saMovesTaken = results.SA_NEIGHBORS_TAKEN;
-
-        println("Runtime = " + rt + " ms.");
-        println("Total MQ Evaluations = " + evals);
-        println("Total Levels = " + levels);
-        println("Simulated Annealing Moves Taken = " + saMovesTaken);
-        println();
-
-        var resultLevels = results.RESULT_CLUSTER_OBJS;
-        BunchGraph bg = api.getPartitionedGraph();
-        if (bg != null)
-          bg.printGraph();
-
-        Integer iLvls = levels;
-        for(int i = 0; i < iLvls; i++) {
-          println(" ************* LEVEL "+i+" ******************");
-          BunchGraph bgLvl = api.getPartitionedGraph(i);
-          bgLvl.printGraph();
-          println("\n\n");
+        for (int i = 0; i < levels; i++) {
+            assertNotNull(api.getPartitionedGraph(i));
         }
     }
 

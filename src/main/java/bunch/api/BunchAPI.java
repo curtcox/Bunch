@@ -23,10 +23,10 @@ final class BunchAPI {
     return engine.getDefaultSpecialNodes(mdgFileName);
   }
 
-  public void run() throws IOException, ClassNotFoundException {
+  public EngineResults run() throws IOException, ClassNotFoundException {
     engine = new BunchEngine();
     engine.run(bunchArgs);
-    getResults();
+    return getResults();
   }
 
   public List<Cluster> getClusters() {

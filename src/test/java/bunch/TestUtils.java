@@ -3,6 +3,7 @@ package bunch;
 import static org.junit.Assert.assertTrue;
 
 public class TestUtils {
+
     public static void assertBetween(long value, long min, long max) {
         assertLessThan(value,max);
         assertGreaterThan(value,min);
