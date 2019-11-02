@@ -62,9 +62,8 @@ public final class BunchCluster {
 
   private Map<String,BunchNode> constructNodeHT() {
     Map<String,BunchNode> h = new Hashtable<>();
-    h.clear();
 
-    if(clusterNodes != null) {
+      if(clusterNodes != null) {
       for (BunchNode bn : clusterNodes) {
         String key = bn.getName();
         h.put(key, bn);

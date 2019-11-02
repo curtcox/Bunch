@@ -10,9 +10,9 @@ public final class BunchMDG {
     mdgEdges = new ArrayList<>();
   }
 
-  private boolean addMDGEdge(BunchMDGDependency d)
+  private void addMDGEdge(BunchMDGDependency d)
   {
-    return mdgEdges.add(d);
+      mdgEdges.add(d);
   }
 
   public void addMDGEdge(String s, String d, int w) {

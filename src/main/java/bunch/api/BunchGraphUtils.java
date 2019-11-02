@@ -53,7 +53,6 @@ final class BunchGraphUtils {
 
   public static Hashtable calcPR(BunchGraph expert, BunchGraph cluster) {
     Hashtable<String,Double> results = new Hashtable<>();
-    results.clear();
     BunchGraphPR prUtil = new BunchGraphPR(expert,cluster);
     boolean rc = prUtil.run();
     if(!rc)

@@ -12,7 +12,6 @@ final class MeCl {
     A = g1;
     B = g2;
     edgeA = new HashMap<>();
-    edgeA.clear();
     meclValue = 0;
   }
 
@@ -36,14 +35,11 @@ final class MeCl {
   private long collectSubClusters(HashMap<String,HashMap<String,List<BunchNode>>> Ca) {
     long tally=0;
     HashMap<String,List<BunchNode>> Ccollected = new HashMap<>();
-    Ccollected.clear();
 
     for (var item : Ca.values()) {
-      HashMap<String,List<BunchNode>> Ci = item;
-      for (var o : Ci.keySet()) {
-        String key = o;
-        var value = Ci.get(key);
-        tally += mergeSubCluster(Ccollected, key, value);
+      for (var o : item.keySet()) {
+        var value = item.get(o);
+        tally += mergeSubCluster(Ccollected, o, value);
       }
     }
     return tally;
@@ -59,11 +55,9 @@ final class MeCl {
     }
 
     for (var item : currentSubCluster) {
-      BunchNode bn1 = item;
       for (var o : value) {
-        BunchNode bn2 = o;
-        if (!bn2.isAMemberOfCluster(bn1.getMemberCluster().getName())) {
-          tally += this.getConnectedWeight(bn1.getName(), bn2.getName());
+        if (!o.isAMemberOfCluster(item.getMemberCluster().getName())) {
+          tally += this.getConnectedWeight(item.getName(), o.getName());
         }
       }
     }

@@ -38,9 +38,8 @@ private void checkForSpecialModules(Node[] originalNodes) {
 
 private void writeSpecialModules(Node[] originalNodes) throws IOException {
     List<Node> deadList = new ArrayList<>();
-    deadList.clear();
 
-    if (originalNodes != null) {
+  if (originalNodes != null) {
       hasSuppliers = false;
       hasClients = false;
       hasCentrals = false;
@@ -188,7 +187,6 @@ private void generateClusters(Graph cLvlG) throws IOException {
 
   Node[]         nodeList = nextLvlG.getNodes();
   Vector<Node>         cVect = new Vector<>();
-  cVect.clear();
 
   writer_d.write("SS(ROOT) = ");
   int count = 1;
@@ -332,8 +330,6 @@ private void findStrongestNode(Node n) {
   List<Node> nodeV = new Vector<>();
 
   LinkedList<Node> l = new LinkedList<>();
-  l.clear();
-  nodeV.clear();
 
   //Seed the linked list
 

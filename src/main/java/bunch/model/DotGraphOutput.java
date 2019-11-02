@@ -37,7 +37,6 @@ private void writeHeader() throws IOException {
  */
 private void writeSpecialModules(Node[] originalNodes) throws IOException {
   List<Node> deadList = new ArrayList<>();
-  deadList.clear();
 
   if (originalNodes != null) {
     boolean hasSuppliers = false;
@@ -302,8 +301,6 @@ private String findStrongestNode(Node n) {
   Vector<Node> nodeV = new Vector<>();
 
     LinkedList<Node> l = new LinkedList<>();
-  l.clear();
-  nodeV.clear();
 
   //Seed the linked list
   l.addLast(n);

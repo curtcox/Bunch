@@ -390,8 +390,6 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     List<String> emptyList = new ArrayList<>();
     boolean   containsSpecial = false;
 
-    emptyList.clear();
-
     if(bunchArgs.omnipresentBoth != null) {
       containsSpecial = true;
       h.put(OMNIPRESENT_CENTRAL,bunchArgs.omnipresentBoth);
@@ -763,7 +761,6 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
       for(int i = 0; i < clusterList.size(); i++) {
         Hashtable<Key,Number> lvlHT = new Hashtable<>();
-        lvlHT.clear();
 
         Cluster c = clusterList.get(i);
         lvlHT.put(CLUSTER_LEVEL,i);

@@ -60,45 +60,11 @@ public final class BunchGraph {
 
   private Map<String,BunchNode> constructNodeHT() {
     Map<String,BunchNode> h = new HashMap<>();
-    h.clear();
     for (BunchNode theNode : nodeList) {
       String key = theNode.getName();
       h.put(key, theNode);
     }
     return h;
-  }
-
-  private void writeSILFile(String fname, boolean includeOverlapNodes)
-    throws java.io.IOException {
-    FileWriter outF = new FileWriter(fname);
-    java.io.BufferedWriter out = new BufferedWriter(outF);
-
-    for (BunchCluster bc : clusterList) {
-      List<BunchNode> clusterNodes = new ArrayList<>(bc.getClusterNodes());
-      if (clusterNodes.size() == 0)
-        continue;
-      out.write("SS(" + bc.getName() + ")=");
-      for (int j = 0; j < clusterNodes.size(); j++) {
-        BunchNode bn = clusterNodes.get(j);
-        out.write(bn.getName());
-        if (j < (clusterNodes.size() - 1))
-          out.write(", ");
-      }
-      if ((includeOverlapNodes) && (bc.getOverlapNodes() != null)) {
-        List<BunchNode> overlapNodes = new ArrayList<>(bc.getOverlapNodes());
-        if (overlapNodes.size() > 0)
-          out.write(", ");
-
-        for (int j = 0; j < overlapNodes.size(); j++) {
-          BunchNode bn = overlapNodes.get(j);
-          out.write(bn.getName());
-          if (j < (overlapNodes.size() - 1))
-            out.write(", ");
-        }
-      }
-      out.write("\r\n");
-    }
-    out.close();
   }
 
   private List<Node> getChildrenList(Node n) {

@@ -21,7 +21,6 @@ public class SASimpleTechnique extends SATechnique {
     Double Alpha = alpha;
     Double Temp  = initTemp;
     Hashtable<String,Double> h = new Hashtable<>();
-    h.clear();
     h.put(SET_INITIAL_TEMP_KEY,Temp);
     h.put(SET_ALPHA_KEY,Alpha);
     return h;
