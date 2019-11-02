@@ -22,13 +22,11 @@ final class EngineArgs {
   public final ObjectiveFunctionCalculator mqCalculatorClass = new TurboMQIncrW();
   public String MQCALC_MDG_FILE;
   public String MQCALC_SIL_FILE;
-  public Integer callbackObjectFrequency;
   public Integer algHcRndPct;
   public Integer algHcHcPct;
   public Integer algNahcHcPct;
   public Integer algNahcRndPct;
   public Integer algNahcPopulationSz;
-  public Integer TIMEOUT_TIME;
   public RunMode runMode = RunMode.CLUSTER;
   public OutputFormat OUTPUT_FORMAT;
   public String OUTPUT_FILE;
