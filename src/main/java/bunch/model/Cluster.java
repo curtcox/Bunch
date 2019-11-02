@@ -31,8 +31,6 @@ import bunch.stats.*;
   private boolean converged = false;
   private boolean validMove = false;
 
-    int [] clustersUsed = null;
-  boolean clusterNamesDirty = true;
   private int numClustNames = -1;
   private boolean clusterNamesChanged = false;
   private double baseObjFnValue = CLUSTER_OBJ_FN_VAL_NOT_DEFINED;
@@ -106,8 +104,7 @@ import bunch.stats.*;
   /**
    * This method is used to increment the depth of the cluster.
    */
-  public void incrDepth()
-  {
+  public void incrDepth() {
     depth++;
 
     if((cDetails != null) && (stats.getCollectClusteringDetails()))
@@ -117,24 +114,21 @@ import bunch.stats.*;
   /**
    * This method is used to return the number of elements in the MDG.
    */
-  public int size()
-  {   return clusterVector.length;  }
+  public int size() {   return clusterVector.length;  }
 
   /**
    * This method returns the cluster membership for a given node.
    *
    * @param node The index of the node of interest.
    */
-  public int getCluster(int node)
-  {   return clusterVector[node]; }
+  public int getCluster(int node) {   return clusterVector[node]; }
 
 
   /**
    * This method invalidates the last move.  Thus the history is forgotton
    * causing the MQ of the entire cluster to be recalculated.
    */
-  private void invalidateLastMove()
-  {
+  private void invalidateLastMove() {
     lastMoveNode = -1;
     lastMoveOrigCluster = -1;
     lastMoveNewCluster = -1;
@@ -146,8 +140,7 @@ import bunch.stats.*;
    * This method allocates vectors to keep track of the inter- and intra-edges
    * with respect to each cluster.
    */
-  public void allocEdgeCounters()
-  {
+  public void allocEdgeCounters() {
       if (clusterVector == null)
         return;
 
@@ -179,8 +172,7 @@ import bunch.stats.*;
   /**
    * This method performs initialization on the Objective Function calculator.
    */
-  private void initCalculator()
-  {
+  private void initCalculator() {
     if (graph == null)
       return;
 
@@ -197,8 +189,7 @@ import bunch.stats.*;
    *
    * @returns The object instance of the objective function calculator.
    */
-  private ObjectiveFunctionCalculator getCalculator()
-  {   return calculator;  }
+  private ObjectiveFunctionCalculator getCalculator() {   return calculator;  }
 
 
   /**
@@ -206,8 +197,7 @@ import bunch.stats.*;
    *
    * @param cv The cluster vectory array
    */
-  public void setClusterVector(int [] cv)
-  {
+  public void setClusterVector(int [] cv) {
       this.invalidateLastMove();
       isDirty = true;
       clusterVector = new int[cv.length];
@@ -297,8 +287,7 @@ import bunch.stats.*;
    *
    * @returns True if the cluster has converged, false otherwise.
    */
-  public boolean isMaximum()
-  {   return converged; }
+  public boolean isMaximum() {   return converged; }
 
   /**
    * This method is used to set the state of the cluster instance to indicate
@@ -306,8 +295,7 @@ import bunch.stats.*;
    *
    * @param state True if the cluster has converged, false otherwise.
    */
-  public void setConverged(boolean state)
-  {   converged = state;   }
+  public void setConverged(boolean state) {   converged = state;   }
 
   /**
    * This method is used to get an instance of the Graph object that the
@@ -316,8 +304,7 @@ import bunch.stats.*;
    *
    * @returns The instance to the graph object.
    */
-  public Graph getGraph()
-  {   return graph;  }
+  public Graph getGraph() {   return graph;  }
 
   /**
    * This method allows the state of the current cluster instance to be
@@ -452,8 +439,7 @@ import bunch.stats.*;
    *
    * @returns A cluser ID not already in use by another cluster.
    */
-  public int allocateNewCluster()
-  {
+  public int allocateNewCluster() {
     int newClusterID = findNewClusterID();
     this.clusterNamesChanged = true;
     return newClusterID;
@@ -473,8 +459,7 @@ import bunch.stats.*;
    *
    * @returns True if the cluster names have changed, false if not.
    */
-  public boolean hasClusterNamesChanged()
-  { return clusterNamesChanged; }
+  public boolean hasClusterNamesChanged() { return clusterNamesChanged; }
 
   /**
    * This method returns an integer array containing the identifies for all
@@ -522,8 +507,7 @@ import bunch.stats.*;
    * @returns An the objective function value of the partition prior to the last
    *          move operation.
    */
-  public double getLastMvObjFn()
-  { return lastMoveObjectiveFnValue;  }
+  public double getLastMvObjFn() { return lastMoveObjectiveFnValue;  }
 
   /**
    * This method returns an array encoding that represents the last move
@@ -538,8 +522,7 @@ import bunch.stats.*;
    * @returns A 3 member array with the information necessary to "rollback" the
    *          last move.
    */
-  public int[] getLmEncoding()
-  {
+  public int[] getLmEncoding() {
     lastMv[0]=lastMoveNode;
     lastMv[1]=lastMoveOrigCluster;
     lastMv[2]=lastMoveNewCluster;
@@ -554,8 +537,7 @@ import bunch.stats.*;
    * @param cluster   The ID of the cluster for the moved node
    *
    */
-  public void relocate(int node, int cluster)
-  {
+  public void relocate(int node, int cluster) {
     int currentCluster = clusterVector[node];
     if(currentCluster != cluster) {
         move(node, currentCluster, cluster);
@@ -597,7 +579,6 @@ import bunch.stats.*;
   /**
    * This method dertermines if the specified last move was valid.
    */
-  public boolean isMoveValid()
-  { return !validMove; }
+  public boolean isMoveValid() { return !validMove; }
 
 }

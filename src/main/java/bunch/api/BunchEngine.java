@@ -31,7 +31,7 @@ final class BunchEngine {
   private Configuration configuration_d;
   private long totalTime=0;
   private Cluster baseCluster;
-  private List<Cluster> clusterList;
+  private ClusterList clusterList;
   private int reflexiveEdgeCount = 0;
 
   private Double precision;
@@ -417,7 +417,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   }
 
   private void initClustering() throws IOException, ClassNotFoundException {
-    clusterList = new ArrayList<>();
+    clusterList = new ClusterList();
     loadPreferences();
     constructGraph();
     handleUserDirectedClustering();
@@ -726,7 +726,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     return results;
   }
 
-  public List<Cluster> getClusterList()
+  public ClusterList getClusterList()
   {
     return this.clusterList;
   }
