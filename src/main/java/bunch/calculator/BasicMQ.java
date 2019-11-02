@@ -82,7 +82,6 @@ public void calculate() {
     nodes_x[i].cluster = -1;
   }
 
-    int pos=0;
   for (int i=0; i<numberOfNodes_d; ++i) {
     int numCluster = clusters_x[i];
     clusterMatrix_d[numCluster][(++clusterMatrix_d[numCluster][0])] = i;

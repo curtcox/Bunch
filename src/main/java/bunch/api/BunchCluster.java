@@ -29,9 +29,6 @@ public final class BunchCluster {
   public Collection<BunchNode> getClusterNodes()
   { return clusterNodes;  }
 
-  public Collection<BunchNode> getOverlapNodes()
-  { return overlapNodes;  }
-
   public int getOverlapNodeCount() {
     if(overlapNodes != null)
       return overlapNodes.size();

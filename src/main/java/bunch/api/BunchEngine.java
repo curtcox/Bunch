@@ -179,12 +179,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
         int n1 = Math.max(client, supplier);
         int n2 = Math.max(central, library);
         int max = Math.max(n1, n2);
-        int type = Node.CLIENT;
 
-        if (max == client) type = Node.CLIENT;
-        if (max == supplier) type = Node.SUPPLIER;
-        if (max == central) type = Node.CENTRAL;
-        if (max == library) type = Node.LIBRARY;
         value.setType(Node.DEAD + max);
       }
     }

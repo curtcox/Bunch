@@ -95,10 +95,7 @@ public final class BunchGraph {
     includesIsomorphicUpdates = true;
     Iterator<BunchNode> nodeI = getNodes().iterator();
     List<BunchCluster> theClusters = new ArrayList<>(getClusters());
-    int adjustCount = 0;
-    int nodeAdjustCount = 0;
-    int totalCount = getNodes().size();
-    boolean nodeIsomorphic = false;
+    boolean nodeIsomorphic;
 
     while(nodeI.hasNext()) {
       BunchNode bn = nodeI.next();
@@ -107,7 +104,6 @@ public final class BunchGraph {
 
       int currClust = bn.getCluster();
       int currStrength = cv[currClust];
-      BunchCluster homeCluster = theClusters.get(currClust);
       for(int i = 0; i < cv.length; i++) {
         if(i == currClust) continue;
         int connectStrength = cv[i];
@@ -115,12 +111,11 @@ public final class BunchGraph {
           BunchCluster bc = theClusters.get(i);
           bc.addOverlapNode(bn);
           bn.subscribeToCluster(bc);
-          adjustCount++;
           nodeIsomorphic = true;
 
         }
       }
-      if(nodeIsomorphic) nodeAdjustCount++;
+      if(nodeIsomorphic) ;
     }
   }
 
