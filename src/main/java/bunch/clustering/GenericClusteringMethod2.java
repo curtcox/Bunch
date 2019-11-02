@@ -2,11 +2,12 @@ package bunch.clustering;
 
 import bunch.model.Cluster;
 import bunch.event.IterationEvent;
+import bunch.model.Configuration;
 import bunch.model.Population;
 
 /**
  * This class is a refactoring in progress.  It supports the same base interface
- * as ClusteringMethod2, which means that it implments support for using
+ * as ClusteringMethod2, which means that it implements support for using
  * the Cluster objects to manage MDG partitions.
  *
  * @author  Brian Mitchell
@@ -29,7 +30,8 @@ private double bestOFValue_d=0.0;
 /**
  * Class constructor.
  */
-GenericClusteringMethod2() {
+GenericClusteringMethod2(Configuration configuration) {
+    super(configuration);
     setPopSize(DEFAULT_POP_SIZE);
     setThreshold(DEFAULT_THRESHOLD);
     setNumOfExperiments(DEFAULT_NUM_EXPERIMENTS);

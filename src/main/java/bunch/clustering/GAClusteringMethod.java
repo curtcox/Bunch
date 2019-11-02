@@ -4,7 +4,6 @@ import bunch.ga.GAConfiguration;
 import bunch.ga.GAMethod;
 import bunch.model.Cluster;
 import bunch.model.Configuration;
-import bunch.model.Feature;
 import bunch.model.Graph;
 
 import java.util.Random;
@@ -25,15 +24,12 @@ import java.util.Random;
 public class GAClusteringMethod extends GenericClusteringMethod {
 
   private GAMethod method_d;
-private Feature[] preFeatures_d;
-private Feature[] features_d;
-private Feature[] postFeatures_d;
 
 /**
  * Class constructor.
  */
 public GAClusteringMethod() {
-  setConfigurable();
+  super(new GAConfiguration());
   setThreshold(1.0);
 }
 
@@ -75,8 +71,7 @@ public void init() {
   currentPopulation_d[0] = currentPopulation_d[0].cloneAllNodesCluster();
   currentPopulation_d[0].calculateObjectiveFunctionValue();
 
-  if (getPopSize() >= 2)
-  {
+  if (getPopSize() >= 2) {
       currentPopulation_d[1] = currentPopulation_d[0].cloneSingleNodeClusters();
       currentPopulation_d[1].calculateObjectiveFunctionValue();
   }
@@ -85,10 +80,6 @@ public void init() {
   method_d.setMutationThreshold(config_d.getMutationThreshold());
   method_d.setCrossoverThreshold(config_d.getCrossoverThreshold());
   method_d.init();
-
-  preFeatures_d = config_d.getPreConditionFeatures();
-  features_d = config_d.getFeatures();
-  postFeatures_d = config_d.getPostConditionFeatures();
 }
 
 /**
@@ -124,28 +115,12 @@ public Graph getBestGraph()
 public boolean nextGeneration() {
   method_d.calcStatistics();
 
-  int parent1=0, parent2=0;
-  int crossp=0;
-
   int n = method_d.getInitCounter();
   int incr = method_d.getIncrementCounter();
   int top = method_d.getMaxCounter();
 
-  if (preFeatures_d != null) {
-    for (Feature feature : preFeatures_d) {
-      feature.apply(currentPopulation_d);
-    }
-  }
-
   while (n < top) {
     method_d.selectReproduceCrossAndMutate(n);
-
-    if (features_d != null) {
-      for (Feature feature : features_d) {
-        feature.apply(method_d);
-      }
-    }
-
     n+=incr;
   }
 
@@ -155,32 +130,9 @@ public boolean nextGeneration() {
 
   currentPopulation_d = method_d.getCurrentPopulation();
 
-  if (postFeatures_d != null) {
-    for (Feature feature : postFeatures_d) {
-      feature.apply(currentPopulation_d);
-    }
-  }
-
   method_d.getRandomNumberGenerator().setSeed(System.currentTimeMillis());
 
   return false;
 }
 
-/**
- * This returns the configuration dialog name
- */
-public String getConfigurationDialogName()
-{
-  return "bunch.ui.GAClusteringConfigurationDialog";
-}
-
-/**
- * This method returns the configuration object to the caller
- */
-public Configuration getConfiguration() {
-  if (configuration_d == null) {
-    configuration_d = new GAConfiguration();
-  }
-  return configuration_d;
-}
 }

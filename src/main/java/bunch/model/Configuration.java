@@ -14,11 +14,8 @@ import java.io.*;
  *
  * @see Feature
  */
-public class Configuration implements java.io.Serializable {
+public class Configuration {
 
-private Feature[] preFeatures_d;
-private Feature[] features_d;
-private Feature[] postFeatures_d;
 private int numIterations_d;
 private int popSize_d;
 public final int expNumber_d = 0;
@@ -81,37 +78,6 @@ public void setPopulationSize(int p)
 public int getPopulationSize()
 {
   return popSize_d;
-}
-
-/**
- * Obtains the array of pre-condition features for this configuration.
- *
- * @return the array of precondition features
- */
-public Feature[] getPreConditionFeatures()
-{
-  return preFeatures_d;
-}
-
-/**
- * Obtains the array of features that are executed along with the
- * clustering algorithm for this configuration.
- *
- * @return the array of features
- */
-public Feature[] getFeatures()
-{
-  return features_d;
-}
-
-/**
- * Obtains the array of post-condition features for this configuration.
- *
- * @return the array of postcondition features
- */
-public Feature[] getPostConditionFeatures()
-{
-  return postFeatures_d;
 }
 
 }

@@ -359,20 +359,4 @@ public Configuration getConfiguration() {
   return hc;
 }
 
-public String getConfigurationDialogName()
-{
-  return "bunch.ui.NAHCClusteringConfigurationDialog";
-}
-
-public void setDefaultConfiguration() {
-  NAHCConfiguration hc = (NAHCConfiguration)getConfiguration();
-
-  hc.setThreshold(1.0/*0.1*/);
-  hc.setNumOfIterations(1/*200*/);
-  hc.setPopulationSize(1/*10*/);
-  hc.setSATechnique(null);
-  hc.setMinPctToConsider(0);
-  hc.setRandomizePct(100);
-  setConfiguration(hc);
-}
 }

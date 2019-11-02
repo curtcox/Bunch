@@ -11,32 +11,25 @@ private int[] tmpClusters_d;
 private int[] nClusters_d;
 private int NC=0;
 
-public OptimalClusteringMethod() { }
+public OptimalClusteringMethod() {
+   super(null);
+}
 
 //TO COMPLETE
 public void run() {
   Graph graph = getGraph().cloneGraph();
   StatsManager sm = StatsManager.getInstance();
-  //setBestGraph(null);
-  //Cluster bestCluster = new Cluster();
 
   int[] clusters = graph.getClusters();
   int   cSz = clusters.length;
 
   nClusters_d = new int[clusters.length+1];
-
-  //  System.arraycopy(clusters, 0, nClusters_d, 1, clusters.length);
   tmpClusters_d = new int[clusters.length+1];
-//  System.arraycopy(clusters, 0, tmpClusters_d, 1, clusters.length);
-
   clusters = new int[cSz];
   int[] lastCluster = new int[cSz];
 
   IterationEvent ev = new IterationEvent(this);
   System.arraycopy(nClusters_d, 1, clusters, 0, clusters.length);
-
-  //Cluster currC = new Cluster(graph,null);
-
   sm.clearExhaustiveFinished();
   sm.setExhaustiveTotal(getMaxIterations());
   sm.incrExhaustiveFinished();
@@ -44,9 +37,7 @@ public void run() {
 
   System.arraycopy(clusters,0,lastCluster,0,clusters.length);
 
-  //currC.setClusterVector(nClusters_d);
   Cluster currC = new Cluster(graph,clusters);
-  //currC.setClusterVector(nClusters_d);
   setBestCluster(currC.cloneCluster());
   Cluster bestCluster = new Cluster();
   bestCluster.copyFromCluster(currC);
@@ -55,29 +46,17 @@ public void run() {
   int j = 2;
 
   while (morePartitions) {
-  //System.out.println("BestOBJ fn = "+bestCluster.getObjFnValue());
   System.arraycopy(nClusters_d, 1, clusters, 0, clusters.length);
 
-    //System.out.print("[");
     for(int i = 0; i < clusters.length;i++)
       if(clusters[i]!=lastCluster[i])
         currC.relocate(i,clusters[i]);
-      //System.out.print(clusters[i]+" ");
-    //System.out.println("]");
-
-    //currC.setClusterVector(clusters);
-
-    //System.arraycopy(nClusters_d, 1, clusters, 0, clusters.length);
-    //graph.calculateObjectiveFunctionValue();
 
     double ofValue = currC.calcObjFn(); //.getObjectiveFunctionValue();
     if (bunch.util.BunchUtilities.compareGreater(ofValue,bestOFValue)) {
-    //if (ofValue > bestOFValue) {
       currC.incrDepth();
       bestCluster.copyFromCluster(currC);
-      //bestCluster.incrDepth();
       bestOFValue = ofValue;
-      //setBestGraph(currC.getGraph());
       bestCluster.getClusterNames();
       setBestCluster(bestCluster.cloneCluster());
     }
@@ -85,9 +64,7 @@ public void run() {
     System.arraycopy(clusters,0,lastCluster,0,clusters.length);
     morePartitions = findNextPartition();
     sm.incrExhaustiveFinished();
-    //this.fireIterationEvent(ev);
   }
-//  setBestGraph(bestCluster.getGraph().clone());
 }
 
 static int xx=1;
@@ -120,8 +97,7 @@ private boolean findNextPartition() {
     tmpClusters_d[L] = tmpClusters_d[L] - 1;
     tmpClusters_d[L+1] = tmpClusters_d[L+1] + 1;
 
-  }
-  else {
+  } else {
     NC = 1;
     for(int i=1; i <= N; i++)
       nClusters_d[i] = 1;
@@ -138,11 +114,4 @@ public int getMaxIterations()
   return (int)(getGraph().getNumberOfPartitions());
 }
 
-//public Cluster getBestCluster()
-//{
-//  Graph bestG = getBestGraph();
-//  Cluster c = new Cluster(bestG,bestG.getClusters());
-//  c.calcObjFn();
-//  return c;
-//}
 }

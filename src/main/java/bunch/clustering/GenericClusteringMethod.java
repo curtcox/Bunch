@@ -1,5 +1,6 @@
 package bunch.clustering;
 
+import bunch.model.Configuration;
 import bunch.model.Graph;
 import bunch.event.IterationEvent;
 
@@ -31,10 +32,11 @@ private double bestOFValue_d=0.0;
 /**
  * Class constructor.
  */
-GenericClusteringMethod() {
-    setPopSize(DEFAULT_POP_SIZE);
-    setThreshold(DEFAULT_THRESHOLD);
-    setNumOfExperiments(DEFAULT_NUM_EXPERIMENTS);
+GenericClusteringMethod(Configuration configuration) {
+  super(configuration);
+  setPopSize(DEFAULT_POP_SIZE);
+  setThreshold(DEFAULT_THRESHOLD);
+  setNumOfExperiments(DEFAULT_NUM_EXPERIMENTS);
 }
 
 /**
@@ -49,8 +51,7 @@ void init() {
 
   currentPopulation_d = new Graph[getPopSize()];
 
-  for (int i=0; i<getPopSize(); ++i)
-  {
+  for (int i=0; i<getPopSize(); ++i) {
     currentPopulation_d[i] = graph.cloneWithRandomClusters();
     currentPopulation_d[i].calculateObjectiveFunctionValue();
     currentPopulation_d[i].setMaximum(false);
@@ -73,10 +74,6 @@ void init() {
   }
   */
 }
-
-private void reInit() {
-}
-
 
 /**
  * Redefinition of the main method for a clustering method.
@@ -107,8 +104,7 @@ public void run() {
   bestOFValue_d = getBestGraph().getObjectiveFunctionValue();
 
 
-  for (int x=0; x<numExperiments_d; x++)
-  {
+  for (int x=0; x<numExperiments_d; x++) {
     //maximize the current population and check for new maximum
     boolean end = nextGeneration();
 
@@ -125,10 +121,8 @@ public void run() {
         ev.setIteration(x-generationsSinceLastChange);
         ev.setOverallIteration(x);
         fireIterationEvent(ev);
-        reInit();
       }
-    }
-    else {
+    } else {
       ev.setIteration(x);
       ev.setOverallIteration(x);
       fireIterationEvent(ev);
@@ -256,4 +250,5 @@ public double getBestObjectiveFunctionValue()
 {
   return bestOFValue_d;
 }
+
 }

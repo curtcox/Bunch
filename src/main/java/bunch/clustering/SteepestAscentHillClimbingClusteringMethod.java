@@ -97,13 +97,4 @@ public Configuration getConfiguration() {
   return hc;
 }
 
-public void setDefaultConfiguration() {
-  HillClimbingConfiguration hc = (HillClimbingConfiguration)super.getConfiguration();
-
-  hc.setThreshold(1.0);
-  hc.setNumOfIterations(1);
-  hc.setPopulationSize(1);
-
-  setConfiguration(hc);
-}
 }
