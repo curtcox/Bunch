@@ -1,6 +1,7 @@
 package bunch.api;
 
-import java.util.Map;
+import bunch.model.Cluster;
+import java.util.List;
 
 final class EngineResults {
   public Double prPrecisionValue;
@@ -12,5 +13,5 @@ final class EngineResults {
   public long SA_NEIGHBORS_TAKEN;
   public int MEDIAN_LEVEL_GRAPH;
   public int reflexiveEdgeCount;
-  public Map[] RESULT_CLUSTER_OBJS;
+  public List<Cluster> RESULT_CLUSTER_OBJS;
 }

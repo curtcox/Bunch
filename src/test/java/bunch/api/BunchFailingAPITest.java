@@ -181,14 +181,12 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
       println("Total MQ Evaluations = " + evals);
       println("Simulated Annealing Moves Taken = " + saMovesTaken);
       println();
-      Map [] resultLevels = results.RESULT_CLUSTER_OBJS;
+      var resultLevels = results.RESULT_CLUSTER_OBJS;
 
-      for(int i = 0; i < resultLevels.length; i++) {
-        Map lvlResults = resultLevels[i];
-        println("***** LEVEL "+i+"*****");
-        String mq = (String)lvlResults.get(MQVALUE);
-        String depth = (String)lvlResults.get(CLUSTER_DEPTH);
-        String numC = (String)lvlResults.get(NUMBER_CLUSTERS);
+      for(var lvlResults : resultLevels) {
+        Double mq = lvlResults.getObjFnValue();
+        long depth = lvlResults.getDepth();
+        int numC = lvlResults.getClusterNames().length;
 
         println("  MQ Value = " + mq);
         println("  Best Cluster Depth = " + depth);
@@ -396,14 +394,12 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
       println("Total MQ Evaluations = " + evals);
       println("Simulated Annealing Moves Taken = " + saMovesTaken);
       println();
-      Map [] resultLevels = results.RESULT_CLUSTER_OBJS;
+      var resultLevels = results.RESULT_CLUSTER_OBJS;
 
-      for(int i = 0; i < resultLevels.length; i++) {
-        Map lvlResults = resultLevels[i];
-        println("***** LEVEL "+i+"*****");
-        String mq = (String)lvlResults.get(MQVALUE);
-        String depth = (String)lvlResults.get(CLUSTER_DEPTH);
-        String numC = (String)lvlResults.get(NUMBER_CLUSTERS);
+      for(var lvlResults : resultLevels) {
+        double mq = lvlResults.getBaseObjFnValue();
+        long depth = lvlResults.getDepth();
+        int numC = lvlResults.getClusterNames().length;
 
         println("  MQ Value = " + mq);
         println("  Best Cluster Depth = " + depth);

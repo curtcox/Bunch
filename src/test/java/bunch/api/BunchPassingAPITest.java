@@ -203,10 +203,10 @@ public class BunchPassingAPITest {
             Integer medLvl = results.MEDIAN_LEVEL_GRAPH;
             var resultLevels = results.RESULT_CLUSTER_OBJS;
 
-            var medLvlResults = resultLevels[medLvl];
+            var medLvlResults = resultLevels.get(medLvl);
 
-            int numClusters = (int) medLvlResults.get(NUMBER_CLUSTERS);
-            double mqValue = (double) medLvlResults.get(MQVALUE);
+            int numClusters = medLvlResults.getClusterNames().length;
+            double mqValue = medLvlResults.getObjFnValue();
 
             var outLine = outFileName + "\t" + numClusters + "\t" + mqValue + "\r\n";
             out.write(outLine);

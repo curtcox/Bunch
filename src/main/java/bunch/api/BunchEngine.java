@@ -744,21 +744,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       results.MEDIAN_LEVEL_GRAPH = getMedianLevelNumber();
 
       results.reflexiveEdgeCount = reflexiveEdgeCount;
-
-      Map []resultClusters = new Hashtable[clusterList.size()];
-
-      for(int i = 0; i < clusterList.size(); i++) {
-        Hashtable<Key,Number> lvlHT = new Hashtable<>();
-
-        Cluster c = clusterList.get(i);
-        lvlHT.put(CLUSTER_LEVEL,i);
-        lvlHT.put(MQVALUE,c.getObjFnValue());
-        lvlHT.put(CLUSTER_DEPTH,c.getDepth());
-        lvlHT.put(NUMBER_CLUSTERS,c.getClusterNames().length);
-        resultClusters[i] = lvlHT;
-      }
-
-      results.RESULT_CLUSTER_OBJS = resultClusters;
+      results.RESULT_CLUSTER_OBJS = clusterList;
       StatsManager.cleanup();
 
       Configuration cTmp = clusteringMethod_d.getConfiguration();
