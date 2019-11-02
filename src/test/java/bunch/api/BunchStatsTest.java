@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.io.*;
 
+import static bunch.TestUtils.*;
 import static bunch.api.Algorithm.NAHC;
 import static bunch.api.OutputFormat.NULL;
 
@@ -29,14 +30,14 @@ public final class BunchStatsTest {
       g.setObjectiveFunctionCalculator(objFnCalc);
 
       if(g == null) {
-        System.out.println("The graph is null");
+        println("The graph is null");
         return;
       }
 
       for(int i = 0; i < 100; i++) {
         int [] clusterV = g.genRandomClusterSize(); //.getRandomCluster();
         Cluster c = new Cluster(g,clusterV);
-        System.out.println("NumClusters = "+c.getClusterNames().length+" MQ Value = "+c.getObjFnValue());
+        println("NumClusters = "+c.getClusterNames().length+" MQ Value = "+c.getObjFnValue());
       }
   }
 
@@ -49,7 +50,7 @@ public final class BunchStatsTest {
     double mqAccum = 0.0;
     int    testRuns = 0;
     String header = "Run Number, Runtime(ms), Best MQ, Depth, Number of Clusters, MQ Evaluations, SA Neighbors Taken";
-    System.out.println(header);
+    println(header);
     writer_d.write(header+"\r\n");
 
     for(int i = 0; i < 100; i++) {
@@ -88,14 +89,14 @@ public final class BunchStatsTest {
 //      }
 
       String outString = i+","+rt+","+mq+","+depth+","+numC+","+evals+","+saMovesTaken;
-      System.out.println(outString);
+      println(outString);
       writer_d.write(outString+"\r\n");
       testRuns++;
       mqAccum+= Double.parseDouble(mq);
     }
     writer_d.close();
-    System.out.println();
-    System.out.println("***** Average MQ = " + (mqAccum/((double)testRuns)));
+    println();
+    println("***** Average MQ = " + (mqAccum/((double)testRuns)));
 
   }
 

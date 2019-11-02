@@ -16,6 +16,10 @@ public class TestUtils {
         assertTrue("Expected value " + value + " is not > " + goal,value > goal);
     }
 
+    public static void println(Object o) {
+        System.out.println(""+o);
+    }
+
     public static void println(String message) {
         System.out.println(message);
     }

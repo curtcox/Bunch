@@ -5,6 +5,8 @@ import org.junit.Test;
 import java.util.*;
 import java.io.*;
 
+import static bunch.TestUtils.*;
+
 public final class BunchAPISimAnalysis {
 
   private final String testID = "CIAT1";
@@ -47,7 +49,7 @@ public final class BunchAPISimAnalysis {
         String mName = "M"+j;
         String ssStrID = "SS_" + ssID;
         Vector<String> v = h.get(ssStrID);
-        if(v == null) System.out.println("A BUG...");
+        if(v == null) println("A BUG...");
         v.add(mName);
       }
 
@@ -84,8 +86,7 @@ public final class BunchAPISimAnalysis {
     Random r = new Random(System.currentTimeMillis());
       BufferedWriter writer = new BufferedWriter(new FileWriter(baseFName));
 
-      for(long i = 0; i < (10*howMany); i++)
-      {
+      for(long i = 0; i < (10*howMany); i++) {
         int rNum = r.nextInt((howMany*howMany));
         int m1 = rNum / howMany;
         int m2 = rNum % howMany;
@@ -129,16 +130,16 @@ public final class BunchAPISimAnalysis {
         total++;
 
 
-    System.out.println();
+    println();
     int numNodes = bgList[0].getNodes().size();
 
-    System.out.println("Node Count = " + numNodes);
-    System.out.println("AVG(PR) = "+(pr / (double) total));
-    System.out.println("AVG(ES) = "+(es / (double) total));
-    System.out.println("AVG(MC) = "+(mc / (double) total));
-    System.out.println("AVG(PR_NOS) = "+(pr1 / (double) total));
-    System.out.println("AVG(ES_NOS) = "+(es1 / (double) total));
-    System.out.println("AVG(MC_NOS) = "+(mc1 / (double) total));
+    println("Node Count = " + numNodes);
+    println("AVG(PR) = "+(pr / (double) total));
+    println("AVG(ES) = "+(es / (double) total));
+    println("AVG(MC) = "+(mc / (double) total));
+    println("AVG(PR_NOS) = "+(pr1 / (double) total));
+    println("AVG(ES_NOS) = "+(es1 / (double) total));
+    println("AVG(MC_NOS) = "+(mc1 / (double) total));
   }
 
   private void doPrecisionRecall(String fn, BunchGraph[] bgList) {
@@ -149,37 +150,32 @@ public final class BunchAPISimAnalysis {
         BunchGraph bg2 = bgList[j];
         Hashtable ht1 = BunchGraphUtils.calcPR(bg1,bg2);
         Double prValue = (Double)ht1.get("AVERAGE");
-        System.out.print(fn+"("+i+","+j+") = ");
-        if(prValue != null)
-        {
+        print(fn+"("+i+","+j+") = ");
+        if(prValue != null) {
           double dTmp = prValue * 100.0;
           pr1 += dTmp;
-          System.out.println((int)dTmp);
-        }
-        else
-          System.out.println("0");
+          println((int)dTmp);
+        } else
+          println("0");
       }
   }
 
   private void doEdgeSim(String fn, BunchGraph[] bgList) {
     int sz = bgList.length;
     for(int i = 0; i < sz; i++)
-      for(int j = i+1; j < sz; j++)
-      {
+      for(int j = i+1; j < sz; j++) {
         BunchGraph bg1 = bgList[i];
         BunchGraph bg2 = bgList[j];
 
         Double esValue = BunchGraphUtils.calcEdgeSimiliarities(bg1, bg2);
 
-        System.out.print(fn+"("+i+","+j+") = ");
-        if(esValue != null)
-        {
+        print(fn+"("+i+","+j+") = ");
+        if(esValue != null) {
           double dTmp = esValue * 100.0;
           es1 += dTmp;
-          System.out.println((int)dTmp);
-        }
-        else
-          System.out.println("0");
+          println((int)dTmp);
+        } else
+          println("0");
       }
   }
 
@@ -193,9 +189,6 @@ public final class BunchAPISimAnalysis {
         Hashtable meClValue1 = BunchGraphUtils.getMeClMeasurement(bg1,bg2);
         Hashtable meClValue2 = BunchGraphUtils.getMeClMeasurement(bg2,bg1);
 
-        //System.out.println("The distance is:  " + meClValue.get(BunchGraphUtils.MECL_VALUE) +
-        //            "   quality = "+meClValue.get(BunchGraphUtils.MECL_QUALITY_METRIC));
-
         Double meclValue1 = (Double)meClValue1.get(BunchGraphUtils.MECL_QUALITY_METRIC);
         Double meclValue2 = (Double)meClValue2.get(BunchGraphUtils.MECL_QUALITY_METRIC);
         double d1 = meclValue1;
@@ -208,21 +201,19 @@ public final class BunchAPISimAnalysis {
 
         long mc1 = BunchGraphUtils.getMeClDistance(bg1,bg2); //(long)((1.0-d1)*(double)totalEdges);
         long mc2 = BunchGraphUtils.getMeClDistance(bg2,bg1);//(long)((1.0-d2)*(double)totalEdges);
-        //long totalmc = (long)(d1+d2);
 
         if(diffEdges != (mc1+mc2))
-          System.out.println("EDGESIM = "+diffEdges+"   MC="+(mc1+mc2));
+          println("EDGESIM = "+diffEdges+"   MC="+(mc1+mc2));
 
         Double  meclValue = Math.max(d1,d2);
 
-        System.out.print(fn+"("+i+","+j+") = ");
+        print(fn+"("+i+","+j+") = ");
         if(meclValue != null) {
           double dTmp = meclValue * 100.0;
-          mc1 += dTmp;
-          System.out.println((int)dTmp);
+          println(dTmp);
         }
         else
-          System.out.println("0");
+          println("0");
       }
   }
 
