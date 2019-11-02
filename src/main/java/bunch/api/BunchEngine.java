@@ -743,14 +743,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       results.SA_NEIGHBORS_TAKEN = stats.getSAOverrides();
       results.MEDIAN_LEVEL_GRAPH = getMedianLevelNumber();
 
-      //now handle errors & warnings
-    results.ERROR_HASHTABLE = new Hashtable<>();
-
-      Map<Key,Integer> warningHT = new Hashtable<>();
-      if (reflexiveEdgeCount > 0) {
-        warningHT.put(REFLEXIVE_EDGE_COUNT,reflexiveEdgeCount);
-      }
-      results.WARNING_HASHTABLE = warningHT;
+      results.reflexiveEdgeCount = reflexiveEdgeCount;
 
       Map []resultClusters = new Hashtable[clusterList.size()];
 

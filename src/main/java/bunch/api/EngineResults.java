@@ -11,7 +11,6 @@ final class EngineResults {
   public int TOTAL_CLUSTER_LEVELS;
   public long SA_NEIGHBORS_TAKEN;
   public int MEDIAN_LEVEL_GRAPH;
-  public Map ERROR_HASHTABLE;
-  public Map WARNING_HASHTABLE;
+  public int reflexiveEdgeCount;
   public Map[] RESULT_CLUSTER_OBJS;
 }
