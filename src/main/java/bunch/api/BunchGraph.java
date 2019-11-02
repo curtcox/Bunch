@@ -51,10 +51,6 @@ public final class BunchGraph {
     return numClusters;
   }
 
-  public void writeSILFile(String fname) throws java.io.IOException {
-    writeSILFile(fname,false);
-  }
-
   public BunchNode findNode(String nodeName) {
     if(nodeHT == null)
       nodeHT = constructNodeHT();

@@ -10,7 +10,7 @@ public final class TSGraphOutput
 public TSGraphOutput() { }
 
 public void write() {
-  Vector edges = new Vector();
+  Vector<Edge> edges = new Vector<>();
   int[] clusters = graph_d.getClusters();
   Node[] nodeList = graph_d.getNodes();
   int nodes = nodeList.length;
@@ -18,9 +18,7 @@ public void write() {
   try {
 	 	writer_d = new BufferedWriter(new FileWriter(getCurrentName()+".nav"));
 
-
-    int pos=0;
-    int minClusterNum = Integer.MAX_VALUE;
+	 	int minClusterNum = Integer.MAX_VALUE;
     int maxClusterNum = 0;
 
     for (int i=0; i<nodes; ++i) {

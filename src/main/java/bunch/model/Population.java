@@ -4,7 +4,7 @@ import java.util.Vector;
 
 public final class Population {
 
-  private final Vector   pop = new Vector();
+  private final Vector<Cluster>   pop = new Vector<>();
   private static   Graph g = null;
 
   public Population(Graph graph) {

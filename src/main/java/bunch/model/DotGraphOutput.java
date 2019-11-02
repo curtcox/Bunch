@@ -278,7 +278,7 @@ private void genChildrenFromOneLevel(Graph cLvlG) throws IOException {
     findStrongestNode(tmp);
 
     //Create a vector for the new cluster
-    Vector<String> newCluster = new Vector<>();
+    Vector<Node> newCluster = new Vector<>();
     newCluster.removeAllElements();
     cVect.addElement(newCluster);
 
@@ -299,10 +299,7 @@ private String findStrongestNode(Node n) {
     if (!n.isCluster())
     return "";
 
-  int lvl = n.nodeLevel;
-  boolean lvlIncr = false;
-
-  Vector nodeV = new Vector();
+  Vector<Node> nodeV = new Vector<>();
 
     LinkedList<Node> l = new LinkedList<>();
   l.clear();
@@ -383,7 +380,7 @@ private String findStrongestNode(Vector v) {
  * Given a particular node, and a vector (by reference), populate the vector
  * with the children of the node.  They may be nested so we will need to recurse
  */
-private void echoNestedChildren(Node n, Vector v) {
+private void echoNestedChildren(Node n, Vector<Node> v) {
     Stack<Node> s = new Stack<>();
 
   s.push(n);

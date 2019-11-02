@@ -48,7 +48,7 @@ public final class PrecisionRecallCalculator {
     //remove all the tree information
     boolean found;
     for (int i = 0; i< m_v_expert_modules_names.size(); i++) {
-      Vector v_module_content = new Vector(m_v_expert_modules_content.get(i));
+      Vector<String> v_module_content = new Vector<>(m_v_expert_modules_content.get(i));
       found = false;
       for (int j=0;j<v_module_content.size() && !found;j++) {
         if (m_v_expert_modules_names.contains(v_module_content.get(j))) {
@@ -70,13 +70,10 @@ public final class PrecisionRecallCalculator {
 
     //remove all the tree information
     for (int i =0; i<m_v_tested_modules_names.size();i++) {
-      String S_module_name = m_v_tested_modules_names.get(i);
-      Vector v_module_content = new Vector(m_v_tested_modules_content.get(i));
+      Vector<String> v_module_content = new Vector<>(m_v_tested_modules_content.get(i));
       found = false;
-      for (int j=0;j<v_module_content.size() && !found;j++)
-      {
-        if (m_v_tested_modules_names.contains(v_module_content.get(j)))
-        {
+      for (int j=0;j<v_module_content.size() && !found;j++) {
+        if (m_v_tested_modules_names.contains(v_module_content.get(j))) {
           m_v_tested_modules_names.remove(i);
           m_v_tested_modules_content.remove(i);
           i--;
@@ -212,7 +209,7 @@ final class Compare {
 }
 
 final class GBunchRW {
-  private final Hashtable<String,Vector> m_ht_bunchread;
+  private final Hashtable<String,Vector<String>> m_ht_bunchread;
   private final String m_S_filename;
 
   public GBunchRW(String filename) {
@@ -221,15 +218,15 @@ final class GBunchRW {
   }
 
   public void read() {
-    int i_start_location_of_SS =0;
-    int i_end_location_of_SS =0;
-    String S_module_name = "";
-    Vector v_module_value;
+    int i_start_location_of_SS;
+    int i_end_location_of_SS;
+    String S_module_name;
+    Vector<String> v_module_value;
 
     try {
       BufferedReader br = new BufferedReader(new FileReader(m_S_filename));
       while (true) {
-        v_module_value = new Vector();
+        v_module_value = new Vector<>();
 
         String line = br.readLine();
 
@@ -264,15 +261,15 @@ final class GBunchRW {
     m_ht_bunchread.clone();
   }
 
-  public void write(Hashtable<Object,Vector> ht) {
+  public void write(Hashtable<Object,Vector<String>> ht) {
     try {
       FileWriter fos = new FileWriter(m_S_filename);
 
       fos.write("//Created automatically using GBunchRW...\n");
     var keys = ht.keys();
     while (keys.hasMoreElements()) {
-      String S_temp = keys.nextElement().toString();
-      Vector v_temp = new Vector<>(ht.get(S_temp));
+      var S_temp = keys.nextElement().toString();
+      var v_temp = new Vector<>(ht.get(S_temp));
 
       fos.write("SS("+S_temp+")= ");  //write the name of every module
       for (int i=0;i<v_temp.size()-1;i++) {
@@ -296,18 +293,18 @@ final class GBunchRW {
       v_temp.add(S_temp);
     }
 
-    return (Vector)v_temp.clone();
+    return (Vector<String>)v_temp.clone();
   }
 
   public Vector<List> getModulesContent() {
-    Vector<List> v_modules = new Vector<>();
+    Vector<List<String>> v_modules = new Vector<>();
 
     var keys = m_ht_bunchread.keys();
     while (keys.hasMoreElements()) {
       String S_temp = keys.nextElement();
-      Vector v_temp = new Vector(m_ht_bunchread.get(S_temp));
+      Vector<String> v_temp = new Vector<>(m_ht_bunchread.get(S_temp));
       v_modules.add(v_temp);
     }
-    return (Vector)v_modules.clone();
+    return (Vector<List>)v_modules.clone();
   }
 } //end of class

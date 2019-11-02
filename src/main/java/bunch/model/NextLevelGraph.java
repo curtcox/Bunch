@@ -8,20 +8,15 @@ static final class NodeInfo {
 
   final String name;
   int    id;
-  final Hashtable<Integer,Integer> dependencies;
-  final Hashtable<Integer,Integer> backEdges;
-  final Hashtable<Integer,Integer> dWeights;
-  final Hashtable<Integer,Integer> beWeights;
-  final Hashtable<Integer,Node> childNodes;
+  final Hashtable<Integer,Integer> dependencies = new Hashtable<>();
+  final Hashtable<Integer,Integer> backEdges = new Hashtable<>();
+  final Hashtable<Integer,Integer> dWeights = new Hashtable<>();
+  final Hashtable<Integer,Integer> beWeights = new Hashtable<>();
+  final Hashtable<Integer,Node> childNodes = new Hashtable<>();
 
   NodeInfo(String n) {
     name = n;
     id = -1;
-    dependencies = new Hashtable();
-    dWeights = new Hashtable();
-    backEdges = new Hashtable();
-    beWeights = new Hashtable();
-    childNodes = new Hashtable();
   }
 }
 
@@ -31,7 +26,7 @@ static final class NodeInfo {
     int    lvl          = g.getGraphLevel()+1;
     Node[] nodeList     = g.getNodes();
     Hashtable<Integer,NodeInfo> cnameht   = new Hashtable<>();
-    Hashtable<Integer,Integer> clusterMap = new Hashtable();
+    Hashtable<Integer,Integer> clusterMap = new Hashtable<>();
     int       nodeLevel = g.getGraphLevel();
 
     int [] clusters = g.getClusters();

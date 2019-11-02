@@ -18,7 +18,7 @@ final class MeCl {
 
   public long run() {
     edgeA.clear();
-    HashMap Ca = determineSubClusters();
+    var Ca = determineSubClusters();
 
     constructEdgeSet();
 
@@ -33,13 +33,13 @@ final class MeCl {
     return (1.0 - pct);
   }
 
-  private long collectSubClusters(HashMap Ca) {
+  private long collectSubClusters(HashMap<String,HashMap<String,List<BunchNode>>> Ca) {
     long tally=0;
-    HashMap<String,List> Ccollected = new HashMap<>();
+    HashMap<String,List<BunchNode>> Ccollected = new HashMap<>();
     Ccollected.clear();
 
     for (var item : Ca.values()) {
-      HashMap<String,List> Ci = (HashMap) item;
+      HashMap<String,List<BunchNode>> Ci = item;
       for (var o : Ci.keySet()) {
         String key = o;
         var value = Ci.get(key);
@@ -49,19 +49,19 @@ final class MeCl {
     return tally;
   }
 
-  private long mergeSubCluster(HashMap<String,List> Ccollected, String key, List<String> value) {
+  private long mergeSubCluster(HashMap<String,List<BunchNode>> Ccollected, String key, List<BunchNode> value) {
     long tally = 0;
 
-    List currentSubCluster = Ccollected.get(key);
+    var currentSubCluster = Ccollected.get(key);
     if(currentSubCluster == null) {
       Ccollected.put(key,value);
       return 0;
     }
 
-    for (Object item : currentSubCluster) {
-      BunchNode bn1 = (BunchNode) item;
-      for (Object o : value) {
-        BunchNode bn2 = (BunchNode) o;
+    for (var item : currentSubCluster) {
+      BunchNode bn1 = item;
+      for (var o : value) {
+        BunchNode bn2 = o;
         if (!bn2.isAMemberOfCluster(bn1.getMemberCluster().getName())) {
           tally += this.getConnectedWeight(bn1.getName(), bn2.getName());
         }
@@ -113,7 +113,7 @@ final class MeCl {
 
         //Now add the current node to the sub cluster
         //hash map for the current cluster in a
-          List members = subClustersA.computeIfAbsent(bnInBClusterName, k -> new ArrayList());
+          List<BunchNode> members = subClustersA.computeIfAbsent(bnInBClusterName, k -> new ArrayList<>());
           members.add(bnInA);
         //Now find the appropriate
       }
