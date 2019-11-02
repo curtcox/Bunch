@@ -2,7 +2,6 @@ package bunch.api;
 
 import bunch.model.Cluster;
 import bunch.simple.SASimpleTechnique;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.BufferedWriter;
@@ -171,78 +170,85 @@ public class BunchPassingAPITest {
   public void BunchAPITest3() throws Exception {
       String mdgFile = "e:\\expir\\cia";
       int runCount = 50;
-
-      var outF = new FileWriter(mdgFile+".txt");
-      var out = new BufferedWriter(outF);
-
-      for(int i = 0; i < runCount; i++) {
-        var api = new BunchAPI();
-        var args = api.bunchArgs;
-
-        args.MDG_INPUT_FILE_NAME = mdgFile;
-        args.OUTPUT_FORMAT = TEXT;
-
-        args.CLUSTERING_ALG = HILL_CLIMBING;
-        args.algHcHcPct = 100;
-        args.algHcRndPct = 0;
-
-        String outFileName = mdgFile + i;
-        args.OUTPUT_FILE = outFileName;
-        args.ECHO_RESULTS_TO_CONSOLE = true;
-
-        var results = api.run();
-          assertNotNull(results);
-          assertBetween(results.RUNTIME, -1,10);
-          assertBetween(results.MQEVALUATIONS,0,100);
-          assertBetween(results.TOTAL_CLUSTER_LEVELS,0,10);
-          assertEquals(0,results.SA_NEIGHBORS_TAKEN);
-
-          Integer medLvl = results.MEDIAN_LEVEL_GRAPH;
-        Map [] resultLevels = results.RESULT_CLUSTER_OBJS;
-
-        Map medLvlResults = resultLevels[medLvl];
-
-        int numClusters = (int) medLvlResults.get(NUMBER_CLUSTERS);
-        double mqValue = (double) medLvlResults.get(MQVALUE);
-
-        String outLine = outFileName + "\t" + numClusters + "\t" + mqValue + "\r\n";
-        out.write(outLine);
-        if ((i % 10) == 0)
-          println("Pct = " + (double)i / (double)runCount);
-      }
-
-      out.close();
-      outF.close();
-
-      outF = new FileWriter(mdgFile+"_pr.txt");
-      out = new BufferedWriter(outF);
-      long total = (runCount * (runCount-1))/2;
-      long performed = 0;
-
-      for (int i = 0; i < runCount; i++) {
-          var api = new BunchAPI();
-          var args = api.bunchArgs;
-          for (int j = i+1; j < runCount; j++) {
-            if (i == j) continue;
-            performed++;
-
-            String file1 = mdgFile + i + ".bunch";
-            String file2 = mdgFile + j + ".bunch";
-            args.runMode =  PR_CALC;
-            args.PR_CLUSTER_FILE = file1;
-            args.PR_EXPERT_FILE = file2;
-            api.run();
-            var results = api.getResults();
-            Double precision = results.prPrecisionValue;
-            Double recall = results.prRecallValue;
-            String outLine = "PR("+file1+", "+file2+")\t" + precision + "\t" + recall+"\r\n";
-
-            out.write(outLine);
-            if ((performed % 100) == 0)
-              println("Pct PR: " + (double)performed/(double)total);
-          }
-      }
+      writeMdgTxtFile(mdgFile,runCount);
+      writeMdgPrTxtFile(mdgFile,runCount);
   }
+
+    void writeMdgTxtFile(String mdgFile, int runCount) throws Exception {
+        final var outF = new FileWriter(mdgFile+".txt");
+        final var out = new BufferedWriter(outF);
+
+        for(int i = 0; i < runCount; i++) {
+            var api = new BunchAPI();
+            var args = api.bunchArgs;
+
+            args.MDG_INPUT_FILE_NAME = mdgFile;
+            args.OUTPUT_FORMAT = TEXT;
+
+            args.CLUSTERING_ALG = HILL_CLIMBING;
+            args.algHcHcPct = 100;
+            args.algHcRndPct = 0;
+
+            var outFileName = mdgFile + i;
+            args.OUTPUT_FILE = outFileName;
+            args.ECHO_RESULTS_TO_CONSOLE = true;
+
+            var results = api.run();
+            assertNotNull(results);
+            assertBetween(results.RUNTIME, -1,10);
+            assertBetween(results.MQEVALUATIONS,0,100);
+            assertBetween(results.TOTAL_CLUSTER_LEVELS,0,10);
+            assertEquals(0,results.SA_NEIGHBORS_TAKEN);
+
+            Integer medLvl = results.MEDIAN_LEVEL_GRAPH;
+            var resultLevels = results.RESULT_CLUSTER_OBJS;
+
+            var medLvlResults = resultLevels[medLvl];
+
+            int numClusters = (int) medLvlResults.get(NUMBER_CLUSTERS);
+            double mqValue = (double) medLvlResults.get(MQVALUE);
+
+            var outLine = outFileName + "\t" + numClusters + "\t" + mqValue + "\r\n";
+            out.write(outLine);
+            if ((i % 10) == 0)
+                println("Pct = " + (double)i / (double)runCount);
+        }
+
+        out.close();
+        outF.close();
+    }
+
+    void writeMdgPrTxtFile(String mdgFile, int runCount) throws Exception {
+        final var outF = new FileWriter(mdgFile+"_pr.txt");
+        final var out = new BufferedWriter(outF);
+        long total = (runCount * (runCount-1))/2;
+        long performed = 0;
+
+        for (int i = 0; i < runCount; i++) {
+            var api = new BunchAPI();
+            var args = api.bunchArgs;
+            for (int j = i+1; j < runCount; j++) {
+                if (i == j) continue;
+                performed++;
+
+                var file1 = mdgFile + i + ".bunch";
+                var file2 = mdgFile + j + ".bunch";
+                args.runMode = PR_CALC;
+                args.PR_CLUSTER_FILE = file1;
+                args.PR_EXPERT_FILE = file2;
+                var results = api.run();
+                assertNotNull(results);
+                var precision = results.prPrecisionValue;
+                var recall = results.prRecallValue;
+                String outLine = "PR("+file1+", "+file2+")\t" + precision + "\t" + recall+"\r\n";
+
+                out.write(outLine);
+                if ((performed % 100) == 0)
+                    println("Pct PR: " + (double)performed/(double)total);
+            }
+        }
+    }
+
 
     @Test
     public void BunchAPITestOld99() throws Exception {
