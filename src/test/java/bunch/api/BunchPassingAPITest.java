@@ -154,21 +154,17 @@ public class BunchPassingAPITest {
 
     @Test
   public void BunchAPITest1x() throws Exception {
-
-    String mdgFile = "c:\\research\\mdgs\\pgsql";
-    String cluFile = "c:\\research\\mdgs\\pgsql.clu";
-
     println("Starting...");
-    BunchAPI api = new BunchAPI();
+    var api = new BunchAPI();
     var bp = api.bunchArgs;
-    bp.MDG_INPUT_FILE_NAME = mdgFile;
     bp.CLUSTERING_ALG = HILL_CLIMBING;
     bp.OUTPUT_FORMAT = TEXT;
     bp.OUTPUT_TREE = true;
-    bp.OUTPUT_FILE = cluFile;
+    bp.MDG_INPUT_FILE_NAME = "c:\\research\\mdgs\\pgsql";
+    bp.OUTPUT_FILE = "c:\\research\\mdgs\\pgsql.clu";
 
-    api.run();
-    println("Done");
+    var results = api.run();
+    assertNotNull(results);
 }
 
   @Test
@@ -180,26 +176,27 @@ public class BunchPassingAPITest {
       var out = new BufferedWriter(outF);
 
       for(int i = 0; i < runCount; i++) {
-        BunchAPI api = new BunchAPI();
-        var bp = api.bunchArgs;
+        var api = new BunchAPI();
+        var args = api.bunchArgs;
 
-        bp.MDG_INPUT_FILE_NAME = mdgFile;
-        bp.OUTPUT_FORMAT = TEXT;
+        args.MDG_INPUT_FILE_NAME = mdgFile;
+        args.OUTPUT_FORMAT = TEXT;
 
-        bp.CLUSTERING_ALG = HILL_CLIMBING;
-        bp.algHcHcPct = 100;
-        bp.algHcRndPct = 0;
+        args.CLUSTERING_ALG = HILL_CLIMBING;
+        args.algHcHcPct = 100;
+        args.algHcRndPct = 0;
 
         String outFileName = mdgFile + i;
-        bp.OUTPUT_FILE = outFileName;
-        bp.ECHO_RESULTS_TO_CONSOLE = true;
+        args.OUTPUT_FILE = outFileName;
+        args.ECHO_RESULTS_TO_CONSOLE = true;
 
-          api.run();
+        var results = api.run();
+          assertNotNull(results);
+          assertBetween(results.RUNTIME, -1,10);
+          assertBetween(results.MQEVALUATIONS,0,100);
+          assertBetween(results.TOTAL_CLUSTER_LEVELS,0,10);
+          assertEquals(0,results.SA_NEIGHBORS_TAKEN);
 
-        var results = api.getResults();
-
-          Long rt = results.RUNTIME;
-          Long evals = results.MQEVALUATIONS;
           Integer medLvl = results.MEDIAN_LEVEL_GRAPH;
         Map [] resultLevels = results.RESULT_CLUSTER_OBJS;
 
@@ -223,17 +220,17 @@ public class BunchPassingAPITest {
       long performed = 0;
 
       for (int i = 0; i < runCount; i++) {
-          BunchAPI api = new BunchAPI();
-          var bp = api.bunchArgs;
+          var api = new BunchAPI();
+          var args = api.bunchArgs;
           for (int j = i+1; j < runCount; j++) {
             if (i == j) continue;
             performed++;
 
             String file1 = mdgFile + i + ".bunch";
             String file2 = mdgFile + j + ".bunch";
-            bp.runMode =  PR_CALC;
-            bp.PR_CLUSTER_FILE = file1;
-            bp.PR_EXPERT_FILE = file2;
+            args.runMode =  PR_CALC;
+            args.PR_CLUSTER_FILE = file1;
+            args.PR_EXPERT_FILE = file2;
             api.run();
             var results = api.getResults();
             Double precision = results.prPrecisionValue;
