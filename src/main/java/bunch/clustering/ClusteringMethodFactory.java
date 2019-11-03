@@ -11,19 +11,19 @@ import static bunch.api.Algorithm.*;
  *
  * @author Brian Mitchell
  *
- * @see ClusteringMethod
+ * @see BaseClusteringMethod
  * @see GenericFactory
  */
 public final class ClusteringMethodFactory {
 
-private final ClusteringMethod defaultMethod = new GeneralHillClimbingClusteringMethod();
+private final BaseClusteringMethod defaultMethod = new GeneralHillClimbingClusteringMethod();
 
 
 /**
  * This method returns the default clustering method.  It is used in the GUI and
  * API when the clustering algorithm is not explicitly specified.
  */
-public ClusteringMethod getDefaultMethod() {
+public BaseClusteringMethod getDefaultMethod() {
   return defaultMethod;
 }
 
@@ -39,7 +39,7 @@ public String[] getItemList() {
  * @param name for the desired method
  * @return the clustering method corresponding to the name
  */
-public ClusteringMethod getMethod(Algorithm name) {
+public BaseClusteringMethod getMethod(Algorithm name) {
   if (name == HILL_CLIMBING) return new GeneralHillClimbingClusteringMethod();
   if (name == NAHC) return new NextAscentHillClimbingClusteringMethod();
   if (name == SAHC) return new SteepestAscentHillClimbingClusteringMethod();

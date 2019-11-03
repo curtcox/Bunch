@@ -5,7 +5,7 @@ import bunch.model.Graph;
 import bunch.event.IterationEvent;
 import bunch.stats.StatsManager;
 
-public final class OptimalClusteringMethod extends ClusteringMethod2 {
+public final class OptimalClusteringMethod extends BaseHierClusteringMethod {
 private boolean hasMorePartitions_d = false;
 private int[] tmpClusters_d;
 private int[] nClusters_d;

@@ -17,7 +17,7 @@ import bunch.model.Graph;
  * @see SteepestAscentHillClimbingClusteringMethod
  * @see GAClusteringMethod
  */
-public abstract class ClusteringMethod implements Runnable {
+public abstract class BaseClusteringMethod implements Runnable {
 
 private IterationListener listener_d;
 private Graph graph_d;
@@ -25,7 +25,7 @@ private Graph bestGraph_d;
 private double elapsedTime_d=0.0;
 private final Configuration configuration_d;
 
-ClusteringMethod(Configuration configuration) {
+BaseClusteringMethod(Configuration configuration) {
     this.configuration_d = configuration;
 }
 

@@ -16,7 +16,7 @@ import bunch.event.IterationEvent;
  * @see GAClusteringMethod
  * @see GenericHillClimbingClusteringMethod
  */
-public abstract class GenericClusteringMethod extends ClusteringMethod {
+public abstract class GenericClusteringMethod extends BaseClusteringMethod {
 
 private static final int DEFAULT_NUM_EXPERIMENTS = 200;
 private static final int DEFAULT_POP_SIZE = 25;

@@ -23,7 +23,7 @@ import bunch.model.Graph;
  * @see GAClusteringMethod
  */
 
-public abstract class ClusteringMethod2 extends ClusteringMethod {
+public abstract class BaseHierClusteringMethod extends BaseClusteringMethod {
 
     private IterationListener listener_d;
 private Graph graph_d;
@@ -34,7 +34,7 @@ private double elapsedTime_d=0.0;
 /**
  * the class constructor
  */
-ClusteringMethod2(Configuration configuration) { super(configuration); }
+BaseHierClusteringMethod(Configuration configuration) { super(configuration); }
 
 /**
  * Initializes the clustering method.

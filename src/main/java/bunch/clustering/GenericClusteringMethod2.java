@@ -13,7 +13,7 @@ import bunch.model.Population;
  * @author  Brian Mitchell
  */
 public abstract class GenericClusteringMethod2
-  extends ClusteringMethod2
+  extends BaseHierClusteringMethod
 {
 
 private static final int DEFAULT_NUM_EXPERIMENTS = 200;
