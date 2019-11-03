@@ -19,7 +19,6 @@ public class BasicMQTest {
         setCalculatorFactory();
         var calc = new BasicMQ();
         var graph = new Graph(0);
-        calc.init(graph);
     }
 
     @Test
@@ -27,8 +26,7 @@ public class BasicMQTest {
         setCalculatorFactory();
         var calc = new BasicMQ();
         var graph = new Graph(0);
-        calc.init(graph);
-        calc.calculate();
+        calc.calculate(graph);
     }
 
     @Test
@@ -36,7 +34,6 @@ public class BasicMQTest {
         setCalculatorFactory();
         var calc = new BasicMQ();
         var graph = new Graph(0);
-        calc.init(graph);
         int[] vector = new int[0];
         Cluster cluster = new Cluster(graph,vector);
         calc.calculate(cluster);
@@ -47,7 +44,6 @@ public class BasicMQTest {
         setCalculatorFactory();
         var calc = new BasicMQ();
         var graph = new Graph(0);
-        calc.init(graph);
         int[] c1 = new int[1];
         int[] c2 = new int[1];
         int nc1 = 0;
@@ -60,7 +56,6 @@ public class BasicMQTest {
         setCalculatorFactory();
         var calc = new BasicMQ();
         var graph = new Graph(0);
-        calc.init(graph);
         int[] c = new int[1];
         int numCluster = 0;
         calc.calculateIntradependenciesValue(c,numCluster);

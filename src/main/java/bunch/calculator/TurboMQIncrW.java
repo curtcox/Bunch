@@ -27,7 +27,7 @@ public TurboMQIncrW() {}
  *
  * @param g the graph which OF will be calculated
  */
-public void init(Graph g) {
+private void init(Graph g) {
   graph_d = g;
   numberOfNodes_d = g.getNumberOfNodes();
   nodes_x = g.getNodes();
@@ -43,6 +43,7 @@ public void init(Graph g) {
 }
 
 public double calculate(Cluster c) {
+  init(c.getGraph());
   //if(clusters_x == null)
   //  clusters_x = c.getClusterNames();
 
@@ -216,7 +217,8 @@ private double calcCFi(int c) {
  * Calculate the objective function value for the graph passed in the
  * #init(bunch.model.Graph) method.
  */
-public void calculate() {
+public void calculate(Graph g) {
+  init(g);
   int k=0;
   double intra=0.0;
   double inter=0.0;

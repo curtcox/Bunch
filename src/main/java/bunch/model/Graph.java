@@ -100,7 +100,6 @@ public void initGraph(int nodes) {
  */
 public void setObjectiveFunctionCalculator(ObjectiveFunctionCalculator calc) {
   calculator_d = calc;
-  calculator_d.init(this);
 }
 
 /**

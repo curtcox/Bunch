@@ -28,10 +28,7 @@ private int[] epE = null;
 /**
  * Class constructor
  */
-public
-TurboMQIncr()
-{
-}
+public TurboMQIncr() { }
 
 /**
  * Initialization for the OF Calculator using the data of the Graph passed
@@ -39,7 +36,7 @@ TurboMQIncr()
  *
  * @param g the graph which OF will be calculated
  */
-public void init(Graph g) {
+private void init(Graph g) {
   graph_d = g;
   numberOfNodes_d = g.getNumberOfNodes();
   nodes_x = g.getNodes();
@@ -53,6 +50,11 @@ public void init(Graph g) {
   //  clusterMatrix_d[i][0] = 0;
   //}
 }
+
+  public void calculate(Graph g) {
+    init(g);
+    calculate();
+  }
 
 public double calculate(Cluster c) {
   //if(clusters_x == null)
@@ -203,7 +205,7 @@ private double calcCFi(int c) {
  * Calculate the objective function value for the graph passed in the
  * #init(bunch.model.Graph) method.
  */
-public void calculate() {
+private void calculate() {
   int k=0;
   double intra=0.0;
   double inter=0.0;

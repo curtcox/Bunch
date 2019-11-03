@@ -22,7 +22,7 @@ private int numberOfNodes_d;
   public SpirosMQ() { }
 
 
-public void init(Graph g) {
+private void init(Graph g) {
   graph_d = g;
   numberOfNodes_d = g.getNumberOfNodes();
   nodes_x = g.getNodes();
@@ -42,11 +42,16 @@ public double calculate(Cluster c) {
   return graph_d.getObjectiveFunctionValue();
 }
 
+public void calculate(Graph g) {
+    init(g);
+    calculate();
+}
+
 /**
  * Calculate the objective function value for the graph passed in the
  * #init(bunch.model.Graph) method.
  */
-public void calculate() {
+private void calculate() {
   int k=0;
   double intra=0.0;
   double inter=0.0;

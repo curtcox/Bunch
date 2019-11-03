@@ -10,29 +10,23 @@ public class TurboMQIncrWTest {
         new TurboMQIncrW();
     }
 
-    @Test
-    public void init() {
+    private void setCalculatorFactory() {
         Graph.setObjectiveFunctionCalculatorFactory(new ObjectiveFunctionCalculatorFactory());
-        var calc = new TurboMQIncrW();
-        var graph = new Graph(0);
-        calc.init(graph);
     }
 
     @Test
     public void calculate() {
-        Graph.setObjectiveFunctionCalculatorFactory(new ObjectiveFunctionCalculatorFactory());
+        setCalculatorFactory();
         var calc = new TurboMQIncrW();
         var graph = new Graph(0);
-        calc.init(graph);
-        calc.calculate();
+        calc.calculate(graph);
     }
 
     @Test
     public void calculate_cluster() {
-        Graph.setObjectiveFunctionCalculatorFactory(new ObjectiveFunctionCalculatorFactory());
+        setCalculatorFactory();
         var calc = new TurboMQIncrW();
         var graph = new Graph(0);
-        calc.init(graph);
         int[] vector = new int[0];
         Cluster cluster = new Cluster(graph,vector);
         calc.calculate(cluster);
@@ -40,10 +34,9 @@ public class TurboMQIncrWTest {
 
     @Test
     public void calculateInterdependenciesValue() {
-        Graph.setObjectiveFunctionCalculatorFactory(new ObjectiveFunctionCalculatorFactory());
+        setCalculatorFactory();
         var calc = new TurboMQIncrW();
         var graph = new Graph(0);
-        calc.init(graph);
         int[] c1 = new int[0];
         int[] c2 = new int[0];
         int nc1 = 0;
@@ -53,10 +46,9 @@ public class TurboMQIncrWTest {
 
     @Test
     public void calculateIntradependenciesValue() {
-        Graph.setObjectiveFunctionCalculatorFactory(new ObjectiveFunctionCalculatorFactory());
+        setCalculatorFactory();
         var calc = new TurboMQIncrW();
         var graph = new Graph(0);
-        calc.init(graph);
         int[] c = new int[0];
         int numCluster = 0;
         calc.calculateIntradependenciesValue(c,numCluster);

@@ -173,14 +173,7 @@ import bunch.stats.*;
    * This method performs initialization on the Objective Function calculator.
    */
   private void initCalculator() {
-    if (graph == null)
-      return;
-
       calculator = Graph.objectiveFunctionCalculatorFactory_sd.getSelectedCalculator();
-    if (calculator == null)
-      return;
-
-    calculator.init(graph);
   }
 
   /**
