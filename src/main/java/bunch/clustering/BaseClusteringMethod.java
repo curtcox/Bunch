@@ -17,7 +17,7 @@ import bunch.model.Graph;
  * @see SteepestAscentHillClimbingClusteringMethod
  * @see GAClusteringMethod
  */
-public abstract class BaseClusteringMethod implements ClusteringMethod {
+abstract class BaseClusteringMethod implements ClusteringMethod {
 
 private IterationListener listener_d;
 private Graph graph_d;

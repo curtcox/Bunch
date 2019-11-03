@@ -8,7 +8,7 @@ import static bunch.api.OutputFormat.*;
 import static bunch.api.RunMode.*;
 
 import bunch.calculator.ObjectiveFunctionCalculator;
-import bunch.clustering.BaseClusteringMethod;
+import bunch.clustering.ClusteringMethod;
 import bunch.clustering.NAHCConfiguration;
 import bunch.ga.GAConfiguration;
 import bunch.model.*;
@@ -24,7 +24,7 @@ final class BunchEngine {
 
   private EngineArgs bunchArgs = new EngineArgs();
   private EngineResults results = new EngineResults();
-  private BaseClusteringMethod clusteringMethod_d;
+  private ClusteringMethod clusteringMethod_d;
   private GraphOutput graphOutput_d;
   private Graph initialGraph_d = new Graph(0);
   private BunchPreferences preferences_d;
