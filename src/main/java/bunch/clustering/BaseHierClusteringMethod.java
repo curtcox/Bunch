@@ -27,11 +27,11 @@ abstract class BaseHierClusteringMethod extends BaseClusteringMethod
         implements HierClusteringMethod
 {
 
-    private IterationListener listener_d;
-private Graph graph_d;
-private Cluster bestCluster_d;
-Configuration configuration_d;
-private double elapsedTime_d=0.0;
+    private IterationListener listener;
+private Graph graph;
+private Cluster bestCluster;
+Configuration configuration;
+private double elapsedTime =0.0;
 
 /**
  * the class constructor
@@ -54,7 +54,7 @@ public void initialize()
  */
 public void setGraph(Graph g)
 {
-  graph_d = g;
+  graph = g;
 }
 
 /**
@@ -64,7 +64,7 @@ public void setGraph(Graph g)
  */
 Graph getGraph()
 {
-  return graph_d;
+  return graph;
 }
 
 /**
@@ -75,7 +75,7 @@ Graph getGraph()
  */
 void setBestCluster(Cluster c)
 {
-  bestCluster_d = c;
+  bestCluster = c;
 }
 
 /**
@@ -86,7 +86,7 @@ void setBestCluster(Cluster c)
  */
 public Cluster getBestCluster()
 {
-  return bestCluster_d;
+  return bestCluster;
 }
 
 /**
@@ -97,9 +97,9 @@ public Cluster getBestCluster()
  */
 public Graph getBestGraph() {
    Cluster best = getBestCluster();
-   graph_d.setClusters(best.getClusterVector());
-   graph_d.setObjectiveFunctionValue(best.getObjFnValue());
-   return graph_d;
+   graph.setClusters(best.getClusterVector());
+   graph.setObjectiveFunctionValue(best.getObjFnValue());
+   return graph;
 }
 
 /**
@@ -109,7 +109,7 @@ public Graph getBestGraph() {
  */
 public double getBestObjectiveFunctionValue()
 {
-  return bestCluster_d.getObjFnValue();
+  return bestCluster.getObjFnValue();
 }
 
 /**
@@ -120,7 +120,7 @@ public double getBestObjectiveFunctionValue()
  */
 public double getElapsedTime()
 {
-  return elapsedTime_d;
+  return elapsedTime;
 }
 
 /**
@@ -132,7 +132,7 @@ public double getElapsedTime()
  */
 void setElapsedTime(double l)
 {
-  elapsedTime_d = l;
+  elapsedTime = l;
 }
 
 /**
@@ -146,7 +146,7 @@ void setElapsedTime(double l)
  */
 public void setIterationListener(IterationListener il)
 {
-  listener_d = il;
+  listener = il;
 }
 
 /**
@@ -158,15 +158,15 @@ public void setIterationListener(IterationListener il)
  */
 public IterationListener getIterationListener()
 {
-  return listener_d;
+  return listener;
 }
 
 /**
  * Fires an Iteration event to this clustering method's iteration listener
  */
 void fireIterationEvent(IterationEvent e) {
-   if (listener_d != null) {
-      listener_d.newIteration(e);
+   if (listener != null) {
+      listener.newIteration(e);
    }
 }
 
@@ -183,7 +183,7 @@ public abstract int getMaxIterations();
  */
 public Configuration getConfiguration()
 {
-  return configuration_d;
+  return configuration;
 }
 
 }

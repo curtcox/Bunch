@@ -21,8 +21,8 @@ protected void getLocalMaxGraph(Cluster c) {
 
     boolean foundbetter;
 
-    SATechnique saAlg = ((NAHCConfiguration)configuration_d).getSATechnique();
-    int         iPct  = ((NAHCConfiguration)configuration_d).getRandomizePct();
+    SATechnique saAlg = ((NAHCConfiguration) configuration).getSATechnique();
+    int         iPct  = ((NAHCConfiguration) configuration).getRandomizePct();
 
     //System.out.println("Debug min to consider = "+ ((NAHCConfiguration)configuration_d).getMinPctToConsider());
     //System.out.println("Rnd Pct = "+ ((NAHCConfiguration)configuration_d).getRandomizePct());
@@ -45,7 +45,7 @@ protected void getLocalMaxGraph(Cluster c) {
 
     long maxPartitionsToExamine = (clusters.length /*c.size()*/) *(clustNames.length);
     int currClustersExamined = 0;
-    double evalPct = (double)(((NAHCConfiguration)configuration_d).getMinPctToConsider())/100.0;
+    double evalPct = (double)(((NAHCConfiguration) configuration).getMinPctToConsider())/100.0;
     long partitionsToExamine = (long)(((double)maxPartitionsToExamine)*evalPct);
 
 //System.out.println("partitions to examine = " + partitionsToExamine + "  Min Pct = " + ((NAHCConfiguration)configuration_d).getMinPctToConsider()  );
@@ -340,12 +340,12 @@ protected Graph getLocalMaxGraph(Graph g)
 
 public Configuration getConfiguration() {
   boolean reconf=false;
-  if (configuration_d == null) {
-    configuration_d = new NAHCConfiguration();
+  if (configuration == null) {
+    configuration = new NAHCConfiguration();
     reconf = true;
   }
 
-  NAHCConfiguration hc = (NAHCConfiguration)configuration_d;
+  NAHCConfiguration hc = (NAHCConfiguration) configuration;
 
   if (reconf) {
     hc.setThreshold(1);

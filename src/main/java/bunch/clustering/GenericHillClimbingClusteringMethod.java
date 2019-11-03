@@ -3,8 +3,6 @@ package bunch.clustering;
 import bunch.model.Cluster;
 import bunch.model.Configuration;
 
-import java.io.*;
-
 /**
  * A generic hill climbing clustering method class, intended to provide common services
  * to both hill-climbing algorithms (next ascent and steepest ascent).
@@ -49,9 +47,9 @@ public abstract class GenericHillClimbingClusteringMethod extends GenericCluster
   public boolean nextGeneration() {
     long[] sequence = new long[currentPopulation_d.size()];
 
-    if (configuration_d.runBatch_d) {
-      System.out.println("Run Batch = " + configuration_d.runBatch_d);
-      System.out.println("Exp Number = " + configuration_d.expNumber_d);
+    if (configuration.runBatch_d) {
+      System.out.println("Run Batch = " + configuration.runBatch_d);
+      System.out.println("Exp Number = " + configuration.expNumber_d);
     }
 
     try {
@@ -64,8 +62,8 @@ public abstract class GenericHillClimbingClusteringMethod extends GenericCluster
 
       if (false)
         for (int i = 0; i < currentPopulation_d.size(); ++i)
-          if (configuration_d.runBatch_d) {
-            int exp = configuration_d.expNumber_d;
+          if (configuration.runBatch_d) {
+            int exp = configuration.expNumber_d;
             sCluster = new StringBuilder();
             sAligned = new StringBuilder();
             int[] n = currentPopulation_d.getCluster(i).getClusterVector();
@@ -83,7 +81,7 @@ public abstract class GenericHillClimbingClusteringMethod extends GenericCluster
             }
             sequence[i]++;
             outLine = exp + "," + i + "," + sequence[i] + "," + currentPopulation_d.getCluster(i).getObjFnValue() + "," + sCluster + "," + sAligned;
-            configuration_d.writer_d.write(outLine + "\r\n");
+            configuration.writer_d.write(outLine + "\r\n");
           }
 
       boolean end = false;
@@ -91,8 +89,8 @@ public abstract class GenericHillClimbingClusteringMethod extends GenericCluster
         end = true;
         for (int i = 0; i < currentPopulation_d.size(); ++i) {
           if (!currentPopulation_d.getCluster(i).isMaximum()) {
-            if (configuration_d.runBatch_d) {
-              int exp = configuration_d.expNumber_d;
+            if (configuration.runBatch_d) {
+              int exp = configuration.expNumber_d;
               sCluster = new StringBuilder();
               sAligned = new StringBuilder();
               int[] n = currentPopulation_d.getCluster(i).getClusterVector();
@@ -110,7 +108,7 @@ public abstract class GenericHillClimbingClusteringMethod extends GenericCluster
               }
               sequence[i]++;
               outLine = exp + "," + i + "," + sequence[i] + "," + currentPopulation_d.getCluster(i).getObjFnValue() + "," + sCluster + "," + sAligned;
-              configuration_d.writer_d.write(outLine + "\r\n");
+              configuration.writer_d.write(outLine + "\r\n");
             }
 
             //end of intrumentation code
@@ -179,9 +177,9 @@ public abstract class GenericHillClimbingClusteringMethod extends GenericCluster
    * @return a HillClimbing configuration object
    */
   public Configuration getConfiguration() {
-    if (configuration_d == null) {
-      configuration_d = new HillClimbingConfiguration();
+    if (configuration == null) {
+      configuration = new HillClimbingConfiguration();
     }
-    return configuration_d;
+    return configuration;
   }
 }

@@ -83,7 +83,7 @@ protected void getLocalMaxGraph(Cluster c) {
 
 public Configuration getConfiguration() {
   boolean reconf=false;
-  if (configuration_d == null) {
+  if (configuration == null) {
     reconf = true;
   }
 
