@@ -20,12 +20,12 @@ private static final int DEFAULT_NUM_EXPERIMENTS = 200;
 private static final int DEFAULT_POP_SIZE = 25;
 private static final double DEFAULT_THRESHOLD = 0.1;
 
-Population currentPopulation_d;
-private int popSize_d=DEFAULT_POP_SIZE;
+Population population;
+private int popSize =DEFAULT_POP_SIZE;
 
-private int numExperiments_d=DEFAULT_NUM_EXPERIMENTS;
-private double threshold_d=DEFAULT_THRESHOLD;
-private double bestOFValue_d=0.0;
+private int numExperiments =DEFAULT_NUM_EXPERIMENTS;
+private double threshold =DEFAULT_THRESHOLD;
+private double bestOFValue =0.0;
 
 /**
  * Class constructor.
@@ -41,11 +41,11 @@ GenericClusteringMethod2(Configuration configuration) {
  * Generic initialization
  */
 void init() {
-   currentPopulation_d = new Population(getGraph());
-   currentPopulation_d.genPopulation(getPopSize());
+   population = new Population(getGraph());
+   population.genPopulation(getPopSize());
 
    if (getBestCluster() == null) {
-      setBestCluster(currentPopulation_d.getCluster(0).cloneCluster());
+      setBestCluster(population.getCluster(0).cloneCluster());
    }
 
   /*
@@ -83,7 +83,7 @@ public void run() {
   int generationsSinceLastChange = 0;
 
   //try the "all nodes in one cluster" partition
-  Cluster c2 = currentPopulation_d.getCluster(0);
+  Cluster c2 = population.getCluster(0);
 
   if (c2.getObjFnValue() > getBestCluster().getObjFnValue()) {
     setBestCluster(c2);
@@ -91,20 +91,20 @@ public void run() {
 
   long t = System.currentTimeMillis();
   IterationEvent ev = new IterationEvent(this);
-  bestOFValue_d = getBestCluster().getObjFnValue();
+  bestOFValue = getBestCluster().getObjFnValue();
 
 
-  for (int x=0; x<numExperiments_d; x++) {
+  for (int x = 0; x< numExperiments; x++) {
     //maximize the current population and check for new maximum
     boolean end = nextGeneration();
 
-    if (bestOFValue_d != getBestCluster().getObjFnValue()) {
+    if (bestOFValue != getBestCluster().getObjFnValue()) {
       setBestObjectiveFunctionValue(getBestCluster().getObjFnValue());
       generationsSinceLastChange = x;
     }
 
     if (end) {
-      if ((x-generationsSinceLastChange) > (numExperiments_d*getThreshold())) {
+      if ((x-generationsSinceLastChange) > (numExperiments *getThreshold())) {
         break;
       } else {
         ev.setIteration(x-generationsSinceLastChange);
@@ -145,7 +145,7 @@ protected abstract boolean nextGeneration();
  */
 void setThreshold(double t)
 {
-    threshold_d = t;
+    threshold = t;
 }
 
 /**
@@ -157,7 +157,7 @@ void setThreshold(double t)
  */
 private double getThreshold()
 {
-    return threshold_d;
+    return threshold;
 }
 
 /**
@@ -182,7 +182,7 @@ public int getMaxIterations()
  */
 void setNumOfExperiments(int max)
 {
-  numExperiments_d = max;
+  numExperiments = max;
 }
 
 /**
@@ -194,7 +194,7 @@ void setNumOfExperiments(int max)
  */
 private int getNumOfExperiments()
 {
-  return numExperiments_d;
+  return numExperiments;
 }
 
 /**
@@ -205,7 +205,7 @@ private int getNumOfExperiments()
  */
 void setPopSize(int psz)
 {
-  popSize_d = psz;
+  popSize = psz;
 }
 
 /**
@@ -216,7 +216,7 @@ void setPopSize(int psz)
  */
 private int getPopSize()
 {
-  return popSize_d;
+  return popSize;
 }
 
 /**
@@ -227,7 +227,7 @@ private int getPopSize()
  */
 private void setBestObjectiveFunctionValue(double v)
 {
-  bestOFValue_d = v;
+  bestOFValue = v;
 }
 
 /**
@@ -238,7 +238,7 @@ private void setBestObjectiveFunctionValue(double v)
  */
 public double getBestObjectiveFunctionValue()
 {
-  return bestOFValue_d;
+  return bestOFValue;
 }
 }
 

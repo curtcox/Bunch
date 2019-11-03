@@ -45,7 +45,7 @@ public abstract class GenericHillClimbingClusteringMethod extends GenericCluster
    * hill climbing algorithms (next ascent and steepest ascent).
    */
   public boolean nextGeneration() {
-    long[] sequence = new long[currentPopulation_d.size()];
+    long[] sequence = new long[population.size()];
 
     if (configuration.runBatch_d) {
       System.out.println("Run Batch = " + configuration.runBatch_d);
@@ -57,16 +57,16 @@ public abstract class GenericHillClimbingClusteringMethod extends GenericCluster
       StringBuilder sCluster = new StringBuilder();
       StringBuilder sAligned = new StringBuilder();
 
-      for (int i = 0; i < currentPopulation_d.size(); i++)
+      for (int i = 0; i < population.size(); i++)
         sequence[i] = 0;
 
       if (false)
-        for (int i = 0; i < currentPopulation_d.size(); ++i)
+        for (int i = 0; i < population.size(); ++i)
           if (configuration.runBatch_d) {
             int exp = configuration.expNumber_d;
             sCluster = new StringBuilder();
             sAligned = new StringBuilder();
-            int[] n = currentPopulation_d.getCluster(i).getClusterVector();
+            int[] n = population.getCluster(i).getClusterVector();
 
             int[] c = new int[n.length];
 
@@ -80,20 +80,20 @@ public abstract class GenericHillClimbingClusteringMethod extends GenericCluster
               sAligned.append(c[zz]).append("|");
             }
             sequence[i]++;
-            outLine = exp + "," + i + "," + sequence[i] + "," + currentPopulation_d.getCluster(i).getObjFnValue() + "," + sCluster + "," + sAligned;
+            outLine = exp + "," + i + "," + sequence[i] + "," + population.getCluster(i).getObjFnValue() + "," + sCluster + "," + sAligned;
             configuration.writer_d.write(outLine + "\r\n");
           }
 
       boolean end = false;
       while (!end) {
         end = true;
-        for (int i = 0; i < currentPopulation_d.size(); ++i) {
-          if (!currentPopulation_d.getCluster(i).isMaximum()) {
+        for (int i = 0; i < population.size(); ++i) {
+          if (!population.getCluster(i).isMaximum()) {
             if (configuration.runBatch_d) {
               int exp = configuration.expNumber_d;
               sCluster = new StringBuilder();
               sAligned = new StringBuilder();
-              int[] n = currentPopulation_d.getCluster(i).getClusterVector();
+              int[] n = population.getCluster(i).getClusterVector();
 
               int[] c = new int[n.length];
 
@@ -107,20 +107,20 @@ public abstract class GenericHillClimbingClusteringMethod extends GenericCluster
                 sCluster.append(n[zz]).append("|");
               }
               sequence[i]++;
-              outLine = exp + "," + i + "," + sequence[i] + "," + currentPopulation_d.getCluster(i).getObjFnValue() + "," + sCluster + "," + sAligned;
+              outLine = exp + "," + i + "," + sequence[i] + "," + population.getCluster(i).getObjFnValue() + "," + sCluster + "," + sAligned;
               configuration.writer_d.write(outLine + "\r\n");
             }
 
             //end of intrumentation code
-            getLocalMaxGraph(currentPopulation_d.getCluster(i));
+            getLocalMaxGraph(population.getCluster(i));
           }
 
-          if (!currentPopulation_d.getCluster(i).isMaximum()) {
+          if (!population.getCluster(i).isMaximum()) {
             end = false;
           }
-          if (currentPopulation_d.getCluster(i).getObjFnValue()
+          if (population.getCluster(i).getObjFnValue()
                   > getBestCluster().getObjFnValue()) {
-            setBestCluster(currentPopulation_d.getCluster(i).cloneCluster());
+            setBestCluster(population.getCluster(i).cloneCluster());
           }
         }
       }
@@ -164,7 +164,7 @@ public abstract class GenericHillClimbingClusteringMethod extends GenericCluster
    * This method is used to "shake" or reinitialize clusters
    */
   public void reInit() {
-    currentPopulation_d.shuffle();
+    population.shuffle();
   }
 
   /**
