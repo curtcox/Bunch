@@ -23,7 +23,9 @@ import bunch.model.Graph;
  * @see GAClusteringMethod
  */
 
-public abstract class BaseHierClusteringMethod extends BaseClusteringMethod {
+public abstract class BaseHierClusteringMethod extends BaseClusteringMethod
+        implements HierClusteringMethod
+{
 
     private IterationListener listener_d;
 private Graph graph_d;
