@@ -24,11 +24,11 @@ final class BunchEngine {
 
   private EngineArgs bunchArgs = new EngineArgs();
   private EngineResults results = new EngineResults();
-  private ClusteringMethod clusteringMethod_d;
-  private GraphOutput graphOutput_d;
-  private Graph initialGraph_d = new Graph(0);
-  private BunchPreferences preferences_d;
-  private Configuration configuration_d;
+  private ClusteringMethod clusteringMethod;
+  private GraphOutput graphOutput;
+  private Graph initialGraph = new Graph(0);
+  private BunchPreferences preferences;
+  private Configuration configuration;
   private long totalTime=0;
   private Cluster baseCluster;
   private ClusterList clusterList;
@@ -288,7 +288,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       if(graphName.endsWith(".gxl") || graphName.endsWith(".GXL"))
         parserClass = "gxl";
 
-      Parser p = preferences_d.getParserFactory().getParser(parserClass);
+      Parser p = preferences.getParserFactory().getParser(parserClass);
       p.setInput(graphName);
       Graph g = (Graph)p.parse();
 
@@ -432,19 +432,19 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
   private void setIsClusterTree() {
     //now set if we are clustering trees or one level
-    initialGraph_d.setIsClusterTree(bunchArgs.AGGLOMERATIVE);
+    initialGraph.setIsClusterTree(bunchArgs.AGGLOMERATIVE);
   }
 
   private void loadClusteringMethodHandler() throws IOException, ClassNotFoundException {
     //Load Clusteirng Method Handler
     var clustAlg = bunchArgs.CLUSTERING_ALG;
     if(clustAlg==null) throw new IllegalArgumentException();
-    clusteringMethod_d = preferences_d.getClusteringMethodFactory().getMethod(clustAlg);
-    if(clusteringMethod_d == null) throw new IllegalArgumentException();
+    clusteringMethod = preferences.getClusteringMethodFactory().getMethod(clustAlg);
+    if(clusteringMethod == null) throw new IllegalArgumentException();
 
-    configuration_d = clusteringMethod_d.getConfiguration();
-    if (initialGraph_d!=null&&configuration_d!=null)
-      configuration_d.init(initialGraph_d);
+    configuration = clusteringMethod.getConfiguration();
+    if (initialGraph !=null&& configuration !=null)
+      configuration.init(initialGraph);
 
     if (clustAlg == GA)            { loadGaConfig(); }
     if (clustAlg == SAHC)          { loadSahcConfig(); }
@@ -457,7 +457,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     Integer rndPct = bunchArgs.algNahcRndPct;
     Integer popSz = bunchArgs.algNahcPopulationSz;
 
-    NAHCConfiguration c = (NAHCConfiguration)configuration_d;
+    NAHCConfiguration c = (NAHCConfiguration) configuration;
 
     if(popSz != null)
       c.setPopulationSize(popSz);
@@ -487,7 +487,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   }
 
   private void loadHillClimbingConfig() {
-    NAHCConfiguration c = (NAHCConfiguration)configuration_d;
+    NAHCConfiguration c = (NAHCConfiguration) configuration;
     if(bunchArgs.algHcRndPct != null) {
       Integer randomize = bunchArgs.algHcRndPct;
       c.setRandomizePct(randomize);
@@ -503,11 +503,11 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     Integer popSz = bunchArgs.ALG_SAHC_POPULATION_SZ;
 
     if(popSz != null)
-      configuration_d.setPopulationSize(popSz);
+      configuration.setPopulationSize(popSz);
   }
 
   private void loadGaConfig() {
-    GAConfiguration gaConfig = (GAConfiguration)configuration_d;
+    GAConfiguration gaConfig = (GAConfiguration) configuration;
     gaConfig.setMethod(bunchArgs.ALG_GA_SELECTION_METHOD);
     gaConfig.setNumOfIterations(bunchArgs.ALG_GA_NUM_GENERATIONS);
     gaConfig.setCrossoverThreshold(bunchArgs.ALG_GA_CROSSOVER_PROB);
@@ -519,17 +519,17 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     //See if there are special modules
     if(bunchArgs.SPECIAL_MODULE_HASHTABLE != null) {
       var special = bunchArgs.SPECIAL_MODULE_HASHTABLE;
-      arrangeLibrariesClientsAndSuppliers(initialGraph_d,special);
+      arrangeLibrariesClientsAndSuppliers(initialGraph,special);
     }
 
     Hashtable specialFromInput = getSpecialModulesFromProperties();
     if (specialFromInput != null)
-      arrangeLibrariesClientsAndSuppliers(initialGraph_d,specialFromInput);
+      arrangeLibrariesClientsAndSuppliers(initialGraph,specialFromInput);
   }
 
   private void setGraphOutputDriver() {
     //now set the graph output driver
-    graphOutput_d = null;
+    graphOutput = null;
     var outputMode = bunchArgs.OUTPUT_FORMAT;
     if (outputMode != null || !(outputMode==NULL)) {
 
@@ -538,22 +538,22 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
         if (outFileName == null)
           outFileName = bunchArgs.MDG_INPUT_FILE_NAME;
 
-        graphOutput_d = preferences_d.getGraphOutputFactory().getOutput(outputMode);
+        graphOutput = preferences.getGraphOutputFactory().getOutput(outputMode);
 
         if (bunchArgs.OUTPUT_TREE) {
-            graphOutput_d.setNestedLevels(true);
+            graphOutput.setNestedLevels(true);
         }
 
-        graphOutput_d.setBaseName(outFileName); //(String)bunchArgs.get(BunchProperties.MDG_INPUT_FILE_NAME));
-        graphOutput_d.setBasicName(outFileName); //(String)bunchArgs.get(BunchProperties.MDG_INPUT_FILE_NAME));
-        String outputFileName = graphOutput_d.getBaseName();
+        graphOutput.setBaseName(outFileName); //(String)bunchArgs.get(BunchProperties.MDG_INPUT_FILE_NAME));
+        graphOutput.setBasicName(outFileName); //(String)bunchArgs.get(BunchProperties.MDG_INPUT_FILE_NAME));
+        String outputFileName = graphOutput.getBaseName();
         String outputPath = bunchArgs.OUTPUT_DIRECTORY;
         if(outputPath != null) {
-          java.io.File f = new java.io.File(graphOutput_d.getBaseName());
+          java.io.File f = new java.io.File(graphOutput.getBaseName());
           String filename = f.getName();
           outputFileName = outputPath+filename;
         }
-        graphOutput_d.setCurrentName(outputFileName);
+        graphOutput.setCurrentName(outputFileName);
         //System.out.println("Current name is " + outputFileName);
       }
     }
@@ -561,15 +561,15 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
   private void setupClusteringMethod() {
     //now setup the clustering method object
-    clusteringMethod_d.initialize();
-    clusteringMethod_d.setGraph(initialGraph_d.cloneGraph());
+    clusteringMethod.initialize();
+    clusteringMethod.setGraph(initialGraph.cloneGraph());
   }
 
   private void setUpCalculator() {
     //now setup the calculator
     ObjectiveFunctionCalculator objFnCalc = bunchArgs.mqCalculatorClass;
-    (preferences_d.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
-    initialGraph_d.setObjectiveFunctionCalculator(objFnCalc);
+    (preferences.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
+    initialGraph.setObjectiveFunctionCalculator(objFnCalc);
     Global.calculator = objFnCalc;
   }
 
@@ -579,18 +579,18 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     if(userSILFile != null) {
       boolean lock = bunchArgs.lockUserSetClusters;
 
-      Parser cp = preferences_d.getParserFactory().getParser("cluster");
+      Parser cp = preferences.getParserFactory().getParser("cluster");
       cp.setInput(userSILFile);
-      cp.setObject(initialGraph_d);
+      cp.setObject(initialGraph);
       cp.parse();
       if(lock)
-        initialGraph_d.setDoubleLocks(true);
+        initialGraph.setDoubleLocks(true);
 
       //=================================
       //Now lock the clusters
       //=================================
-      int[] clust = initialGraph_d.getClusters();
-      boolean[] locks = initialGraph_d.getLocks();
+      int[] clust = initialGraph.getClusters();
+      boolean[] locks = initialGraph.getLocks();
       for (int i=0; i<clust.length; ++i) {
         if (clust[i] != -1) {
           locks[i] = true;
@@ -602,31 +602,31 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   private void constructGraph() {
     //Construct Graph
     if(bunchArgs.mdgInputFileName != null) {
-      Parser p = preferences_d.getParserFactory().getParser("dependency");
+      Parser p = preferences.getParserFactory().getParser("dependency");
       p.setInput(bunchArgs.mdgInputFileName);
       p.setDelims(getFileDelims());
-      initialGraph_d = (Graph)p.parse();
+      initialGraph = (Graph)p.parse();
       reflexiveEdgeCount = p.getReflexiveEdges();
     }
 
     if (bunchArgs.mdgGraphObject != null) {
       BunchMDG mdgObj = bunchArgs.mdgGraphObject;
 
-      initialGraph_d = bunch.util.BunchUtilities.toInternalGraph(mdgObj);
+      initialGraph = bunch.util.BunchUtilities.toInternalGraph(mdgObj);
       reflexiveEdgeCount = 0;
     }
   }
 
   private void loadPreferences() throws IOException, ClassNotFoundException {
     //Load Preferences
-    preferences_d = (BunchPreferences)(Beans.instantiate(null, "bunch.BunchPreferences"));
+    preferences = (BunchPreferences)(Beans.instantiate(null, "bunch.BunchPreferences"));
   }
 
   public Graph getBestGraph() {
-    if (clusteringMethod_d == null)
+    if (clusteringMethod == null)
       return null;
 
-    return clusteringMethod_d.getBestGraph().cloneGraph();
+    return clusteringMethod.getBestGraph().cloneGraph();
   }
 
   private void runClustering() throws IOException, ClassNotFoundException {
@@ -634,12 +634,12 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
     executeClusteringEngine();//clusteringMethod_d,bunchArgs);
 
-    clusteringMethod_d.getBestCluster();
-    baseCluster = clusteringMethod_d.getBestCluster().cloneCluster();
-    clusterList.add(clusteringMethod_d.getBestCluster().cloneCluster());
+    clusteringMethod.getBestCluster();
+    baseCluster = clusteringMethod.getBestCluster().cloneCluster();
+    clusterList.add(clusteringMethod.getBestCluster().cloneCluster());
 
     if(bunchArgs.AGGLOMERATIVE) {
-      Graph g = clusteringMethod_d.getBestGraph().cloneGraph();
+      Graph g = clusteringMethod.getBestGraph().cloneGraph();
 
       int []cNames = g.getClusterNames();  //c.getClusterNames();
       while(cNames.length>1) {
@@ -650,21 +650,21 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
         newG.setPreviousLevelGraph(g);
         newG.setGraphLevel(g.getGraphLevel()+1);
 
-        clusteringMethod_d.setGraph(newG);
-        clusteringMethod_d.initialize();
+        clusteringMethod.setGraph(newG);
+        clusteringMethod.initialize();
 
         executeClusteringEngine();//clusteringMethod_d,bunchArgs);
 
-        clusteringMethod_d.getBestCluster();
-        clusterList.add(clusteringMethod_d.getBestCluster().cloneCluster());
+        clusteringMethod.getBestCluster();
+        clusterList.add(clusteringMethod.getBestCluster().cloneCluster());
 
-        g = clusteringMethod_d.getBestGraph().cloneGraph();
+        g = clusteringMethod.getBestGraph().cloneGraph();
         cNames = g.getClusterNames();  //c.getClusterNames();
       }
     }
-    if(graphOutput_d != null) {
-      graphOutput_d.setGraph(clusteringMethod_d.getBestGraph());
-      graphOutput_d.write();
+    if(graphOutput != null) {
+      graphOutput.setGraph(clusteringMethod.getBestGraph());
+      graphOutput.write();
     }
 
   }
@@ -690,10 +690,10 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   }
 
   private int getMedianLevelNumber() {
-      if (clusteringMethod_d == null)
+      if (clusteringMethod == null)
         return -1;
 
-      Graph g = clusteringMethod_d.getBestGraph();
+      Graph g = clusteringMethod.getBestGraph();
       Graph medianG = g.getMedianTree();
       return medianG.getGraphLevel();
   }
@@ -732,7 +732,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
   }
 
   private EngineResults getClusteringResultsHT() {
-      if (clusteringMethod_d == null) return null;
+      if (clusteringMethod == null) return null;
       if (baseCluster == null)        return null;
 
       results = new EngineResults();
@@ -747,7 +747,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
       results.RESULT_CLUSTER_OBJS = clusterList;
       StatsManager.cleanup();
 
-      Configuration cTmp = clusteringMethod_d.getConfiguration();
+      Configuration cTmp = clusteringMethod.getConfiguration();
       if(cTmp instanceof NAHCConfiguration) {
         NAHCConfiguration nahcConf = (NAHCConfiguration)cTmp;
         if (nahcConf.getSATechnique() != null)
@@ -781,7 +781,7 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
 
   private void executeClusteringEngine() {
     long startTime = System.currentTimeMillis();
-    clusteringMethod_d.run();
+    clusteringMethod.run();
     long endTime = System.currentTimeMillis();
     totalTime += (endTime - startTime);
   }

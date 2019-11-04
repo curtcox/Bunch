@@ -1,6 +1,5 @@
 package bunch.api;
 
-import bunch.model.Cluster;
 import bunch.model.ClusterList;
 import bunch.model.Graph;
 
