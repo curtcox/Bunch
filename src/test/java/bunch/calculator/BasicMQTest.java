@@ -10,20 +10,14 @@ public class BasicMQTest {
         new BasicMQ();
     }
 
-    private void setCalculatorFactory() {
-        Graph.setObjectiveFunctionCalculatorFactory(new ObjectiveFunctionCalculatorFactory());
-    }
-
     @Test
     public void init() {
-        setCalculatorFactory();
         var calc = new BasicMQ();
         var graph = new Graph(0);
     }
 
     @Test
     public void calculate() {
-        setCalculatorFactory();
         var calc = new BasicMQ();
         var graph = new Graph(0);
         calc.calculate(graph);
@@ -31,7 +25,6 @@ public class BasicMQTest {
 
     @Test
     public void calculate_cluster() {
-        setCalculatorFactory();
         var calc = new BasicMQ();
         var graph = new Graph(0);
         int[] vector = new int[0];
@@ -41,7 +34,6 @@ public class BasicMQTest {
 
     @Test
     public void calculateInterdependenciesValue() {
-        setCalculatorFactory();
         var calc = new BasicMQ();
         var graph = new Graph(0);
         int[] c1 = new int[1];
@@ -53,7 +45,6 @@ public class BasicMQTest {
 
     @Test
     public void calculateIntradependenciesValue() {
-        setCalculatorFactory();
         var calc = new BasicMQ();
         var graph = new Graph(0);
         int[] c = new int[1];

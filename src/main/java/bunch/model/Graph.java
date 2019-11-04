@@ -18,7 +18,7 @@ import java.util.Random;
  * @version 1.0
  * @see Node
  */
-public final class Graph implements java.io.Serializable {
+public final class Graph {
 
 private Node[] nodes_d;
 private Node[] originalNodes_d;
@@ -36,9 +36,8 @@ private transient double objectiveFunctionValue_d;
 
 private transient Random random_d;
 
-private transient ObjectiveFunctionCalculator calculator_d;
+public transient ObjectiveFunctionCalculator calculator;
 
-public static ObjectiveFunctionCalculatorFactory objectiveFunctionCalculatorFactory_sd;
 
 /**
  * Creates an empty Graph. Must call initGraph() later to be able to use this\
@@ -67,17 +66,6 @@ public Graph(int nodes) {
 }
 
 /**
- * This method sets the objective function calculator factory, that will
- * be used later to create new calculators based on a given name. This
- * method must be called before any instance of the Graph class is created.
- *
- * @param of the function calculator factory to set
- */
-public static void setObjectiveFunctionCalculatorFactory(ObjectiveFunctionCalculatorFactory of) {
-  objectiveFunctionCalculatorFactory_sd = of;
-}
-
-/**
  * Initialized this  graph with the specified number of nodes
  * (calls #clear() to ensure
  * that the Graph is correctly initialized.)
@@ -96,10 +84,9 @@ public void initGraph(int nodes) {
  * that should have been set before using any Graph class
  *
  * @param calc the name of the calculator to set for this graph
- * @see #setObjectiveFunctionCalculatorFactory(ObjectiveFunctionCalculatorFactory)
  */
 public void setObjectiveFunctionCalculator(ObjectiveFunctionCalculator calc) {
-  calculator_d = calc;
+  calculator = calc;
 }
 
 /**
@@ -288,9 +275,6 @@ public void setIntradependenciesValue(double intra) {
  * by calling its ObjectiveFunctionCalculator.
  */
 public void calculateObjectiveFunctionValue() {
-    if (calculator_d == null) {
-      setObjectiveFunctionCalculator(objectiveFunctionCalculatorFactory_sd.getCurrentCalculator());
-    }
     //calculator_d.calculate();
     Cluster c = new Cluster(this,this.getClusters());
     c.calcObjFn();

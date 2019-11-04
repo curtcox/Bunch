@@ -65,8 +65,7 @@ public ObjectiveFunctionCalculator getCurrentCalculator() {
    return currObjFnMethod;
 }
 
-public void setCurrentCalculator(ObjectiveFunctionCalculator sCalc)
-{
+public void setCurrentCalculator(ObjectiveFunctionCalculator sCalc) {
    currObjFnMethod = sCalc;
 }
 

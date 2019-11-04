@@ -41,7 +41,8 @@ GenericClusteringMethod2(Configuration configuration) {
  * Generic initialization
  */
 void init() {
-   population = new Population(getGraph());
+    var graph = getGraph();
+   population = new Population(graph);
    population.genPopulation(getPopSize());
 
    if (getBestCluster() == null) {

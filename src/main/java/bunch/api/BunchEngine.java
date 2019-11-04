@@ -569,8 +569,8 @@ private void arrangeLibrariesClientsAndSuppliers(Graph g, Map special) {
     //now setup the calculator
     ObjectiveFunctionCalculator objFnCalc = bunchArgs.mqCalculatorClass;
     (preferences_d.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
-    Graph.setObjectiveFunctionCalculatorFactory(preferences_d.getObjectiveFunctionCalculatorFactory());
     initialGraph_d.setObjectiveFunctionCalculator(objFnCalc);
+    Global.calculator = objFnCalc;
   }
 
   private void handleUserDirectedClustering() {

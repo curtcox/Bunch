@@ -20,10 +20,6 @@ public final class MQCalculator {
       p.setDelims(" \t");
 
       Graph g = (Graph)p.parse();
-      ObjectiveFunctionCalculatorFactory ofc = new ObjectiveFunctionCalculatorFactory();
-      ofc.setCurrentCalculator(calculatorName);
-      Graph.setObjectiveFunctionCalculatorFactory(ofc);
-
       g.setObjectiveFunctionCalculator(calculatorName);
 
       ClusterFileParser cfp = new ClusterFileParser();

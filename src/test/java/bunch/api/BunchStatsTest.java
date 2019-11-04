@@ -26,7 +26,6 @@ public final class BunchStatsTest {
 
       var objFnCalc =  new TurboMQIncrW();
       (pref.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
-      Graph.setObjectiveFunctionCalculatorFactory(pref.getObjectiveFunctionCalculatorFactory());
       g.setObjectiveFunctionCalculator(objFnCalc);
 
       if(g == null) {

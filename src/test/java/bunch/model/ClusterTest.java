@@ -13,7 +13,6 @@ public class ClusterTest {
 
     @Test
     public void getClusterNames_0() {
-        Graph.setObjectiveFunctionCalculatorFactory(new ObjectiveFunctionCalculatorFactory());
         Graph graph = new Graph(0);
         int[] vector = new int[0];
         Cluster cluster = new Cluster(graph,vector);

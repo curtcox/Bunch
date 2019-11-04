@@ -173,7 +173,15 @@ import bunch.stats.*;
    * This method performs initialization on the Objective Function calculator.
    */
   private void initCalculator() {
-      calculator = Graph.objectiveFunctionCalculatorFactory_sd.getSelectedCalculator();
+      if (graph!=null) {
+          calculator = graph.calculator;
+      }
+      if (calculator==null) {
+          calculator = Global.calculator;
+          if (calculator==null) {
+              throw new IllegalStateException();
+          }
+      }
   }
 
   /**
@@ -252,12 +260,11 @@ import bunch.stats.*;
       stats.incrMQCalculations();
       numMQEvaluations++;
 
-       if (graph == null)
+      if (graph == null)
          return CLUSTER_OBJ_FN_VAL_NOT_DEFINED;
 
-
       if (!isDirty)
-        return objFnValue;
+         return objFnValue;
 
       if (calculator == null)
           initCalculator();

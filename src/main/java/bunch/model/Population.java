@@ -1,37 +1,36 @@
 package bunch.model;
 
-import java.util.Vector;
 
 public final class Population {
 
-  private final Vector<Cluster>   pop = new Vector<>();
-  private static   Graph g = null;
+  private final ClusterList pop = new ClusterList();
+  private static Graph graph;
 
   public Population(Graph graph) {
-      g = graph.cloneGraph();
+      Population.graph = graph.cloneGraph();
   }
 
   public void shuffle() {
       for(int i = 0; i < pop.size(); i++) {
-         Cluster c = (Cluster)pop.elementAt(i);
-         g.setClusters(c.getClusterVector());
-         g.shuffleClusters();
-         c.setClusterVector(g.getClusters());
+         Cluster c = pop.get(i);
+         graph.setClusters(c.getClusterVector());
+         graph.shuffleClusters();
+         c.setClusterVector(graph.getClusters());
          c.setConverged(false);
       }
 
   }
 
   public void genPopulation(int howMany) {
-      pop.removeAllElements();
+      pop.clear();
       for(int i = 0; i < howMany; i++) {
          //UNCOMMENT THE BELOW LINE FOR ORIGIONAL FUNCTION
-         //int [] clusterV = g.getRandomCluster();
+         //int [] clusterV = graph.getRandomCluster();
 
          //COMMENT THE BELOW LINE TO REMOVE THE EXPIREMENTAL FUNCTION
-         int [] clusterV = g.genRandomClusterSize();
-         Cluster c = new Cluster(g,clusterV);
-         pop.addElement(c);
+         int [] clusterV = graph.genRandomClusterSize();
+         Cluster c = new Cluster(graph,clusterV);
+         pop.add(c);
       }
   }
 
@@ -42,7 +41,7 @@ public final class Population {
 
   public Cluster getCluster(int whichOne) {
       if ((whichOne >= 0) && (whichOne < size()))
-         return (Cluster)pop.elementAt(whichOne);
+         return pop.get(whichOne);
       else
          return null;
   }

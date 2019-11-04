@@ -22,4 +22,8 @@ public final class ClusterList implements Iterable<Cluster> {
     public Iterator<Cluster> iterator() {
         return clusters.iterator();
     }
+
+    public void clear() {
+        clusters.clear();
+    }
 }

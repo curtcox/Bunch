@@ -36,15 +36,7 @@ final class BunchGraphUtils {
       cfp.setObject(g);
       cfp.parse();
 
-      ObjectiveFunctionCalculatorFactory ocf = new ObjectiveFunctionCalculatorFactory();
-      Graph.setObjectiveFunctionCalculatorFactory(ocf);
-
-      if(mqCalcClass == null) {
-        g.setObjectiveFunctionCalculator(ocf.getDefaultMethod());
-      } else {
-        ocf.setCurrentCalculator(mqCalcClass);
-        g.setObjectiveFunctionCalculator(mqCalcClass);
-      }
+      g.setObjectiveFunctionCalculator(mqCalcClass);
       g.calculateObjectiveFunctionValue();
       bg.construct(g);
       return bg;
