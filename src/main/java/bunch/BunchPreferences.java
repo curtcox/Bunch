@@ -23,28 +23,12 @@ public class BunchPreferences
  * track as a global singleton of the factory instances.
  */
 private final ClusteringMethodFactory methodFactory_d;
-private final ObjectiveFunctionCalculatorFactory calculatorFactory_d;
-private final ParserFactory parserFactory_d;
-private final GraphOutputFactory outputFactory_d;
 
 /**
  * class constructor.  Create the factory objects.
  */
 public BunchPreferences() {
   methodFactory_d =  new ClusteringMethodFactory();
-  calculatorFactory_d = new ObjectiveFunctionCalculatorFactory();
-  parserFactory_d = new ParserFactory();
-  outputFactory_d = new GraphOutputFactory();
-}
-
-/**
- * Obtains the factory of Clustering Methods set to this preferences object
- *
- * @return the clustering method factory
- * @see ClusteringMethodFactory
- */
-public ClusteringMethodFactory getClusteringMethodFactory() {
-  return methodFactory_d;
 }
 
 }

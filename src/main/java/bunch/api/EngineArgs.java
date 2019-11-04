@@ -2,6 +2,8 @@ package bunch.api;
 
 import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.calculator.TurboMQIncrW;
+import bunch.clustering.ClusteringMethod;
+import bunch.clustering.ClusteringMethodFactory;
 import bunch.model.GraphOutput;
 import bunch.model.GraphOutputFactory;
 import bunch.parser.ParserFactory;
@@ -56,4 +58,5 @@ final class EngineArgs {
   public boolean ECHO_RESULTS_TO_CONSOLE;
   public GraphOutput graphOutput = new GraphOutputFactory().defaultOption;
   public ParserFactory parserFactory = new ParserFactory();
+  public ClusteringMethod clusteringMethod = new ClusteringMethodFactory().getDefaultMethod();
 }

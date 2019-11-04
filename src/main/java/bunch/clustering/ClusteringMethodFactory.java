@@ -16,14 +16,14 @@ import static bunch.api.Algorithm.*;
  */
 public final class ClusteringMethodFactory {
 
-private final BaseClusteringMethod defaultMethod = new NextAscentHillClimbingClusteringMethod();
+private final ClusteringMethod defaultMethod = new NextAscentHillClimbingClusteringMethod();
 
 
 /**
  * This method returns the default clustering method.  It is used in the GUI and
  * API when the clustering algorithm is not explicitly specified.
  */
-public BaseClusteringMethod getDefaultMethod() {
+public ClusteringMethod getDefaultMethod() {
   return defaultMethod;
 }
 
@@ -39,7 +39,7 @@ public String[] getItemList() {
  * @param name for the desired method
  * @return the clustering method corresponding to the name
  */
-public BaseClusteringMethod getMethod(Algorithm name) {
+public ClusteringMethod getMethod(Algorithm name) {
   if (name == HILL_CLIMBING) return new NextAscentHillClimbingClusteringMethod();
   if (name == NAHC) return new NextAscentHillClimbingClusteringMethod();
   if (name == SAHC) return new SteepestAscentHillClimbingClusteringMethod();

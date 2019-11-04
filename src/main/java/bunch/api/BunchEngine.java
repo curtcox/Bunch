@@ -221,7 +221,7 @@ final class BunchEngine {
     //Load Clusteirng Method Handler
     var clustAlg = bunchArgs.CLUSTERING_ALG;
     if(clustAlg==null) throw new IllegalArgumentException();
-    clusteringMethod = preferences.getClusteringMethodFactory().getMethod(clustAlg);
+    clusteringMethod = bunchArgs.clusteringMethod;
     if(clusteringMethod == null) throw new IllegalArgumentException();
 
     configuration = clusteringMethod.getConfiguration();
