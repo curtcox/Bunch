@@ -4,6 +4,7 @@ import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.calculator.TurboMQIncrW;
 import bunch.model.GraphOutput;
 import bunch.model.GraphOutputFactory;
+import bunch.parser.ParserFactory;
 
 import java.util.Collection;
 import java.util.Map;
@@ -54,4 +55,5 @@ final class EngineArgs {
   public String ALG_HC_SA_CONFIG;
   public boolean ECHO_RESULTS_TO_CONSOLE;
   public GraphOutput graphOutput = new GraphOutputFactory().defaultOption;
+  public ParserFactory parserFactory = new ParserFactory();
 }

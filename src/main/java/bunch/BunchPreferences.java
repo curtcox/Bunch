@@ -58,14 +58,4 @@ public ObjectiveFunctionCalculatorFactory getObjectiveFunctionCalculatorFactory(
   return calculatorFactory_d;
 }
 
-/**
- * Obtains the factory of parsers set to this preferences object
- *
- * @return the parser factory
- * @see ParserFactory
- */
-public ParserFactory getParserFactory() {
-  return parserFactory_d;
-}
-
 }

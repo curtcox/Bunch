@@ -2,8 +2,10 @@ package bunch.api;
 
 import bunch.calculator.TurboMQIncrW;
 import bunch.model.Cluster;
+import bunch.model.Global;
 import bunch.model.Graph;
 import bunch.parser.Parser;
+import bunch.parser.ParserFactory;
 import org.junit.Test;
 
 import java.io.*;
@@ -17,15 +19,14 @@ public final class BunchStatsTest {
   @Test
   public void checkGraphTest() throws Exception {
       String filename = "d:\\proj\\bunch\\examples\\bison"; //"e:\\incl";
-      bunch.BunchPreferences pref = (bunch.BunchPreferences)(java.beans.Beans.instantiate(null, "bunch.BunchPreferences"));
 
-      Parser p = pref.getParserFactory().getParser("dependency");
+      Parser p = new ParserFactory().getParser("dependency");
       p.setInput(filename);
       p.setDelims(" \t");
       Graph g = (Graph)p.parse();
 
       var objFnCalc =  new TurboMQIncrW();
-      (pref.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
+      Global.calculator = objFnCalc;
       g.setObjectiveFunctionCalculator(objFnCalc);
 
       if(g == null) {

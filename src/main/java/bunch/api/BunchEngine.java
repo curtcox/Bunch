@@ -71,7 +71,7 @@ final class BunchEngine {
       if(graphName.endsWith(".gxl") || graphName.endsWith(".GXL"))
         parserClass = "gxl";
 
-      Parser p = preferences.getParserFactory().getParser(parserClass);
+      Parser p = bunchArgs.parserFactory.getParser(parserClass);
       p.setInput(graphName);
       Graph g = (Graph)p.parse();
 
@@ -346,7 +346,7 @@ final class BunchEngine {
     if(userSILFile != null) {
       boolean lock = bunchArgs.lockUserSetClusters;
 
-      Parser cp = preferences.getParserFactory().getParser("cluster");
+      Parser cp = bunchArgs.parserFactory.getParser("cluster");
       cp.setInput(userSILFile);
       cp.setObject(initialGraph);
       cp.parse();
@@ -369,7 +369,7 @@ final class BunchEngine {
   private void constructGraph() {
     //Construct Graph
     if(bunchArgs.mdgInputFileName != null) {
-      Parser p = preferences.getParserFactory().getParser("dependency");
+      Parser p = bunchArgs.parserFactory.getParser("dependency");
       p.setInput(bunchArgs.mdgInputFileName);
       p.setDelims(getFileDelims());
       initialGraph = (Graph)p.parse();
