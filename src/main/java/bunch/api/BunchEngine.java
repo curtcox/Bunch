@@ -55,7 +55,6 @@ final class BunchEngine {
   private void initClustering() throws IOException, ClassNotFoundException {
     clusterList = new ClusterList();
     constructGraph();
-    handleUserDirectedClustering();
     loadClusteringMethodHandler();
     setIsClusterTree();
     setUpCalculator();
@@ -189,32 +188,6 @@ final class BunchEngine {
     ObjectiveFunctionCalculator objFnCalc = bunchArgs.mqCalculatorClass;
     initialGraph.setObjectiveFunctionCalculator(objFnCalc);
     Global.calculator = objFnCalc;
-  }
-
-  private void handleUserDirectedClustering() {
-    //NOW HANDLE USER DIRECTED CLUSTERING, IF SET AND THE LOCKS
-    String userSILFile = bunchArgs.userDirectedClusterSil;
-    if(userSILFile != null) {
-      boolean lock = bunchArgs.lockUserSetClusters;
-
-      Parser cp = bunchArgs.parserFactory.getParser("cluster");
-      cp.setInput(userSILFile);
-      cp.setObject(initialGraph);
-      cp.parse();
-      if(lock)
-        initialGraph.setDoubleLocks(true);
-
-      //=================================
-      //Now lock the clusters
-      //=================================
-      int[] clust = initialGraph.getClusters();
-      boolean[] locks = initialGraph.getLocks();
-      for (int i=0; i<clust.length; ++i) {
-        if (clust[i] != -1) {
-          locks[i] = true;
-        }
-      }
-    }
   }
 
   private void constructGraph() {
@@ -374,7 +347,9 @@ final class BunchEngine {
     bunchArgs = args;
 
     var runMode = bunchArgs.runMode;
-    if (runMode == null) return;
+    if (runMode == null) {
+      throw new IllegalArgumentException();
+    }
 
     if (runMode == CLUSTER) {
       runClustering();
