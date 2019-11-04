@@ -1,7 +1,5 @@
 package bunch.api;
 
-import bunch.*;
-
 import static bunch.api.Algorithm.*;
 import static bunch.api.Key.*;
 import static bunch.api.OutputFormat.*;
@@ -27,7 +25,6 @@ final class BunchEngine {
   private ClusteringMethod clusteringMethod;
   private GraphOutput graphOutput;
   private Graph initialGraph = new Graph(0);
-  private BunchPreferences preferences;
   private Configuration configuration;
   private long totalTime=0;
   private Cluster baseCluster;
@@ -201,7 +198,6 @@ final class BunchEngine {
 
   private void initClustering() throws IOException, ClassNotFoundException {
     clusterList = new ClusterList();
-    loadPreferences();
     constructGraph();
     handleUserDirectedClustering();
     loadClusteringMethodHandler();
@@ -381,11 +377,6 @@ final class BunchEngine {
       initialGraph = bunch.util.BunchUtilities.toInternalGraph(mdgObj);
       reflexiveEdgeCount = 0;
     }
-  }
-
-  private void loadPreferences() throws IOException, ClassNotFoundException {
-    //Load Preferences
-    preferences = (BunchPreferences)(Beans.instantiate(null, "bunch.BunchPreferences"));
   }
 
   public Graph getBestGraph() {
