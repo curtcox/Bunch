@@ -47,15 +47,4 @@ public ClusteringMethodFactory getClusteringMethodFactory() {
   return methodFactory_d;
 }
 
-/**
- * Obtains the factory of objective function calculator
- * methods set to this preferences object
- *
- * @return the OF Calculator method factory
- * @see ObjectiveFunctionCalculatorFactory
- */
-public ObjectiveFunctionCalculatorFactory getObjectiveFunctionCalculatorFactory() {
-  return calculatorFactory_d;
-}
-
 }

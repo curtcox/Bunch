@@ -335,7 +335,6 @@ final class BunchEngine {
   private void setUpCalculator() {
     //now setup the calculator
     ObjectiveFunctionCalculator objFnCalc = bunchArgs.mqCalculatorClass;
-    (preferences.getObjectiveFunctionCalculatorFactory()).setCurrentCalculator(objFnCalc);
     initialGraph.setObjectiveFunctionCalculator(objFnCalc);
     Global.calculator = objFnCalc;
   }
