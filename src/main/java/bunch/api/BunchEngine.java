@@ -299,7 +299,7 @@ final class BunchEngine {
 
   private void setGraphOutputDriver() {
     //now set the graph output driver
-    graphOutput = null;
+    graphOutput = bunchArgs.graphOutput;
     var outputMode = bunchArgs.OUTPUT_FORMAT;
     if (outputMode != null || !(outputMode==NULL)) {
 
@@ -308,14 +308,12 @@ final class BunchEngine {
         if (outFileName == null)
           outFileName = bunchArgs.MDG_INPUT_FILE_NAME;
 
-        graphOutput = preferences.getGraphOutputFactory().getOutput(outputMode);
-
         if (bunchArgs.OUTPUT_TREE) {
             graphOutput.setNestedLevels(true);
         }
 
-        graphOutput.setBaseName(outFileName); //(String)bunchArgs.get(BunchProperties.MDG_INPUT_FILE_NAME));
-        graphOutput.setBasicName(outFileName); //(String)bunchArgs.get(BunchProperties.MDG_INPUT_FILE_NAME));
+        graphOutput.setBaseName(outFileName);
+        graphOutput.setBasicName(outFileName);
         String outputFileName = graphOutput.getBaseName();
         String outputPath = bunchArgs.OUTPUT_DIRECTORY;
         if(outputPath != null) {
@@ -324,7 +322,6 @@ final class BunchEngine {
           outputFileName = outputPath+filename;
         }
         graphOutput.setCurrentName(outputFileName);
-        //System.out.println("Current name is " + outputFileName);
       }
     }
   }

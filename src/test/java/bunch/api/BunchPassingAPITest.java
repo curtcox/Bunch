@@ -1,6 +1,7 @@
 package bunch.api;
 
 import bunch.model.Cluster;
+import bunch.model.GraphOutputFactory;
 import bunch.simple.SASimpleTechnique;
 import org.junit.Test;
 
@@ -100,13 +101,13 @@ public class BunchPassingAPITest {
     @Test
     public void Do_With_File() throws Exception {
         var api = new BunchAPI();
-        var bp = api.bunchArgs;
-        bp.MDG_INPUT_FILE_NAME = "e:\\SampleMDGs\\paul.mdg";
-        bp.CLUSTERING_ALG = HILL_CLIMBING;
-        bp.OUTPUT_FORMAT = NULL;
-        bp.AGGLOMERATIVE = true;
-        bp.PROGRESS_CALLBACK_CLASS = "bunch.api.BunchAPITestCallback";
-        bp.PROGRESS_CALLBACK_FREQ = 5;
+        var args = api.bunchArgs;
+        args.MDG_INPUT_FILE_NAME = "e:\\SampleMDGs\\paul.mdg";
+        args.CLUSTERING_ALG = HILL_CLIMBING;
+        args.OUTPUT_FORMAT = NULL;
+        args.AGGLOMERATIVE = true;
+        args.PROGRESS_CALLBACK_CLASS = "bunch.api.BunchAPITestCallback";
+        args.PROGRESS_CALLBACK_FREQ = 5;
         var results = api.run();
         assertNotNull(results);
         assertBetween(results.RUNTIME, 1,30);

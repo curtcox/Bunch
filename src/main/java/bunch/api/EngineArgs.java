@@ -2,6 +2,8 @@ package bunch.api;
 
 import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.calculator.TurboMQIncrW;
+import bunch.model.GraphOutput;
+import bunch.model.GraphOutputFactory;
 
 import java.util.Collection;
 import java.util.Map;
@@ -51,4 +53,5 @@ final class EngineArgs {
   public Class ALG_HC_SA_CLASS;
   public String ALG_HC_SA_CONFIG;
   public boolean ECHO_RESULTS_TO_CONSOLE;
+  public GraphOutput graphOutput = new GraphOutputFactory().defaultOption;
 }

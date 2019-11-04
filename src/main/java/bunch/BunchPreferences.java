@@ -15,7 +15,6 @@ import bunch.parser.ParserFactory;
  * @author Brian Mitchell
  */
 public class BunchPreferences
-  implements java.io.Serializable
 {
 
 /**
@@ -27,8 +26,6 @@ private final ClusteringMethodFactory methodFactory_d;
 private final ObjectiveFunctionCalculatorFactory calculatorFactory_d;
 private final ParserFactory parserFactory_d;
 private final GraphOutputFactory outputFactory_d;
-
-public static final long serialVersionUID = 100L;
 
 /**
  * class constructor.  Create the factory objects.
@@ -46,8 +43,7 @@ public BunchPreferences() {
  * @return the clustering method factory
  * @see ClusteringMethodFactory
  */
-public ClusteringMethodFactory getClusteringMethodFactory()
-{
+public ClusteringMethodFactory getClusteringMethodFactory() {
   return methodFactory_d;
 }
 
@@ -58,8 +54,7 @@ public ClusteringMethodFactory getClusteringMethodFactory()
  * @return the OF Calculator method factory
  * @see ObjectiveFunctionCalculatorFactory
  */
-public ObjectiveFunctionCalculatorFactory getObjectiveFunctionCalculatorFactory()
-{
+public ObjectiveFunctionCalculatorFactory getObjectiveFunctionCalculatorFactory() {
   return calculatorFactory_d;
 }
 
@@ -69,20 +64,8 @@ public ObjectiveFunctionCalculatorFactory getObjectiveFunctionCalculatorFactory(
  * @return the parser factory
  * @see ParserFactory
  */
-public ParserFactory getParserFactory()
-{
+public ParserFactory getParserFactory() {
   return parserFactory_d;
-}
-
-/**
- * Obtains the factory of output methods set to this preferences object
- *
- * @return the graph output method factory
- * @see GraphOutputFactory
- */
-public GraphOutputFactory getGraphOutputFactory()
-{
-  return outputFactory_d;
 }
 
 }
