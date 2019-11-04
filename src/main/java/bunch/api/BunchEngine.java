@@ -160,42 +160,6 @@ final class BunchEngine {
     }
   }
 
-  private Hashtable<Key,Collection<String>> getSpecialModulesFromProperties() {
-    Hashtable<Key,Collection<String>> h = new Hashtable<>();
-    List<String> emptyList = new ArrayList<>();
-    boolean   containsSpecial = false;
-
-    if(bunchArgs.omnipresentBoth != null) {
-      containsSpecial = true;
-      h.put(OMNIPRESENT_CENTRAL,bunchArgs.omnipresentBoth);
-    } else
-      h.put(OMNIPRESENT_CENTRAL,emptyList);
-
-    if(bunchArgs.omnipresentClients != null) {
-      containsSpecial = true;
-      h.put(OMNIPRESENT_CLIENT,bunchArgs.omnipresentClients);
-    } else
-      h.put(OMNIPRESENT_CLIENT,emptyList);
-
-    if(bunchArgs.omnipresentSuppliers != null) {
-      containsSpecial = true;
-      h.put(OMNIPRESENT_SUPPLIER,bunchArgs.omnipresentSuppliers);
-    }
-    else
-      h.put(OMNIPRESENT_SUPPLIER,emptyList);
-
-    if(bunchArgs.libraryList != null) {
-      containsSpecial = true;
-      h.put(LIBRARY_MODULE,bunchArgs.libraryList);
-    } else
-      h.put(LIBRARY_MODULE,emptyList);
-
-    if(containsSpecial)
-      return h;
-    else
-      return null;
-  }
-
   private void initClustering() throws IOException, ClassNotFoundException {
     clusterList = new ClusterList();
     constructGraph();
