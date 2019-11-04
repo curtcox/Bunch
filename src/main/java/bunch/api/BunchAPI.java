@@ -4,7 +4,6 @@ import bunch.model.ClusterList;
 import bunch.model.Graph;
 
 import java.io.IOException;
-import java.util.*;
 
 final class BunchAPI {
 
@@ -17,10 +16,6 @@ final class BunchAPI {
 
   public EngineResults getResults() {
     return engine.getResultsHT();
-  }
-
-  public Map getSpecialModules(String mdgFileName) {
-    return engine.getDefaultSpecialNodes(mdgFileName);
   }
 
   public EngineResults run() throws IOException, ClassNotFoundException {

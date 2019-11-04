@@ -240,8 +240,6 @@ private String mode = "NAHC";
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = mdgFileName;
 
-      var htSpecial = api.getSpecialModules(mdgFileName);
-
       bp.CLUSTERING_ALG = HILL_CLIMBING;
       bp.OUTPUT_FORMAT = TEXT;
 
@@ -250,11 +248,7 @@ private String mode = "NAHC";
         bp.algHcRndPct = 0;
       }
 
-      if(removeSpecialNodes)
-        api.bunchArgs.SPECIAL_MODULE_HASHTABLE = htSpecial;
-
-      api.run();
-      var results = api.getResults();
+      var results = api.run();
       Integer iMedLvl = results.MEDIAN_LEVEL_GRAPH;
 
       //===============================================================

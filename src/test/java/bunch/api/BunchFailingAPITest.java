@@ -9,7 +9,6 @@ import org.junit.Test;
 import java.util.*;
 import java.io.*;
 
-import static bunch.api.Key.*;
 import static bunch.TestUtils.*;
 
 public class BunchFailingAPITest {
@@ -141,21 +140,6 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
   }
 
   @Test
-  public void BunchAPITestOld() {
-      var api = new BunchAPI();
-      var htSpecial = api.getSpecialModules("e:\\linux\\linux");
-
-      Collection suppliers = (Collection)htSpecial.get(OMNIPRESENT_SUPPLIER);
-      Collection clients  = (Collection)htSpecial.get(OMNIPRESENT_CLIENT);
-      Collection centrals = (Collection)htSpecial.get(OMNIPRESENT_CENTRAL);
-      Collection libraries = (Collection)htSpecial.get(LIBRARY_MODULE);
-      dump("clients",clients);
-      dump("suppliers",suppliers);
-      dump("centrals",centrals);
-      dump("libraries",libraries);
-  }
-
-  @Test
   public void BunchAPITest5() throws Exception {
       BunchAPI api = new BunchAPI();
     var bp = api.bunchArgs;
@@ -209,7 +193,7 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
     bunchGraphs = new ArrayList<>();
 
       for(int i = 0; i < 2; i++) {
-      this.runClustering(graphName, removeSpecial);
+      this.runClustering(graphName);
     }
     double avgValue = expirPR(prfreq);
     double avgIsomorphicValue = expirIsomorphicPR();
@@ -330,18 +314,13 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
     return (accum /(double)trials);
   }
 
-  private void runClustering(String mdgFileName, boolean removeSpecialNodes) throws Exception {
+  private void runClustering(String mdgFileName) throws Exception {
       BunchAPI api = new BunchAPI();
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = mdgFileName;
 
-      var htSpecial = api.getSpecialModules(mdgFileName);
-
       bp.CLUSTERING_ALG = HILL_CLIMBING;
       bp.OUTPUT_FORMAT = TEXT;
-
-      if(removeSpecialNodes)
-        api.bunchArgs.SPECIAL_MODULE_HASHTABLE = htSpecial;
 
       api.run();
       var results = api.getResults();
