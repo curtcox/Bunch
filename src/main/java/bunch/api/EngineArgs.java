@@ -18,8 +18,6 @@ final class EngineArgs {
   public Map algNahcSaConfig;
   public boolean AGGLOMERATIVE;
   public final ObjectiveFunctionCalculator mqCalculatorClass = new TurboMQIncrW();
-  public String MQCALC_MDG_FILE;
-  public String MQCALC_SIL_FILE;
   public Integer algHcRndPct;
   public Integer algHcHcPct;
   public Integer algNahcHcPct;
