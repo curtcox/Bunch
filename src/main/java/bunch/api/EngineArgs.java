@@ -8,19 +8,12 @@ import bunch.model.GraphOutput;
 import bunch.model.GraphOutputFactory;
 import bunch.parser.ParserFactory;
 
-import java.util.Collection;
 import java.util.Map;
 
 final class EngineArgs {
 
-  public Collection<String> omnipresentBoth;
-  public Collection<String> omnipresentClients;
-  public Collection<String> omnipresentSuppliers;
-  public Collection<String> libraryList;
   public String mdgInputFileName;
   public BunchMDG mdgGraphObject;
-  public String userDirectedClusterSil;
-  public boolean lockUserSetClusters;
   public String algNahcSaClass;
   public Map algNahcSaConfig;
   public boolean AGGLOMERATIVE;
@@ -44,10 +37,7 @@ final class EngineArgs {
   public Integer ALG_GA_POPULATION_SZ;
   public Integer ALG_GA_NUM_GENERATIONS;
   public Integer ALG_SAHC_POPULATION_SZ;
-  public String PR_CLUSTER_FILE;
-  public String PR_EXPERT_FILE;
   public Algorithm CLUSTERING_ALG = Algorithm.HILL_CLIMBING;
-  public Map SPECIAL_MODULE_HASHTABLE;
   public String MDG_PARSER_DELIMS;
   public boolean MDG_PARSER_USE_SPACES;
   public boolean MDG_PARSER_USE_TABS;
