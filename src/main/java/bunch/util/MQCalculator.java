@@ -1,16 +1,13 @@
 package bunch.util;
 
 import bunch.calculator.ObjectiveFunctionCalculator;
-import bunch.calculator.ObjectiveFunctionCalculatorFactory;
 import bunch.model.Graph;
 import bunch.model.Node;
 import bunch.parser.ClusterFileParser;
 import bunch.parser.DependencyFileParser;
 import bunch.parser.Parser;
 
-public final class MQCalculator {
-
-  public MQCalculator() { }
+final class MQCalculator {
 
   public static double CalcMQ(String mdgFileName, String silFileName, ObjectiveFunctionCalculator calculatorName) {
     try {
@@ -40,9 +37,8 @@ public final class MQCalculator {
       return g.getObjectiveFunctionValue();
       //System.out.println("Objective function value = " + g.getObjectiveFunctionValue());
 
-    } catch(Exception calcExcept) {
-      calcExcept.printStackTrace();
-      return -1.0;
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 }
