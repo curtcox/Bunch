@@ -5,14 +5,8 @@ import bunch.clustering.ClusteringMethod;
 import bunch.clustering.NAHCConfiguration;
 import bunch.model.*;
 import bunch.parser.Parser;
-import bunch.simple.SATechnique;
 import bunch.stats.StatsManager;
-
-import java.beans.Beans;
 import java.io.IOException;
-import java.util.Map;
-
-import static bunch.api.Algorithm.*;
 import static bunch.api.OutputFormat.NULL;
 
 public final class ClusterEngine {
@@ -21,7 +15,6 @@ public final class ClusterEngine {
   private ClusteringMethod clusteringMethod;
   private GraphOutput graphOutput;
   private Graph initialGraph = new Graph(0);
-  private Configuration configuration;
   private long totalTime=0;
   private ClusterList clusterList;
   private int reflexiveEdgeCount = 0;
@@ -58,13 +51,12 @@ public final class ClusterEngine {
   }
 
   private void loadClusteringMethodHandler() {
-    //Load Clusteirng Method Handler
     var clustAlg = bunchArgs.CLUSTERING_ALG;
-    if(clustAlg==null) throw new IllegalArgumentException();
+    if (clustAlg==null) throw new IllegalArgumentException();
     clusteringMethod = bunchArgs.clusteringMethod;
-    if(clusteringMethod == null) throw new IllegalArgumentException();
+    if (clusteringMethod == null) throw new IllegalArgumentException();
 
-    configuration = clusteringMethod.getConfiguration();
+    var configuration = clusteringMethod.getConfiguration();
     if (initialGraph !=null && configuration !=null)
       configuration.init(initialGraph);
   }
