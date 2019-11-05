@@ -16,9 +16,8 @@ import java.util.Map;
 import static bunch.api.Algorithm.*;
 import static bunch.api.OutputFormat.NULL;
 
-public final class ClusterEngine
-  implements RunMode
-{
+public final class ClusterEngine {
+
   private ClusterArgs bunchArgs;
   private ClusteringMethod clusteringMethod;
   private GraphOutput graphOutput;
@@ -70,7 +69,6 @@ public final class ClusterEngine
     if (initialGraph !=null&& configuration !=null)
       configuration.init(initialGraph);
 
-    if (clustAlg == GA)            { loadGaConfig(); }
     if (clustAlg == SAHC)          { loadSahcConfig(); }
     if (clustAlg == HILL_CLIMBING) { loadHillClimbingConfig(); }
     if (clustAlg == NAHC)          { loadNahcConfig(); }
@@ -128,15 +126,6 @@ public final class ClusterEngine
 
     if(popSz != null)
       configuration.setPopulationSize(popSz);
-  }
-
-  private void loadGaConfig() {
-    GAConfiguration gaConfig = (GAConfiguration) configuration;
-    gaConfig.setMethod(bunchArgs.ALG_GA_SELECTION_METHOD);
-    gaConfig.setNumOfIterations(bunchArgs.ALG_GA_NUM_GENERATIONS);
-    gaConfig.setCrossoverThreshold(bunchArgs.ALG_GA_CROSSOVER_PROB);
-    gaConfig.setMutationThreshold(bunchArgs.ALG_GA_MUTATION_PROB);
-    gaConfig.setPopulationSize(bunchArgs.ALG_GA_POPULATION_SZ);
   }
 
   private void setGraphOutputDriver() {

@@ -28,11 +28,7 @@ final class ClusterArgs {
   public String MDG_INPUT_FILE_NAME;
   public boolean OUTPUT_TREE;
   public String OUTPUT_DIRECTORY;
-  public GaSelection ALG_GA_SELECTION_METHOD;
-  public Double ALG_GA_CROSSOVER_PROB;
-  public Double ALG_GA_MUTATION_PROB;
   public Integer ALG_GA_POPULATION_SZ;
-  public Integer ALG_GA_NUM_GENERATIONS;
   public Integer ALG_SAHC_POPULATION_SZ;
   public Algorithm CLUSTERING_ALG = Algorithm.HILL_CLIMBING;
   public String MDG_PARSER_DELIMS;
