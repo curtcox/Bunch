@@ -6,18 +6,13 @@ import bunch.model.Graph;
 public final class BunchAPI {
 
   final EngineArgs bunchArgs = new EngineArgs();
-  private BunchEngine engine;
-
-  public BunchAPI() {
-    engine = new BunchEngine();
-  }
+  final ClusterEngine engine = new ClusterEngine();
 
   public EngineResults getResults() {
-    return engine.getResultsHT();
+    return engine.getResults();
   }
 
   public EngineResults run() throws Exception {
-    engine = new BunchEngine();
     engine.run(bunchArgs);
     return getResults();
   }
