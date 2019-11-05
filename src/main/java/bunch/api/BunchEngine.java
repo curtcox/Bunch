@@ -263,8 +263,8 @@ final class BunchEngine {
 //    String clusterF = bunchArgs.PR_CLUSTER_FILE;
 //    String expertF = bunchArgs.PR_EXPERT_FILE;
 //
-//    bunch.util.PrecisionRecallCalculator calc =
-//      new bunch.util.PrecisionRecallCalculator(expertF,clusterF);
+//    bunch.precisionrecall.PrecisionRecallCalculator calc =
+//      new bunch.precisionrecall.PrecisionRecallCalculator(expertF,clusterF);
 //
 //    precision = calc.get_precision();
 //    recall = calc.get_recall();

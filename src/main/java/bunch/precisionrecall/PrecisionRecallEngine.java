@@ -1,6 +1,4 @@
-package bunch.api;
-
-import bunch.util.PrecisionRecallCalculator;
+package bunch.precisionrecall;
 
 public final class PrecisionRecallEngine {
 

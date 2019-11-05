@@ -1,9 +1,9 @@
-package bunch.util;
+package bunch.precisionrecall;
 
 import java.util.*;
 import java.io.*;
 
-public final class PrecisionRecallCalculator {
+final class PrecisionRecallCalculator {
 
   private final String m_S_filename1;
   private final String m_S_filename2;

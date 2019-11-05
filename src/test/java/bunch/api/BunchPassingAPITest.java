@@ -1,6 +1,7 @@
 package bunch.api;
 
 import bunch.model.Cluster;
+import bunch.precisionrecall.PrecisionRecallEngine;
 import bunch.simple.SASimpleTechnique;
 import org.junit.Test;
 
