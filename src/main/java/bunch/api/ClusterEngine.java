@@ -57,7 +57,7 @@ public final class ClusterEngine {
     initialGraph.setIsClusterTree(bunchArgs.AGGLOMERATIVE);
   }
 
-  private void loadClusteringMethodHandler() throws IOException, ClassNotFoundException {
+  private void loadClusteringMethodHandler() {
     //Load Clusteirng Method Handler
     var clustAlg = bunchArgs.CLUSTERING_ALG;
     if(clustAlg==null) throw new IllegalArgumentException();
@@ -65,44 +65,8 @@ public final class ClusterEngine {
     if(clusteringMethod == null) throw new IllegalArgumentException();
 
     configuration = clusteringMethod.getConfiguration();
-    if (initialGraph !=null&& configuration !=null)
+    if (initialGraph !=null && configuration !=null)
       configuration.init(initialGraph);
-
-    if (clustAlg == NAHC)          { loadNahcConfig(); }
-  }
-
-  private void loadNahcConfig() throws IOException, ClassNotFoundException {
-    Integer HCPct = bunchArgs.algNahcHcPct;
-    Integer rndPct = bunchArgs.algNahcRndPct;
-    Integer popSz = bunchArgs.algNahcPopulationSz;
-
-    NAHCConfiguration c = (NAHCConfiguration) configuration;
-
-    if(popSz != null)
-      c.setPopulationSize(popSz);
-
-    if(HCPct != null) {
-      c.setMinPctToConsider(HCPct);
-
-      if(rndPct != null)
-        c.setRandomizePct(rndPct);
-      else {
-        int pctTmp = 100- HCPct;
-        c.setRandomizePct(pctTmp);
-      }
-    }
-
-    String SAClass = bunchArgs.algNahcSaClass;
-    if (SAClass != null) {
-      SATechnique saHandler = (SATechnique) Beans.instantiate(null,SAClass);
-      if (saHandler != null) {
-        Map saHandlerArgs = bunchArgs.algNahcSaConfig;
-        if(saHandlerArgs != null) {
-          saHandler.setConfig();
-        }
-        c.setSATechnique(saHandler);
-      }
-    }
   }
 
   private void setGraphOutputDriver() {

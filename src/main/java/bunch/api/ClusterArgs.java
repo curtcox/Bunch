@@ -8,21 +8,15 @@ import bunch.model.GraphOutput;
 import bunch.model.GraphOutputFactory;
 import bunch.parser.ParserFactory;
 
-import java.util.Map;
-
 final class ClusterArgs {
 
   public String mdgInputFileName;
   public BunchMDG mdgGraphObject;
-  public String algNahcSaClass;
-  public Map algNahcSaConfig;
   public boolean AGGLOMERATIVE;
   public final ObjectiveFunctionCalculator mqCalculatorClass = new TurboMQIncrW();
   public Integer algHcRndPct;
   public Integer algHcHcPct;
   public Integer algNahcHcPct;
-  public Integer algNahcRndPct;
-  public Integer algNahcPopulationSz;
   public OutputFormat OUTPUT_FORMAT;
   public String OUTPUT_FILE;
   public String MDG_INPUT_FILE_NAME;
