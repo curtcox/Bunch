@@ -29,7 +29,6 @@ final class ClusterArgs {
   public boolean OUTPUT_TREE;
   public String OUTPUT_DIRECTORY;
   public Integer ALG_GA_POPULATION_SZ;
-  public Integer ALG_SAHC_POPULATION_SZ;
   public Algorithm CLUSTERING_ALG = Algorithm.HILL_CLIMBING;
   public String MDG_PARSER_DELIMS;
   public boolean MDG_PARSER_USE_SPACES;

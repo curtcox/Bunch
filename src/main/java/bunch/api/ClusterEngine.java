@@ -3,7 +3,6 @@ package bunch.api;
 import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.clustering.ClusteringMethod;
 import bunch.clustering.NAHCConfiguration;
-import bunch.ga.GAConfiguration;
 import bunch.model.*;
 import bunch.parser.Parser;
 import bunch.simple.SATechnique;
@@ -69,7 +68,6 @@ public final class ClusterEngine {
     if (initialGraph !=null&& configuration !=null)
       configuration.init(initialGraph);
 
-    if (clustAlg == SAHC)          { loadSahcConfig(); }
     if (clustAlg == HILL_CLIMBING) { loadHillClimbingConfig(); }
     if (clustAlg == NAHC)          { loadNahcConfig(); }
   }
@@ -119,13 +117,6 @@ public final class ClusterEngine {
       Integer hcThreshold = bunchArgs.algHcHcPct;
       c.setMinPctToConsider(hcThreshold);
     }
-  }
-
-  private void loadSahcConfig() {
-    Integer popSz = bunchArgs.ALG_SAHC_POPULATION_SZ;
-
-    if(popSz != null)
-      configuration.setPopulationSize(popSz);
   }
 
   private void setGraphOutputDriver() {
