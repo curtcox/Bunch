@@ -6,17 +6,17 @@ public class RunModeClusterTest {
 
     @Test
     public void can_create() {
-        new RunModeCluster();
+        new ClusterEngine();
     }
 
     @Test
     public void getClusteringResults() {
-        new RunModeCluster().getResults();
+        new ClusterEngine().getResults();
     }
 
     @Test
     public void runClustering() throws Exception {
-        new RunModeCluster().run(new EngineArgs());
+        new ClusterEngine().run(new EngineArgs());
     }
 
 }

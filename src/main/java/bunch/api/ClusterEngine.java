@@ -16,7 +16,7 @@ import java.util.Map;
 import static bunch.api.Algorithm.*;
 import static bunch.api.OutputFormat.NULL;
 
-public final class RunModeCluster
+public final class ClusterEngine
   implements RunMode
 {
   private EngineArgs bunchArgs;
