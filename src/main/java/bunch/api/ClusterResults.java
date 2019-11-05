@@ -2,7 +2,7 @@ package bunch.api;
 
 import bunch.model.*;
 
-final class EngineResults {
+final class ClusterResults {
   public long RUNTIME;
   public long MQEVALUATIONS;
   public int TOTAL_CLUSTER_LEVELS;

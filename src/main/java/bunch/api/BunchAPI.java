@@ -5,14 +5,14 @@ import bunch.model.Graph;
 
 public final class BunchAPI {
 
-  final EngineArgs bunchArgs = new EngineArgs();
+  final ClusterArgs bunchArgs = new ClusterArgs();
   final ClusterEngine engine = new ClusterEngine();
 
-  public EngineResults getResults() {
+  public ClusterResults getResults() {
     return engine.getResults();
   }
 
-  public EngineResults run() throws Exception {
+  public ClusterResults run() throws Exception {
     engine.run(bunchArgs);
     return getResults();
   }

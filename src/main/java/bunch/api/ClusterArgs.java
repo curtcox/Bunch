@@ -10,7 +10,7 @@ import bunch.parser.ParserFactory;
 
 import java.util.Map;
 
-final class EngineArgs {
+final class ClusterArgs {
 
   public String mdgInputFileName;
   public BunchMDG mdgGraphObject;

@@ -16,7 +16,7 @@ public class RunModeClusterTest {
 
     @Test
     public void runClustering() throws Exception {
-        new ClusterEngine().run(new EngineArgs());
+        new ClusterEngine().run(new ClusterArgs());
     }
 
 }

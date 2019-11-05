@@ -155,7 +155,7 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
 
   }
 
-  private void printResutls(EngineResults results) {
+  private void printResutls(ClusterResults results) {
       long rt = results.RUNTIME;
       long evals = results.MQEVALUATIONS;
       Integer levels = results.TOTAL_CLUSTER_LEVELS;

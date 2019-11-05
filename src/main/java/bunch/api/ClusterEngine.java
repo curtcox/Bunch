@@ -19,7 +19,7 @@ import static bunch.api.OutputFormat.NULL;
 public final class ClusterEngine
   implements RunMode
 {
-  private EngineArgs bunchArgs;
+  private ClusterArgs bunchArgs;
   private ClusteringMethod clusteringMethod;
   private GraphOutput graphOutput;
   private Graph initialGraph = new Graph(0);
@@ -199,7 +199,7 @@ public final class ClusterEngine
     }
   }
 
-  public EngineResults run(EngineArgs args) throws IOException, ClassNotFoundException {
+  public ClusterResults run(ClusterArgs args) throws IOException, ClassNotFoundException {
     this.bunchArgs = args;
     initClustering();
 
@@ -250,8 +250,8 @@ public final class ClusterEngine
       return medianG.getGraphLevel();
   }
 
-  EngineResults getResults() {
-      var results = new EngineResults();
+  ClusterResults getResults() {
+      var results = new ClusterResults();
 
       results.RUNTIME = totalTime;
       results.MQEVALUATIONS = stats.getMQCalculations();

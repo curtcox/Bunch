@@ -5,7 +5,7 @@ import bunch.model.Graph;
 
 public interface RunMode {
 
-    EngineResults run(EngineArgs args) throws Exception;
+    ClusterResults run(ClusterArgs args) throws Exception;
     Graph getBestGraph();
     ClusterList getClusterList();
 }
