@@ -252,9 +252,6 @@ public final class RunModeCluster
   }
 
   EngineResults getResults() {
-      if (clusteringMethod == null || baseCluster == null) {
-        throw new IllegalArgumentException();
-      }
       var results = new EngineResults();
 
       results.RUNTIME = totalTime;
@@ -289,9 +286,6 @@ public final class RunModeCluster
   }
 
   public Graph getBestGraph() {
-    if (clusteringMethod == null)
-      return null;
-
     return clusteringMethod.getBestGraph().cloneGraph();
   }
 

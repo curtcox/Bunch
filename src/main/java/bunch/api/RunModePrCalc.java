@@ -23,10 +23,6 @@ public final class RunModePrCalc
 
   private EngineResults getResults() {
     var results = new EngineResults();
-    if ((precision == null) || (recall == null)) {
-      throw new IllegalArgumentException();
-    }
-
     results.prPrecisionValue = precision;
     results.prRecallValue = recall;
     return results;

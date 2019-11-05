@@ -18,10 +18,6 @@ public final class RunModeMqCalc
   }
 
   private EngineResults getResults() {
-    if (MQCalcValue == null) {
-      throw new IllegalArgumentException();
-    }
-
     var results = new EngineResults();
     results.mqCalcResultValue = MQCalcValue;
     return results;
