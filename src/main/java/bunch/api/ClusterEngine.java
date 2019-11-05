@@ -51,8 +51,6 @@ public final class ClusterEngine {
   }
 
   private void loadClusteringMethodHandler() {
-    var clustAlg = bunchArgs.CLUSTERING_ALG;
-    if (clustAlg==null) throw new IllegalArgumentException();
     clusteringMethod = bunchArgs.clusteringMethod;
     if (clusteringMethod == null) throw new IllegalArgumentException();
 

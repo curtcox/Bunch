@@ -240,7 +240,6 @@ private String mode = "NAHC";
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = mdgFileName;
 
-      bp.CLUSTERING_ALG = HILL_CLIMBING;
       bp.OUTPUT_FORMAT = TEXT;
 
       if(mode.equals("SAHC")) {

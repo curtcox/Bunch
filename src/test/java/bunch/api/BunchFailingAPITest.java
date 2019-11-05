@@ -145,7 +145,6 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
     var bp = api.bunchArgs;
 
     bp.MDG_INPUT_FILE_NAME = "e:\\expir\\small";
-    bp.CLUSTERING_ALG = GA;
 
     bp.ALG_GA_POPULATION_SZ = 50;
 
@@ -319,7 +318,6 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = mdgFileName;
 
-      bp.CLUSTERING_ALG = HILL_CLIMBING;
       bp.OUTPUT_FORMAT = TEXT;
 
       api.run();
@@ -350,7 +348,6 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = "/Users/brianmitchell/dev/mdgs/incl";
 
-      bp.CLUSTERING_ALG = HILL_CLIMBING;
       bp.algHcHcPct = 55;
       bp.algHcRndPct = 20;
       bp.ALG_HC_SA_CLASS = SASimpleTechnique.class;

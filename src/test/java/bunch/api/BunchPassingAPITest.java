@@ -102,7 +102,6 @@ public class BunchPassingAPITest {
         var api = new BunchAPI();
         var args = api.bunchArgs;
         args.MDG_INPUT_FILE_NAME = "e:\\SampleMDGs\\paul.mdg";
-        args.CLUSTERING_ALG = HILL_CLIMBING;
         args.OUTPUT_FORMAT = NULL;
         args.AGGLOMERATIVE = true;
         args.PROGRESS_CALLBACK_CLASS = "bunch.api.BunchAPITestCallback";
@@ -128,7 +127,6 @@ public class BunchPassingAPITest {
         var args = api.bunchArgs;
         args.mdgGraphObject = newBunchMDG2();
 
-        args.CLUSTERING_ALG = HILL_CLIMBING;
         args.OUTPUT_FORMAT = NULL;
 
         args.AGGLOMERATIVE = true;
@@ -155,7 +153,6 @@ public class BunchPassingAPITest {
     println("Starting...");
     var api = new BunchAPI();
     var bp = api.bunchArgs;
-    bp.CLUSTERING_ALG = HILL_CLIMBING;
     bp.OUTPUT_FORMAT = TEXT;
     bp.OUTPUT_TREE = true;
     bp.MDG_INPUT_FILE_NAME = "c:\\research\\mdgs\\pgsql";
@@ -184,7 +181,6 @@ public class BunchPassingAPITest {
             args.MDG_INPUT_FILE_NAME = mdgFile;
             args.OUTPUT_FORMAT = TEXT;
 
-            args.CLUSTERING_ALG = HILL_CLIMBING;
             args.algHcHcPct = 100;
             args.algHcRndPct = 0;
 
@@ -263,8 +259,6 @@ public class BunchPassingAPITest {
             var bp = api.bunchArgs;
 
             bp.MDG_INPUT_FILE_NAME = mdg;
-
-            bp.CLUSTERING_ALG = HILL_CLIMBING;
 
             if(useSA) {
                 bp.algHcHcPct = 30;
@@ -374,7 +368,6 @@ public class BunchPassingAPITest {
         //BunchAsyncNotifyTest nt = new BunchAsyncNotifyTest();
 
         bp.MDG_INPUT_FILE_NAME = mdg;
-        bp.CLUSTERING_ALG = HILL_CLIMBING;
 
         //bp.setProperty(CLUSTERING_ALG,ALG_GA);
         bp.OUTPUT_FORMAT = TEXT;

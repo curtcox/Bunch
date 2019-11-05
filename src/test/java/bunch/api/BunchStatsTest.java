@@ -59,7 +59,6 @@ public final class BunchStatsTest {
       bp.MDG_INPUT_FILE_NAME = "e:\\incl";
       bp.OUTPUT_FORMAT = NULL;
 
-      bp.CLUSTERING_ALG = NAHC;
       bp.algNahcHcPct = 1;
       //bp.setProperty(BunchProperties.ALG_NAHC_RND_PCT,"20");
       //bp.setProperty(BunchProperties.ALG_NAHC_SA_CLASS,"bunch.simple.SASimpleTechnique");
