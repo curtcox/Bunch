@@ -25,7 +25,6 @@ public final class RunModeCluster
   private Graph initialGraph = new Graph(0);
   private Configuration configuration;
   private long totalTime=0;
-  private Cluster baseCluster;
   private ClusterList clusterList;
   private int reflexiveEdgeCount = 0;
   private final StatsManager stats = StatsManager.getInstance();
@@ -207,7 +206,7 @@ public final class RunModeCluster
     executeClusteringEngine();//clusteringMethod_d,bunchArgs);
 
     clusteringMethod.getBestCluster();
-    baseCluster = clusteringMethod.getBestCluster().cloneCluster();
+    Cluster baseCluster = clusteringMethod.getBestCluster().cloneCluster();
     clusterList.add(clusteringMethod.getBestCluster().cloneCluster());
 
     if(bunchArgs.AGGLOMERATIVE) {
