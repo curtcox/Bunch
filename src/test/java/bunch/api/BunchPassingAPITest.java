@@ -231,13 +231,11 @@ public class BunchPassingAPITest {
 
                 var file1 = mdgFile + i + ".bunch";
                 var file2 = mdgFile + j + ".bunch";
-                args.runMode = new PrecisionRecallEngine();
-                args.PR_CLUSTER_FILE = file1;
-                args.PR_EXPERT_FILE = file2;
-                var results = api.run();
+                var pr = new PrecisionRecallEngine();
+                var results = pr.run(file1,file2);
                 assertNotNull(results);
-                var precision = results.prPrecisionValue;
-                var recall = results.prRecallValue;
+                var precision = results.precision;
+                var recall = results.recall;
                 String outLine = "PR("+file1+", "+file2+")\t" + precision + "\t" + recall+"\r\n";
 
                 out.write(outLine);
