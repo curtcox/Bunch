@@ -1,7 +1,6 @@
 package bunch.api;
 
 import bunch.model.Cluster;
-import bunch.model.GraphOutputFactory;
 import bunch.simple.SASimpleTechnique;
 import org.junit.Test;
 
@@ -11,7 +10,6 @@ import java.util.*;
 
 import static bunch.api.Algorithm.*;
 import static bunch.api.OutputFormat.*;
-import static bunch.api.RunMode.*;
 import static org.junit.Assert.*;
 import static bunch.TestUtils.*;
 
@@ -233,7 +231,7 @@ public class BunchPassingAPITest {
 
                 var file1 = mdgFile + i + ".bunch";
                 var file2 = mdgFile + j + ".bunch";
-                args.runMode = new RunModePrCalc();
+                args.runMode = new PrecisionRecallEngine();
                 args.PR_CLUSTER_FILE = file1;
                 args.PR_EXPERT_FILE = file2;
                 var results = api.run();

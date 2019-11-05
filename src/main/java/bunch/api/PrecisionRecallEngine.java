@@ -4,7 +4,7 @@ import bunch.model.ClusterList;
 import bunch.model.Graph;
 import bunch.util.PrecisionRecallCalculator;
 
-public final class RunModePrCalc
+public final class PrecisionRecallEngine
   implements RunMode
 {
 
