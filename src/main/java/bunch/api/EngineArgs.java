@@ -32,7 +32,7 @@ final class EngineArgs {
   public Integer algNahcHcPct;
   public Integer algNahcRndPct;
   public Integer algNahcPopulationSz;
-  public RunMode runMode = RunMode.CLUSTER;
+  public RunMode runMode = new RunModeCluster();
   public OutputFormat OUTPUT_FORMAT;
   public String OUTPUT_FILE;
   public String MDG_INPUT_FILE_NAME;

@@ -16,10 +16,10 @@ import java.util.Map;
 import static bunch.api.Algorithm.*;
 import static bunch.api.OutputFormat.NULL;
 
-final class RunModeCluster {
-
-  private EngineArgs bunchArgs = new EngineArgs();
-  private EngineResults results = new EngineResults();
+public final class RunModeCluster
+  implements RunMode
+{
+  private EngineArgs bunchArgs;
   private ClusteringMethod clusteringMethod;
   private GraphOutput graphOutput;
   private Graph initialGraph = new Graph(0);
@@ -200,7 +200,8 @@ final class RunModeCluster {
     }
   }
 
-  void runClustering() throws IOException, ClassNotFoundException {
+  public EngineResults run(EngineArgs args) throws IOException, ClassNotFoundException {
+    this.bunchArgs = args;
     initClustering();
 
     executeClusteringEngine();//clusteringMethod_d,bunchArgs);
@@ -238,6 +239,7 @@ final class RunModeCluster {
       graphOutput.write();
     }
 
+    return getResults();
   }
 
   private int getMedianLevelNumber() {
@@ -249,11 +251,11 @@ final class RunModeCluster {
       return medianG.getGraphLevel();
   }
 
-  EngineResults getClusteringResultsHT() {
-      if (clusteringMethod == null) return null;
-      if (baseCluster == null)        return null;
-
-      results = new EngineResults();
+  EngineResults getResults() {
+      if (clusteringMethod == null || baseCluster == null) {
+        throw new IllegalArgumentException();
+      }
+      var results = new EngineResults();
 
       results.RUNTIME = totalTime;
       results.MQEVALUATIONS = stats.getMQCalculations();
@@ -280,6 +282,17 @@ final class RunModeCluster {
     clusteringMethod.run();
     long endTime = System.currentTimeMillis();
     totalTime += (endTime - startTime);
+  }
+
+  public ClusterList getClusterList() {
+    return this.clusterList;
+  }
+
+  public Graph getBestGraph() {
+    if (clusteringMethod == null)
+      return null;
+
+    return clusteringMethod.getBestGraph().cloneGraph();
   }
 
 }

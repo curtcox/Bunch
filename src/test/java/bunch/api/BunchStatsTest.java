@@ -42,7 +42,7 @@ public final class BunchStatsTest {
   }
 
   @Test
-  public void runStatsTest() throws IOException, ClassNotFoundException {
+  public void runStatsTest() throws Exception {
 
     String fileName = "e:\\bunchstats.txt";
 

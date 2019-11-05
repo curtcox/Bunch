@@ -233,7 +233,7 @@ public class BunchPassingAPITest {
 
                 var file1 = mdgFile + i + ".bunch";
                 var file2 = mdgFile + j + ".bunch";
-                args.runMode = PR_CALC;
+                args.runMode = new RunModePrCalc();
                 args.PR_CLUSTER_FILE = file1;
                 args.PR_EXPERT_FILE = file2;
                 var results = api.run();

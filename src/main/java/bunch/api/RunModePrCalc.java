@@ -1,31 +1,45 @@
 package bunch.api;
 
-final class RunModePrCalc {
+import bunch.model.ClusterList;
+import bunch.model.Graph;
+import bunch.util.PrecisionRecallCalculator;
 
-  private EngineArgs bunchArgs = new EngineArgs();
-  private EngineResults results = new EngineResults();
+public final class RunModePrCalc
+  implements RunMode
+{
+
   private Double precision;
   private Double recall;
 
-  private void runPRCalc() {
+  public EngineResults run(EngineArgs bunchArgs) {
     String clusterF = bunchArgs.PR_CLUSTER_FILE;
     String expertF = bunchArgs.PR_EXPERT_FILE;
 
-    bunch.util.PrecisionRecallCalculator calc =
-      new bunch.util.PrecisionRecallCalculator(expertF,clusterF);
-
+    var calc = new PrecisionRecallCalculator(expertF,clusterF);
     precision = calc.get_precision();
     recall = calc.get_recall();
+    return getResults();
   }
 
-  private EngineResults getPRResultsHT() {
-    results = new EngineResults();
-    if ((precision == null) || (recall == null))
-      return null;
+  private EngineResults getResults() {
+    var results = new EngineResults();
+    if ((precision == null) || (recall == null)) {
+      throw new IllegalArgumentException();
+    }
 
     results.prPrecisionValue = precision;
     results.prRecallValue = recall;
     return results;
+  }
+
+  @Override
+  public Graph getBestGraph() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public ClusterList getClusterList() {
+    throw new UnsupportedOperationException();
   }
 
 }

@@ -11,12 +11,12 @@ public class RunModeClusterTest {
 
     @Test
     public void getClusteringResults() {
-        new RunModeCluster().getClusteringResultsHT();
+        new RunModeCluster().getResults();
     }
 
     @Test
     public void runClustering() throws Exception {
-        new RunModeCluster().runClustering();
+        new RunModeCluster().run(new EngineArgs());
     }
 
 }

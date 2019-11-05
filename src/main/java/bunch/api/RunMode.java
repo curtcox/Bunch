@@ -1,5 +1,11 @@
 package bunch.api;
 
-enum RunMode {
-    CLUSTER, PR_CALC, MQ_CALC
+import bunch.model.ClusterList;
+import bunch.model.Graph;
+
+public interface RunMode {
+
+    EngineResults run(EngineArgs args) throws Exception;
+    Graph getBestGraph();
+    ClusterList getClusterList();
 }

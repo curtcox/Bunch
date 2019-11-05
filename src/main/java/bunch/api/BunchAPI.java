@@ -3,8 +3,6 @@ package bunch.api;
 import bunch.model.ClusterList;
 import bunch.model.Graph;
 
-import java.io.IOException;
-
 public final class BunchAPI {
 
   final EngineArgs bunchArgs = new EngineArgs();
@@ -18,7 +16,7 @@ public final class BunchAPI {
     return engine.getResultsHT();
   }
 
-  public EngineResults run() throws IOException, ClassNotFoundException {
+  public EngineResults run() throws Exception {
     engine = new BunchEngine();
     engine.run(bunchArgs);
     return getResults();
