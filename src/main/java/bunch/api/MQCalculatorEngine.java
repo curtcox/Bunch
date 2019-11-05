@@ -3,7 +3,7 @@ package bunch.api;
 import bunch.model.ClusterList;
 import bunch.model.Graph;
 
-public final class RunModeMqCalc
+public final class MQCalculatorEngine
   implements RunMode
 {
   private Double MQCalcValue;
