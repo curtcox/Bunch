@@ -2,6 +2,7 @@ package bunch.util;
 
 import java.util.*;
 
+import bunch.api.BunchMDG;
 import bunch.model.Graph;
 import bunch.model.Node;
 
@@ -23,7 +24,7 @@ public static boolean compareGreaterEqual(double a, double b) {
   return (ia >= ib);
 }
 
-public static Graph toInternalGraph(bunch.api.BunchMDG bunchMDG) {
+public static Graph toInternalGraph(BunchMDG bunchMDG) {
   var al = new ArrayList<>(bunchMDG.getMDGEdges());
   Hashtable<String,ParserNode> nodes = new Hashtable<>();
 
