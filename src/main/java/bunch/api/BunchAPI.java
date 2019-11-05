@@ -5,7 +5,7 @@ import bunch.model.Graph;
 
 import java.io.IOException;
 
-final class BunchAPI {
+public final class BunchAPI {
 
   final EngineArgs bunchArgs = new EngineArgs();
   private BunchEngine engine;
