@@ -68,7 +68,6 @@ public final class ClusterEngine {
     if (initialGraph !=null&& configuration !=null)
       configuration.init(initialGraph);
 
-    if (clustAlg == HILL_CLIMBING) { loadHillClimbingConfig(); }
     if (clustAlg == NAHC)          { loadNahcConfig(); }
   }
 
@@ -103,19 +102,6 @@ public final class ClusterEngine {
         }
         c.setSATechnique(saHandler);
       }
-    }
-  }
-
-  private void loadHillClimbingConfig() {
-    NAHCConfiguration c = (NAHCConfiguration) configuration;
-    if(bunchArgs.algHcRndPct != null) {
-      Integer randomize = bunchArgs.algHcRndPct;
-      c.setRandomizePct(randomize);
-    }
-
-    if(bunchArgs.algHcHcPct != null) {
-      Integer hcThreshold = bunchArgs.algHcHcPct;
-      c.setMinPctToConsider(hcThreshold);
     }
   }
 
