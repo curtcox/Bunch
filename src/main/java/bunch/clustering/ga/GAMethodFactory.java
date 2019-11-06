@@ -1,4 +1,4 @@
-package bunch.ga;
+package bunch.clustering.ga;
 
 final class GAMethodFactory {
 }

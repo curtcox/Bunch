@@ -1,6 +1,6 @@
 package bunch.clustering;
 
-import bunch.ga.GAClusteringMethod;
+import bunch.clustering.ga.GAClusteringMethod;
 import bunch.model.Configuration;
 import bunch.model.Graph;
 import bunch.event.IterationEvent;

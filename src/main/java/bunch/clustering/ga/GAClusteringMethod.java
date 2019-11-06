@@ -1,4 +1,4 @@
-package bunch.ga;
+package bunch.clustering.ga;
 
 import bunch.clustering.GenericClusteringMethod;
 import bunch.model.Cluster;
@@ -8,7 +8,7 @@ import java.util.Random;
 
 /**
  * A clustering method based on a genetic algorithm. This implementation relies
- * on the bunch.ga.GAMethod interface for actual GA processing. This is necessary
+ * on the bunch.clustering.ga.ga.GAMethod interface for actual GA processing. This is necessary
  * because there can be different GA implementations (for example, with
  * different selection mechanisms such as roulette wheel, or tournament)
  * and the basic algorithm does not change but the specifics do. Those specifics

@@ -1,4 +1,4 @@
-package bunch.ga;
+package bunch.clustering.ga;
 
 import bunch.model.Configuration;
 import bunch.model.Graph;
