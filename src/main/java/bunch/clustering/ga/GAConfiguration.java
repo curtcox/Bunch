@@ -1,6 +1,6 @@
 package bunch.clustering.ga;
 
-import bunch.clustering.Configuration;
+import bunch.clustering.ClusteringMethodConfiguration;
 import bunch.model.Graph;
 
 /**
@@ -12,7 +12,7 @@ import bunch.model.Graph;
  * @see GAClusteringMethod
  */
 public final class GAConfiguration
-  extends Configuration
+  extends ClusteringMethodConfiguration
 {
 private GAMethod method_d;
 private double mutationThreshold_d;

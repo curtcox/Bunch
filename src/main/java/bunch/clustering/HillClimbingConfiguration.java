@@ -8,7 +8,7 @@ import bunch.model.Graph;
  *
  * @author Brian Mitchell
  */
-public class HillClimbingConfiguration extends Configuration {
+public class HillClimbingConfiguration extends ClusteringMethodConfiguration {
 private double threshold_d=0.1;
 
 /**

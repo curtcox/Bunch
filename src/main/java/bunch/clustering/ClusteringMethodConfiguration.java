@@ -12,7 +12,7 @@ import java.io.*;
  * @author Brian Mitchell
  *
  */
-public class Configuration {
+public class ClusteringMethodConfiguration {
 
 private int numIterations_d;
 private int popSize_d;
@@ -20,7 +20,7 @@ private int popSize_d;
 /**
  * Class constructor.
  */
-protected Configuration() { }
+protected ClusteringMethodConfiguration() { }
 
 /**
  * Initializes this configuration object based on the characteristics of

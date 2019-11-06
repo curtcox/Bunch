@@ -2,7 +2,7 @@ package bunch.api;
 
 import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.clustering.ClusteringMethod;
-import bunch.clustering.Configuration;
+import bunch.clustering.ClusteringMethodConfiguration;
 import bunch.clustering.NAHCConfiguration;
 import bunch.model.*;
 import bunch.output.GraphOutput;
@@ -144,7 +144,7 @@ public final class ClusterEngine {
       results.RESULT_CLUSTER_OBJS = clusterList;
       StatsManager.cleanup();
 
-      Configuration cTmp = clusteringMethod.getConfiguration();
+      ClusteringMethodConfiguration cTmp = clusteringMethod.getConfiguration();
       if(cTmp instanceof NAHCConfiguration) {
         NAHCConfiguration nahcConf = (NAHCConfiguration)cTmp;
         if (nahcConf.getSATechnique() != null)

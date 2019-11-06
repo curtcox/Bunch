@@ -32,7 +32,7 @@ private double bestOFValue_d=0.0;
 /**
  * Class constructor.
  */
-public GenericClusteringMethod(Configuration configuration) {
+public GenericClusteringMethod(ClusteringMethodConfiguration configuration) {
   super(configuration);
   setPopSize(DEFAULT_POP_SIZE);
   setThreshold(DEFAULT_THRESHOLD);

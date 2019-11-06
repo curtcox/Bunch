@@ -23,9 +23,9 @@ private IterationListener listener_d;
 private Graph graph_d;
 private Graph bestGraph_d;
 private double elapsedTime_d=0.0;
-private final Configuration configuration_d;
+private final ClusteringMethodConfiguration configuration_d;
 
-BaseClusteringMethod(Configuration configuration) {
+BaseClusteringMethod(ClusteringMethodConfiguration configuration) {
     this.configuration_d = configuration;
 }
 
@@ -83,7 +83,7 @@ public abstract int getMaxIterations();
 
 public abstract Cluster getBestCluster();
 
-public Configuration getConfiguration() {
+public ClusteringMethodConfiguration getConfiguration() {
   return configuration_d;
 }
 

@@ -4,7 +4,7 @@ import bunch.model.Cluster;
 import bunch.model.Graph;
 
 public interface ClusteringMethod extends Runnable {
-    Configuration getConfiguration();
+    ClusteringMethodConfiguration getConfiguration();
     void initialize();
     void setGraph(Graph cloneGraph);
     Graph getBestGraph();

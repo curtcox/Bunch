@@ -30,13 +30,13 @@ abstract class BaseHierClusteringMethod extends BaseClusteringMethod
     private IterationListener listener;
 private Graph graph;
 private Cluster bestCluster;
-Configuration configuration;
+ClusteringMethodConfiguration configuration;
 private double elapsedTime =0.0;
 
 /**
  * the class constructor
  */
-BaseHierClusteringMethod(Configuration configuration) { super(configuration); }
+BaseHierClusteringMethod(ClusteringMethodConfiguration configuration) { super(configuration); }
 
 /**
  * Initializes the clustering method.
@@ -180,7 +180,7 @@ public abstract int getMaxIterations();
  *
  * @return the configuration
  */
-public Configuration getConfiguration()
+public ClusteringMethodConfiguration getConfiguration()
 {
   return configuration;
 }
