@@ -4,7 +4,6 @@ import bunch.event.IterationEvent;
 import bunch.event.IterationListener;
 import bunch.clustering.ga.GAClusteringMethod;
 import bunch.model.Cluster;
-import bunch.model.Configuration;
 import bunch.model.Graph;
 
 /**

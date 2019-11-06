@@ -1,18 +1,16 @@
-package bunch.model;
+package bunch.clustering;
+
+import bunch.model.Graph;
 
 import java.io.*;
 
 /**
  * A generic configuration class for clustering methods. This basic class
- * includes parameters for a population size, the number of iterations for
- * the algorithm and three sets of "Features" for pre/post and processing
- * during the algorithm. Features are intended to extend an algorithm in
- * generic form. This class is also Serializable so it can easily be saved
- * or transmitted over the network if necessary.
+ * includes parameters for a population size and the number of iterations for
+ * the algorithm.
  *
  * @author Brian Mitchell
  *
- * @see Feature
  */
 public class Configuration {
 

@@ -4,8 +4,8 @@ import bunch.calculator.TurboMQIncrW;
 import bunch.model.Cluster;
 import bunch.model.Global;
 import bunch.model.Graph;
+import bunch.parser.DependencyFileParser;
 import bunch.parser.Parser;
-import bunch.parser.ParserFactory;
 import org.junit.Test;
 
 import java.io.*;
@@ -18,7 +18,7 @@ public final class BunchStatsTest {
   public void checkGraphTest() {
       String filename = "d:\\proj\\bunch\\examples\\bison"; //"e:\\incl";
 
-      Parser p = new ParserFactory().getParser("dependency");
+      Parser p = new DependencyFileParser();
       p.setInput(filename);
       p.setDelims(" \t");
       Graph g = (Graph)p.parse();

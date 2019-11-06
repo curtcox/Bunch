@@ -1,6 +1,5 @@
 package bunch.clustering;
 
-import bunch.model.Configuration;
 import bunch.model.Graph;
 
 /**

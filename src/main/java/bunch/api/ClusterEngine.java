@@ -2,10 +2,10 @@ package bunch.api;
 
 import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.clustering.ClusteringMethod;
+import bunch.clustering.Configuration;
 import bunch.clustering.NAHCConfiguration;
 import bunch.model.*;
 import bunch.output.GraphOutput;
-import bunch.parser.Parser;
 import bunch.stats.StatsManager;
 import java.io.IOException;
 
@@ -72,15 +72,6 @@ public final class ClusterEngine {
   }
 
   private void constructGraph() {
-    //Construct Graph
-    if(bunchArgs.mdgInputFileName != null) {
-      Parser p = bunchArgs.parserFactory.getParser("dependency");
-      p.setInput(bunchArgs.mdgInputFileName);
-      p.setDelims(getFileDelims());
-      initialGraph = (Graph)p.parse();
-      reflexiveEdgeCount = p.getReflexiveEdges();
-    }
-
     if (bunchArgs.mdgGraphObject != null) {
       BunchMDG mdgObj = bunchArgs.mdgGraphObject;
 

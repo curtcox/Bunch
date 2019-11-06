@@ -1,7 +1,6 @@
 package bunch.clustering;
 
 import bunch.model.Cluster;
-import bunch.model.Configuration;
 import bunch.model.Node;
 
 public final class SteepestAscentHillClimbingClusteringMethod extends GenericHillClimbingClusteringMethod {

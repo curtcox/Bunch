@@ -2,7 +2,6 @@ package bunch.clustering;
 
 import bunch.model.Cluster;
 import bunch.event.IterationEvent;
-import bunch.model.Configuration;
 import bunch.model.Population;
 
 /**

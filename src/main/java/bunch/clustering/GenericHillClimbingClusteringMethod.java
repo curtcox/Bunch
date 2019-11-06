@@ -1,7 +1,6 @@
 package bunch.clustering;
 
 import bunch.model.Cluster;
-import bunch.model.Configuration;
 
 /**
  * A generic hill climbing clustering method class, intended to provide common services
