@@ -4,6 +4,7 @@ import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.clustering.ClusteringMethod;
 import bunch.clustering.NAHCConfiguration;
 import bunch.model.*;
+import bunch.output.GraphOutput;
 import bunch.parser.Parser;
 import bunch.stats.StatsManager;
 import java.io.IOException;

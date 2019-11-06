@@ -1,4 +1,6 @@
-package bunch.model;
+package bunch.output;
+
+import bunch.model.Graph;
 
 import java.io.*;
 

@@ -4,8 +4,6 @@ import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.calculator.TurboMQIncrW;
 import bunch.clustering.ClusteringMethod;
 import bunch.clustering.ClusteringMethodFactory;
-import bunch.model.GraphOutput;
-import bunch.model.GraphOutputFactory;
 import bunch.parser.ParserFactory;
 
 final class ClusterArgs {

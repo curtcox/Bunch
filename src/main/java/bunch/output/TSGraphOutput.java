@@ -1,4 +1,7 @@
-package bunch.model;
+package bunch.output;
+
+import bunch.model.Edge;
+import bunch.model.Node;
 
 import java.io.*;
 import java.util.Vector;
