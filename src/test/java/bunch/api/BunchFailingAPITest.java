@@ -141,12 +141,13 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
 
   @Test
   public void BunchAPITest5() throws Exception {
-      BunchAPI api = new BunchAPI();
-    var bp = api.bunchArgs;
 
-    bp.MDG_INPUT_FILE_NAME = "e:\\expir\\small";
+      var api = new BunchAPI();
+    var args = api.bunchArgs;
 
-    bp.ALG_GA_POPULATION_SZ = 50;
+    args.MDG_INPUT_FILE_NAME = "e:\\expir\\small";
+
+    args.ALG_GA_POPULATION_SZ = 50;
 
     api.run();
     var results = api.getResults();

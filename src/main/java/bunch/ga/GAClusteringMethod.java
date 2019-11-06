@@ -1,9 +1,7 @@
-package bunch.clustering;
+package bunch.ga;
 
-import bunch.ga.GAConfiguration;
-import bunch.ga.GAMethod;
+import bunch.clustering.GenericClusteringMethod;
 import bunch.model.Cluster;
-import bunch.model.Configuration;
 import bunch.model.Graph;
 
 import java.util.Random;
@@ -135,4 +133,7 @@ public boolean nextGeneration() {
   return false;
 }
 
+  public GAConfiguration getConfiguration() {
+    return (GAConfiguration) super.getConfiguration();
+  }
 }

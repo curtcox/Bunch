@@ -148,7 +148,7 @@ public void shakePopulation() {
 
 /**
  * Sets the initial value of the counter for this method. This value will
- * be used by the bunch.clustering.GAClusteringMethod.run() method to initialize the
+ * be used by the bunch.ga.GAClusteringMethod.run() method to initialize the
  * internal generation counter for the GA.
  *
  * @see #getInitCounter()
@@ -170,7 +170,7 @@ public int getInitCounter()
 
 /**
  * Sets the maximum value of the counter for this method. This value will
- * be used by the bunch.clustering.GAClusteringMethod.run() method as upper bound
+ * be used by the bunch.ga.GAClusteringMethod.run() method as upper bound
  * for the GA's internal generation counter.
  *
  * @see #getMaxCounter()
@@ -204,7 +204,7 @@ public int getIncrementCounter()
 
 /**
  * Sets the increment value of the counter for this method. This value will
- * be used by the bunch.clustering.GAClusteringMethod.run() method to increment the
+ * be used by the bunch.ga.GAClusteringMethod.run() method to increment the
  * for the GA's internal generation counter each iteration.
  *
  * @param i the counter increment value

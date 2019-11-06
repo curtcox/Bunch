@@ -3,7 +3,6 @@ package bunch.ga;
 import bunch.api.GaSelection;
 import bunch.model.Configuration;
 import bunch.model.Graph;
-import bunch.clustering.GAClusteringMethod;
 
 /**
  * A subclass of Configuration with specific parameters used by the Genetic
@@ -13,7 +12,7 @@ import bunch.clustering.GAClusteringMethod;
  *
  * @see GAClusteringMethod
  */
-public class GAConfiguration
+public final class GAConfiguration
   extends Configuration
 {
 private GAMethod method_d;

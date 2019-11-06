@@ -1,6 +1,7 @@
 package bunch.clustering;
 
 import bunch.api.Algorithm;
+import bunch.ga.GAClusteringMethod;
 import bunch.model.GenericFactory;
 
 import static bunch.api.Algorithm.*;

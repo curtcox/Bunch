@@ -2,6 +2,7 @@ package bunch.clustering;
 
 import bunch.event.IterationEvent;
 import bunch.event.IterationListener;
+import bunch.ga.GAClusteringMethod;
 import bunch.model.Cluster;
 import bunch.model.Configuration;
 import bunch.model.Graph;
@@ -62,8 +63,7 @@ public void setGraph(Graph g)
  *
  * @return the graph
  */
-Graph getGraph()
-{
+public Graph getGraph() {
   return graph;
 }
 

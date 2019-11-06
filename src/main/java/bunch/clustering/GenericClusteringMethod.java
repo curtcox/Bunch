@@ -1,5 +1,6 @@
 package bunch.clustering;
 
+import bunch.ga.GAClusteringMethod;
 import bunch.model.Configuration;
 import bunch.model.Graph;
 import bunch.event.IterationEvent;
@@ -22,7 +23,7 @@ private static final int DEFAULT_NUM_EXPERIMENTS = 200;
 private static final int DEFAULT_POP_SIZE = 25;
 private static final double DEFAULT_THRESHOLD = 0.1;
 
-Graph[] currentPopulation_d;
+public Graph[] currentPopulation_d;
 private int popSize_d=DEFAULT_POP_SIZE;
 
 private int numExperiments_d=DEFAULT_NUM_EXPERIMENTS;
@@ -32,7 +33,7 @@ private double bestOFValue_d=0.0;
 /**
  * Class constructor.
  */
-GenericClusteringMethod(Configuration configuration) {
+public GenericClusteringMethod(Configuration configuration) {
   super(configuration);
   setPopSize(DEFAULT_POP_SIZE);
   setThreshold(DEFAULT_THRESHOLD);
@@ -153,8 +154,7 @@ protected abstract boolean nextGeneration();
  * @param t the threshold percentage expressed as a real value
  * @see #getThreshold()
  */
-void setThreshold(double t)
-{
+public void setThreshold(double t) {
     threshold_d = t;
 }
 
@@ -190,8 +190,7 @@ public int getMaxIterations()
  * @param max the maximum number of experiments to run
  * @see #getNumOfExperiments()
  */
-void setNumOfExperiments(int max)
-{
+public void setNumOfExperiments(int max) {
   numExperiments_d = max;
 }
 
@@ -213,8 +212,7 @@ private int getNumOfExperiments()
  * @param psz the population size set for this clustering method
  * @see #getPopSize()
  */
-void setPopSize(int psz)
-{
+public void setPopSize(int psz) {
   popSize_d = psz;
 }
 
@@ -224,8 +222,7 @@ void setPopSize(int psz)
  * @return the population size set for this clustering method
  * @see #setPopSize(int)
  */
-int getPopSize()
-{
+public int getPopSize() {
   return popSize_d;
 }
 

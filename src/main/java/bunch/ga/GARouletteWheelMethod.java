@@ -8,7 +8,7 @@ import bunch.model.Graph;
  *
  * @author Brian Mitchell
  */
-public class GARouletteWheelMethod extends GAMethod {
+public final class GARouletteWheelMethod extends GAMethod {
 
 private int[] tempArray_d;
 
@@ -78,10 +78,7 @@ public void selectReproduceCrossAndMutate(int pos) {
 /**
  * Update the data structures to deal with the new fitness value
  */
-protected
-void
-processFitnessValues()
-{
+protected void processFitnessValues() {
   sumOFValue_d = 0.0;
   int nummax = 0;
   for (double v : fitnessArray_d) {
@@ -125,9 +122,7 @@ processFitnessValues()
 /**
  * Scale the difference to range between 0 and 1
  */
-private double
-getScaledFitness(double fit)
-{
+private double getScaledFitness(double fit) {
     double mult = 1.0;
     double cdiff = fit-minOFValue_d;
     double odiff = maxOFValue_d-minOFValue_d;
@@ -142,24 +137,18 @@ getScaledFitness(double fit)
 /**
  * Determine a mutation position, if a mutation operation is needed
  */
-private void
-mutate(int[] c, int pos)
+private void mutate(int[] c, int pos)
 {
     c[pos] = (int)(randomGenerator_d.nextFloat() * (c.length-1));
 }
 
-public
-void
-shakePopulation()
-{
+public void shakePopulation() {
 }
 
 /**
  * Crossover the population member c1c with c2c at the crossp position
  */
-private void
-cross(int[] c1c, int[] c2c, int crossp)
-{
+private void cross(int[] c1c, int[] c2c, int crossp) {
   System.arraycopy(c1c, crossp, tempArray_d, crossp, c1c.length-crossp);
   System.arraycopy(c2c, crossp, c1c, crossp, c1c.length-crossp);
   System.arraycopy(tempArray_d, crossp, c2c, crossp, c1c.length-crossp);
