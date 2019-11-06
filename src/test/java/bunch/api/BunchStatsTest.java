@@ -11,7 +11,6 @@ import org.junit.Test;
 import java.io.*;
 
 import static bunch.TestUtils.*;
-import static bunch.api.Algorithm.NAHC;
 import static bunch.api.OutputFormat.NULL;
 
 public final class BunchStatsTest {

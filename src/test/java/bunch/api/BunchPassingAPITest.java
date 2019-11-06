@@ -9,7 +9,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.*;
 
-import static bunch.api.Algorithm.*;
 import static bunch.api.OutputFormat.*;
 import static org.junit.Assert.*;
 import static bunch.TestUtils.*;

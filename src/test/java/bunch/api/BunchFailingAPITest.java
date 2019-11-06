@@ -2,7 +2,6 @@ package bunch.api;
 
 import bunch.simple.SASimpleTechnique;
 
-import static bunch.api.Algorithm.*;
 import static bunch.api.OutputFormat.*;
 import org.junit.Test;
 

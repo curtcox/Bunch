@@ -5,7 +5,6 @@ import org.junit.Test;
 import java.util.*;
 
 import static bunch.TestUtils.*;
-import static bunch.api.Algorithm.HILL_CLIMBING;
 import static bunch.api.OutputFormat.TEXT;
 
 public final class BunchAPISimEdgeTest {
