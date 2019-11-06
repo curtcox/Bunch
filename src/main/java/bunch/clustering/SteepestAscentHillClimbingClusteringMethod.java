@@ -81,7 +81,7 @@ protected void getLocalMaxGraph(Cluster c) {
 
 }
 
-public Configuration getConfiguration() {
+public HillClimbingConfiguration getConfiguration() {
   boolean reconf=false;
   if (configuration == null) {
     reconf = true;

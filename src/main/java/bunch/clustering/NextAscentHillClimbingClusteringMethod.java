@@ -338,7 +338,7 @@ protected Graph getLocalMaxGraph(Graph g)
     return g;
 }
 
-public Configuration getConfiguration() {
+public NAHCConfiguration getConfiguration() {
   boolean reconf=false;
   if (configuration == null) {
     configuration = new NAHCConfiguration();

@@ -176,10 +176,10 @@ public abstract class GenericHillClimbingClusteringMethod extends GenericCluster
    *
    * @return a HillClimbing configuration object
    */
-  public Configuration getConfiguration() {
+  public HillClimbingConfiguration getConfiguration() {
     if (configuration == null) {
       configuration = new HillClimbingConfiguration();
     }
-    return configuration;
+    return (HillClimbingConfiguration) configuration;
   }
 }
