@@ -17,7 +17,6 @@ final class ClusterArgs {
   public Integer algHcRndPct;
   public Integer algHcHcPct;
   public Integer algNahcHcPct;
-  public OutputFormat OUTPUT_FORMAT;
   public String OUTPUT_FILE;
   public String MDG_INPUT_FILE_NAME;
   public boolean OUTPUT_TREE;
@@ -31,7 +30,6 @@ final class ClusterArgs {
   public Class ALG_HC_SA_CLASS;
   public String ALG_HC_SA_CONFIG;
   public boolean ECHO_RESULTS_TO_CONSOLE;
-  public GraphOutput graphOutput = new GraphOutputFactory().defaultOption;
   public ParserFactory parserFactory = new ParserFactory();
   public ClusteringMethod clusteringMethod = new ClusteringMethodFactory().getDefaultMethod();
 }

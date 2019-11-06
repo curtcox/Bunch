@@ -11,12 +11,11 @@ import org.junit.Test;
 import java.io.*;
 
 import static bunch.TestUtils.*;
-import static bunch.api.OutputFormat.NULL;
 
 public final class BunchStatsTest {
 
   @Test
-  public void checkGraphTest() throws Exception {
+  public void checkGraphTest() {
       String filename = "d:\\proj\\bunch\\examples\\bison"; //"e:\\incl";
 
       Parser p = new ParserFactory().getParser("dependency");
@@ -56,7 +55,6 @@ public final class BunchStatsTest {
       BunchAPI api = new BunchAPI();
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = "e:\\incl";
-      bp.OUTPUT_FORMAT = NULL;
 
       bp.algNahcHcPct = 1;
       //bp.setProperty(BunchProperties.ALG_NAHC_RND_PCT,"20");

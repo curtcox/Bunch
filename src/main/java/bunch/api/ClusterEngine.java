@@ -7,7 +7,6 @@ import bunch.model.*;
 import bunch.parser.Parser;
 import bunch.stats.StatsManager;
 import java.io.IOException;
-import static bunch.api.OutputFormat.NULL;
 
 public final class ClusterEngine {
 
@@ -42,7 +41,6 @@ public final class ClusterEngine {
     setUpCalculator();
     setupClusteringMethod();
     StatsManager.getInstance();
-    setGraphOutputDriver();
   }
 
   private void setIsClusterTree() {
@@ -57,35 +55,6 @@ public final class ClusterEngine {
     var configuration = clusteringMethod.getConfiguration();
     if (initialGraph !=null && configuration !=null)
       configuration.init(initialGraph);
-  }
-
-  private void setGraphOutputDriver() {
-    //now set the graph output driver
-    graphOutput = bunchArgs.graphOutput;
-    var outputMode = bunchArgs.OUTPUT_FORMAT;
-    if (outputMode != null || !(outputMode==NULL)) {
-
-      if (outputMode != null) {
-        String outFileName = bunchArgs.OUTPUT_FILE;
-        if (outFileName == null)
-          outFileName = bunchArgs.MDG_INPUT_FILE_NAME;
-
-        if (bunchArgs.OUTPUT_TREE) {
-            graphOutput.setNestedLevels(true);
-        }
-
-        graphOutput.setBaseName(outFileName);
-        graphOutput.setBasicName(outFileName);
-        String outputFileName = graphOutput.getBaseName();
-        String outputPath = bunchArgs.OUTPUT_DIRECTORY;
-        if(outputPath != null) {
-          java.io.File f = new java.io.File(graphOutput.getBaseName());
-          String filename = f.getName();
-          outputFileName = outputPath+filename;
-        }
-        graphOutput.setCurrentName(outputFileName);
-      }
-    }
   }
 
   private void setupClusteringMethod() {

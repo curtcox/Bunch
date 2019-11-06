@@ -5,7 +5,6 @@ import org.junit.Test;
 import java.util.*;
 
 import static bunch.TestUtils.*;
-import static bunch.api.OutputFormat.TEXT;
 
 public final class BunchAPISimEdgeTest {
 
@@ -238,8 +237,6 @@ private String mode = "NAHC";
       BunchAPI api = new BunchAPI();
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = mdgFileName;
-
-      bp.OUTPUT_FORMAT = TEXT;
 
       if(mode.equals("SAHC")) {
         bp.algHcHcPct= 100;

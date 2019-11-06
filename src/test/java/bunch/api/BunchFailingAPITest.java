@@ -2,7 +2,6 @@ package bunch.api;
 
 import bunch.simple.SASimpleTechnique;
 
-import static bunch.api.OutputFormat.*;
 import org.junit.Test;
 
 import java.util.*;
@@ -318,8 +317,6 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
       var bp = api.bunchArgs;
       bp.MDG_INPUT_FILE_NAME = mdgFileName;
 
-      bp.OUTPUT_FORMAT = TEXT;
-
       api.run();
       var results = api.getResults();
       Integer iMedLvl = results.MEDIAN_LEVEL_GRAPH;
@@ -352,7 +349,6 @@ private static Hashtable collectFinalGraphs(String mdgFileName, String baseFileD
       bp.algHcRndPct = 20;
       bp.ALG_HC_SA_CLASS = SASimpleTechnique.class;
       bp.ALG_HC_SA_CONFIG = "InitialTemp=100.0,Alpha=0.95";
-      bp.OUTPUT_FORMAT = DOT;
       bp.OUTPUT_DIRECTORY = "/Users/brianmitchell/dev/mdgs";
 
       println("Running...");

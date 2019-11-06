@@ -9,7 +9,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.*;
 
-import static bunch.api.OutputFormat.*;
 import static org.junit.Assert.*;
 import static bunch.TestUtils.*;
 
@@ -79,7 +78,6 @@ public class BunchPassingAPITest {
         var args = api.bunchArgs;
         args.mdgGraphObject = newBunchMDG();
 
-        args.OUTPUT_FORMAT = NULL;
         args.AGGLOMERATIVE = true;
 
         args.PROGRESS_CALLBACK_CLASS = "bunch.api.BunchAPITestCallback";
@@ -101,7 +99,6 @@ public class BunchPassingAPITest {
         var api = new BunchAPI();
         var args = api.bunchArgs;
         args.MDG_INPUT_FILE_NAME = "e:\\SampleMDGs\\paul.mdg";
-        args.OUTPUT_FORMAT = NULL;
         args.AGGLOMERATIVE = true;
         args.PROGRESS_CALLBACK_CLASS = "bunch.api.BunchAPITestCallback";
         args.PROGRESS_CALLBACK_FREQ = 5;
@@ -125,8 +122,6 @@ public class BunchPassingAPITest {
         var api = new BunchAPI();
         var args = api.bunchArgs;
         args.mdgGraphObject = newBunchMDG2();
-
-        args.OUTPUT_FORMAT = NULL;
 
         args.AGGLOMERATIVE = true;
 
@@ -152,7 +147,6 @@ public class BunchPassingAPITest {
     println("Starting...");
     var api = new BunchAPI();
     var bp = api.bunchArgs;
-    bp.OUTPUT_FORMAT = TEXT;
     bp.OUTPUT_TREE = true;
     bp.MDG_INPUT_FILE_NAME = "c:\\research\\mdgs\\pgsql";
     bp.OUTPUT_FILE = "c:\\research\\mdgs\\pgsql.clu";
@@ -178,7 +172,6 @@ public class BunchPassingAPITest {
             var args = api.bunchArgs;
 
             args.MDG_INPUT_FILE_NAME = mdgFile;
-            args.OUTPUT_FORMAT = TEXT;
 
             args.algHcHcPct = 100;
             args.algHcRndPct = 0;
@@ -264,13 +257,9 @@ public class BunchPassingAPITest {
                 bp.algHcRndPct = 20;
                 bp.ALG_HC_SA_CLASS = SASimpleTechnique.class;
                 bp.ALG_HC_SA_CONFIG = "InitialTemp=10.0,Alpha=0.85";
-                bp.OUTPUT_FORMAT = NULL;
             }
 
             bp.algHcHcPct = 100;
-
-
-            bp.OUTPUT_FORMAT = GXL;
 
             //api.setDebugStats(true);
             long startTime = System.currentTimeMillis();
@@ -369,7 +358,6 @@ public class BunchPassingAPITest {
         bp.MDG_INPUT_FILE_NAME = mdg;
 
         //bp.setProperty(CLUSTERING_ALG,ALG_GA);
-        bp.OUTPUT_FORMAT = TEXT;
         bp.OUTPUT_TREE = true;
         bp.OUTPUT_FILE = "e:\\samplemdgs\\compiler.clu";
 
