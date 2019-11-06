@@ -23,10 +23,6 @@ public abstract class SATechnique {
   public Hashtable getConfig()
   { return null;  }
 
-  public void setConfig()
-  {
-  }
-
   double   getNextRndNumber()
   {
     return rndNum.nextDouble();
