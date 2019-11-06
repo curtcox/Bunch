@@ -16,9 +16,6 @@ public class Configuration {
 
 private int numIterations_d;
 private int popSize_d;
-public final int expNumber_d = 0;
-public final boolean runBatch_d = false;
-public final BufferedWriter writer_d = null;
 
 /**
  * Class constructor.

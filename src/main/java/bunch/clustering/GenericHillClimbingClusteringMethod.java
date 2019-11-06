@@ -46,70 +46,15 @@ public abstract class GenericHillClimbingClusteringMethod extends GenericCluster
   public boolean nextGeneration() {
     long[] sequence = new long[population.size()];
 
-    if (configuration.runBatch_d) {
-      System.out.println("Run Batch = " + configuration.runBatch_d);
-      System.out.println("Exp Number = " + configuration.expNumber_d);
-    }
-
     try {
-      String outLine = "";
-      StringBuilder sCluster = new StringBuilder();
-      StringBuilder sAligned = new StringBuilder();
-
       for (int i = 0; i < population.size(); i++)
         sequence[i] = 0;
-
-      if (false)
-        for (int i = 0; i < population.size(); ++i)
-          if (configuration.runBatch_d) {
-            int exp = configuration.expNumber_d;
-            sCluster = new StringBuilder();
-            sAligned = new StringBuilder();
-            int[] n = population.getCluster(i).getClusterVector();
-
-            int[] c = new int[n.length];
-
-            for (int z = 0; z < n.length; z++)
-              c[z] = n[z];
-
-            realignClusters(c);
-
-            for (int zz = 0; zz < n.length; zz++) {
-              sCluster.append(n[zz]).append("|");
-              sAligned.append(c[zz]).append("|");
-            }
-            sequence[i]++;
-            outLine = exp + "," + i + "," + sequence[i] + "," + population.getCluster(i).getObjFnValue() + "," + sCluster + "," + sAligned;
-            configuration.writer_d.write(outLine + "\r\n");
-          }
 
       boolean end = false;
       while (!end) {
         end = true;
         for (int i = 0; i < population.size(); ++i) {
           if (!population.getCluster(i).isMaximum()) {
-            if (configuration.runBatch_d) {
-              int exp = configuration.expNumber_d;
-              sCluster = new StringBuilder();
-              sAligned = new StringBuilder();
-              int[] n = population.getCluster(i).getClusterVector();
-
-              int[] c = new int[n.length];
-
-              for (int z = 0; z < n.length; z++)
-                c[z] = n[z];
-
-              realignClusters(c);
-
-              for (int zz = 0; zz < n.length; zz++) {
-                sAligned.append(c[zz]).append("|");
-                sCluster.append(n[zz]).append("|");
-              }
-              sequence[i]++;
-              outLine = exp + "," + i + "," + sequence[i] + "," + population.getCluster(i).getObjFnValue() + "," + sCluster + "," + sAligned;
-              configuration.writer_d.write(outLine + "\r\n");
-            }
-
             //end of intrumentation code
             getLocalMaxGraph(population.getCluster(i));
           }
