@@ -1,6 +1,5 @@
 package bunch.ga;
 
-import bunch.api.GaSelection;
 import bunch.model.Configuration;
 import bunch.model.Graph;
 
@@ -59,7 +58,7 @@ public void init(Graph g) {
     }
   }
   setMutationThreshold(0.005 * bitsize);
-  setMethod(methodFactory_d.defaultMethod);
+  setMethod(new GATournamentMethod());
 }
 
 /**
@@ -91,8 +90,7 @@ public GAMethod getMethod()
  * @param m the ga method to set to this configuration instance
  * @see #getMethod()
  */
-private void setMethod(GAMethod m)
-{
+private void setMethod(GAMethod m) {
   method_d = m;
 }
 
@@ -105,9 +103,9 @@ private void setMethod(GAMethod m)
  * @see #getMethod()
  * @see #setMethod(GAMethod)
  */
-public void setMethod(GaSelection m) {
-  setMethod(methodFactory_d.getMethod(m));
-}
+//public void setMethod(GaSelection m) {
+//  setMethod(methodFactory_d.getMethod(m));
+//}
 
 /**
  * Sets the mutation threshold for this configuration object, expressed in chance of
