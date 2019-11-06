@@ -4,11 +4,9 @@ import bunch.calculator.ObjectiveFunctionCalculator;
 import bunch.calculator.TurboMQIncrW;
 import bunch.clustering.ClusteringMethod;
 import bunch.clustering.ClusteringMethodFactory;
-import bunch.parser.ParserFactory;
 
 final class ClusterArgs {
 
-  public String mdgInputFileName;
   public BunchMDG mdgGraphObject;
   public boolean AGGLOMERATIVE;
   public final ObjectiveFunctionCalculator mqCalculatorClass = new TurboMQIncrW();
@@ -28,6 +26,5 @@ final class ClusterArgs {
   public Class ALG_HC_SA_CLASS;
   public String ALG_HC_SA_CONFIG;
   public boolean ECHO_RESULTS_TO_CONSOLE;
-  public ParserFactory parserFactory = new ParserFactory();
   public ClusteringMethod clusteringMethod = new ClusteringMethodFactory().getDefaultMethod();
 }
